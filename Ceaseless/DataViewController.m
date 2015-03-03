@@ -27,6 +27,10 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.dataLabel.text = [self.dataObject description];
+//	let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+//  let blurView = UIVisualEffectView(effect: blurEffect)
+//  blurView.frame = myFrame
+//  self.view.addSubview(blurView)
 }
 
 @end

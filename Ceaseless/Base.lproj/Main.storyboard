@@ -18,7 +18,26 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.12156862745098039" green="0.12549019607843137" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" id="04V-wD-iLr"/>
+                    <navigationItem key="navigationItem" id="04V-wD-iLr">
+                        <barButtonItem key="leftBarButtonItem" title="Item" style="plain" id="h2B-cB-23D">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="9oX-f1-08t">
+                                <rect key="frame" x="16" y="7" width="24" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="icon_notes">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Item" style="plain" id="4tM-ZF-Zq0">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="S92-jw-onB">
+                                <rect key="frame" x="451" y="7" width="24" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="icon_settings">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q3h-pU-vEd" sceneMemberID="firstResponder"/>
             </objects>
@@ -39,7 +58,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Screen Shot 2015-02-18 at 8.25.51 AM.png" translatesAutoresizingMaskIntoConstraints="NO" id="Jpw-Sd-QaQ">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IMG_0023.JPG" translatesAutoresizingMaskIntoConstraints="NO" id="X2w-zm-bz6">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IMG_0023.JPG" translatesAutoresizingMaskIntoConstraints="NO" id="X2w-zm-bz6">
                                 <rect key="frame" x="16" y="0.0" width="568" height="304"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="304" id="WeA-fM-e31"/>
@@ -94,6 +113,11 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="6lX-HA-I6m"/>
+                                <exclude reference="Mdd-2a-XXW"/>
+                                <exclude reference="O3M-GQ-IWs"/>
+                                <exclude reference="OzH-BT-gwJ"/>
+                                <exclude reference="rUl-zV-9oy"/>
                                 <exclude reference="NCi-ei-0vu"/>
                                 <exclude reference="Rrb-Ju-dJ0"/>
                                 <exclude reference="cXB-ZQ-RPh"/>
@@ -101,11 +125,6 @@
                                 <exclude reference="cCk-mG-gz5"/>
                                 <exclude reference="iaq-Qg-kwv"/>
                                 <exclude reference="toY-YP-AMD"/>
-                                <exclude reference="6lX-HA-I6m"/>
-                                <exclude reference="Mdd-2a-XXW"/>
-                                <exclude reference="O3M-GQ-IWs"/>
-                                <exclude reference="OzH-BT-gwJ"/>
-                                <exclude reference="rUl-zV-9oy"/>
                                 <exclude reference="ugj-AZ-w3I"/>
                                 <exclude reference="We2-u7-YtL"/>
                                 <exclude reference="aYB-gB-4FX"/>
@@ -138,6 +157,9 @@
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pjs-nJ-d0G" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <barButtonItem title="Settings" style="plain" id="thi-j2-wpl">
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </barButtonItem>
             </objects>
             <point key="canvasLocation" x="-101" y="-243"/>
         </scene>
@@ -146,5 +168,7 @@
         <image name="IMG_0023.JPG" width="1936" height="2592"/>
         <image name="Screen Shot 2015-02-18 at 8.25.51 AM.png" width="392" height="465"/>
         <image name="icon_more" width="28" height="8"/>
+        <image name="icon_notes" width="24" height="24"/>
+        <image name="icon_settings" width="24" height="24"/>
     </resources>
 </document>
