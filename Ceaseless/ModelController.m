@@ -81,4 +81,17 @@
     return [self viewControllerAtIndex:index storyboard:viewController.storyboard];
 }
 
+#pragma mark -
+#pragma mark Page Indicator
+
+- (NSInteger) presentationCountForPageViewController: (UIPageViewController *) pageViewController
+{
+    return [self.pageData count];
+}
+
+- (NSInteger) presentationIndexForPageViewController: (UIPageViewController *) pageViewController
+{
+    return 0;
+}
+
 @end
