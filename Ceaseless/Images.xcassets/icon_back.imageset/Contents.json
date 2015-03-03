@@ -3,17 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "mainLogo.png"
+      "filename" : "icon_back.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "mainLogo@2x.png"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "CeaselessLogo.png"
+      "filename" : "icon_back@2x.png"
     }
   ],
   "info" : {
