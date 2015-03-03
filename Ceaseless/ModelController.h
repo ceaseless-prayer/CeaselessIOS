@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PersonPicker.h"
 
 @class DataViewController;
 
 @interface ModelController : NSObject <UIPageViewControllerDataSource>
+
+@property (strong, nonatomic) PersonPicker *personPicker;
 
 - (DataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard;
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController;

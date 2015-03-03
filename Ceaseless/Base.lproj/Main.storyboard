@@ -58,7 +58,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Screen Shot 2015-02-18 at 8.25.51 AM.png" translatesAutoresizingMaskIntoConstraints="NO" id="Jpw-Sd-QaQ">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IMG_0023.JPG" translatesAutoresizingMaskIntoConstraints="NO" id="X2w-zm-bz6">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="X2w-zm-bz6">
                                 <rect key="frame" x="16" y="0.0" width="568" height="304"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="304" id="WeA-fM-e31"/>
@@ -133,6 +133,7 @@
                     </view>
                     <connections>
                         <outlet property="dataLabel" destination="cF2-Le-7mQ" id="3EH-BK-JV6"/>
+                        <outlet property="imageview" destination="X2w-zm-bz6" id="C6r-PE-D0j"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GmD-Rr-ZGN" sceneMemberID="firstResponder"/>
@@ -165,7 +166,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="IMG_0023.JPG" width="1936" height="2592"/>
         <image name="Screen Shot 2015-02-18 at 8.25.51 AM.png" width="392" height="465"/>
         <image name="icon_more" width="28" height="8"/>
         <image name="icon_notes" width="24" height="24"/>

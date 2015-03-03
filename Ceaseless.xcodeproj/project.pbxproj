@@ -18,6 +18,8 @@
 		42F3AE3E1AA4DD80003A88F5 /* CeaselessTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F3AE3D1AA4DD80003A88F5 /* CeaselessTests.m */; };
 		709D83391AA598A600C3486E /* Screen Shot 2015-02-18 at 8.25.51 AM.png in Resources */ = {isa = PBXBuildFile; fileRef = 709D83381AA598A600C3486E /* Screen Shot 2015-02-18 at 8.25.51 AM.png */; };
 		709D833D1AA599EF00C3486E /* IMG_0023.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 709D833C1AA599EF00C3486E /* IMG_0023.JPG */; };
+		70D51C0B1AA6222700FA7CDC /* PersonPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D51C0A1AA6222700FA7CDC /* PersonPicker.m */; };
+		70D51C0E1AA627DF00FA7CDC /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D51C0D1AA627DF00FA7CDC /* Person.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +52,10 @@
 		42F3AE3D1AA4DD80003A88F5 /* CeaselessTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CeaselessTests.m; sourceTree = "<group>"; };
 		709D83381AA598A600C3486E /* Screen Shot 2015-02-18 at 8.25.51 AM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screen Shot 2015-02-18 at 8.25.51 AM.png"; sourceTree = "<group>"; };
 		709D833C1AA599EF00C3486E /* IMG_0023.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_0023.JPG; sourceTree = "<group>"; };
+		70D51C091AA6222700FA7CDC /* PersonPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonPicker.h; sourceTree = "<group>"; };
+		70D51C0A1AA6222700FA7CDC /* PersonPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonPicker.m; sourceTree = "<group>"; };
+		70D51C0C1AA627DF00FA7CDC /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		70D51C0D1AA627DF00FA7CDC /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +105,10 @@
 				42F3AE261AA4DD7F003A88F5 /* DataViewController.m */,
 				42F3AE281AA4DD7F003A88F5 /* ModelController.h */,
 				42F3AE291AA4DD7F003A88F5 /* ModelController.m */,
+				70D51C091AA6222700FA7CDC /* PersonPicker.h */,
+				70D51C0A1AA6222700FA7CDC /* PersonPicker.m */,
+				70D51C0C1AA627DF00FA7CDC /* Person.h */,
+				70D51C0D1AA627DF00FA7CDC /* Person.m */,
 				42F3AE2B1AA4DD7F003A88F5 /* Main.storyboard */,
 				42F3AE2E1AA4DD7F003A88F5 /* Images.xcassets */,
 				42F3AE301AA4DD7F003A88F5 /* LaunchScreen.xib */,
@@ -240,7 +250,9 @@
 			files = (
 				42F3AE271AA4DD7F003A88F5 /* DataViewController.m in Sources */,
 				42F3AE211AA4DD7F003A88F5 /* AppDelegate.m in Sources */,
+				70D51C0E1AA627DF00FA7CDC /* Person.m in Sources */,
 				42F3AE2A1AA4DD7F003A88F5 /* ModelController.m in Sources */,
+				70D51C0B1AA6222700FA7CDC /* PersonPicker.m in Sources */,
 				42F3AE1E1AA4DD7F003A88F5 /* main.m in Sources */,
 				42F3AE241AA4DD7F003A88F5 /* RootViewController.m in Sources */,
 			);

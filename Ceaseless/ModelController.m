@@ -8,6 +8,8 @@
 
 #import "ModelController.h"
 #import "DataViewController.h"
+#import "PersonPicker.h"
+#import "AppDelegate.h"
 
 /*
  A controller object that manages a simple model -- a collection of month names.
@@ -21,7 +23,9 @@
 
 @interface ModelController ()
 
-@property (readonly, strong, nonatomic) NSArray *pageData;
+//@property (readonly, strong, nonatomic) NSArray *pageData;
+@property (readonly, strong, nonatomic) NSArray *personData;
+
 @end
 
 @implementation ModelController
@@ -30,28 +34,31 @@
     self = [super init];
     if (self) {
         // Create the data model.
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        _pageData = [[dateFormatter monthSymbols] copy];
+
+		PersonPicker *addressBook = [[PersonPicker alloc] init];
+		[addressBook loadContacts];
+		AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
+		_personData = appDelegate.peopleArray;
     }
     return self;
 }
 
 - (DataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard {
     // Return the data view controller for the given index.
-    if (([self.pageData count] == 0) || (index >= [self.pageData count])) {
+    if (([self.personData count] == 0) || (index >= [self.personData count])) {
         return nil;
     }
 
     // Create a new view controller and pass suitable data.
     DataViewController *dataViewController = [storyboard instantiateViewControllerWithIdentifier:@"DataViewController"];
-    dataViewController.dataObject = self.pageData[index];
+    dataViewController.dataObject = self.personData[index];
     return dataViewController;
 }
 
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController {
     // Return the index of the given data view controller.
     // For simplicity, this implementation uses a static array of model objects and the view controller stores the model object; you can therefore use the model object to identify the index.
-    return [self.pageData indexOfObject:viewController.dataObject];
+    return [self.personData indexOfObject:viewController.dataObject];
 }
 
 #pragma mark - Page View Controller Data Source
@@ -75,7 +82,7 @@
     }
     
     index++;
-    if (index == [self.pageData count]) {
+    if (index == [self.personData count]) {
         return nil;
     }
     return [self viewControllerAtIndex:index storyboard:viewController.storyboard];
@@ -86,7 +93,7 @@
 
 - (NSInteger) presentationCountForPageViewController: (UIPageViewController *) pageViewController
 {
-    return [self.pageData count];
+    return [self.personData count];
 }
 
 - (NSInteger) presentationIndexForPageViewController: (UIPageViewController *) pageViewController

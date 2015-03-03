@@ -7,6 +7,7 @@
 //
 
 #import "DataViewController.h"
+#import "Person.h"
 
 @interface DataViewController ()
 
@@ -26,7 +27,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.dataLabel.text = [self.dataObject description];
+	Person *person = self.dataObject;
+	self.dataLabel.text = [NSString stringWithFormat: @"%@ %@", person.firstName, person.lastName];
+	self.imageview.image = person.profileImage;
 //	let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
 //  let blurView = UIVisualEffectView(effect: blurEffect)
 //  blurView.frame = myFrame
