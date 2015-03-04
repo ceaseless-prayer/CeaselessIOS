@@ -87,22 +87,54 @@
 	NSInteger numberOfPeople = 5;
 
 	NSArray *allPeople = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
-
+    
+    // http://stackoverflow.com/questions/11351454/dealing-with-duplicate-contacts-due-to-linked-cards-in-ios-address-book-api
+    NSMutableSet *unifiedRecordsSet = [NSMutableSet set];
+    
+    CFArrayRef records = ABAddressBookCopyArrayOfAllPeople(addressBook);
+    for (CFIndex i = 0; i < CFArrayGetCount(records); i++)
+    {
+        NSMutableSet *contactSet = [NSMutableSet set];
+        
+        ABRecordRef record = CFArrayGetValueAtIndex(records, i);
+        [contactSet addObject:(__bridge id)record];
+        
+        NSArray *linkedRecordsArray = (__bridge NSArray *)ABPersonCopyArrayOfAllLinkedPeople(record);
+        [contactSet addObjectsFromArray:linkedRecordsArray];
+        
+        // Your own custom "unified record" class (or just an NSSet!)
+        NSSet *unifiedRecord = [[NSSet alloc] initWithSet:contactSet];
+        
+        [unifiedRecordsSet addObject:unifiedRecord];
+        CFRelease(record);
+    }
+    
+    CFRelease(records);
+    
+    allPeople = [unifiedRecordsSet allObjects];
+    
 	for (NSInteger i = 0; i < numberOfPeople; i++) {
-		ABRecordRef rawPerson = (__bridge ABRecordRef)allPeople[i];
-
-		Person *person = [[Person alloc] init];
-		person.firstName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonFirstNameProperty));
-		person.lastName  = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonLastNameProperty));
-
-			// Check for contact picture
-		if (rawPerson != nil && ABPersonHasImageData(rawPerson)) {
-			if ( &ABPersonCopyImageDataWithFormat != nil ) {
-				person.profileImage = [UIImage imageWithData:(__bridge NSData *)ABPersonCopyImageDataWithFormat(rawPerson, kABPersonImageFormatThumbnail)];
-			}
-		}
-
-		[self.ceaselessPeople addObject: person];
+        NSSet *unifiedRecord = allPeople[i];
+        Person *person = [[Person alloc] init];
+        
+        NSEnumerator *enumerator = [unifiedRecord objectEnumerator];
+        
+        id value;
+        
+        while ((value = [enumerator nextObject])) {
+            ABRecordRef rawPerson = (__bridge ABRecordRef) value;
+            // Check for contact picture
+            if (rawPerson != nil && ABPersonHasImageData(rawPerson)) {
+                if ( &ABPersonCopyImageDataWithFormat != nil ) {
+                    person.profileImage = [UIImage imageWithData:(__bridge NSData *)ABPersonCopyImageDataWithFormat(rawPerson, kABPersonImageFormatOriginalSize)];
+                }
+            }
+            person.firstName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonFirstNameProperty));
+            person.lastName  = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonLastNameProperty));
+     
+        }
+        
+        [self.ceaselessPeople addObject: person];
 		NSLog(@"Name:%@ %@", person.firstName, person.lastName);
 	}
 }

@@ -24,39 +24,7 @@
 	NSLog (@"count %lu", (unsigned long)[self.personView.subviews count]);
 	[self.cardView addSubview: self.personView];
 
-	[self.personView setTranslatesAutoresizingMaskIntoConstraints:NO];
-
-	[self.cardView addConstraint:[NSLayoutConstraint constraintWithItem:self.personView
-														  attribute:NSLayoutAttributeTop
-														  relatedBy:NSLayoutRelationEqual
-															 toItem:self.cardView
-														  attribute:NSLayoutAttributeTop
-														 multiplier:1.0
-														   constant:0.0]];
-
-	[self.cardView addConstraint:[NSLayoutConstraint constraintWithItem:self.personView
-														  attribute:NSLayoutAttributeLeading
-														  relatedBy:NSLayoutRelationEqual
-															 toItem:self.cardView
-														  attribute:NSLayoutAttributeLeading
-														 multiplier:1.0
-														   constant:0.0]];
-
-	[self.cardView addConstraint:[NSLayoutConstraint constraintWithItem:self.personView
-														  attribute:NSLayoutAttributeBottom
-														  relatedBy:NSLayoutRelationEqual
-															 toItem:self.cardView
-														  attribute:NSLayoutAttributeBottom
-														 multiplier:1.0
-														   constant:0.0]];
-
-	[self.cardView addConstraint:[NSLayoutConstraint constraintWithItem:self.personView
-														  attribute:NSLayoutAttributeTrailing
-														  relatedBy:NSLayoutRelationEqual
-															 toItem:self.cardView
-														  attribute:NSLayoutAttributeTrailing
-														 multiplier:1.0
-														   constant:0.0]];
+    [self setDynamicViewConstraints];
 
 }
 
@@ -75,6 +43,42 @@
 //  let blurView = UIVisualEffectView(effect: blurEffect)
 //  blurView.frame = myFrame
 //  self.view.addSubview(blurView)
+}
+
+- (void)setDynamicViewConstraints {
+    [self.personView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    [self.cardView addConstraint:[NSLayoutConstraint constraintWithItem:self.personView
+                                                              attribute:NSLayoutAttributeTop
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.cardView
+                                                              attribute:NSLayoutAttributeTop
+                                                             multiplier:1.0
+                                                               constant:0.0]];
+    
+    [self.cardView addConstraint:[NSLayoutConstraint constraintWithItem:self.personView
+                                                              attribute:NSLayoutAttributeLeading
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.cardView
+                                                              attribute:NSLayoutAttributeLeading
+                                                             multiplier:1.0
+                                                               constant:0.0]];
+    
+    [self.cardView addConstraint:[NSLayoutConstraint constraintWithItem:self.personView
+                                                              attribute:NSLayoutAttributeBottom
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.cardView
+                                                              attribute:NSLayoutAttributeBottom
+                                                             multiplier:1.0
+                                                               constant:0.0]];
+    
+    [self.cardView addConstraint:[NSLayoutConstraint constraintWithItem:self.personView
+                                                              attribute:NSLayoutAttributeTrailing
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.cardView
+                                                              attribute:NSLayoutAttributeTrailing
+                                                             multiplier:1.0
+                                                               constant:0.0]];
 }
 
 @end
