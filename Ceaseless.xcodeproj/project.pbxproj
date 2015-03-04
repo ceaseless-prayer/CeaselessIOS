@@ -20,6 +20,9 @@
 		709D833D1AA599EF00C3486E /* IMG_0023.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 709D833C1AA599EF00C3486E /* IMG_0023.JPG */; };
 		70D51C0B1AA6222700FA7CDC /* PersonPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D51C0A1AA6222700FA7CDC /* PersonPicker.m */; };
 		70D51C0E1AA627DF00FA7CDC /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D51C0D1AA627DF00FA7CDC /* Person.m */; };
+		70D51C111AA6694400FA7CDC /* ScriptureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70D51C101AA6694400FA7CDC /* ScriptureView.xib */; };
+		70D51C131AA66F5100FA7CDC /* PersonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70D51C121AA66F5100FA7CDC /* PersonView.xib */; };
+		70D51C161AA6800D00FA7CDC /* PersonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D51C151AA6800D00FA7CDC /* PersonView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +59,10 @@
 		70D51C0A1AA6222700FA7CDC /* PersonPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonPicker.m; sourceTree = "<group>"; };
 		70D51C0C1AA627DF00FA7CDC /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
 		70D51C0D1AA627DF00FA7CDC /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		70D51C101AA6694400FA7CDC /* ScriptureView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScriptureView.xib; sourceTree = "<group>"; };
+		70D51C121AA66F5100FA7CDC /* PersonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonView.xib; sourceTree = "<group>"; };
+		70D51C141AA6800D00FA7CDC /* PersonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonView.h; sourceTree = "<group>"; };
+		70D51C151AA6800D00FA7CDC /* PersonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +116,7 @@
 				70D51C0A1AA6222700FA7CDC /* PersonPicker.m */,
 				70D51C0C1AA627DF00FA7CDC /* Person.h */,
 				70D51C0D1AA627DF00FA7CDC /* Person.m */,
-				42F3AE2B1AA4DD7F003A88F5 /* Main.storyboard */,
+				70D51C0F1AA668AA00FA7CDC /* View */,
 				42F3AE2E1AA4DD7F003A88F5 /* Images.xcassets */,
 				42F3AE301AA4DD7F003A88F5 /* LaunchScreen.xib */,
 				42F3AE1B1AA4DD7F003A88F5 /* Supporting Files */,
@@ -143,6 +150,18 @@
 				42F3AE3C1AA4DD80003A88F5 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		70D51C0F1AA668AA00FA7CDC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				42F3AE2B1AA4DD7F003A88F5 /* Main.storyboard */,
+				70D51C101AA6694400FA7CDC /* ScriptureView.xib */,
+				70D51C141AA6800D00FA7CDC /* PersonView.h */,
+				70D51C151AA6800D00FA7CDC /* PersonView.m */,
+				70D51C121AA66F5100FA7CDC /* PersonView.xib */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,11 +245,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70D51C111AA6694400FA7CDC /* ScriptureView.xib in Resources */,
 				709D833D1AA599EF00C3486E /* IMG_0023.JPG in Resources */,
 				42F3AE2D1AA4DD7F003A88F5 /* Main.storyboard in Resources */,
 				42F3AE321AA4DD80003A88F5 /* LaunchScreen.xib in Resources */,
 				42F3AE2F1AA4DD7F003A88F5 /* Images.xcassets in Resources */,
 				709D83391AA598A600C3486E /* Screen Shot 2015-02-18 at 8.25.51 AM.png in Resources */,
+				70D51C131AA66F5100FA7CDC /* PersonView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,6 +270,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42F3AE271AA4DD7F003A88F5 /* DataViewController.m in Sources */,
+				70D51C161AA6800D00FA7CDC /* PersonView.m in Sources */,
 				42F3AE211AA4DD7F003A88F5 /* AppDelegate.m in Sources */,
 				70D51C0E1AA627DF00FA7CDC /* Person.m in Sources */,
 				42F3AE2A1AA4DD7F003A88F5 /* ModelController.m in Sources */,

@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PersonView.h"
 
 @interface DataViewController : UIViewController
 
-@property (strong, nonatomic) IBOutlet UILabel *dataLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *imageview;
+@property (strong, nonatomic) IBOutlet UIView *cardView;
+@property (strong, nonatomic) PersonView *personView;
 @property (strong, nonatomic) id dataObject;
 
 @end
