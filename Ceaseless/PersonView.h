@@ -13,5 +13,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *personImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
+@property (weak, nonatomic) IBOutlet UIVisualEffectView *blurEffect;
 
 @end

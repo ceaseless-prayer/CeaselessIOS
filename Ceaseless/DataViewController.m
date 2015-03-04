@@ -33,6 +33,12 @@ static NSString *kSMSMessage;
 	self.personView = [PersonView alloc];
 	self.personView = [[[NSBundle mainBundle] loadNibNamed:@"PersonView" owner:self options:nil] lastObject];
 	NSLog (@"count %lu", (unsigned long)[self.personView.subviews count]);
+
+    // fallback if user disables transparency/blur effect
+    if(UIAccessibilityIsReduceTransparencyEnabled()) {
+        ((UIView *) self.personView.blurEffect.subviews[0]).backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:0.5f];
+    }
+    
 	[self.cardView addSubview: self.personView];
 
     [self setDynamicViewConstraints];
