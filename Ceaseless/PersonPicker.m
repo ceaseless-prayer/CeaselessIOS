@@ -131,7 +131,18 @@
             }
             person.firstName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonFirstNameProperty));
             person.lastName  = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonLastNameProperty));
-     
+				//TODO:  this needs to be mobile or iphone first the other because it is used for texting from the device
+
+			ABMultiValueRef phoneNumbers = ABRecordCopyValue(rawPerson, kABPersonPhoneProperty);
+
+			CFIndex numberOfPhoneNumbers = ABMultiValueGetCount(phoneNumbers);
+			for (CFIndex i = 0; i < numberOfPhoneNumbers; i++) {
+				NSString *phoneNumber = CFBridgingRelease(ABMultiValueCopyValueAtIndex(phoneNumbers, i));
+				person.phoneNumber = phoneNumber;
+				NSLog(@"  phone:%@", phoneNumber);
+			}
+
+			CFRelease(phoneNumbers);
         }
         
         [self.ceaselessPeople addObject: person];
