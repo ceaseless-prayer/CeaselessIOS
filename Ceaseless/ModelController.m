@@ -9,7 +9,10 @@
 #import "ModelController.h"
 #import "DataViewController.h"
 #import "PersonPicker.h"
+#import "Person.h"
 #import "AppDelegate.h"
+#import "ScripturePicker.h"
+#import "Scripture.h"
 
 /*
  A controller object that manages a simple model -- a collection of month names.
@@ -23,8 +26,9 @@
 
 @interface ModelController ()
 
-//@property (readonly, strong, nonatomic) NSArray *pageData;
 @property (readonly, strong, nonatomic) NSArray *personData;
+@property (readonly, strong, nonatomic) Scripture *scripture;
+@property (strong, nonatomic) NSArray *cardArray;
 
 @end
 
@@ -35,30 +39,45 @@
     if (self) {
         // Create the data model.
 
-		PersonPicker *addressBook = [[PersonPicker alloc] init];
-		[addressBook loadContacts];
+		ScripturePicker *scripturePicker = [[ScripturePicker alloc] init];
+		_scripture = [scripturePicker requestDailyVerseReference];
+
+		PersonPicker *personPicker = [[PersonPicker alloc] init];
+		[personPicker loadContacts];
 		AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
 		_personData = appDelegate.peopleArray;
+
+//		id objects;
+//
+//		NSRange range = NSMakeRange(0, [_personData count]-1);
+//		objects = (__bridge id)(malloc(sizeof(id) * range.length));
+//
+//		self.cardArray = [[NSArray alloc] initWithObjects: _scripture, [_personData getObjects:objects range:range] nil];
+		self.cardArray = [[NSArray alloc] initWithArray: _personData];
+//
+//		free((__bridge void *)(objects));
+
     }
     return self;
 }
 
 - (DataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard {
     // Return the data view controller for the given index.
-    if (([self.personData count] == 0) || (index >= [self.personData count])) {
+    if (([self.cardArray count] == 0) || (index >= [self.cardArray count])) {
         return nil;
     }
 
     // Create a new view controller and pass suitable data.
     DataViewController *dataViewController = [storyboard instantiateViewControllerWithIdentifier:@"DataViewController"];
-    dataViewController.dataObject = self.personData[index];
+    dataViewController.dataObject = self.cardArray[index];
+	dataViewController.index = index;
     return dataViewController;
 }
 
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController {
     // Return the index of the given data view controller.
     // For simplicity, this implementation uses a static array of model objects and the view controller stores the model object; you can therefore use the model object to identify the index.
-    return [self.personData indexOfObject:viewController.dataObject];
+    return [self.cardArray indexOfObject:viewController.dataObject];
 }
 
 #pragma mark - Page View Controller Data Source
@@ -82,7 +101,7 @@
     }
     
     index++;
-    if (index == [self.personData count]) {
+    if (index == [self.cardArray count]) {
         return nil;
     }
     return [self viewControllerAtIndex:index storyboard:viewController.storyboard];
@@ -93,7 +112,7 @@
 
 - (NSInteger) presentationCountForPageViewController: (UIPageViewController *) pageViewController
 {
-    return [self.personData count];
+    return [self.cardArray count];
 }
 
 - (NSInteger) presentationIndexForPageViewController: (UIPageViewController *) pageViewController

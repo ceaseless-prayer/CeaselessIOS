@@ -2,32 +2,45 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PersonView"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Hu6-e9-UQz" userLabel="PersonView" customClass="PersonView">
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Hu6-e9-UQz" customClass="PersonView">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
+                <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GC5-zi-k0j" userLabel="NotesPlaceholderView">
+                    <rect key="frame" x="8" y="64" width="584" height="536"/>
+                    <color key="backgroundColor" red="0.22352941176470589" green="0.24705882352941178" blue="0.27450980392156865" alpha="0.70000000000000007" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="600" id="hE0-ng-sjE"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="hE0-ng-sjE"/>
+                        </mask>
+                    </variation>
+                </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Screen Shot 2015-02-18 at 8.25.51 AM.png" translatesAutoresizingMaskIntoConstraints="NO" id="X16-Iy-AA8" userLabel="BackgroundImageView">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="465"/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vRz-LA-Wxx" userLabel="PersonImageView">
-                    <rect key="frame" x="8" y="8" width="584" height="304"/>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vRz-LA-Wxx" userLabel="PersonImageView">
+                    <rect key="frame" x="8" y="64" width="584" height="304"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="304" id="jla-bv-BZQ"/>
                     </constraints>
                 </imageView>
                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zHl-KV-Ywy">
-                    <rect key="frame" x="8" y="8" width="584" height="44"/>
+                    <rect key="frame" x="8" y="64" width="584" height="44"/>
                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="9JQ-bm-x4R">
                         <rect key="frame" x="0.0" y="0.0" width="584" height="44"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" misplaced="YES" text="Name Label" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="29f-oR-vIq">
-                                <rect key="frame" x="8" y="0.0" width="100" height="44"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" text="Name Label" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="29f-oR-vIq">
+                                <rect key="frame" x="8" y="0.0" width="95" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="xHd-ew-cfm"/>
@@ -74,9 +87,11 @@
                 <constraint firstItem="zHl-KV-Ywy" firstAttribute="trailing" secondItem="vRz-LA-Wxx" secondAttribute="trailing" id="0nF-Wm-J4M"/>
                 <constraint firstItem="X16-Iy-AA8" firstAttribute="leading" secondItem="Hu6-e9-UQz" secondAttribute="leading" id="5XK-0q-ZDj"/>
                 <constraint firstAttribute="centerY" secondItem="vRz-LA-Wxx" secondAttribute="centerY" id="EZK-JL-qvv"/>
+                <constraint firstItem="GC5-zi-k0j" firstAttribute="top" secondItem="vRz-LA-Wxx" secondAttribute="top" id="FCg-l5-sNN"/>
                 <constraint firstItem="X16-Iy-AA8" firstAttribute="top" secondItem="Hu6-e9-UQz" secondAttribute="top" id="Kug-bf-gex"/>
                 <constraint firstAttribute="trailing" secondItem="X16-Iy-AA8" secondAttribute="trailing" id="NVc-vw-B4H"/>
                 <constraint firstAttribute="trailingMargin" secondItem="vRz-LA-Wxx" secondAttribute="trailing" constant="8" id="O3p-3Q-5bx"/>
+                <constraint firstAttribute="bottom" secondItem="GC5-zi-k0j" secondAttribute="bottom" id="T9E-X2-teJ"/>
                 <constraint firstItem="vRz-LA-Wxx" firstAttribute="leading" secondItem="Hu6-e9-UQz" secondAttribute="leading" constant="8" id="Uyj-mt-oPz"/>
                 <constraint firstAttribute="trailing" secondItem="vRz-LA-Wxx" secondAttribute="trailing" constant="8" id="VM2-Kc-IPh"/>
                 <constraint firstAttribute="centerX" secondItem="vRz-LA-Wxx" secondAttribute="centerX" id="d1T-hh-Wkv"/>
@@ -84,17 +99,26 @@
                 <constraint firstItem="vRz-LA-Wxx" firstAttribute="leading" secondItem="Hu6-e9-UQz" secondAttribute="leadingMargin" id="lWh-kF-Wac"/>
                 <constraint firstItem="X16-Iy-AA8" firstAttribute="leading" secondItem="Hu6-e9-UQz" secondAttribute="leading" id="lWw-4M-Vju"/>
                 <constraint firstItem="X16-Iy-AA8" firstAttribute="top" secondItem="Hu6-e9-UQz" secondAttribute="topMargin" id="qmU-3U-kzk"/>
+                <constraint firstItem="vRz-LA-Wxx" firstAttribute="top" secondItem="Hu6-e9-UQz" secondAttribute="top" constant="64" id="rBh-5S-gD6"/>
                 <constraint firstItem="zHl-KV-Ywy" firstAttribute="leading" secondItem="vRz-LA-Wxx" secondAttribute="leading" id="rZS-z9-Wvi"/>
+                <constraint firstItem="GC5-zi-k0j" firstAttribute="top" secondItem="vRz-LA-Wxx" secondAttribute="bottom" id="rnQ-qA-5y0"/>
+                <constraint firstItem="GC5-zi-k0j" firstAttribute="leading" secondItem="vRz-LA-Wxx" secondAttribute="leading" id="vTZ-k1-J1r"/>
                 <constraint firstAttribute="trailing" secondItem="X16-Iy-AA8" secondAttribute="trailing" id="xtL-tD-bs9"/>
+                <constraint firstItem="GC5-zi-k0j" firstAttribute="trailing" secondItem="vRz-LA-Wxx" secondAttribute="trailing" id="zUK-l9-9H3"/>
                 <constraint firstItem="zHl-KV-Ywy" firstAttribute="top" secondItem="vRz-LA-Wxx" secondAttribute="top" id="zzW-j3-DyA"/>
             </constraints>
             <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="X16-Iy-AA8"/>
+                </mask>
                 <mask key="constraints">
                     <exclude reference="lWw-4M-Vju"/>
                     <exclude reference="qmU-3U-kzk"/>
                     <exclude reference="xtL-tD-bs9"/>
+                    <exclude reference="rnQ-qA-5y0"/>
                     <exclude reference="EZK-JL-qvv"/>
                     <exclude reference="O3p-3Q-5bx"/>
+                    <exclude reference="exy-Fj-k6Y"/>
                     <exclude reference="lWh-kF-Wac"/>
                 </mask>
             </variation>

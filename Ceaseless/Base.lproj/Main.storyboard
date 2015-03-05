@@ -7,7 +7,7 @@
         <!--Root View Controller-->
         <scene sceneID="clB-vc-fyl">
             <objects>
-                <viewController id="703-4V-yAM" customClass="RootViewController" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="703-4V-yAM" customClass="RootViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="I7W-xW-C47"/>
                         <viewControllerLayoutGuide type="bottom" id="IfR-02-kHw"/>
@@ -15,7 +15,18 @@
                     <view key="view" contentMode="scaleToFill" id="502-Ir-ELC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Screen Shot 2015-02-18 at 8.25.07 AM.png" translatesAutoresizingMaskIntoConstraints="NO" id="rxH-h1-ZKU" userLabel="BackgroundImageView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" red="0.12156862745098039" green="0.12549019607843137" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="rxH-h1-ZKU" firstAttribute="leading" secondItem="502-Ir-ELC" secondAttribute="leading" id="2GC-Tn-0gq"/>
+                            <constraint firstItem="rxH-h1-ZKU" firstAttribute="top" secondItem="502-Ir-ELC" secondAttribute="top" id="Hrs-zr-Qa6"/>
+                            <constraint firstItem="IfR-02-kHw" firstAttribute="top" secondItem="rxH-h1-ZKU" secondAttribute="bottom" id="KOb-Ub-UOv"/>
+                            <constraint firstAttribute="trailing" secondItem="rxH-h1-ZKU" secondAttribute="trailing" id="l1O-Je-Lax"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="04V-wD-iLr">
                         <barButtonItem key="leftBarButtonItem" title="Item" style="plain" id="h2B-cB-23D">
@@ -37,6 +48,9 @@
                             </button>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="backgroundImageView" destination="rxH-h1-ZKU" id="cdk-J6-Cit"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q3h-pU-vEd" sceneMemberID="firstResponder"/>
             </objects>
@@ -50,10 +64,11 @@
                         <viewControllerLayoutGuide type="top" id="fXf-Jd-eTc"/>
                         <viewControllerLayoutGuide type="bottom" id="EPS-s9-h4K"/>
                     </layoutGuides>
-                    <view key="view" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="ZwX-cT-FIQ">
+                    <view key="view" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="ZwX-cT-FIQ" userLabel="cardView">
                         <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <connections>
                         <outlet property="cardView" destination="ZwX-cT-FIQ" id="1kF-VK-ZK2"/>
                     </connections>
@@ -70,8 +85,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="y4Z-w0-Jy9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" red="0.094117647058823528" green="0.10980392156862745" blue="0.20392156862745098" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="tintColor" red="0.094117647060000004" green="0.10980392160000001" blue="0.20392156859999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="0.14117647058823529" green="0.16078431372549021" blue="0.18431372549019609" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="barTintColor" red="0.094117647060000004" green="0.10980392160000001" blue="0.20392156859999999" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -88,6 +102,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Screen Shot 2015-02-18 at 8.25.07 AM.png" width="468" height="465"/>
         <image name="icon_notes" width="24" height="24"/>
         <image name="icon_settings" width="24" height="24"/>
     </resources>

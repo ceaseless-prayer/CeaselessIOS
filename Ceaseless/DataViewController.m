@@ -8,8 +8,11 @@
 
 #import "DataViewController.h"
 #import "Person.h"
+#import "Scripture.h"
 #import "PersonView.h"
+#import "ScriptureView.h"
 #import <MessageUI/MessageUI.h>
+#import <QuartzCore/QuartzCore.h>
 
 
 @interface DataViewController () <MFMessageComposeViewControllerDelegate>
@@ -30,18 +33,36 @@ static NSString *kSMSMessage;
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
 	[self registerForNotifications];
-	self.personView = [PersonView alloc];
-	self.personView = [[[NSBundle mainBundle] loadNibNamed:@"PersonView" owner:self options:nil] lastObject];
-	NSLog (@"count %lu", (unsigned long)[self.personView.subviews count]);
+	NSLog (@"index is %lu", (unsigned long)self.index);
+	if (self.index == 0) {
+		self.scriptureView = [ScriptureView alloc];
+		self.scriptureView = [[[NSBundle mainBundle] loadNibNamed:@"ScriptureView" owner:self options:nil] lastObject];
+		NSLog (@"count %lu", (unsigned long)[self.scriptureView.subviews count]);
 
-    // fallback if user disables transparency/blur effect
-    if(UIAccessibilityIsReduceTransparencyEnabled()) {
-        ((UIView *) self.personView.blurEffect.subviews[0]).backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:0.5f];
-    }
-    
-	[self.cardView addSubview: self.personView];
+		[self.cardView addSubview: self.scriptureView];
+		[self setDynamicViewConstraintsForSubview: self.scriptureView];
+	} else {
+		self.personView = [PersonView alloc];
+		self.personView = [[[NSBundle mainBundle] loadNibNamed:@"PersonView" owner:self options:nil] lastObject];
+		NSLog (@"count %lu", (unsigned long)[self.personView.subviews count]);
 
-    [self setDynamicViewConstraints];
+		// fallback if user disables transparency/blur effect
+		if(UIAccessibilityIsReduceTransparencyEnabled()) {
+			((UIView *) self.personView.blurEffect.subviews[0]).backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:0.5f];
+		}
+
+		[self.cardView addSubview: self.personView];
+		[self setDynamicViewConstraintsForSubview: self.personView];
+
+	}
+
+	self.cardView.layer.cornerRadius = 6.0f;
+	[self.cardView setClipsToBounds:YES];
+		// drop shadow
+	[self.cardView.layer setShadowColor:[UIColor blackColor].CGColor];
+	[self.cardView.layer setShadowOpacity:0.8];
+	[self.cardView.layer setShadowRadius:3.0];
+	[self.cardView.layer setShadowOffset:CGSizeMake(2.0, 2.0)];
 
 }
 
@@ -52,12 +73,16 @@ static NSString *kSMSMessage;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-	Person *person = self.dataObject;
-	self.personView.nameLabel.text = [NSString stringWithFormat: @"%@ %@", person.firstName, person.lastName];
-	self.personView.personImageView.image = person.profileImage;
+	if (self.index == 0) {
+		
+	} else {
+		Person *person = self.dataObject;
+		self.personView.nameLabel.text = [NSString stringWithFormat: @"%@ %@", person.firstName, person.lastName];
+		self.personView.personImageView.image = person.profileImage;
 
-	[self.personView.moreButton addTarget:self
-								   action:@selector(presentActionSheet:)forControlEvents:UIControlEventTouchUpInside];
+		[self.personView.moreButton addTarget:self
+									   action:@selector(presentActionSheet:)forControlEvents:UIControlEventTouchUpInside];
+	}
 
 
 //	let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
@@ -200,10 +225,10 @@ static NSString *kSMSMessage;
 												  object:nil];
 }
 
-- (void)setDynamicViewConstraints {
-    [self.personView setTranslatesAutoresizingMaskIntoConstraints:NO];
+- (void)setDynamicViewConstraintsForSubview: (UIView *) newSubview {
+    [newSubview setTranslatesAutoresizingMaskIntoConstraints:NO];
     
-    [self.cardView addConstraint:[NSLayoutConstraint constraintWithItem:self.personView
+    [self.cardView addConstraint:[NSLayoutConstraint constraintWithItem:newSubview
                                                               attribute:NSLayoutAttributeTop
                                                               relatedBy:NSLayoutRelationEqual
                                                                  toItem:self.cardView
@@ -211,7 +236,7 @@ static NSString *kSMSMessage;
                                                              multiplier:1.0
                                                                constant:0.0]];
     
-    [self.cardView addConstraint:[NSLayoutConstraint constraintWithItem:self.personView
+    [self.cardView addConstraint:[NSLayoutConstraint constraintWithItem:newSubview
                                                               attribute:NSLayoutAttributeLeading
                                                               relatedBy:NSLayoutRelationEqual
                                                                  toItem:self.cardView
@@ -219,7 +244,7 @@ static NSString *kSMSMessage;
                                                              multiplier:1.0
                                                                constant:0.0]];
     
-    [self.cardView addConstraint:[NSLayoutConstraint constraintWithItem:self.personView
+    [self.cardView addConstraint:[NSLayoutConstraint constraintWithItem:newSubview
                                                               attribute:NSLayoutAttributeBottom
                                                               relatedBy:NSLayoutRelationEqual
                                                                  toItem:self.cardView
@@ -227,7 +252,7 @@ static NSString *kSMSMessage;
                                                              multiplier:1.0
                                                                constant:0.0]];
     
-    [self.cardView addConstraint:[NSLayoutConstraint constraintWithItem:self.personView
+    [self.cardView addConstraint:[NSLayoutConstraint constraintWithItem:newSubview
                                                               attribute:NSLayoutAttributeTrailing
                                                               relatedBy:NSLayoutRelationEqual
                                                                  toItem:self.cardView

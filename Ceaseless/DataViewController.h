@@ -8,12 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "PersonView.h"
+#import "ScriptureView.h"
 
 @interface DataViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UIView *cardView;
 @property (strong, nonatomic) PersonView *personView;
+@property (strong, nonatomic) ScriptureView *scriptureView;
 @property (strong, nonatomic) id dataObject;
+@property (nonatomic) NSUInteger index;
 
 @end
 

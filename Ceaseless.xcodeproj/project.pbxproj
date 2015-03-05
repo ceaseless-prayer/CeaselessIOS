@@ -23,6 +23,16 @@
 		70D51C111AA6694400FA7CDC /* ScriptureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70D51C101AA6694400FA7CDC /* ScriptureView.xib */; };
 		70D51C131AA66F5100FA7CDC /* PersonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70D51C121AA66F5100FA7CDC /* PersonView.xib */; };
 		70D51C161AA6800D00FA7CDC /* PersonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D51C151AA6800D00FA7CDC /* PersonView.m */; };
+		70F663F51AA7BF420073801E /* Screen Shot 2015-02-18 at 8.25.07 AM.png in Resources */ = {isa = PBXBuildFile; fileRef = 70F663F41AA7BF420073801E /* Screen Shot 2015-02-18 at 8.25.07 AM.png */; };
+		70F663FB1AA7E14F0073801E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F663FA1AA7E14F0073801E /* CoreGraphics.framework */; };
+		70F663FE1AA7E30F0073801E /* UIImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F663FD1AA7E30F0073801E /* UIImageEffects.m */; };
+		70F664001AA7E4470073801E /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F663FF1AA7E4470073801E /* Accelerate.framework */; };
+		70F664021AA7E46C0073801E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F664011AA7E46C0073801E /* UIKit.framework */; };
+		70F664041AA7E4780073801E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F664031AA7E4780073801E /* Foundation.framework */; };
+		70F664091AA82B360073801E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F664081AA82B360073801E /* QuartzCore.framework */; };
+		70F6640C1AA83CC60073801E /* ScriptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F6640B1AA83CC60073801E /* ScriptureView.m */; };
+		70F6640F1AA8456B0073801E /* Scripture.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F6640E1AA8456B0073801E /* Scripture.m */; };
+		70F664181AA8B9260073801E /* ScripturePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F664171AA8B9260073801E /* ScripturePicker.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +73,20 @@
 		70D51C121AA66F5100FA7CDC /* PersonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonView.xib; sourceTree = "<group>"; };
 		70D51C141AA6800D00FA7CDC /* PersonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonView.h; sourceTree = "<group>"; };
 		70D51C151AA6800D00FA7CDC /* PersonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonView.m; sourceTree = "<group>"; };
+		70F663F41AA7BF420073801E /* Screen Shot 2015-02-18 at 8.25.07 AM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screen Shot 2015-02-18 at 8.25.07 AM.png"; sourceTree = "<group>"; };
+		70F663FA1AA7E14F0073801E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		70F663FC1AA7E30F0073801E /* UIImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageEffects.h; sourceTree = "<group>"; };
+		70F663FD1AA7E30F0073801E /* UIImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageEffects.m; sourceTree = "<group>"; };
+		70F663FF1AA7E4470073801E /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		70F664011AA7E46C0073801E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		70F664031AA7E4780073801E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		70F664081AA82B360073801E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		70F6640A1AA83CC60073801E /* ScriptureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptureView.h; sourceTree = "<group>"; };
+		70F6640B1AA83CC60073801E /* ScriptureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptureView.m; sourceTree = "<group>"; };
+		70F6640D1AA8456B0073801E /* Scripture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scripture.h; sourceTree = "<group>"; };
+		70F6640E1AA8456B0073801E /* Scripture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scripture.m; sourceTree = "<group>"; };
+		70F664161AA8B9260073801E /* ScripturePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScripturePicker.h; sourceTree = "<group>"; };
+		70F664171AA8B9260073801E /* ScripturePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScripturePicker.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +94,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70F664091AA82B360073801E /* QuartzCore.framework in Frameworks */,
+				70F664041AA7E4780073801E /* Foundation.framework in Frameworks */,
+				70F664021AA7E46C0073801E /* UIKit.framework in Frameworks */,
+				70F664001AA7E4470073801E /* Accelerate.framework in Frameworks */,
+				70F663FB1AA7E14F0073801E /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +115,7 @@
 		42F3AE0F1AA4DD7F003A88F5 = {
 			isa = PBXGroup;
 			children = (
+				70F664081AA82B360073801E /* QuartzCore.framework */,
 				42F3AE1A1AA4DD7F003A88F5 /* Ceaseless */,
 				42F3AE3A1AA4DD80003A88F5 /* CeaselessTests */,
 				42F3AE191AA4DD7F003A88F5 /* Products */,
@@ -104,21 +134,20 @@
 		42F3AE1A1AA4DD7F003A88F5 /* Ceaseless */ = {
 			isa = PBXGroup;
 			children = (
+				70F664161AA8B9260073801E /* ScripturePicker.h */,
+				70F664171AA8B9260073801E /* ScripturePicker.m */,
 				42F3AE1F1AA4DD7F003A88F5 /* AppDelegate.h */,
 				42F3AE201AA4DD7F003A88F5 /* AppDelegate.m */,
-				42F3AE221AA4DD7F003A88F5 /* RootViewController.h */,
-				42F3AE231AA4DD7F003A88F5 /* RootViewController.m */,
-				42F3AE251AA4DD7F003A88F5 /* DataViewController.h */,
-				42F3AE261AA4DD7F003A88F5 /* DataViewController.m */,
-				42F3AE281AA4DD7F003A88F5 /* ModelController.h */,
-				42F3AE291AA4DD7F003A88F5 /* ModelController.m */,
 				70D51C091AA6222700FA7CDC /* PersonPicker.h */,
 				70D51C0A1AA6222700FA7CDC /* PersonPicker.m */,
-				70D51C0C1AA627DF00FA7CDC /* Person.h */,
-				70D51C0D1AA627DF00FA7CDC /* Person.m */,
+				70F663FC1AA7E30F0073801E /* UIImageEffects.h */,
+				70F663FD1AA7E30F0073801E /* UIImageEffects.m */,
+				70F664071AA7EAB20073801E /* Controllers */,
+				70F664061AA7EA990073801E /* Model */,
 				70D51C0F1AA668AA00FA7CDC /* View */,
 				42F3AE2E1AA4DD7F003A88F5 /* Images.xcassets */,
 				42F3AE301AA4DD7F003A88F5 /* LaunchScreen.xib */,
+				70F664051AA7E4840073801E /* Frameworks */,
 				42F3AE1B1AA4DD7F003A88F5 /* Supporting Files */,
 			);
 			path = Ceaseless;
@@ -127,6 +156,7 @@
 		42F3AE1B1AA4DD7F003A88F5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				70F663F41AA7BF420073801E /* Screen Shot 2015-02-18 at 8.25.07 AM.png */,
 				709D833C1AA599EF00C3486E /* IMG_0023.JPG */,
 				709D83381AA598A600C3486E /* Screen Shot 2015-02-18 at 8.25.51 AM.png */,
 				42F3AE1C1AA4DD7F003A88F5 /* Info.plist */,
@@ -156,12 +186,50 @@
 			isa = PBXGroup;
 			children = (
 				42F3AE2B1AA4DD7F003A88F5 /* Main.storyboard */,
+				70F6640A1AA83CC60073801E /* ScriptureView.h */,
+				70F6640B1AA83CC60073801E /* ScriptureView.m */,
 				70D51C101AA6694400FA7CDC /* ScriptureView.xib */,
 				70D51C141AA6800D00FA7CDC /* PersonView.h */,
 				70D51C151AA6800D00FA7CDC /* PersonView.m */,
 				70D51C121AA66F5100FA7CDC /* PersonView.xib */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		70F664051AA7E4840073801E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				70F664031AA7E4780073801E /* Foundation.framework */,
+				70F664011AA7E46C0073801E /* UIKit.framework */,
+				70F663FF1AA7E4470073801E /* Accelerate.framework */,
+				70F663FA1AA7E14F0073801E /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		70F664061AA7EA990073801E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				70D51C0C1AA627DF00FA7CDC /* Person.h */,
+				70D51C0D1AA627DF00FA7CDC /* Person.m */,
+				70F6640D1AA8456B0073801E /* Scripture.h */,
+				70F6640E1AA8456B0073801E /* Scripture.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		70F664071AA7EAB20073801E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				42F3AE221AA4DD7F003A88F5 /* RootViewController.h */,
+				42F3AE231AA4DD7F003A88F5 /* RootViewController.m */,
+				42F3AE251AA4DD7F003A88F5 /* DataViewController.h */,
+				42F3AE261AA4DD7F003A88F5 /* DataViewController.m */,
+				42F3AE281AA4DD7F003A88F5 /* ModelController.h */,
+				42F3AE291AA4DD7F003A88F5 /* ModelController.m */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -216,7 +284,7 @@
 					};
 					42F3AE361AA4DD80003A88F5 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 28DYBASY7W;
+						DevelopmentTeam = 98FUBN4YVB;
 						TestTargetID = 42F3AE171AA4DD7F003A88F5;
 					};
 				};
@@ -248,6 +316,7 @@
 				70D51C111AA6694400FA7CDC /* ScriptureView.xib in Resources */,
 				709D833D1AA599EF00C3486E /* IMG_0023.JPG in Resources */,
 				42F3AE2D1AA4DD7F003A88F5 /* Main.storyboard in Resources */,
+				70F663F51AA7BF420073801E /* Screen Shot 2015-02-18 at 8.25.07 AM.png in Resources */,
 				42F3AE321AA4DD80003A88F5 /* LaunchScreen.xib in Resources */,
 				42F3AE2F1AA4DD7F003A88F5 /* Images.xcassets in Resources */,
 				709D83391AA598A600C3486E /* Screen Shot 2015-02-18 at 8.25.51 AM.png in Resources */,
@@ -271,9 +340,13 @@
 			files = (
 				42F3AE271AA4DD7F003A88F5 /* DataViewController.m in Sources */,
 				70D51C161AA6800D00FA7CDC /* PersonView.m in Sources */,
+				70F6640C1AA83CC60073801E /* ScriptureView.m in Sources */,
 				42F3AE211AA4DD7F003A88F5 /* AppDelegate.m in Sources */,
+				70F6640F1AA8456B0073801E /* Scripture.m in Sources */,
 				70D51C0E1AA627DF00FA7CDC /* Person.m in Sources */,
 				42F3AE2A1AA4DD7F003A88F5 /* ModelController.m in Sources */,
+				70F664181AA8B9260073801E /* ScripturePicker.m in Sources */,
+				70F663FE1AA7E30F0073801E /* UIImageEffects.m in Sources */,
 				70D51C0B1AA6222700FA7CDC /* PersonPicker.m in Sources */,
 				42F3AE1E1AA4DD7F003A88F5 /* main.m in Sources */,
 				42F3AE241AA4DD7F003A88F5 /* RootViewController.m in Sources */,
