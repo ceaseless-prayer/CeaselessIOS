@@ -73,13 +73,21 @@
                                 <rect key="frame" x="8" y="0.0" width="584" height="600"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TGv-zI-7CW" userLabel="shadowView">
+                                <rect key="frame" x="8" y="0.0" width="584" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="DUk-Mq-fnx" secondAttribute="bottom" id="HTI-bu-4ks"/>
                             <constraint firstItem="DUk-Mq-fnx" firstAttribute="top" secondItem="ZwX-cT-FIQ" secondAttribute="top" id="JPv-t0-fxr"/>
+                            <constraint firstItem="DUk-Mq-fnx" firstAttribute="bottom" secondItem="TGv-zI-7CW" secondAttribute="bottom" id="LHK-wb-T7R"/>
                             <constraint firstItem="EPS-s9-h4K" firstAttribute="top" secondItem="DUk-Mq-fnx" secondAttribute="bottom" id="ObW-lA-XPF"/>
+                            <constraint firstItem="DUk-Mq-fnx" firstAttribute="top" secondItem="TGv-zI-7CW" secondAttribute="top" id="QoZ-9n-ReS"/>
                             <constraint firstAttribute="trailing" secondItem="DUk-Mq-fnx" secondAttribute="trailing" constant="8" id="aC5-7H-tkn"/>
                             <constraint firstItem="DUk-Mq-fnx" firstAttribute="leading" secondItem="ZwX-cT-FIQ" secondAttribute="leading" constant="8" id="b3J-Uk-szt"/>
+                            <constraint firstItem="DUk-Mq-fnx" firstAttribute="trailing" secondItem="TGv-zI-7CW" secondAttribute="trailing" id="g1t-zG-T7H"/>
+                            <constraint firstItem="DUk-Mq-fnx" firstAttribute="leading" secondItem="TGv-zI-7CW" secondAttribute="leading" id="lip-UW-hNo"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -90,6 +98,7 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <connections>
                         <outlet property="cardView" destination="DUk-Mq-fnx" id="no8-lv-2EJ"/>
+                        <outlet property="shadowView" destination="TGv-zI-7CW" id="hQY-xb-oLz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GmD-Rr-ZGN" sceneMemberID="firstResponder"/>

@@ -13,6 +13,7 @@
 @interface DataViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UIView *cardView;
+@property (weak, nonatomic) IBOutlet UIView *shadowView;
 @property (strong, nonatomic) PersonView *personView;
 @property (strong, nonatomic) ScriptureView *scriptureView;
 @property (strong, nonatomic) id dataObject;

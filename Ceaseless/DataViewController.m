@@ -60,28 +60,23 @@ static NSString *kSMSMessage;
 	self.cardView.layer.cornerRadius = 6.0f;
 	[self.cardView setClipsToBounds:YES];
 	// drop shadow
-	//the frame size of self.cardView has not been set by Autolayout here, so call layoutSubviews
-	[self.view layoutSubviews];  //fixes the width but not the height
 	[self putView:self.cardView insideShadowWithColor:[UIColor blackColor] andBlur: (CGFloat) 5.0f andOffset:CGSizeMake(1.0f, 1.75f) andOpacity: 0.5f];
 
 }
 - (void)putView:(UIView*)view insideShadowWithColor:(UIColor*)color andBlur: (CGFloat)blur andOffset:(CGSize)shadowOffset andOpacity:(CGFloat)shadowOpacity
 {
-		//the frame size of self.cardView has not been set by Autolayout here, hack the height
-	CGRect shadowFrame = CGRectMake(view.frame.origin.x,view.frame.origin.y,view.frame.size.width, view.superview.frame.size.height - 102);
-//	CGRect shadowFrame = view.frame;
-	NSLog (@"%f %f %f %f", shadowFrame.origin.x, shadowFrame.origin.y, shadowFrame.size.width, shadowFrame.size.height);
-	UIView * shadow = [[UIView alloc] initWithFrame:shadowFrame];
-	shadow.backgroundColor = color;
-	shadow.userInteractionEnabled = NO; // Modify this if needed
-	shadow.layer.shadowColor = color.CGColor;
-	shadow.layer.shadowOffset = shadowOffset;
-	shadow.layer.shadowRadius = blur;
-	shadow.layer.cornerRadius = view.layer.cornerRadius;
-	shadow.layer.masksToBounds = NO;
-	shadow.clipsToBounds = NO;
-	shadow.layer.shadowOpacity = shadowOpacity;
-	[view.superview insertSubview:shadow belowSubview:view];
+
+	self.shadowView.backgroundColor = color;
+	self.shadowView.userInteractionEnabled = NO; // Modify this if needed
+	self.shadowView.layer.shadowColor = color.CGColor;
+	self.shadowView.layer.shadowOffset = shadowOffset;
+	self.shadowView.layer.shadowRadius = blur;
+	self.shadowView.layer.cornerRadius = view.layer.cornerRadius;
+	self.shadowView.layer.masksToBounds = NO;
+	self.shadowView.clipsToBounds = NO;
+	self.shadowView.layer.shadowOpacity = shadowOpacity;
+	[self.shadowView removeFromSuperview];
+	[view.superview insertSubview: self.shadowView belowSubview:view];
 
 }
 
