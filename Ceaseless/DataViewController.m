@@ -29,6 +29,7 @@ static NSString *kSMSMessage;
 	kInviteMessage =  NSLocalizedString(@"I prayed for you using the Ceaseless app today. You would like it. Search for Ceaseless Prayer in the App Store.", nil);
 	kSMSMessage = NSLocalizedString(@"I prayed for you today when you came up in my Ceaseless app.", nil);
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
@@ -58,11 +59,29 @@ static NSString *kSMSMessage;
 
 	self.cardView.layer.cornerRadius = 6.0f;
 	[self.cardView setClipsToBounds:YES];
-    // drop shadow
-	[self.cardView.layer setShadowColor:[UIColor blackColor].CGColor];
-	[self.cardView.layer setShadowOpacity:0.5];
-	[self.cardView.layer setShadowRadius:5.0];
-	[self.cardView.layer setShadowOffset:CGSizeMake(1.0, 1.75)];
+	// drop shadow
+	//the frame size of self.cardView has not been set by Autolayout here, so call layoutSubviews
+	[self.view layoutSubviews];  //fixes the width but not the height
+	[self putView:self.cardView insideShadowWithColor:[UIColor blackColor] andBlur: (CGFloat) 5.0f andOffset:CGSizeMake(1.0f, 1.75f) andOpacity: 0.5f];
+
+}
+- (void)putView:(UIView*)view insideShadowWithColor:(UIColor*)color andBlur: (CGFloat)blur andOffset:(CGSize)shadowOffset andOpacity:(CGFloat)shadowOpacity
+{
+		//the frame size of self.cardView has not been set by Autolayout here, hack the height
+	CGRect shadowFrame = CGRectMake(view.frame.origin.x,view.frame.origin.y,view.frame.size.width, view.superview.frame.size.height - 102);
+//	CGRect shadowFrame = view.frame;
+	NSLog (@"%f %f %f %f", shadowFrame.origin.x, shadowFrame.origin.y, shadowFrame.size.width, shadowFrame.size.height);
+	UIView * shadow = [[UIView alloc] initWithFrame:shadowFrame];
+	shadow.backgroundColor = color;
+	shadow.userInteractionEnabled = NO; // Modify this if needed
+	shadow.layer.shadowColor = color.CGColor;
+	shadow.layer.shadowOffset = shadowOffset;
+	shadow.layer.shadowRadius = blur;
+	shadow.layer.cornerRadius = view.layer.cornerRadius;
+	shadow.layer.masksToBounds = NO;
+	shadow.clipsToBounds = NO;
+	shadow.layer.shadowOpacity = shadowOpacity;
+	[view.superview insertSubview:shadow belowSubview:view];
 
 }
 

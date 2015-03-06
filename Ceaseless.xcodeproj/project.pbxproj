@@ -115,7 +115,6 @@
 		42F3AE0F1AA4DD7F003A88F5 = {
 			isa = PBXGroup;
 			children = (
-				70F664081AA82B360073801E /* QuartzCore.framework */,
 				42F3AE1A1AA4DD7F003A88F5 /* Ceaseless */,
 				42F3AE3A1AA4DD80003A88F5 /* CeaselessTests */,
 				42F3AE191AA4DD7F003A88F5 /* Products */,
@@ -199,6 +198,7 @@
 		70F664051AA7E4840073801E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				70F664081AA82B360073801E /* QuartzCore.framework */,
 				70F664031AA7E4780073801E /* Foundation.framework */,
 				70F664011AA7E46C0073801E /* UIKit.framework */,
 				70F663FF1AA7E4470073801E /* Accelerate.framework */,
@@ -284,7 +284,7 @@
 					};
 					42F3AE361AA4DD80003A88F5 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 28DYBASY7W;
+						DevelopmentTeam = 98FUBN4YVB;
 						TestTargetID = 42F3AE171AA4DD7F003A88F5;
 					};
 				};

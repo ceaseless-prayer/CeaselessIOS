@@ -69,21 +69,27 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3kW-ML-fua" userLabel="cardView">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DUk-Mq-fnx" userLabel="cardView">
                                 <rect key="frame" x="8" y="0.0" width="584" height="600"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="3kW-ML-fua" firstAttribute="leading" secondItem="ZwX-cT-FIQ" secondAttribute="leading" constant="8" id="GsA-gV-EEy"/>
-                            <constraint firstItem="3kW-ML-fua" firstAttribute="top" secondItem="ZwX-cT-FIQ" secondAttribute="top" id="Jtv-MX-OIE"/>
-                            <constraint firstAttribute="trailing" secondItem="3kW-ML-fua" secondAttribute="trailing" constant="8" id="YA5-JA-7G0"/>
-                            <constraint firstAttribute="bottom" secondItem="3kW-ML-fua" secondAttribute="bottom" id="lOU-bw-e1H"/>
+                            <constraint firstAttribute="bottom" secondItem="DUk-Mq-fnx" secondAttribute="bottom" id="HTI-bu-4ks"/>
+                            <constraint firstItem="DUk-Mq-fnx" firstAttribute="top" secondItem="ZwX-cT-FIQ" secondAttribute="top" id="JPv-t0-fxr"/>
+                            <constraint firstItem="EPS-s9-h4K" firstAttribute="top" secondItem="DUk-Mq-fnx" secondAttribute="bottom" id="ObW-lA-XPF"/>
+                            <constraint firstAttribute="trailing" secondItem="DUk-Mq-fnx" secondAttribute="trailing" constant="8" id="aC5-7H-tkn"/>
+                            <constraint firstItem="DUk-Mq-fnx" firstAttribute="leading" secondItem="ZwX-cT-FIQ" secondAttribute="leading" constant="8" id="b3J-Uk-szt"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="ObW-lA-XPF"/>
+                            </mask>
+                        </variation>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <connections>
-                        <outlet property="cardView" destination="3kW-ML-fua" id="CjL-M3-04Z"/>
+                        <outlet property="cardView" destination="DUk-Mq-fnx" id="no8-lv-2EJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GmD-Rr-ZGN" sceneMemberID="firstResponder"/>
