@@ -13,10 +13,10 @@
                         <viewControllerLayoutGuide type="bottom" id="IfR-02-kHw"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="502-Ir-ELC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Screen Shot 2015-02-18 at 8.25.07 AM.png" translatesAutoresizingMaskIntoConstraints="NO" id="rxH-h1-ZKU" userLabel="BackgroundImageView">
+                            <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Screen Shot 2015-02-18 at 8.25.07 AM.png" translatesAutoresizingMaskIntoConstraints="NO" id="rxH-h1-ZKU" userLabel="BackgroundImageView">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                         </subviews>
@@ -28,6 +28,7 @@
                             <constraint firstAttribute="trailing" secondItem="rxH-h1-ZKU" secondAttribute="trailing" id="l1O-Je-Lax"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="04V-wD-iLr">
                         <barButtonItem key="leftBarButtonItem" title="Item" style="plain" id="h2B-cB-23D">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="9oX-f1-08t">
@@ -64,13 +65,25 @@
                         <viewControllerLayoutGuide type="top" id="fXf-Jd-eTc"/>
                         <viewControllerLayoutGuide type="bottom" id="EPS-s9-h4K"/>
                     </layoutGuides>
-                    <view key="view" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="ZwX-cT-FIQ" userLabel="cardView">
+                    <view key="view" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="ZwX-cT-FIQ">
                         <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3kW-ML-fua" userLabel="cardView">
+                                <rect key="frame" x="8" y="0.0" width="584" height="600"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="3kW-ML-fua" firstAttribute="leading" secondItem="ZwX-cT-FIQ" secondAttribute="leading" constant="8" id="GsA-gV-EEy"/>
+                            <constraint firstItem="3kW-ML-fua" firstAttribute="top" secondItem="ZwX-cT-FIQ" secondAttribute="top" id="Jtv-MX-OIE"/>
+                            <constraint firstAttribute="trailing" secondItem="3kW-ML-fua" secondAttribute="trailing" constant="8" id="YA5-JA-7G0"/>
+                            <constraint firstAttribute="bottom" secondItem="3kW-ML-fua" secondAttribute="bottom" id="lOU-bw-e1H"/>
+                        </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <connections>
-                        <outlet property="cardView" destination="ZwX-cT-FIQ" id="1kF-VK-ZK2"/>
+                        <outlet property="cardView" destination="3kW-ML-fua" id="CjL-M3-04Z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GmD-Rr-ZGN" sceneMemberID="firstResponder"/>

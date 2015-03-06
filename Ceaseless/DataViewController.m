@@ -58,11 +58,11 @@ static NSString *kSMSMessage;
 
 	self.cardView.layer.cornerRadius = 6.0f;
 	[self.cardView setClipsToBounds:YES];
-		// drop shadow
+    // drop shadow
 	[self.cardView.layer setShadowColor:[UIColor blackColor].CGColor];
-	[self.cardView.layer setShadowOpacity:0.8];
-	[self.cardView.layer setShadowRadius:3.0];
-	[self.cardView.layer setShadowOffset:CGSizeMake(2.0, 2.0)];
+	[self.cardView.layer setShadowOpacity:0.5];
+	[self.cardView.layer setShadowRadius:5.0];
+	[self.cardView.layer setShadowOffset:CGSizeMake(1.0, 1.75)];
 
 }
 
