@@ -8,6 +8,7 @@
 
 #import "ScripturePicker.h"
 #import "Scripture.h"
+#import "AppDelegate.h"
 
 @implementation ScripturePicker
 
@@ -18,6 +19,7 @@ NSString *const kDefaultCitation = @"(Matthew 21:22,ESV)";
 
 - (Scripture *)requestDailyVerseReference
 {
+    self.scripture = [Scripture alloc];
 	self.scripture.verse = kDefaultScripture;
 	self.scripture.citation = kDefaultCitation;
 
@@ -39,6 +41,11 @@ NSString *const kDefaultCitation = @"(Matthew 21:22,ESV)";
 		}];
 
 	[urlSessionDataTask resume];
+    
+   
+    AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
+    appDelegate.scripture = self.scripture;
+   
 	return self.scripture;
 }
 
