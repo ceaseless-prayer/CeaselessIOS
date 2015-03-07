@@ -46,11 +46,15 @@
 		//!         by this mask.  This must be an image mask or it must meet the
 		//!         requirements of the mask parameter of CGContextClipToMask.
 
-	UIImage *blurredImage = [UIImageEffects imageByApplyingBlurToImage:self.backgroundImageView.image withRadius: 100 tintColor: UIColorFromRGBWithAlpha(0x24292f, 0.6) saturationDeltaFactor:1 maskImage:self.backgroundImageView.image];
+	UIImage *blurredImage = [UIImageEffects imageByApplyingBlurToImage:self.backgroundImageView.image withRadius: 10 tintColor: UIColorFromRGBWithAlpha(0x00012f, 0.6) saturationDeltaFactor:1 maskImage:self.backgroundImageView.image];
 	self.backgroundImageView.image = blurredImage;
 
     // Configure the page view controller and add it as a child view controller.
-    self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
+    NSDictionary *opts = @{
+                           @"UIPageViewControllerOptionInterPageSpacingKey": @20
+                           };
+    
+    self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:opts];
     self.pageViewController.delegate = self;
 
     DataViewController *startingViewController = [self.modelController viewControllerAtIndex:0 storyboard:self.storyboard];

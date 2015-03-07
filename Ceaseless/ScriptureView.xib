@@ -5,7 +5,12 @@
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ScriptureViewController">
+            <connections>
+                <outlet property="scriptureView" destination="iN0-l3-epB" id="MrO-YW-0Ob"/>
+                <outlet property="view" destination="iN0-l3-epB" id="coJ-bw-Fpg"/>
+            </connections>
+        </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ScriptureView">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>

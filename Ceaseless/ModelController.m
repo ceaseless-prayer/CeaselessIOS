@@ -13,6 +13,8 @@
 #import "AppDelegate.h"
 #import "ScripturePicker.h"
 #import "Scripture.h"
+#import "ScriptureViewController.h"
+#import "PersonViewController.h"
 
 /*
  A controller object that manages a simple model -- a collection of month names.
@@ -28,7 +30,7 @@
 
 @property (readonly, strong, nonatomic) NSArray *personData;
 @property (readonly, strong, nonatomic) Scripture *scripture;
-@property (strong, nonatomic) NSArray *cardArray;
+@property (strong, nonatomic) NSMutableArray *cardArray;
 
 @end
 
@@ -38,24 +40,18 @@
     self = [super init];
     if (self) {
         // Create the data model.
-
+        // Initializes to app delegate card array
 		ScripturePicker *scripturePicker = [[ScripturePicker alloc] init];
 		_scripture = [scripturePicker requestDailyVerseReference];
 
 		PersonPicker *personPicker = [[PersonPicker alloc] init];
 		[personPicker loadContacts];
+        
+        // set local members to point to app delegate
 		AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
-		_personData = appDelegate.peopleArray;
-
-//		id objects;
-//
-//		NSRange range = NSMakeRange(0, [_personData count]-1);
-//		objects = (__bridge id)(malloc(sizeof(id) * range.length));
-//
-//		self.cardArray = [[NSArray alloc] initWithObjects: _scripture, [_personData getObjects:objects range:range] nil];
-		self.cardArray = [[NSArray alloc] initWithArray: _personData];
-//
-//		free((__bridge void *)(objects));
+        
+        _cardArray = [[NSMutableArray alloc] initWithArray: appDelegate.peopleArray];
+        [_cardArray insertObject: appDelegate.scripture atIndex: 0];
 
     }
     return self;
@@ -68,10 +64,17 @@
     }
 
     // Create a new view controller and pass suitable data.
-    DataViewController *dataViewController = [storyboard instantiateViewControllerWithIdentifier:@"DataViewController"];
-    dataViewController.dataObject = self.cardArray[index];
-	dataViewController.index = index;
-    return dataViewController;
+
+    DataViewController *contentViewController;
+    if ([self.cardArray[index] isMemberOfClass:[Scripture class]]) {
+        contentViewController = [[ScriptureViewController alloc] init];
+    } else {
+        contentViewController = [[PersonViewController alloc] init];
+    }
+
+    contentViewController.dataObject = self.cardArray[index];
+	contentViewController.index = index;
+    return contentViewController;
 }
 
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController {

@@ -7,17 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PersonView.h"
-#import "ScriptureView.h"
 
 @interface DataViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UIView *cardView;
 @property (weak, nonatomic) IBOutlet UIView *shadowView;
-@property (strong, nonatomic) PersonView *personView;
-@property (strong, nonatomic) ScriptureView *scriptureView;
 @property (strong, nonatomic) id dataObject;
 @property (nonatomic) NSUInteger index;
 
+- (void) setDynamicViewConstraintsForSubview: (UIView *) newSubview;
 @end
 

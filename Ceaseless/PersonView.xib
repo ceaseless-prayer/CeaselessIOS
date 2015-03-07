@@ -5,7 +5,12 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PersonView"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PersonViewController">
+            <connections>
+                <outlet property="personView" destination="Hu6-e9-UQz" id="WAI-Hn-Sob"/>
+                <outlet property="view" destination="Hu6-e9-UQz" id="3P9-2Z-L4K"/>
+            </connections>
+        </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Hu6-e9-UQz" customClass="PersonView">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
