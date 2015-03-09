@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="mXJ-JJ-gyu">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Root View Controller-->
@@ -16,8 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Screen Shot 2015-02-18 at 8.22.42 AM.png" translatesAutoresizingMaskIntoConstraints="NO" id="rxH-h1-ZKU" userLabel="BackgroundImageView">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Screen Shot 2015-02-18 at 8.25.07 AM.png" translatesAutoresizingMaskIntoConstraints="NO" id="rxH-h1-ZKU" userLabel="BackgroundImageView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <color key="tintColor" red="0.0" green="0.0039215686274509803" blue="0.18431372549019609" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
                         </subviews>
@@ -26,12 +27,18 @@
                             <constraint firstItem="rxH-h1-ZKU" firstAttribute="leading" secondItem="502-Ir-ELC" secondAttribute="leading" id="2GC-Tn-0gq"/>
                             <constraint firstItem="rxH-h1-ZKU" firstAttribute="top" secondItem="502-Ir-ELC" secondAttribute="top" id="Hrs-zr-Qa6"/>
                             <constraint firstItem="IfR-02-kHw" firstAttribute="top" secondItem="rxH-h1-ZKU" secondAttribute="bottom" id="KOb-Ub-UOv"/>
+                            <constraint firstItem="rxH-h1-ZKU" firstAttribute="bottom" secondItem="502-Ir-ELC" secondAttribute="bottomMargin" id="jLJ-7L-NNL"/>
                             <constraint firstAttribute="trailing" secondItem="rxH-h1-ZKU" secondAttribute="trailing" id="l1O-Je-Lax"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="KOb-Ub-UOv"/>
+                            </mask>
+                        </variation>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="04V-wD-iLr">
-                        <barButtonItem key="leftBarButtonItem" title="Item" style="plain" id="h2B-cB-23D">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="h2B-cB-23D">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="9oX-f1-08t">
                                 <rect key="frame" x="16" y="7" width="24" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -40,7 +47,7 @@
                                 </state>
                             </button>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" style="plain" id="4tM-ZF-Zq0">
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="4tM-ZF-Zq0">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="S92-jw-onB">
                                 <rect key="frame" x="451" y="7" width="24" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -69,41 +76,8 @@
                     <view key="view" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="ZwX-cT-FIQ">
                         <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DUk-Mq-fnx" userLabel="cardView">
-                                <rect key="frame" x="8" y="0.0" width="584" height="600"/>
-                            </view>
-                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TGv-zI-7CW" userLabel="shadowView">
-                                <rect key="frame" x="591" y="0.0" width="1" height="600"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="1" id="DHw-da-2ud"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <constraints>
-                            <constraint firstAttribute="bottom" secondItem="DUk-Mq-fnx" secondAttribute="bottom" id="HTI-bu-4ks"/>
-                            <constraint firstItem="DUk-Mq-fnx" firstAttribute="top" secondItem="ZwX-cT-FIQ" secondAttribute="top" id="JPv-t0-fxr"/>
-                            <constraint firstItem="DUk-Mq-fnx" firstAttribute="bottom" secondItem="TGv-zI-7CW" secondAttribute="bottom" id="LHK-wb-T7R"/>
-                            <constraint firstItem="DUk-Mq-fnx" firstAttribute="top" secondItem="TGv-zI-7CW" secondAttribute="top" id="QoZ-9n-ReS"/>
-                            <constraint firstAttribute="trailing" secondItem="DUk-Mq-fnx" secondAttribute="trailing" constant="8" id="aC5-7H-tkn"/>
-                            <constraint firstItem="DUk-Mq-fnx" firstAttribute="leading" secondItem="ZwX-cT-FIQ" secondAttribute="leading" constant="8" id="b3J-Uk-szt"/>
-                            <constraint firstItem="DUk-Mq-fnx" firstAttribute="trailing" secondItem="TGv-zI-7CW" secondAttribute="trailing" id="g1t-zG-T7H"/>
-                            <constraint firstItem="DUk-Mq-fnx" firstAttribute="leading" secondItem="TGv-zI-7CW" secondAttribute="leading" id="lip-UW-hNo"/>
-                            <constraint firstItem="EPS-s9-h4K" firstAttribute="top" secondItem="DUk-Mq-fnx" secondAttribute="bottom" id="vWT-jb-chB"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="lip-UW-hNo"/>
-                                <exclude reference="ObW-lA-XPF"/>
-                            </mask>
-                        </variation>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <connections>
-                        <outlet property="cardView" destination="DUk-Mq-fnx" id="no8-lv-2EJ"/>
-                        <outlet property="shadowView" destination="TGv-zI-7CW" id="hQY-xb-oLz"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GmD-Rr-ZGN" sceneMemberID="firstResponder"/>
             </objects>
@@ -133,7 +107,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Screen Shot 2015-02-18 at 8.22.42 AM.png" width="466" height="312"/>
+        <image name="Screen Shot 2015-02-18 at 8.25.07 AM.png" width="468" height="465"/>
         <image name="icon_notes" width="24" height="24"/>
         <image name="icon_settings" width="24" height="24"/>
     </resources>

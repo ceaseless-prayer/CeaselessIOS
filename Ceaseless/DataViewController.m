@@ -17,29 +17,31 @@
     // Do any additional setup after loading the view, typically from a nib.
 	
 	NSLog (@"index is %lu", (unsigned long)self.index);
+}
 
+- (void) formatCardView: (UIView *) cardView withShadowView: (UIView *) shadowView {
     //format properly
-	self.view.layer.cornerRadius = 6.0f;
-	[self.view setClipsToBounds:YES];
+	cardView.layer.cornerRadius = 6.0f;
+	[cardView setClipsToBounds:YES];
     
 	// drop shadow
-	[self putView:self.view insideShadowWithColor:[UIColor yellowColor] andBlur: (CGFloat) 5.0f andOffset:CGSizeMake(1.0f, 1.75f) andOpacity: 0.5f];
+	[self putView:cardView insideShadowView: shadowView WithColor:[UIColor blackColor] andBlur: (CGFloat) 5.0f andOffset:CGSizeMake(1.0f, 1.75f) andOpacity: 0.5f];
 
 }
-- (void)putView:(UIView*)view insideShadowWithColor:(UIColor*)color andBlur: (CGFloat)blur andOffset:(CGSize)shadowOffset andOpacity:(CGFloat)shadowOpacity
+- (void)putView:(UIView*)view insideShadowView: (UIView*) shadowView WithColor:(UIColor*)color andBlur: (CGFloat)blur andOffset:(CGSize)shadowOffset andOpacity:(CGFloat)shadowOpacity
 {
 
-	self.shadowView.backgroundColor = color;
-	self.shadowView.userInteractionEnabled = NO; // Modify this if needed
-	self.shadowView.layer.shadowColor = color.CGColor;
-	self.shadowView.layer.shadowOffset = shadowOffset;
-	self.shadowView.layer.shadowRadius = blur;
-	self.shadowView.layer.cornerRadius = view.layer.cornerRadius;
-	self.shadowView.layer.masksToBounds = NO;
-	self.shadowView.clipsToBounds = NO;
-	self.shadowView.layer.shadowOpacity = shadowOpacity;
-	[self.shadowView removeFromSuperview];
-	[view.superview insertSubview: self.shadowView belowSubview:view];
+	shadowView.backgroundColor = color;
+	shadowView.userInteractionEnabled = NO; // Modify this if needed
+	shadowView.layer.shadowColor = color.CGColor;
+	shadowView.layer.shadowOffset = shadowOffset;
+	shadowView.layer.shadowRadius = blur;
+	shadowView.layer.cornerRadius = view.layer.cornerRadius;
+	shadowView.layer.masksToBounds = NO;
+	shadowView.clipsToBounds = NO;
+	shadowView.layer.shadowOpacity = shadowOpacity;
+	[shadowView removeFromSuperview];
+	[view.superview insertSubview: shadowView belowSubview:view];
 
 }
 
@@ -50,42 +52,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-}
 
-- (void)setDynamicViewConstraintsForSubview: (UIView *) newSubview {
-    [newSubview setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
-    [self.cardView addConstraint:[NSLayoutConstraint constraintWithItem:newSubview
-                                                              attribute:NSLayoutAttributeTop
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:self.cardView
-                                                              attribute:NSLayoutAttributeTop
-                                                             multiplier:1.0
-                                                               constant:0.0]];
-    
-    [self.cardView addConstraint:[NSLayoutConstraint constraintWithItem:newSubview
-                                                              attribute:NSLayoutAttributeLeading
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:self.cardView
-                                                              attribute:NSLayoutAttributeLeading
-                                                             multiplier:1.0
-                                                               constant:0.0]];
-    
-    [self.cardView addConstraint:[NSLayoutConstraint constraintWithItem:newSubview
-                                                              attribute:NSLayoutAttributeBottom
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:self.cardView
-                                                              attribute:NSLayoutAttributeBottom
-                                                             multiplier:1.0
-                                                               constant:0.0]];
-    
-    [self.cardView addConstraint:[NSLayoutConstraint constraintWithItem:newSubview
-                                                              attribute:NSLayoutAttributeTrailing
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:self.cardView
-                                                              attribute:NSLayoutAttributeTrailing
-                                                             multiplier:1.0
-                                                               constant:0.0]];
 }
 
 @end

@@ -9,7 +9,7 @@
 #import "PersonViewController.h"
 #import "Person.h"
 #import <MessageUI/MessageUI.h>
-#import <QuartzCore/QuartzCore.h>
+//#import <QuartzCore/QuartzCore.h>
 
 @interface PersonViewController () <MFMessageComposeViewControllerDelegate>
 
@@ -30,7 +30,9 @@ static NSString *kSMSMessage;
 
     [super viewDidLoad];
     [self registerForNotifications];
-    
+
+	[self formatCardView: self.personView.cardView withShadowView: self.personView.shadowView];
+
     // fallback if user disables transparency/blur effect
     if(UIAccessibilityIsReduceTransparencyEnabled()) {
         ((UIView *) self.personView.blurEffect.subviews[0]).backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:0.5f];
@@ -46,6 +48,7 @@ static NSString *kSMSMessage;
         
     [self.personView.moreButton addTarget:self
                                    action:@selector(presentActionSheet:)forControlEvents:UIControlEventTouchUpInside];
+
 }
 
 #pragma mark - Action Sheet

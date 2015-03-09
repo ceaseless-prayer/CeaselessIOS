@@ -10,11 +10,9 @@
 
 @interface DataViewController : UIViewController
 
-@property (strong, nonatomic) IBOutlet UIView *cardView;
-@property (weak, nonatomic) IBOutlet UIView *shadowView;
 @property (strong, nonatomic) id dataObject;
 @property (nonatomic) NSUInteger index;
 
-- (void) setDynamicViewConstraintsForSubview: (UIView *) newSubview;
+- (void) formatCardView: (UIView *) cardView withShadowView: (UIView *) shadowView;
 @end
 
