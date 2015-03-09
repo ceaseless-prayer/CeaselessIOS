@@ -25,29 +25,7 @@
     // Do any additional setup after loading the view, typically from a nib.
 	self.navigationItem.titleView = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"logo_main"]];
 
-		//| ----------------------------------------------------------------------------
-		//! Applies a blur, tint color, and saturation adjustment to @a inputImage,
-		//! optionally within the area specified by @a maskImage.
-		//!
-		//! @param  inputImage
-		//!         The source image.  A modified copy of this image will be returned.
-		//! @param  blurRadius
-		//!         The radius of the blur in points.
-		//! @param  tintColor
-		//!         An optional UIColor object that is uniformly blended with the
-		//!         result of the blur and saturation operations.  The alpha channel
-		//!         of this color determines how strong the tint is.
-		//! @param  saturationDeltaFactor
-		//!         A value of 1.0 produces no change in the resulting image.  Values
-		//!         less than 1.0 will desaturation the resulting image while values
-		//!         greater than 1.0 will have the opposite effect.
-		//! @param  maskImage
-		//!         If specified, @a inputImage is only modified in the area(s) defined
-		//!         by this mask.  This must be an image mask or it must meet the
-		//!         requirements of the mask parameter of CGContextClipToMask.
-
-	UIImage *blurredImage = [UIImageEffects imageByApplyingBlurToImage:self.backgroundImageView.image withRadius: 10 tintColor: UIColorFromRGBWithAlpha(0x00012f, 0.6) saturationDeltaFactor:1 maskImage:self.backgroundImageView.image];
-	self.backgroundImageView.image = blurredImage;
+	[self setBlurredBackground];
 
     // Configure the page view controller and add it as a child view controller.
     NSDictionary *opts = @{
@@ -120,6 +98,32 @@
 
 
     return UIPageViewControllerSpineLocationMid;
+}
+
+- (void)setBlurredBackground {
+		//| ----------------------------------------------------------------------------
+		//! Applies a blur, tint color, and saturation adjustment to @a inputImage,
+		//! optionally within the area specified by @a maskImage.
+		//!
+		//! @param  inputImage
+		//!         The source image.  A modified copy of this image will be returned.
+		//! @param  blurRadius
+		//!         The radius of the blur in points.
+		//! @param  tintColor
+		//!         An optional UIColor object that is uniformly blended with the
+		//!         result of the blur and saturation operations.  The alpha channel
+		//!         of this color determines how strong the tint is.
+		//! @param  saturationDeltaFactor
+		//!         A value of 1.0 produces no change in the resulting image.  Values
+		//!         less than 1.0 will desaturation the resulting image while values
+		//!         greater than 1.0 will have the opposite effect.
+		//! @param  maskImage
+		//!         If specified, @a inputImage is only modified in the area(s) defined
+		//!         by this mask.  This must be an image mask or it must meet the
+		//!         requirements of the mask parameter of CGContextClipToMask.
+
+	UIImage *blurredImage = [UIImageEffects imageByApplyingBlurToImage:self.backgroundImageView.image withRadius: 10 tintColor: UIColorFromRGBWithAlpha(0x00012f, 0.6) saturationDeltaFactor:1 maskImage:self.backgroundImageView.image];
+	self.backgroundImageView.image = blurredImage;
 }
 
 @end

@@ -107,7 +107,7 @@
                                     </variation>
                                 </visualEffectView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K9c-0F-rJa" userLabel="ShareButton">
-                                    <rect key="frame" x="553" y="506" width="19" height="26"/>
+                                    <rect key="frame" x="553" y="558" width="19" height="26"/>
                                     <state key="normal" image="icon_share_ios"/>
                                 </button>
                             </subviews>
@@ -118,7 +118,7 @@
                                 <constraint firstAttribute="trailing" secondItem="DL6-Do-MjI" secondAttribute="trailing" id="DrH-bw-CfI"/>
                                 <constraint firstItem="h1U-rN-1q2" firstAttribute="top" secondItem="K9c-0F-rJa" secondAttribute="bottom" constant="12" id="Gt0-wp-l8J"/>
                                 <constraint firstAttribute="trailing" secondItem="h1U-rN-1q2" secondAttribute="trailing" id="HR7-jC-B51"/>
-                                <constraint firstAttribute="bottom" secondItem="K9c-0F-rJa" secondAttribute="bottom" constant="64" id="NS0-fB-bdT"/>
+                                <constraint firstAttribute="bottom" secondItem="K9c-0F-rJa" secondAttribute="bottom" constant="12" id="NS0-fB-bdT"/>
                                 <constraint firstItem="DL6-Do-MjI" firstAttribute="top" secondItem="ayC-9B-Mxc" secondAttribute="top" id="POi-To-WBF"/>
                                 <constraint firstItem="h1U-rN-1q2" firstAttribute="leading" secondItem="ayC-9B-Mxc" secondAttribute="leading" id="S6q-Qh-pMF"/>
                                 <constraint firstItem="DL6-Do-MjI" firstAttribute="width" secondItem="h1U-rN-1q2" secondAttribute="height" multiplier="600:250" id="dNk-ET-sHa"/>
