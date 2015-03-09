@@ -123,15 +123,18 @@
         
         while ((value = [enumerator nextObject])) {
             ABRecordRef rawPerson = (__bridge ABRecordRef) value;
+            
             // Check for contact picture
             if (rawPerson != nil && ABPersonHasImageData(rawPerson)) {
                 if ( &ABPersonCopyImageDataWithFormat != nil ) {
                     person.profileImage = [UIImage imageWithData:(__bridge NSData *)ABPersonCopyImageDataWithFormat(rawPerson, kABPersonImageFormatOriginalSize)];
                 }
             }
+            
             person.firstName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonFirstNameProperty));
             person.lastName  = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonLastNameProperty));
-				//TODO:  this needs to be mobile or iphone first the other because it is used for texting from the device
+            
+            // TODO:  this needs to be mobile or iphone first the other because it is used for texting from the device
 
 			ABMultiValueRef phoneNumbers = ABRecordCopyValue(rawPerson, kABPersonPhoneProperty);
 
@@ -145,8 +148,13 @@
 			CFRelease(phoneNumbers);
         }
         
-        [self.ceaselessPeople addObject: person];
-		NSLog(@"Name:%@ %@", person.firstName, person.lastName);
+        // filter out contacts without names
+        if (!(person.firstName == nil && person.lastName == nil)) {
+            [self.ceaselessPeople addObject: person];
+            NSLog(@"Name:%@ %@", person.firstName, person.lastName);
+        } else {
+            ++numberOfPeople; // need to loop through one more person
+        }
 	}
 }
 @end
