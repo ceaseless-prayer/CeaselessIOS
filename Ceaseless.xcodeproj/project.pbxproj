@@ -21,6 +21,7 @@
 		42F3AE3E1AA4DD80003A88F5 /* CeaselessTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F3AE3D1AA4DD80003A88F5 /* CeaselessTests.m */; };
 		704D5CA11AAF6D5200BD48B3 /* PersonNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5C9F1AAF6D5200BD48B3 /* PersonNotesViewController.m */; };
 		704D5CA41AAF723700BD48B3 /* PersonNotes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 704D5CA31AAF723700BD48B3 /* PersonNotes.storyboard */; };
+		704D5CA71AAF90A200BD48B3 /* CeaselessDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CA51AAF90A200BD48B3 /* CeaselessDataModel.xcdatamodeld */; };
 		707BE2E61AAA1B1A0020FF29 /* Screen Shot 2015-02-17 at 9.05.16 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = 707BE2E51AAA1B1A0020FF29 /* Screen Shot 2015-02-17 at 9.05.16 PM.png */; };
 		707BE2E81AAA1D1C0020FF29 /* Screen Shot 2015-02-18 at 8.22.42 AM.png in Resources */ = {isa = PBXBuildFile; fileRef = 707BE2E71AAA1D1C0020FF29 /* Screen Shot 2015-02-18 at 8.22.42 AM.png */; };
 		709D83391AA598A600C3486E /* Screen Shot 2015-02-18 at 8.25.51 AM.png in Resources */ = {isa = PBXBuildFile; fileRef = 709D83381AA598A600C3486E /* Screen Shot 2015-02-18 at 8.25.51 AM.png */; };
@@ -78,6 +79,7 @@
 		704D5C9E1AAF6D5200BD48B3 /* PersonNotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonNotesViewController.h; sourceTree = "<group>"; };
 		704D5C9F1AAF6D5200BD48B3 /* PersonNotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonNotesViewController.m; sourceTree = "<group>"; };
 		704D5CA31AAF723700BD48B3 /* PersonNotes.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PersonNotes.storyboard; sourceTree = "<group>"; };
+		704D5CA61AAF90A200BD48B3 /* CeaselessDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CeaselessDataModel.xcdatamodel; sourceTree = "<group>"; };
 		707BE2E51AAA1B1A0020FF29 /* Screen Shot 2015-02-17 at 9.05.16 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screen Shot 2015-02-17 at 9.05.16 PM.png"; sourceTree = "<group>"; };
 		707BE2E71AAA1D1C0020FF29 /* Screen Shot 2015-02-18 at 8.22.42 AM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screen Shot 2015-02-18 at 8.22.42 AM.png"; sourceTree = "<group>"; };
 		709D83381AA598A600C3486E /* Screen Shot 2015-02-18 at 8.25.51 AM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screen Shot 2015-02-18 at 8.25.51 AM.png"; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				70D51C0D1AA627DF00FA7CDC /* Person.m */,
 				70F6640D1AA8456B0073801E /* Scripture.h */,
 				70F6640E1AA8456B0073801E /* Scripture.m */,
+				704D5CA51AAF90A200BD48B3 /* CeaselessDataModel.xcdatamodeld */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -396,6 +399,7 @@
 				70D51C0E1AA627DF00FA7CDC /* Person.m in Sources */,
 				704D5CA11AAF6D5200BD48B3 /* PersonNotesViewController.m in Sources */,
 				42F3AE2A1AA4DD7F003A88F5 /* ModelController.m in Sources */,
+				704D5CA71AAF90A200BD48B3 /* CeaselessDataModel.xcdatamodeld in Sources */,
 				70F664181AA8B9260073801E /* ScripturePicker.m in Sources */,
 				70F663FE1AA7E30F0073801E /* UIImageEffects.m in Sources */,
 				70D51C0B1AA6222700FA7CDC /* PersonPicker.m in Sources */,
@@ -613,6 +617,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		704D5CA51AAF90A200BD48B3 /* CeaselessDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				704D5CA61AAF90A200BD48B3 /* CeaselessDataModel.xcdatamodel */,
+			);
+			currentVersion = 704D5CA61AAF90A200BD48B3 /* CeaselessDataModel.xcdatamodel */;
+			path = CeaselessDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 42F3AE101AA4DD7F003A88F5 /* Project object */;
 }

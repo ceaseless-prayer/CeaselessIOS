@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C109" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Email" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="person" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="emails" inverseEntity="Person" syncable="YES"/>
+    </entity>
+    <entity name="Note" syncable="YES">
+        <attribute name="createDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="lastUpdatedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="peopleTagged" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="notes" inverseEntity="Person" syncable="YES"/>
+    </entity>
+    <entity name="PeopleQueue" syncable="YES">
+        <relationship name="person" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Person" inverseName="queued" inverseEntity="Person" syncable="YES"/>
+    </entity>
+    <entity name="Person" syncable="YES">
+        <attribute name="addressBookId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ceaselessId" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="emails" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Email" inverseName="person" inverseEntity="Email" syncable="YES"/>
+        <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="peopleTagged" inverseEntity="Note" syncable="YES"/>
+        <relationship name="phoneNumbers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PhoneNumber" inverseName="person" inverseEntity="PhoneNumber" syncable="YES"/>
+        <relationship name="prayerRecords" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PrayerRecord" inverseName="person" inverseEntity="PrayerRecord" syncable="YES"/>
+        <relationship name="queued" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="PeopleQueue" inverseName="person" inverseEntity="PeopleQueue" syncable="YES"/>
+    </entity>
+    <entity name="PhoneNumber" syncable="YES">
+        <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="person" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="phoneNumbers" inverseEntity="Person" syncable="YES"/>
+    </entity>
+    <entity name="PrayerRecord" syncable="YES">
+        <attribute name="createDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="person" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="prayerRecords" inverseEntity="Person" syncable="YES"/>
+    </entity>
+    <entity name="ScriptureQueue" syncable="YES">
+        <attribute name="citation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shareLink" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="verse" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Person" positionX="-396" positionY="-73" width="128" height="178"/>
+        <element name="Email" positionX="-216" positionY="-144" width="128" height="73"/>
+        <element name="PhoneNumber" positionX="-45" positionY="-1" width="128" height="73"/>
+        <element name="Note" positionX="-200" positionY="-54" width="128" height="103"/>
+        <element name="ScriptureQueue" positionX="-576" positionY="-180" width="128" height="90"/>
+        <element name="PrayerRecord" positionX="-173" positionY="81" width="128" height="88"/>
+        <element name="PeopleQueue" positionX="-387" positionY="-180" width="128" height="58"/>
+    </elements>
+</model>
