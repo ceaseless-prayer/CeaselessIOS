@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -26,7 +26,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="584" height="596"/>
                                 </imageView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DL6-Do-MjI" userLabel="ClearTopView">
-                                    <rect key="frame" x="0.0" y="0.0" width="584" height="353"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="584" height="168"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="200" id="jHZ-pb-A62"/>
@@ -44,13 +44,13 @@
                                     </variation>
                                 </view>
                                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h1U-rN-1q2">
-                                    <rect key="frame" x="0.0" y="353" width="584" height="243"/>
+                                    <rect key="frame" x="0.0" y="168" width="584" height="428"/>
                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="MVu-Vi-9iM">
-                                        <rect key="frame" x="0.0" y="0.0" width="584" height="243"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="584" height="428"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="8Wq-k1-EVN">
-                                                <rect key="frame" x="0.0" y="0.0" width="584" height="191"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="584" height="376"/>
                                                 <color key="backgroundColor" red="0.0" green="0.0039215686274509803" blue="0.18431372549019609" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="262" id="1ef-dE-bGI"/>
@@ -68,7 +68,7 @@
                                                 </variation>
                                             </textView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scripture reference" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="240-mT-dOI">
-                                                <rect key="frame" x="0.0" y="191" width="584" height="52"/>
+                                                <rect key="frame" x="0.0" y="376" width="584" height="52"/>
                                                 <color key="backgroundColor" red="0.0" green="0.0039215686274509803" blue="0.18431372549019609" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="52" id="poh-AP-6v3"/>
@@ -121,7 +121,7 @@
                                 <constraint firstAttribute="bottom" secondItem="K9c-0F-rJa" secondAttribute="bottom" constant="12" id="NS0-fB-bdT"/>
                                 <constraint firstItem="DL6-Do-MjI" firstAttribute="top" secondItem="ayC-9B-Mxc" secondAttribute="top" id="POi-To-WBF"/>
                                 <constraint firstItem="h1U-rN-1q2" firstAttribute="leading" secondItem="ayC-9B-Mxc" secondAttribute="leading" id="S6q-Qh-pMF"/>
-                                <constraint firstItem="DL6-Do-MjI" firstAttribute="width" secondItem="h1U-rN-1q2" secondAttribute="height" multiplier="600:250" id="dNk-ET-sHa"/>
+                                <constraint firstItem="DL6-Do-MjI" firstAttribute="width" secondItem="h1U-rN-1q2" secondAttribute="height" multiplier="600:440" id="dNk-ET-sHa"/>
                                 <constraint firstItem="mnf-Gd-yPc" firstAttribute="leading" secondItem="ayC-9B-Mxc" secondAttribute="leading" id="eVf-2B-Jb7"/>
                                 <constraint firstItem="h1U-rN-1q2" firstAttribute="top" secondItem="DL6-Do-MjI" secondAttribute="bottom" id="flQ-fe-MDC"/>
                                 <constraint firstAttribute="bottom" secondItem="mnf-Gd-yPc" secondAttribute="bottom" id="hlK-pn-f7H"/>
