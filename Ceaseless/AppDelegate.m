@@ -18,6 +18,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
 	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+    // TODO we may want to re-think if we want to ask for local notification permission when the app opens.
+    if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound categories:nil]];
+    }
     return YES;
 }
 
@@ -29,6 +34,26 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    // scheduling local notifications
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    NSCalendar *gregorian = [[NSCalendar alloc]
+                             initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    
+    NSDateComponents *dateComponent = [gregorian components:NSCalendarUnitYear | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitWeekday | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour fromDate:[NSDate date]];
+    
+//    [dateComponent setHour:7]; // When we load from config.
+
+    dateComponent.second += 30; // for testing--a notification shows up 30 seconds after you close the app.
+    
+    NSDate *fireDate = [[NSCalendar currentCalendar] dateFromComponents:dateComponent];
+    
+    UILocalNotification *notification = [[UILocalNotification alloc]init];
+    [notification setAlertBody:@"Remember to pray for others today."];
+    [notification setFireDate:fireDate];
+    notification.repeatInterval = NSCalendarUnitWeekday;
+    [notification setTimeZone:[NSTimeZone defaultTimeZone]];
+    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
