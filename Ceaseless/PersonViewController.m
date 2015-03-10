@@ -44,7 +44,21 @@ static NSString *kSMSMessage;
     [super viewWillAppear:animated];
     Person *person = self.dataObject;
     self.personView.nameLabel.text = [NSString stringWithFormat: @"%@ %@", person.firstName, person.lastName];
-    self.personView.personImageView.image = person.profileImage;
+	if (person.profileImage) {
+		self.personView.personImageView.image = person.profileImage;
+		self.personView.personImageView.hidden = NO;
+		self.personView.placeholderText.hidden = YES;
+
+		self.personView.personImageView.layer.cornerRadius = 6.0f;
+		[self.personView.personImageView setClipsToBounds:YES];
+	} else {
+		NSString *firstInitial = [person.firstName substringToIndex: 1];
+		NSString *lastInitial = [person.lastName substringToIndex: 1];
+		self.personView.personImageView.hidden = YES;
+		self.personView.placeholderText.hidden = NO;
+		self.personView.placeholderText.text = [NSString stringWithFormat: @"%@%@", firstInitial, lastInitial];
+	}
+
         
     [self.personView.moreButton addTarget:self
                                    action:@selector(presentActionSheet:)forControlEvents:UIControlEventTouchUpInside];
