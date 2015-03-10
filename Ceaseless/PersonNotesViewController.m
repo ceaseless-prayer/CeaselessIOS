@@ -49,6 +49,7 @@
 	cell.textLabel.text = [self.notesArray objectAtIndex: indexPath.row];
 	cell.textLabel.textColor = [UIColor whiteColor];
 	cell.detailTextLabel.textColor = [UIColor whiteColor];
+    cell.backgroundColor = [UIColor clearColor];
 	NSLog (@"cell text %@", cell.textLabel.text);
  return cell;
 }
