@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "Scripture.h"
+#import "NonMOScripture.h"
 
 @interface ScripturePicker : NSObject
 
-@property (strong, nonatomic) Scripture *scripture;
+@property (strong, nonatomic) NonMOScripture *scripture;
 
-- (Scripture *)requestDailyVerseReference;
+- (NonMOScripture *)requestDailyVerseReference;
 
 @end

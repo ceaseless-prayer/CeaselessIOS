@@ -7,7 +7,7 @@
 //
 
 #import "ScriptureViewController.h"
-#import "Scripture.h"
+#import "NonMOScripture.h"
 
 @implementation ScriptureViewController
 
@@ -19,7 +19,7 @@
 - (void)viewWillAppear: (BOOL)animated {
     [super viewWillAppear:animated];
 
-	Scripture *scripture = self.dataObject;
+	NonMOScripture *scripture = self.dataObject;
 	self.scriptureView.scriptureReferenceLabel.text = scripture.citation;
 	self.scriptureView.scriptureTextView.text = scripture.verse;
 }

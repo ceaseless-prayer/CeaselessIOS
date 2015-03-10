@@ -12,7 +12,7 @@
 #import "NonMOPerson.h"
 #import "AppDelegate.h"
 #import "ScripturePicker.h"
-#import "Scripture.h"
+#import "NonMOScripture.h"
 #import "ScriptureViewController.h"
 #import "PersonViewController.h"
 
@@ -29,7 +29,7 @@
 @interface ModelController ()
 
 @property (readonly, strong, nonatomic) NSArray *personData;
-@property (readonly, strong, nonatomic) Scripture *scripture;
+@property (readonly, strong, nonatomic) NonMOScripture *scripture;
 @property (strong, nonatomic) NSMutableArray *cardArray;
 
 @end
@@ -66,7 +66,7 @@
     // Create a new view controller and pass suitable data.
 
     DataViewController *contentViewController;
-    if ([self.cardArray[index] isMemberOfClass:[Scripture class]]) {
+    if ([self.cardArray[index] isMemberOfClass:[NonMOScripture class]]) {
         contentViewController = [[ScriptureViewController alloc] init];
     } else {
         contentViewController = [[PersonViewController alloc] init];

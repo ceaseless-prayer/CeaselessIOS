@@ -46,7 +46,7 @@
 		70F664041AA7E4780073801E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F664031AA7E4780073801E /* Foundation.framework */; };
 		70F664091AA82B360073801E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F664081AA82B360073801E /* QuartzCore.framework */; };
 		70F6640C1AA83CC60073801E /* ScriptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F6640B1AA83CC60073801E /* ScriptureView.m */; };
-		70F6640F1AA8456B0073801E /* Scripture.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F6640E1AA8456B0073801E /* Scripture.m */; };
+		70F6640F1AA8456B0073801E /* NonMOScripture.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F6640E1AA8456B0073801E /* NonMOScripture.m */; };
 		70F664181AA8B9260073801E /* ScripturePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F664171AA8B9260073801E /* ScripturePicker.m */; };
 /* End PBXBuildFile section */
 
@@ -123,8 +123,8 @@
 		70F664081AA82B360073801E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		70F6640A1AA83CC60073801E /* ScriptureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptureView.h; sourceTree = "<group>"; };
 		70F6640B1AA83CC60073801E /* ScriptureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptureView.m; sourceTree = "<group>"; };
-		70F6640D1AA8456B0073801E /* Scripture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scripture.h; sourceTree = "<group>"; };
-		70F6640E1AA8456B0073801E /* Scripture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scripture.m; sourceTree = "<group>"; };
+		70F6640D1AA8456B0073801E /* NonMOScripture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NonMOScripture.h; sourceTree = "<group>"; };
+		70F6640E1AA8456B0073801E /* NonMOScripture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NonMOScripture.m; sourceTree = "<group>"; };
 		70F664161AA8B9260073801E /* ScripturePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScripturePicker.h; sourceTree = "<group>"; };
 		70F664171AA8B9260073801E /* ScripturePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScripturePicker.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -257,8 +257,8 @@
 			children = (
 				70D51C0C1AA627DF00FA7CDC /* NonMOPerson.h */,
 				70D51C0D1AA627DF00FA7CDC /* NonMOPerson.m */,
-				70F6640D1AA8456B0073801E /* Scripture.h */,
-				70F6640E1AA8456B0073801E /* Scripture.m */,
+				70F6640D1AA8456B0073801E /* NonMOScripture.h */,
+				70F6640E1AA8456B0073801E /* NonMOScripture.m */,
 				704D5CA51AAF90A200BD48B3 /* CeaselessDataModel.xcdatamodeld */,
 				704D5CF21AAFA96200BD48B3 /* PrayerRecord.h */,
 				704D5CF31AAFA96200BD48B3 /* PrayerRecord.m */,
@@ -436,7 +436,7 @@
 				70F6640C1AA83CC60073801E /* ScriptureView.m in Sources */,
 				704D5CEE1AAFA96200BD48B3 /* Email.m in Sources */,
 				42F3AE211AA4DD7F003A88F5 /* AppDelegate.m in Sources */,
-				70F6640F1AA8456B0073801E /* Scripture.m in Sources */,
+				70F6640F1AA8456B0073801E /* NonMOScripture.m in Sources */,
 				70D51C0E1AA627DF00FA7CDC /* NonMOPerson.m in Sources */,
 				704D5CA11AAF6D5200BD48B3 /* PersonNotesViewController.m in Sources */,
 				42F3AE2A1AA4DD7F003A88F5 /* ModelController.m in Sources */,

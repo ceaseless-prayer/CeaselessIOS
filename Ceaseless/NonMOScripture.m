@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Christopher Lim. All rights reserved.
 //
 
-#import "Scripture.h"
+#import "NonMOScripture.h"
 
-@implementation Scripture
+@implementation NonMOScripture
 
 @end

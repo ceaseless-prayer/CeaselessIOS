@@ -7,7 +7,7 @@
 	//
 
 #import "ScripturePicker.h"
-#import "Scripture.h"
+#import "NonMOScripture.h"
 #import "AppDelegate.h"
 
 @implementation ScripturePicker
@@ -17,9 +17,9 @@ NSString *const kGetScriptureURL = @"http://test.ceaselessprayer.com/api/getScri
 NSString *const kDefaultScripture = @"\"And whatever you ask in prayer, you will receive, if you have faith.\"";
 NSString *const kDefaultCitation = @"(Matthew 21:22,ESV)";
 
-- (Scripture *)requestDailyVerseReference
+- (NonMOScripture *)requestDailyVerseReference
 {
-    self.scripture = [Scripture alloc];
+    self.scripture = [NonMOScripture alloc];
 	self.scripture.verse = kDefaultScripture;
 	self.scripture.citation = kDefaultCitation;
 

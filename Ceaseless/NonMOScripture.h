@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Scripture : NSObject
+@interface NonMOScripture : NSObject
 
 @property (strong, nonatomic) NSString *verse;
 @property (strong, nonatomic) NSString *citation;
