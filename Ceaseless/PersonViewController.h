@@ -8,7 +8,9 @@
 
 #import "DataViewController.h"
 #import "PersonView.h"
+#import "PersonNotesViewController.h"
 
 @interface PersonViewController : DataViewController
     @property (strong, nonatomic) IBOutlet PersonView *personView;
+@property (strong, nonatomic) PersonNotesViewController *personNotesViewController;
 @end

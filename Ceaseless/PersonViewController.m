@@ -29,6 +29,13 @@ static NSString *kSMSMessage;
 - (void)viewDidLoad {
 
     [super viewDidLoad];
+
+	UIStoryboard *sb = [UIStoryboard storyboardWithName:@"PersonNotes" bundle:nil];
+	self.personNotesViewController = [sb instantiateViewControllerWithIdentifier:@"PersonNotesViewController"];
+	[self.personView.notesView addSubview: self.personNotesViewController.tableView];
+	self.personNotesViewController.notesArray = [[NSArray alloc] initWithObjects: @"Note 1", @"Note 2", @"Note 3", @"Note 4", @"Note 5", nil];
+	[self setDynamicViewConstraintsToView: self.personView.notesView forSubview: self.personNotesViewController.tableView ];
+
     [self registerForNotifications];
 
 	[self formatCardView: self.personView.cardView withShadowView: self.personView.shadowView];
@@ -64,7 +71,41 @@ static NSString *kSMSMessage;
                                    action:@selector(presentActionSheet:)forControlEvents:UIControlEventTouchUpInside];
 
 }
+- (void)setDynamicViewConstraintsToView: (UIView *) parentView forSubview: (UIView *) newSubview {
+	[newSubview setTranslatesAutoresizingMaskIntoConstraints:NO];
 
+	[parentView addConstraint:[NSLayoutConstraint constraintWithItem:newSubview
+															  attribute:NSLayoutAttributeTop
+															  relatedBy:NSLayoutRelationEqual
+																 toItem:parentView
+															  attribute:NSLayoutAttributeTop
+															 multiplier:1.0
+															   constant:0.0]];
+
+	[parentView addConstraint:[NSLayoutConstraint constraintWithItem:newSubview
+															  attribute:NSLayoutAttributeLeading
+															  relatedBy:NSLayoutRelationEqual
+																 toItem:parentView
+															  attribute:NSLayoutAttributeLeading
+															 multiplier:1.0
+															   constant:0.0]];
+
+	[parentView addConstraint:[NSLayoutConstraint constraintWithItem:newSubview
+															  attribute:NSLayoutAttributeBottom
+															  relatedBy:NSLayoutRelationEqual
+																 toItem:parentView
+															  attribute:NSLayoutAttributeBottom
+															 multiplier:1.0
+															   constant:0.0]];
+
+	[parentView addConstraint:[NSLayoutConstraint constraintWithItem:newSubview
+															  attribute:NSLayoutAttributeTrailing
+															  relatedBy:NSLayoutRelationEqual
+																 toItem:parentView
+															  attribute:NSLayoutAttributeTrailing
+															 multiplier:1.0
+															   constant:0.0]];
+}
 #pragma mark - Action Sheet
 
 -(void) presentActionSheet: (UIButton *) sender {
@@ -79,7 +120,7 @@ static NSString *kSMSMessage;
                                    {
                                        NSLog(@"Cancel action");
                                    }];
-    
+
     UIAlertAction *inviteAction = [UIAlertAction
                                    actionWithTitle:NSLocalizedString(@"Invite to Ceaseless", @"Invite to Ceaseless")
                                    style:UIAlertActionStyleDefault

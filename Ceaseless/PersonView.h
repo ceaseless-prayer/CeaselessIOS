@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *placeholderText;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
+@property (weak, nonatomic) IBOutlet UIView *notesView;
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *blurEffect;
 
 @end
