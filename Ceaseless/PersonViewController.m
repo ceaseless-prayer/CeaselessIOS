@@ -7,7 +7,7 @@
 //
 
 #import "PersonViewController.h"
-#import "Person.h"
+#import "NonMOPerson.h"
 #import <MessageUI/MessageUI.h>
 //#import <QuartzCore/QuartzCore.h>
 
@@ -49,7 +49,7 @@ static NSString *kSMSMessage;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    Person *person = self.dataObject;
+    NonMOPerson *person = self.dataObject;
     self.personView.nameLabel.text = [NSString stringWithFormat: @"%@ %@", person.firstName, person.lastName];
 	if (person.profileImage) {
 		self.personView.personImageView.image = person.profileImage;
@@ -176,7 +176,7 @@ static NSString *kSMSMessage;
         [warningAlert show];
         return;
     }
-    Person *person = self.dataObject;
+    NonMOPerson *person = self.dataObject;
     NSArray *recipents = [NSArray arrayWithObjects: person.phoneNumber, nil];
     NSString *message = [NSString stringWithFormat: @"%@", file];
     

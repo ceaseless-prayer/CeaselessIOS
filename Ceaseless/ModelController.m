@@ -9,7 +9,7 @@
 #import "ModelController.h"
 #import "DataViewController.h"
 #import "PersonPicker.h"
-#import "Person.h"
+#import "NonMOPerson.h"
 #import "AppDelegate.h"
 #import "ScripturePicker.h"
 #import "Scripture.h"

@@ -8,7 +8,7 @@
 
 #import "PersonPicker.h"
 #import <AddressBookUI/AddressBookUI.h>
-#import "Person.h"
+#import "NonMOPerson.h"
 #import "AppDelegate.h"
 
 @interface PersonPicker ()
@@ -115,7 +115,7 @@
     
 	for (NSInteger i = 0; i < numberOfPeople; i++) {
         NSSet *unifiedRecord = allPeople[i];
-        Person *person = [[Person alloc] init];
+        NonMOPerson *person = [[NonMOPerson alloc] init];
         
         NSEnumerator *enumerator = [unifiedRecord objectEnumerator];
         
