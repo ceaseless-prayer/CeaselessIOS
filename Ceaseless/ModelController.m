@@ -12,7 +12,7 @@
 #import "NonMOPerson.h"
 #import "AppDelegate.h"
 #import "ScripturePicker.h"
-#import "NonMOScripture.h"
+#import "ScriptureQueue.h"
 #import "ScriptureViewController.h"
 #import "PersonViewController.h"
 
@@ -29,7 +29,7 @@
 @interface ModelController ()
 
 @property (readonly, strong, nonatomic) NSArray *personData;
-@property (readonly, strong, nonatomic) NonMOScripture *scripture;
+@property (readonly, strong, nonatomic) ScriptureQueue *scripture;
 @property (strong, nonatomic) NSMutableArray *cardArray;
 
 @end
@@ -43,9 +43,8 @@
         // Initializes to app delegate card array
 		ScripturePicker *scripturePicker = [[ScripturePicker alloc] init];
 		[scripturePicker fillScriptureQueue];
-		[scripturePicker listQueuedScriptures];
-		_scripture = [scripturePicker requestDailyVerseReference];
-
+		_scripture = [scripturePicker popScriptureQueue];
+		[scripturePicker fillScriptureQueue];
 		PersonPicker *personPicker = [[PersonPicker alloc] init];
 		[personPicker loadContacts];
         
@@ -53,7 +52,7 @@
 		AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
         
         _cardArray = [[NSMutableArray alloc] initWithArray: appDelegate.peopleArray];
-        [_cardArray insertObject: appDelegate.scripture atIndex: 0];
+        [_cardArray insertObject: _scripture atIndex: 0];
 
     }
     return self;
@@ -68,7 +67,7 @@
     // Create a new view controller and pass suitable data.
 
     DataViewController *contentViewController;
-    if ([self.cardArray[index] isMemberOfClass:[NonMOScripture class]]) {
+    if ([self.cardArray[index] isMemberOfClass:[ScriptureQueue class]]) {
         contentViewController = [[ScriptureViewController alloc] init];
     } else {
         contentViewController = [[PersonViewController alloc] init];

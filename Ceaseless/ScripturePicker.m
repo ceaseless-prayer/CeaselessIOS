@@ -7,9 +7,7 @@
 	//
 
 #import "ScripturePicker.h"
-#import "NonMOScripture.h"
 #import "AppDelegate.h"
-#import "ScriptureQueue.h"
 
 @interface ScripturePicker ()
 
@@ -21,8 +19,6 @@
 
 NSString *const kVerseOfTheDayURL = @"http://test.ceaselessprayer.com/api/votd";
 NSString *const kGetScriptureURL = @"http://test.ceaselessprayer.com/api/getScripture";
-NSString *const kDefaultScripture = @"\"And whatever you ask in prayer, you will receive, if you have faith.\"";
-NSString *const kDefaultCitation = @"(Matthew 21:22,ESV)";
 int const kDefaultQueueSize = 5;
 	// verseOfTheDay
 	//		if its still the same day return the verse we cached
@@ -33,6 +29,20 @@ int const kDefaultQueueSize = 5;
 	//		delete it from the queue
 	//		return the scripture
 	//
+- (void) verseOfTheDay {
+
+
+	// if it is a new day, remove the top of the queue
+
+
+		// need to get the top of the queue, then delete it.
+//	NSError * error = nil;
+//	[self.managedObjectContext deleteObject: sq];
+//
+//	if (![self.managedObjectContext save:&error]) {
+//		NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
+//	}
+}
 - (void) fillScriptureQueue {
 
 	AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
@@ -57,12 +67,32 @@ int const kDefaultQueueSize = 5;
 	return itemsCount;
 
 }
-- (NonMOScripture *)requestDailyVerseReference
-{
-    self.scripture = [NonMOScripture alloc];
-	self.scripture.verse = kDefaultScripture;
-	self.scripture.citation = kDefaultCitation;
 
+- (ScriptureQueue *)popScriptureQueue
+{
+	ScriptureQueue *sq;
+	NSArray *scriptures =[self listQueuedScriptures];
+	for (id managedObject in scriptures) {
+		sq = managedObject;
+		NSLog(@"verse: %@", sq.verse);
+		NSLog(@"citation: %@", sq.citation);
+	}
+
+	if ([scriptures count] > 0) {
+		// return the top of the queue
+		sq = [scriptures objectAtIndex:0];
+	} else {
+		NSLog (@"What happened to the seeded default");
+//		sq = [ScriptureQueue alloc]; // TODO test this. this does not work I tested it
+//		sq.verse = kDefaultScripture;
+//		sq.citation = kDefaultCitation;
+	}
+
+	return sq;
+};
+
+- (void)requestDailyVerseReference
+{
 	NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
 	NSURLSession *urlSession = [NSURLSession sessionWithConfiguration:configuration delegate:nil delegateQueue:nil];
 
@@ -81,12 +111,6 @@ int const kDefaultQueueSize = 5;
 		}];
 
 	[urlSessionDataTask resume];
-    
-   
-    AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
-    appDelegate.scripture = self.scripture;
-   
-	return self.scripture;
 }
 
 -(void) requestScriptureText: (NSDictionary *) dailyVerseData
@@ -148,9 +172,7 @@ int const kDefaultQueueSize = 5;
 	  }];
 	[dataTask resume];
 }
-- (void) listQueuedScriptures {
-		// Test listing all tagData from the store
-
+- (NSArray *) listQueuedScriptures {
 	NSError * error = nil;
 
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -159,11 +181,7 @@ int const kDefaultQueueSize = 5;
 	[fetchRequest setEntity:entity];
 
 	NSArray *fetchedObjects2 = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-	for (id managedObject in fetchedObjects2) {
-		ScriptureQueue *sq = managedObject;
-		NSLog(@"verse: %@", sq.verse);
-		NSLog(@"citation: %@", sq.citation);
-	}
+	return fetchedObjects2;
 }
 
 @end

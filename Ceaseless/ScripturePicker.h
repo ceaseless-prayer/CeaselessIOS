@@ -8,13 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "NonMOScripture.h"
+#import "ScriptureQueue.h"
 
 @interface ScripturePicker : NSObject
 
-@property (strong, nonatomic) NonMOScripture *scripture;
+@property (strong, nonatomic) ScriptureQueue *scripture;
 
-- (NonMOScripture *)requestDailyVerseReference;
+- (void)requestDailyVerseReference;
 - (void) fillScriptureQueue;
-- (void) listQueuedScriptures;
+- (NSArray *) listQueuedScriptures;
+- (ScriptureQueue *) popScriptureQueue;
 @end
