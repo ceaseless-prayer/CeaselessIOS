@@ -9,6 +9,13 @@
 #import "ScripturePicker.h"
 #import "NonMOScripture.h"
 #import "AppDelegate.h"
+#import "ScriptureQueue.h"
+
+@interface ScripturePicker ()
+
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
+@end
 
 @implementation ScripturePicker
 
@@ -16,7 +23,40 @@ NSString *const kVerseOfTheDayURL = @"http://test.ceaselessprayer.com/api/votd";
 NSString *const kGetScriptureURL = @"http://test.ceaselessprayer.com/api/getScripture";
 NSString *const kDefaultScripture = @"\"And whatever you ask in prayer, you will receive, if you have faith.\"";
 NSString *const kDefaultCitation = @"(Matthew 21:22,ESV)";
+int const kDefaultQueueSize = 5;
+	// verseOfTheDay
+	//		if its still the same day return the verse we cached
+	//		else pop a scripture off the queue
+	//
+	// pop a scripture off the queue
+	//		get the first scripture on the queue
+	//		delete it from the queue
+	//		return the scripture
+	//
+- (void) fillScriptureQueue {
 
+	AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
+	self.managedObjectContext = appDelegate.managedObjectContext;
+
+	NSInteger count = [self countObjectsInCoreData];
+
+	while (count < kDefaultQueueSize) {
+		[self requestDailyVerseReference];
+		count++;
+	}
+
+}
+- (NSInteger) countObjectsInCoreData {
+	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"ScriptureQueue"];
+	fetchRequest.resultType = NSCountResultType;
+	NSError *fetchError = nil;
+	NSUInteger itemsCount = [self.managedObjectContext countForFetchRequest:fetchRequest error:&fetchError];
+	if (itemsCount == NSNotFound) {
+		NSLog(@"Fetch error: %@", fetchError);
+	}
+	return itemsCount;
+
+}
 - (NonMOScripture *)requestDailyVerseReference
 {
     self.scripture = [NonMOScripture alloc];
@@ -89,17 +129,41 @@ NSString *const kDefaultCitation = @"(Matthew 21:22,ESV)";
 
 	  if (error == nil)
 		  {
-NSDictionary *verseDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+		  NSDictionary *verseDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
 		  if (verseDictionary)
 			  {
 			  dispatch_async(dispatch_get_main_queue(), ^{
-				  self.scripture.verse = [verseDictionary objectForKey:@"text"];
-				  self.scripture.citation = [verseDictionary objectForKey: @"citation"];
+				  NSError * error = nil;
+
+				  NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"ScriptureQueue" inManagedObjectContext:self.managedObjectContext];
+				  [newManagedObject setValue: [verseDictionary objectForKey:@"text"]forKey: @"verse"];
+				  [newManagedObject setValue: [verseDictionary objectForKey:@"citation"] forKey: @"citation"];
+				  if (![self.managedObjectContext save: &error]) {
+					  NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
+				  }
+
 			  });
 		  }
 		  }
 	  }];
 	[dataTask resume];
+}
+- (void) listQueuedScriptures {
+		// Test listing all tagData from the store
+
+	NSError * error = nil;
+
+	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"ScriptureQueue"
+											  inManagedObjectContext:self.managedObjectContext];
+	[fetchRequest setEntity:entity];
+
+	NSArray *fetchedObjects2 = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+	for (id managedObject in fetchedObjects2) {
+		ScriptureQueue *sq = managedObject;
+		NSLog(@"verse: %@", sq.verse);
+		NSLog(@"citation: %@", sq.citation);
+	}
 }
 
 @end

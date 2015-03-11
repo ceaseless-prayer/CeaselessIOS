@@ -21,7 +21,7 @@
 		42F3AE3E1AA4DD80003A88F5 /* CeaselessTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F3AE3D1AA4DD80003A88F5 /* CeaselessTests.m */; };
 		704D5CA11AAF6D5200BD48B3 /* PersonNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5C9F1AAF6D5200BD48B3 /* PersonNotesViewController.m */; };
 		704D5CA41AAF723700BD48B3 /* PersonNotes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 704D5CA31AAF723700BD48B3 /* PersonNotes.storyboard */; };
-		704D5CA71AAF90A200BD48B3 /* CeaselessDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CA51AAF90A200BD48B3 /* CeaselessDataModel.xcdatamodeld */; };
+		704D5CA71AAF90A200BD48B3 /* Ceaseless.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CA51AAF90A200BD48B3 /* Ceaseless.xcdatamodeld */; };
 		704D5CE21AAFA96100BD48B3 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CE11AAFA96100BD48B3 /* Note.m */; };
 		704D5CE51AAFA96200BD48B3 /* PeopleQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CE41AAFA96200BD48B3 /* PeopleQueue.m */; };
 		704D5CE81AAFA96200BD48B3 /* PhoneNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CE71AAFA96200BD48B3 /* PhoneNumber.m */; };
@@ -86,7 +86,7 @@
 		704D5C9E1AAF6D5200BD48B3 /* PersonNotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonNotesViewController.h; sourceTree = "<group>"; };
 		704D5C9F1AAF6D5200BD48B3 /* PersonNotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonNotesViewController.m; sourceTree = "<group>"; };
 		704D5CA31AAF723700BD48B3 /* PersonNotes.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PersonNotes.storyboard; sourceTree = "<group>"; };
-		704D5CA61AAF90A200BD48B3 /* CeaselessDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CeaselessDataModel.xcdatamodel; sourceTree = "<group>"; };
+		704D5CA61AAF90A200BD48B3 /* Ceaseless.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Ceaseless.xcdatamodel; sourceTree = "<group>"; };
 		704D5CE01AAFA96100BD48B3 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
 		704D5CE11AAFA96100BD48B3 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
 		704D5CE31AAFA96200BD48B3 /* PeopleQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleQueue.h; sourceTree = "<group>"; };
@@ -259,7 +259,7 @@
 				70D51C0D1AA627DF00FA7CDC /* NonMOPerson.m */,
 				70F6640D1AA8456B0073801E /* NonMOScripture.h */,
 				70F6640E1AA8456B0073801E /* NonMOScripture.m */,
-				704D5CA51AAF90A200BD48B3 /* CeaselessDataModel.xcdatamodeld */,
+				704D5CA51AAF90A200BD48B3 /* Ceaseless.xcdatamodeld */,
 				704D5CF21AAFA96200BD48B3 /* PrayerRecord.h */,
 				704D5CF31AAFA96200BD48B3 /* PrayerRecord.m */,
 				704D5CEF1AAFA96200BD48B3 /* ScriptureQueue.h */,
@@ -440,7 +440,7 @@
 				70D51C0E1AA627DF00FA7CDC /* NonMOPerson.m in Sources */,
 				704D5CA11AAF6D5200BD48B3 /* PersonNotesViewController.m in Sources */,
 				42F3AE2A1AA4DD7F003A88F5 /* ModelController.m in Sources */,
-				704D5CA71AAF90A200BD48B3 /* CeaselessDataModel.xcdatamodeld in Sources */,
+				704D5CA71AAF90A200BD48B3 /* Ceaseless.xcdatamodeld in Sources */,
 				70F664181AA8B9260073801E /* ScripturePicker.m in Sources */,
 				704D5CF11AAFA96200BD48B3 /* ScriptureQueue.m in Sources */,
 				70F663FE1AA7E30F0073801E /* UIImageEffects.m in Sources */,
@@ -661,13 +661,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		704D5CA51AAF90A200BD48B3 /* CeaselessDataModel.xcdatamodeld */ = {
+		704D5CA51AAF90A200BD48B3 /* Ceaseless.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				704D5CA61AAF90A200BD48B3 /* CeaselessDataModel.xcdatamodel */,
+				704D5CA61AAF90A200BD48B3 /* Ceaseless.xcdatamodel */,
 			);
-			currentVersion = 704D5CA61AAF90A200BD48B3 /* CeaselessDataModel.xcdatamodel */;
-			path = CeaselessDataModel.xcdatamodeld;
+			currentVersion = 704D5CA61AAF90A200BD48B3 /* Ceaseless.xcdatamodel */;
+			path = Ceaseless.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

@@ -42,6 +42,8 @@
         // Create the data model.
         // Initializes to app delegate card array
 		ScripturePicker *scripturePicker = [[ScripturePicker alloc] init];
+		[scripturePicker fillScriptureQueue];
+		[scripturePicker listQueuedScriptures];
 		_scripture = [scripturePicker requestDailyVerseReference];
 
 		PersonPicker *personPicker = [[PersonPicker alloc] init];

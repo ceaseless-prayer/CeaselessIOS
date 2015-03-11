@@ -15,5 +15,6 @@
 @property (strong, nonatomic) NonMOScripture *scripture;
 
 - (NonMOScripture *)requestDailyVerseReference;
-
+- (void) fillScriptureQueue;
+- (void) listQueuedScriptures;
 @end
