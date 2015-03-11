@@ -7,9 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AddressBookUI/AddressBookUI.h>
+#import "Person.h"
 
 @interface PersonPicker : NSObject
 
 -(void)loadContacts;
+-(void) refreshContactsFromAddressBook: (ABAddressBookRef)addressBook;
 
 @end
