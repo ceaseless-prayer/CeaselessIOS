@@ -51,8 +51,9 @@
 		AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
         
         _cardArray = [[NSMutableArray alloc] initWithArray: appDelegate.peopleArray];
-        [_cardArray insertObject: _scripture atIndex: 0];
-
+		if (_scripture) {
+			[_cardArray insertObject: _scripture atIndex: 0];
+		}
 
     }
     return self;

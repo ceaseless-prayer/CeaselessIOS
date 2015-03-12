@@ -72,7 +72,7 @@ int const kDefaultQueueMinSize = 1;
 	self.managedObjectContext = appDelegate.managedObjectContext;
 
 	NSArray *scriptureArray = [[NSArray alloc] init];
-		//get usused scripture
+		//get unused scripture
 	scriptureArray = [self getScriptureWithPredicate: @"lastPresentedDate == nil"];
 	if ([scriptureArray count] < 1) {
 			//get a previously used scripture
@@ -93,13 +93,12 @@ int const kDefaultQueueMinSize = 1;
 		if (![self.managedObjectContext save: &error]) {
 			NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
 		}
+			//return the selected scripture object
+		return [scriptureArray objectAtIndex:0];
+
 	} else {
-		NSLog (@"What happened to the seeded default");
+		return nil;
 	}
-
-		//return the selected scripture object
-	return [scriptureArray objectAtIndex:0];
-
 };
 
 - (void)requestDailyVerseReference

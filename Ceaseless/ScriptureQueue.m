@@ -7,8 +7,6 @@
 //
 
 #import "ScriptureQueue.h"
-#import "AppDelegate.h"
-
 
 @implementation ScriptureQueue
 
