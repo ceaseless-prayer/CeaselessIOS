@@ -178,7 +178,7 @@
     return persons;
 }
 
--(void) refreshContactsFromAddressBook: (ABAddressBookRef)addressBook {
+- (void) refreshContactsFromAddressBook: (ABAddressBookRef)addressBook {
     
     NSArray * allAddressBookContacts = [self getUnifiedAddressBookRecords:addressBook];
     NSArray * allCeaselessContacts = [self getAllCeaselessContacts];

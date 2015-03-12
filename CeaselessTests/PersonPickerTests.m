@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import "PersonPicker.h"
 
 @interface PersonPickerTests : XCTestCase
-
+    @property (nonatomic) PersonPicker *picker;
 @end
 
 @implementation PersonPickerTests
@@ -28,13 +29,6 @@
 - (void)testExample {
     // This is an example of a functional test case.
     XCTAssert(YES, @"Pass");
-}
-
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
 }
 
 @end

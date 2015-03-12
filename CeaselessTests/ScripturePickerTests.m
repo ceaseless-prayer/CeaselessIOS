@@ -8,33 +8,28 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import "ScripturePicker.h"
 
 @interface ScripturePickerTests : XCTestCase
-
+    @property (nonatomic) ScripturePicker *picker;
 @end
 
 @implementation ScripturePickerTests
 
 - (void)setUp {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    _picker = [[ScripturePicker alloc] init];
+    // TODO we could clean up the queue
 }
 
 - (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
+    // TODO we could restore the queue
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    XCTAssert(YES, @"Pass");
-}
-
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+- (void)testPopScriptureQueue {
+    ScriptureQueue *sq = [_picker popScriptureQueue];
+    XCTAssertNotNil(sq, @"Pass");
 }
 
 @end
