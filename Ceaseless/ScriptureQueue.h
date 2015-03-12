@@ -17,6 +17,4 @@
 @property (nonatomic, retain) NSString * shareLink;
 @property (nonatomic, retain)	NSDate * lastPresentedDate;
 
-- (void) seedDefaultScripture;
-- (NSInteger) countObjectsInCoreData;
 @end

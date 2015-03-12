@@ -17,15 +17,4 @@
 @dynamic shareLink;
 @dynamic lastPresentedDate;
 
-- (NSInteger) countObjectsInCoreData {
-	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"ScriptureQueue"];
-	fetchRequest.resultType = NSCountResultType;
-	NSError *fetchError = nil;
-	NSUInteger itemsCount = [self.managedObjectContext countForFetchRequest:fetchRequest error:&fetchError];
-	if (itemsCount == NSNotFound) {
-		NSLog(@"Fetch error: %@", fetchError);
-	}
-	return itemsCount;
-
-}
 @end

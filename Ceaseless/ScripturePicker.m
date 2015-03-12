@@ -45,10 +45,9 @@ int const kDefaultQueueMinSize = 1;
 	self.managedObjectContext = appDelegate.managedObjectContext;
 
 	NSInteger totalCount = [self countObjectsInCoreData];
-	NSInteger presentedCount = [self.fetchedObjects count];
+	NSArray *presentedScripture = [self getScriptureWithPredicate: @"lastPresentedDate != nil"];
+	NSInteger presentedCount = [presentedScripture count];
 	NSInteger unusedCount = totalCount - presentedCount;
-		//this method returns the self.fetchedObjects array
-	[self getScriptureWithPredicate: @"lastPresentedDate != nil"];
 
 	while (unusedCount < kDefaultQueueMaxSize) {
 		[self requestDailyVerseReference];
@@ -57,7 +56,7 @@ int const kDefaultQueueMinSize = 1;
 
 	while (totalCount > 1 && presentedCount > 0) {
 		NSError * error = nil;
-		[self.managedObjectContext deleteObject: self.fetchedObjects [presentedCount - 1]];
+		[self.managedObjectContext deleteObject: presentedScripture [presentedCount - 1]];
 
 		if (![self.managedObjectContext save:&error]) {
 			NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
@@ -72,29 +71,24 @@ int const kDefaultQueueMinSize = 1;
 	AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
 	self.managedObjectContext = appDelegate.managedObjectContext;
 
-		//containsScriptureWithPredicate returns self.fetchedObjects
+	NSArray *scriptureArray = [[NSArray alloc] init];
 		//get usused scripture
-	[self getScriptureWithPredicate: @"lastPresentedDate == nil"];
-	if ([self.fetchedObjects count] < 1) {
+	scriptureArray = [self getScriptureWithPredicate: @"lastPresentedDate == nil"];
+	if ([scriptureArray count] < 1) {
 			//get a previously used scripture
-		[self getScriptureWithPredicate: @"lastPresentedDate != nil"];
-		if ([self.fetchedObjects count] < 1) {
+		scriptureArray = [self getScriptureWithPredicate: @"lastPresentedDate != nil"];
+		if ([scriptureArray count] < 1) {
 				//there aren't any previously used or unused scripture, so seed with a default scripture
-				// Initialize with a default scripture
 				[self seedDefaultScripture];
-				// now get the seeded scripture in self.fetchedObjects
-				[self getScriptureWithPredicate: @"lastPresentedDate == nil"];
+				// now get the seeded scripture
+				scriptureArray = [self getScriptureWithPredicate: @"lastPresentedDate == nil"];
 		}
 	}
-//	for (ScriptureQueue *sq in self.fetchedObjects) {
-//		NSLog(@"verse: %@", sq.verse);
-//		NSLog(@"citation: %@", sq.citation);
-//	}
 
-	if ([self.fetchedObjects count] > 0) {
+	if ([scriptureArray count] > 0) {
 		// set the last Presented Date on the scripture we will use
 		NSError * error = nil;
-		[[self.fetchedObjects objectAtIndex:0] setValue: [NSDate date] forKey: @"lastPresentedDate"];
+		[[scriptureArray objectAtIndex:0] setValue: [NSDate date] forKey: @"lastPresentedDate"];
 
 		if (![self.managedObjectContext save: &error]) {
 			NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
@@ -104,7 +98,7 @@ int const kDefaultQueueMinSize = 1;
 	}
 
 		//return the selected scripture object
-	return [self.fetchedObjects objectAtIndex:0];
+	return [scriptureArray objectAtIndex:0];
 
 };
 
@@ -190,7 +184,7 @@ int const kDefaultQueueMinSize = 1;
 	[dataTask resume];
 }
 
-- (void) getScriptureWithPredicate: (NSString *) predicateArgument {
+- (NSArray *) getScriptureWithPredicate: (NSString *) predicateArgument {
 
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
 	NSEntityDescription *entity = [NSEntityDescription entityForName:@"ScriptureQueue"
@@ -202,7 +196,9 @@ int const kDefaultQueueMinSize = 1;
 
 	[fetchRequest setPredicate:pred];
 
-	self.fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+	NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+
+	return fetchedObjects;
 }
 - (void) seedDefaultScripture {
 
