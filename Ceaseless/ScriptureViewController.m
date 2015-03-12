@@ -22,5 +22,7 @@
 	NonMOScripture *scripture = self.dataObject;
 	self.scriptureView.scriptureReferenceLabel.text = scripture.citation;
 	self.scriptureView.scriptureTextView.text = scripture.verse;
+		//scroll text to top of view
+	[self.scriptureView.scriptureTextView scrollRangeToVisible: (NSMakeRange(0, 0))];
 }
 @end
