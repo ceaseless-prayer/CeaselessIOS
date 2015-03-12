@@ -42,9 +42,8 @@
         // Create the data model.
         // Initializes to app delegate card array
 		ScripturePicker *scripturePicker = [[ScripturePicker alloc] init];
-		[scripturePicker fillScriptureQueue];
+		[scripturePicker manageScriptureQueue];
 		_scripture = [scripturePicker popScriptureQueue];
-		[scripturePicker fillScriptureQueue];
 		PersonPicker *personPicker = [[PersonPicker alloc] init];
 		[personPicker loadContacts];
         
@@ -53,6 +52,7 @@
         
         _cardArray = [[NSMutableArray alloc] initWithArray: appDelegate.peopleArray];
         [_cardArray insertObject: _scripture atIndex: 0];
+
 
     }
     return self;

@@ -13,9 +13,10 @@
 @interface ScripturePicker : NSObject
 
 @property (strong, nonatomic) ScriptureQueue *scripture;
+@property (nonatomic, retain) NSArray *fetchedObjects;
 
 - (void)requestDailyVerseReference;
-- (void) fillScriptureQueue;
-- (NSArray *) listQueuedScriptures;
+- (void) manageScriptureQueue;
 - (ScriptureQueue *) popScriptureQueue;
+- (void) containsScriptureWithPredicate: (NSString *) predicateArgument;
 @end

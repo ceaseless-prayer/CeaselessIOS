@@ -14,8 +14,6 @@
 
 @implementation AppDelegate
 
-NSString *const kDefaultScripture = @"\"And whatever you ask in prayer, you will receive, if you have faith.\"";
-NSString *const kDefaultCitation = @"(Matthew 21:22,ESV)";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -25,18 +23,8 @@ NSString *const kDefaultCitation = @"(Matthew 21:22,ESV)";
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
         [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound categories:nil]];
     }
-	[self seedDefaultScripture];
 
     return YES;
-}
-- (void) seedDefaultScripture {
-	NSError *error = nil;
-	NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"ScriptureQueue" inManagedObjectContext:self.managedObjectContext];
-	[newManagedObject setValue: kDefaultScripture forKey: @"verse"];
-	[newManagedObject setValue: kDefaultCitation forKey: @"citation"];
-	if (![self.managedObjectContext save: &error]) {
-		NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
-	}
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
