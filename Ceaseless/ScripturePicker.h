@@ -18,5 +18,5 @@
 - (void)requestDailyVerseReference;
 - (void) manageScriptureQueue;
 - (ScriptureQueue *) popScriptureQueue;
-- (void) containsScriptureWithPredicate: (NSString *) predicateArgument;
+- (void) getScriptureWithPredicate: (NSString *) predicateArgument;
 @end

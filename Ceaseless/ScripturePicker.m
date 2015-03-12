@@ -45,15 +45,15 @@ int const kDefaultQueueMinSize = 1;
 	self.managedObjectContext = appDelegate.managedObjectContext;
 
 	NSInteger totalCount = [self countObjectsInCoreData];
-	[self containsScriptureWithPredicate: @"lastPresentedDate != nil"];
 	NSInteger presentedCount = [self.fetchedObjects count];
 	NSInteger unusedCount = totalCount - presentedCount;
-	
+		//this method returns the self.fetchedObjects array
+	[self getScriptureWithPredicate: @"lastPresentedDate != nil"];
+
 	while (unusedCount < kDefaultQueueMaxSize) {
 		[self requestDailyVerseReference];
 		unusedCount++;
 	}
-
 
 	while (totalCount > 1 && presentedCount > 0) {
 		NSError * error = nil;
@@ -71,15 +71,19 @@ int const kDefaultQueueMinSize = 1;
 {
 	AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
 	self.managedObjectContext = appDelegate.managedObjectContext;
-	
-	[self containsScriptureWithPredicate: @"lastPresentedDate == nil"];
+
+		//containsScriptureWithPredicate returns self.fetchedObjects
+		//get usused scripture
+	[self getScriptureWithPredicate: @"lastPresentedDate == nil"];
 	if ([self.fetchedObjects count] < 1) {
-			//use a previously used scripture
-		[self containsScriptureWithPredicate: @"lastPresentedDate != nil"];
+			//get a previously used scripture
+		[self getScriptureWithPredicate: @"lastPresentedDate != nil"];
 		if ([self.fetchedObjects count] < 1) {
+				//there aren't any previously used or unused scripture, so seed with a default scripture
 				// Initialize with a default scripture
 				[self seedDefaultScripture];
-				[self containsScriptureWithPredicate: @"lastPresentedDate == nil"];
+				// now get the seeded scripture in self.fetchedObjects
+				[self getScriptureWithPredicate: @"lastPresentedDate == nil"];
 		}
 	}
 //	for (ScriptureQueue *sq in self.fetchedObjects) {
@@ -186,7 +190,7 @@ int const kDefaultQueueMinSize = 1;
 	[dataTask resume];
 }
 
-- (void) containsScriptureWithPredicate: (NSString *) predicateArgument {
+- (void) getScriptureWithPredicate: (NSString *) predicateArgument {
 
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
 	NSEntityDescription *entity = [NSEntityDescription entityForName:@"ScriptureQueue"
