@@ -7,7 +7,14 @@
 //
 
 #import "ScriptureViewController.h"
-#import "NonMOScripture.h"
+#import "ScriptureQueue.h"
+#import "AppDelegate.h"
+
+@interface ScriptureViewController ()
+
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
+@end
 
 @implementation ScriptureViewController
 
@@ -19,9 +26,11 @@
 - (void)viewWillAppear: (BOOL)animated {
     [super viewWillAppear:animated];
 
-	NonMOScripture *scripture = self.dataObject;
-	self.scriptureView.scriptureReferenceLabel.text = scripture.citation;
-	self.scriptureView.scriptureTextView.text = scripture.verse;
+	AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
+	self.managedObjectContext = appDelegate.managedObjectContext;
+
+	self.scriptureView.scriptureReferenceLabel.text = [self.dataObject valueForKey: @"citation" ];
+	self.scriptureView.scriptureTextView.text = [self.dataObject valueForKey: @"verse"];
 		//scroll text to top of view
 	[self.scriptureView.scriptureTextView scrollRangeToVisible: (NSMakeRange(0, 0))];
 }
