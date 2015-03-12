@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		42199AB51AAF8DC400797224 /* background-3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 42199AB41AAF8DC400797224 /* background-3.jpg */; };
+		425271A81AB1FA9A005098F6 /* ScripturePickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271A71AB1FA9A005098F6 /* ScripturePickerTests.m */; };
+		425271AA1AB1FF1C005098F6 /* PersonPickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271A91AB1FF1C005098F6 /* PersonPickerTests.m */; };
 		429E60891AAA5FD8003F37BF /* ScriptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E60881AAA5FD7003F37BF /* ScriptureViewController.m */; };
 		429E608C1AAA61B1003F37BF /* PersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E608B1AAA61B1003F37BF /* PersonViewController.m */; };
 		42F3AE1E1AA4DD7F003A88F5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F3AE1D1AA4DD7F003A88F5 /* main.m */; };
@@ -62,6 +64,8 @@
 
 /* Begin PBXFileReference section */
 		42199AB41AAF8DC400797224 /* background-3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "background-3.jpg"; sourceTree = "<group>"; };
+		425271A71AB1FA9A005098F6 /* ScripturePickerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScripturePickerTests.m; sourceTree = "<group>"; };
+		425271A91AB1FF1C005098F6 /* PersonPickerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonPickerTests.m; sourceTree = "<group>"; };
 		429E60871AAA5FD7003F37BF /* ScriptureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptureViewController.h; sourceTree = "<group>"; };
 		429E60881AAA5FD7003F37BF /* ScriptureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptureViewController.m; sourceTree = "<group>"; };
 		429E608A1AAA61B1003F37BF /* PersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonViewController.h; sourceTree = "<group>"; };
@@ -211,7 +215,9 @@
 			isa = PBXGroup;
 			children = (
 				42F3AE3D1AA4DD80003A88F5 /* CeaselessTests.m */,
+				425271A71AB1FA9A005098F6 /* ScripturePickerTests.m */,
 				42F3AE3B1AA4DD80003A88F5 /* Supporting Files */,
+				425271A91AB1FF1C005098F6 /* PersonPickerTests.m */,
 			);
 			path = CeaselessTests;
 			sourceTree = "<group>";
@@ -350,7 +356,7 @@
 					};
 					42F3AE361AA4DD80003A88F5 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 98FUBN4YVB;
+						DevelopmentTeam = 28DYBASY7W;
 						TestTargetID = 42F3AE171AA4DD7F003A88F5;
 					};
 				};
@@ -455,6 +461,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				42F3AE3E1AA4DD80003A88F5 /* CeaselessTests.m in Sources */,
+				425271A81AB1FA9A005098F6 /* ScripturePickerTests.m in Sources */,
+				425271AA1AB1FF1C005098F6 /* PersonPickerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
