@@ -31,6 +31,14 @@ int const kDefaultQueueMinSize = 1;
 	//		delete it from the queue
 	//		return the scripture
 	//
+
+- (id)init {
+	self = [super init];
+	if (self) {
+		AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
+		self.managedObjectContext = appDelegate.managedObjectContext;	}
+	return self;
+}
 - (void) verseOfTheDay {
 
 
@@ -40,9 +48,6 @@ int const kDefaultQueueMinSize = 1;
 
 }
 - (void) manageScriptureQueue {
-
-	AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
-	self.managedObjectContext = appDelegate.managedObjectContext;
 
 	NSInteger totalCount = [self countObjectsInCoreData];
 	NSArray *presentedScripture = [self getScriptureWithPredicate: @"lastPresentedDate != nil"];
@@ -68,9 +73,6 @@ int const kDefaultQueueMinSize = 1;
 
 - (ScriptureQueue *)popScriptureQueue
 {
-	AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
-	self.managedObjectContext = appDelegate.managedObjectContext;
-
 	NSArray *scriptureArray = [[NSArray alloc] init];
 		//get unused scripture
 	scriptureArray = [self getScriptureWithPredicate: @"lastPresentedDate == nil"];
