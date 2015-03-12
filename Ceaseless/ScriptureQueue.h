@@ -15,5 +15,6 @@
 @property (nonatomic, retain) NSString * verse;
 @property (nonatomic, retain) NSString * citation;
 @property (nonatomic, retain) NSString * shareLink;
+@property (nonatomic, retain)	NSDate * lastPresentedDate;
 
 @end

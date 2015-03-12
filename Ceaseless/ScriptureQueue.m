@@ -8,11 +8,11 @@
 
 #import "ScriptureQueue.h"
 
-
 @implementation ScriptureQueue
 
 @dynamic verse;
 @dynamic citation;
 @dynamic shareLink;
+@dynamic lastPresentedDate;
 
 @end

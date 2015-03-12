@@ -16,10 +16,12 @@
 @end
 
 @implementation ScripturePicker
-
+NSString *const kDefaultScripture = @"\"And whatever you ask in prayer, you will receive, if you have faith.\"";
+NSString *const kDefaultCitation = @"(Matthew 21:22,ESV)";
 NSString *const kVerseOfTheDayURL = @"http://test.ceaselessprayer.com/api/votd";
 NSString *const kGetScriptureURL = @"http://test.ceaselessprayer.com/api/getScripture";
-int const kDefaultQueueSize = 5;
+int const kDefaultQueueMaxSize = 5;
+int const kDefaultQueueMinSize = 1;
 	// verseOfTheDay
 	//		if its still the same day return the verse we cached
 	//		else pop a scripture off the queue
@@ -29,66 +31,76 @@ int const kDefaultQueueSize = 5;
 	//		delete it from the queue
 	//		return the scripture
 	//
+
+- (id)init {
+	self = [super init];
+	if (self) {
+		AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
+		self.managedObjectContext = appDelegate.managedObjectContext;	}
+	return self;
+}
 - (void) verseOfTheDay {
 
 
 	// if it is a new day, remove the top of the queue
 
 
-		// need to get the top of the queue, then delete it.
-//	NSError * error = nil;
-//	[self.managedObjectContext deleteObject: sq];
-//
-//	if (![self.managedObjectContext save:&error]) {
-//		NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
-//	}
+
 }
-- (void) fillScriptureQueue {
+- (void) manageScriptureQueue {
 
-	AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
-	self.managedObjectContext = appDelegate.managedObjectContext;
+	NSInteger totalCount = [self countObjectsInCoreData];
+	NSArray *presentedScripture = [self getScriptureWithPredicate: @"lastPresentedDate != nil"];
+	NSInteger presentedCount = [presentedScripture count];
+	NSInteger unusedCount = totalCount - presentedCount;
 
-	NSInteger count = [self countObjectsInCoreData];
-
-	while (count < kDefaultQueueSize) {
+	while (unusedCount < kDefaultQueueMaxSize) {
 		[self requestDailyVerseReference];
-		count++;
+		unusedCount++;
 	}
 
-}
-- (NSInteger) countObjectsInCoreData {
-	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"ScriptureQueue"];
-	fetchRequest.resultType = NSCountResultType;
-	NSError *fetchError = nil;
-	NSUInteger itemsCount = [self.managedObjectContext countForFetchRequest:fetchRequest error:&fetchError];
-	if (itemsCount == NSNotFound) {
-		NSLog(@"Fetch error: %@", fetchError);
-	}
-	return itemsCount;
+	while (totalCount > 1 && presentedCount > 0) {
+		NSError * error = nil;
+		[self.managedObjectContext deleteObject: presentedScripture [presentedCount - 1]];
 
+		if (![self.managedObjectContext save:&error]) {
+			NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
+		}
+		totalCount--;
+		presentedCount--;
+	}
 }
 
 - (ScriptureQueue *)popScriptureQueue
 {
-	ScriptureQueue *sq;
-	NSArray *scriptures =[self listQueuedScriptures];
-	for (id managedObject in scriptures) {
-		sq = managedObject;
-		NSLog(@"verse: %@", sq.verse);
-		NSLog(@"citation: %@", sq.citation);
+	NSArray *scriptureArray = [[NSArray alloc] init];
+		//get unused scripture
+	scriptureArray = [self getScriptureWithPredicate: @"lastPresentedDate == nil"];
+	if ([scriptureArray count] < 1) {
+			//get a previously used scripture
+		scriptureArray = [self getScriptureWithPredicate: @"lastPresentedDate != nil"];
+		if ([scriptureArray count] < 1) {
+				//there aren't any previously used or unused scripture, so seed with a default scripture
+				[self seedDefaultScripture];
+				// now get the seeded scripture
+				scriptureArray = [self getScriptureWithPredicate: @"lastPresentedDate == nil"];
+		}
 	}
 
-	if ([scriptures count] > 0) {
-		// return the top of the queue
-		sq = [scriptures objectAtIndex:0];
+	if ([scriptureArray count] > 0) {
+		// set the last Presented Date on the scripture we will use
+		NSError * error = nil;
+		[[scriptureArray objectAtIndex:0] setValue: [NSDate date] forKey: @"lastPresentedDate"];
+
+		if (![self.managedObjectContext save: &error]) {
+			NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
+		}
+			//return the selected scripture object
+		return [scriptureArray objectAtIndex:0];
+
 	} else {
-		NSLog (@"What happened to the seeded default");
-//		sq = [ScriptureQueue alloc]; // TODO test this. this does not work I tested it
-//		sq.verse = kDefaultScripture;
-//		sq.citation = kDefaultCitation;
+		return nil;
 	}
-
-	return sq;
 };
 
 - (void)requestDailyVerseReference
@@ -172,16 +184,42 @@ int const kDefaultQueueSize = 5;
 	  }];
 	[dataTask resume];
 }
-- (NSArray *) listQueuedScriptures {
-	NSError * error = nil;
+
+- (NSArray *) getScriptureWithPredicate: (NSString *) predicateArgument {
 
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
 	NSEntityDescription *entity = [NSEntityDescription entityForName:@"ScriptureQueue"
 											  inManagedObjectContext:self.managedObjectContext];
 	[fetchRequest setEntity:entity];
+	NSError * error = nil;
 
-	NSArray *fetchedObjects2 = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-	return fetchedObjects2;
+	NSPredicate *pred = [NSPredicate predicateWithFormat:predicateArgument];
+
+	[fetchRequest setPredicate:pred];
+
+	NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+
+	return fetchedObjects;
 }
+- (void) seedDefaultScripture {
 
+	NSError *error = nil;
+	NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"ScriptureQueue" inManagedObjectContext:self.managedObjectContext];
+	[newManagedObject setValue: kDefaultScripture forKey: @"verse"];
+	[newManagedObject setValue: kDefaultCitation forKey: @"citation"];
+	if (![self.managedObjectContext save: &error]) {
+		NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
+	}
+}
+- (NSInteger) countObjectsInCoreData {
+	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"ScriptureQueue"];
+	fetchRequest.resultType = NSCountResultType;
+	NSError *fetchError = nil;
+	NSUInteger itemsCount = [self.managedObjectContext countForFetchRequest:fetchRequest error:&fetchError];
+	if (itemsCount == NSNotFound) {
+		NSLog(@"Fetch error: %@", fetchError);
+	}
+	return itemsCount;
+
+}
 @end
