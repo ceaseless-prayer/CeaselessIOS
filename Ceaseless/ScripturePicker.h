@@ -15,7 +15,7 @@
 @property (strong, nonatomic) ScriptureQueue *scripture;
 
 - (void)requestDailyVerseReference;
-- (void) fillScriptureQueue;
-- (NSArray *) listQueuedScriptures;
+- (void) manageScriptureQueue;
 - (ScriptureQueue *) popScriptureQueue;
+- (NSArray *) getScriptureWithPredicate: (NSString *) predicateArgument;
 @end

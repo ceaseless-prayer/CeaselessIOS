@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-#import "NonMOScripture.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -22,7 +21,6 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong) NSArray *peopleArray;
 @property (nonatomic, strong) NSArray *cardArray;
-@property (nonatomic, strong) NonMOScripture *scripture;
 
 @end
 

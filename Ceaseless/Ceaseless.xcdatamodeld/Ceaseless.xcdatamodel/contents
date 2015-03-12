@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C109" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C1510" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Email" representedClassName="Email" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="person" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="emails" inverseEntity="Person" syncable="YES"/>
@@ -35,16 +35,17 @@
     </entity>
     <entity name="ScriptureQueue" representedClassName="ScriptureQueue" syncable="YES">
         <attribute name="citation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastPresentedDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="shareLink" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="verse" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Person" positionX="-396" positionY="-73" width="128" height="178"/>
         <element name="Email" positionX="-216" positionY="-144" width="128" height="73"/>
-        <element name="PhoneNumber" positionX="-45" positionY="-1" width="128" height="73"/>
         <element name="Note" positionX="-200" positionY="-54" width="128" height="103"/>
-        <element name="ScriptureQueue" positionX="-576" positionY="-180" width="128" height="88"/>
-        <element name="PrayerRecord" positionX="-173" positionY="81" width="128" height="88"/>
         <element name="PeopleQueue" positionX="-387" positionY="-180" width="128" height="58"/>
+        <element name="Person" positionX="-396" positionY="-73" width="128" height="178"/>
+        <element name="PhoneNumber" positionX="-45" positionY="-1" width="128" height="73"/>
+        <element name="PrayerRecord" positionX="-173" positionY="81" width="128" height="88"/>
+        <element name="ScriptureQueue" positionX="-576" positionY="-180" width="128" height="105"/>
     </elements>
 </model>
