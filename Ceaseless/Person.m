@@ -7,6 +7,7 @@
 //
 
 #import "Person.h"
+#import "AddressBookId.h"
 #import "Email.h"
 #import "Name.h"
 #import "Note.h"
@@ -26,5 +27,6 @@
 @dynamic queued;
 @dynamic firstNames;
 @dynamic lastNames;
+@dynamic addressBookIds;
 
 @end

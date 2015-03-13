@@ -9,5 +9,53 @@
 #import "CeaselessLocalContacts.h"
 
 @implementation CeaselessLocalContacts
+- (NSArray *) filterResults: (NSArray*) results byEmails:(NSSet*) emails orPhoneNumbers: (NSSet*) phoneNumbers {
+    NSMutableArray *filteredResults = [[NSMutableArray alloc]init];
+    for (Person *contact in results) {
+        
+        BOOL emailMatch = NO;
+        BOOL phoneNumberMatch = NO;
+        
+        for(NSString *email in emails) {
+            if([contact.emails containsObject:email]){
+                emailMatch = YES;
+                break;
+            }
+        }
+        
+        for(NSString *phoneNumber in phoneNumbers) {
+            if([contact.phoneNumbers containsObject:phoneNumber]) {
+                phoneNumberMatch = YES;
+                break;
+            };
+        }
+        
+        if(emailMatch || phoneNumbers) {
+            [filteredResults addObject:contact];
+        }
+    }
+    
+    return filteredResults;
+}
 
+- (NSArray *) lookupContactsByFirstName:(NSString*) firstName andLastName: (NSString*) lastName {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                              @"ANY firstName like %@ AND lastName like %@", firstName, lastName];
+    return [_contacts filteredArrayUsingPredicate:predicate];
+}
+
+- (NSArray *) lookupContactsByAddressBookId:(NSString*) addressBookId {
+    NSUUID *oNSUUID = [[UIDevice currentDevice] identifierForVendor];
+    NSString *deviceId = [oNSUUID UUIDString];
+    NSMutableArray *results = [[NSMutableArray alloc]init];
+    for(Person *contact in _contacts) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                                  @"ANY recordId like %@ AND deviceId like %@", addressBookId, deviceId];
+        NSSet *idMatches = [contact.addressBookIds filteredSetUsingPredicate: predicate];
+        if([idMatches count] > 0) {
+            [results addObject: contact];
+        }
+    }
+    return results;
+}
 @end

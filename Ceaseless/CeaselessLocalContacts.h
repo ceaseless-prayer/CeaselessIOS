@@ -7,10 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "Person.h"
+#import "AddressBookId.h"
 
 @interface CeaselessLocalContacts : NSObject
 @property (strong, nonatomic) NSArray *contacts;
 - (NSArray *) filterResults: (NSArray*) results byEmails:(NSSet*) emails orPhoneNumbers: (NSSet*) phoneNumber;
 - (NSArray *) lookupContactsByFirstName:(NSString*) firstName andLastName: (NSString*) lastName;
-- (NSArray *) lookupContactsByDeviceId: (NSString*) deviceId andAddressBookId:(NSString*) addressBookId;
+- (NSArray *) lookupContactsByAddressBookId:(NSString*) addressBookId;
 @end

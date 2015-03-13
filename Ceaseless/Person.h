@@ -2,6 +2,10 @@
 //  Person.h
 //  Ceaseless
 //
+//  This class stores information about person necessary for identification and holds relationships
+//  With user and system generated content about that person. It defers to local address books to fill
+//  in contact information details rather than storing everything itself.
+//
 //  Created by Christopher Lim on 3/13/15.
 //  Copyright (c) 2015 Christopher Lim. All rights reserved.
 //
@@ -9,7 +13,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Email, Name, Note, PeopleQueue, PhoneNumber, PrayerRecord;
+@class AddressBookId, Email, Name, Note, PeopleQueue, PhoneNumber, PrayerRecord;
 
 @interface Person : NSManagedObject
 
@@ -22,6 +26,7 @@
 @property (nonatomic, retain) PeopleQueue *queued;
 @property (nonatomic, retain) NSSet *firstNames;
 @property (nonatomic, retain) NSSet *lastNames;
+@property (nonatomic, retain) NSSet *addressBookIds;
 @end
 
 @interface Person (CoreDataGeneratedAccessors)
@@ -55,5 +60,10 @@
 - (void)removeLastNamesObject:(Name *)value;
 - (void)addLastNames:(NSSet *)values;
 - (void)removeLastNames:(NSSet *)values;
+
+- (void)addAddressBookIdsObject:(AddressBookId *)value;
+- (void)removeAddressBookIdsObject:(AddressBookId *)value;
+- (void)addAddressBookIds:(NSSet *)values;
+- (void)removeAddressBookIds:(NSSet *)values;
 
 @end
