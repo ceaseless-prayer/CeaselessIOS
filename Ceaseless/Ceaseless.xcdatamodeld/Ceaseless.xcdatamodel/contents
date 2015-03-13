@@ -4,6 +4,11 @@
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="person" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="emails" inverseEntity="Person" syncable="YES"/>
     </entity>
+    <entity name="Name" representedClassName="Name" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="firstNameFor" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="firstNames" inverseEntity="Person" syncable="YES"/>
+        <relationship name="lastNameFor" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="lastNames" inverseEntity="Person" syncable="YES"/>
+    </entity>
     <entity name="Note" representedClassName="Note" syncable="YES">
         <attribute name="createDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="lastUpdatedDate" optional="YES" attributeType="Date" syncable="YES"/>
@@ -16,9 +21,9 @@
     <entity name="Person" representedClassName="Person" syncable="YES">
         <attribute name="addressBookId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="ceaselessId" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="emails" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Email" inverseName="person" inverseEntity="Email" syncable="YES"/>
+        <relationship name="firstNames" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Name" inverseName="firstNameFor" inverseEntity="Name" syncable="YES"/>
+        <relationship name="lastNames" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Name" inverseName="lastNameFor" inverseEntity="Name" syncable="YES"/>
         <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="peopleTagged" inverseEntity="Note" syncable="YES"/>
         <relationship name="phoneNumbers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PhoneNumber" inverseName="person" inverseEntity="PhoneNumber" syncable="YES"/>
         <relationship name="prayerRecords" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PrayerRecord" inverseName="person" inverseEntity="PrayerRecord" syncable="YES"/>
@@ -47,5 +52,6 @@
         <element name="PhoneNumber" positionX="-45" positionY="-1" width="128" height="73"/>
         <element name="PrayerRecord" positionX="-173" positionY="81" width="128" height="88"/>
         <element name="ScriptureQueue" positionX="-576" positionY="-180" width="128" height="105"/>
+        <element name="Name" positionX="-369" positionY="-27" width="128" height="88"/>
     </elements>
 </model>
