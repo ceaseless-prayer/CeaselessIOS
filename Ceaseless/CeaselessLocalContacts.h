@@ -10,6 +10,9 @@
 #import <UIKit/UIKit.h>
 #import "Person.h"
 #import "AddressBookId.h"
+#import "Email.h"
+#import "PhoneNumber.h"
+#import "Name.h"
 
 @interface CeaselessLocalContacts : NSObject
 @property (strong, nonatomic) NSArray *contacts;

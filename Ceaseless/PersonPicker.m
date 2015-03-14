@@ -90,10 +90,19 @@
 
 }
 
+- (void) refreshCeaselessContactsFromAddressBook: (ABAddressBookRef)addressBook {
+    NSArray * allAddressBookContacts = [self getUnifiedAddressBookRecords:addressBook];
+    for(NSSet *unifiedRecord in allAddressBookContacts) {
+        [self updateCeaselessContactFromABRecord:(__bridge ABRecordRef)[unifiedRecord anyObject]];
+    }
+}
+
 - (NSArray *)getUnifiedAddressBookRecords:(ABAddressBookRef)addressBook
 {
     // http://stackoverflow.com/questions/11351454/dealing-with-duplicate-contacts-due-to-linked-cards-in-ios-address-book-api
     NSMutableSet *unifiedRecordsSet = [NSMutableSet set];
+    
+    // TODO remove this block of code.
     CFArrayRef sources = ABAddressBookCopyArrayOfAllSources(addressBook);
     NSLog(@" total sources:%ld", CFArrayGetCount(sources));
     for (CFIndex i=0; i < CFArrayGetCount(sources); i++) {
@@ -293,7 +302,8 @@
             [self.managedObjectContext deleteObject: personToRemove];
         }
     } else {
-            // either create it or do nothing
+        // either create it or do nothing
+        [self createCeaselessContactFromABRecord:rawPerson];
     }
 
     // save our changes
@@ -305,60 +315,102 @@
 
 - (void) buildCeaselessContact:(Person*) ceaselessContact fromABRecord: (ABRecordRef) rawPerson {
     NSSet *unifiedRecord = [self getUnifiedAddressBookRecordFor:rawPerson];
+    ceaselessContact.firstNames = [self buildFirstNames:unifiedRecord];
+    ceaselessContact.lastNames = [self buildLastNames:unifiedRecord];
+    ceaselessContact.addressBookIds = [self buildAddressBookIds:unifiedRecord];
+    ceaselessContact.phoneNumbers = [self buildPhoneNumbers:unifiedRecord];
+    ceaselessContact.emails = [self buildEmails:unifiedRecord];
+}
+
+- (NSMutableSet *)buildFirstNames:(NSSet *)unifiedRecord {
     NSMutableSet *firstNames = [[NSMutableSet alloc]init];
-    NSMutableSet *lastNames = [[NSMutableSet alloc]init];
-    NSMutableSet *emails = [[NSMutableSet alloc]init];
-    NSMutableSet *phoneNumbers = [[NSMutableSet alloc]init];
-    NSMutableSet *addressBookIds = [[NSMutableSet alloc]init];
-    NSUUID *oNSUUID = [[UIDevice currentDevice] identifierForVendor];
-    NSString *deviceId = [oNSUUID UUIDString];
-    
     for (id record in unifiedRecord) {
         ABRecordRef personData = (__bridge ABRecordRef) record;
         NSString *firstName = CFBridgingRelease(ABRecordCopyValue(personData, kABPersonFirstNameProperty));
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                                  @"ANY name like %@", firstName];
         if(firstName != nil && ![firstName isEqual: @""]) {
-            [firstNames addObject: firstName];
+            Name *name = (Name *) [self getOrCreateManagedObject:@"Name" withPredicate:predicate];
+            [firstNames addObject: name];
         }
     }
-    ceaselessContact.firstNames = firstNames;
-    
+    return firstNames;
+}
+
+- (NSMutableSet *)buildLastNames:(NSSet *)unifiedRecord {
+    NSMutableSet *lastNames = [[NSMutableSet alloc]init];
     for (id record in unifiedRecord) {
         ABRecordRef personData = (__bridge ABRecordRef) record;
         NSString *lastName = CFBridgingRelease(ABRecordCopyValue(personData, kABPersonLastNameProperty));
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                                  @"ANY name like %@", lastName];
         if(lastName != nil && ![lastName isEqual: @""]) {
-            [lastNames addObject: lastName];
+            Name *name = (Name *) [self getOrCreateManagedObject:@"Name" withPredicate:predicate];
+            [lastNames addObject: name];
         }
     }
-    ceaselessContact.lastNames = lastNames;
+    return lastNames;
+}
+
+- (NSMutableSet*)buildAddressBookIds:(NSSet *)unifiedRecord {
+    
+    NSUUID *oNSUUID = [[UIDevice currentDevice] identifierForVendor];
+    NSString *deviceId = [oNSUUID UUIDString];
+    NSMutableSet *addressBookIds = [[NSMutableSet alloc]init];
     
     for (id record in unifiedRecord) {
         ABRecordRef personData = (__bridge ABRecordRef) record;
         NSString * addressBookId = @(ABRecordGetRecordID(personData)).stringValue;
-        AddressBookId *abId = [NSEntityDescription insertNewObjectForEntityForName:@"AddressBookId" inManagedObjectContext:self.managedObjectContext];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                                  @"ANY recordId like %@ AND deviceId like %@", addressBookId, deviceId];
+        AddressBookId *abId = (AddressBookId *) [self getOrCreateManagedObject:@"AddressBookId" withPredicate:predicate];
         abId.recordId = addressBookId;
         abId.deviceId = deviceId;
         [addressBookIds addObject: abId];
     }
-    ceaselessContact.addressBookIds = addressBookIds;
-    
-    for (id record in unifiedRecord) {
-        ABRecordRef personData = (__bridge ABRecordRef) record;
-        NSSet *recordPhoneNumbers = [self convertABMultiValueStringRefToSet:ABRecordCopyValue(personData, kABPersonPhoneProperty)];
-        [phoneNumbers unionSet:recordPhoneNumbers];
-        
-        // TODO
-//        PhoneNumber *phoneNumber = [NSEntityDescription insertNewObjectForEntityForName:@"PhoneNumber" inManagedObjectContext:self.managedObjectContext];
-    }
-    ceaselessContact.phoneNumbers = phoneNumbers;
+    return addressBookIds;
+}
 
-    for (id record in unifiedRecord) {
-        ABRecordRef personData = (__bridge ABRecordRef) record;
-        NSSet *recordEmails = [self convertABMultiValueStringRefToSet:ABRecordCopyValue(personData, kABPersonEmailProperty)];
-        [emails unionSet:recordEmails];
-        
-//        Email *email = [NSEntityDescription insertNewObjectForEntityForName:@"Email" inManagedObjectContext:self.managedObjectContext];
+- (NSMutableSet *)buildPhoneNumbers:(NSSet *)unifiedRecord {
+    NSMutableSet *phoneNumbers = [[NSMutableSet alloc]init];
+    NSMutableSet *rawPhoneNumbers = [self collectMultiValueRefAcrossSetMembers:unifiedRecord propertyKey:kABPersonPhoneProperty];
+    for (NSString *phoneNumber in rawPhoneNumbers) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                                  @"ANY number like %@", phoneNumber];
+        PhoneNumber *phoneNumberObject = (PhoneNumber *) [self getOrCreateManagedObject: @"PhoneNumber" withPredicate:predicate];
+        phoneNumberObject.number = phoneNumber;
+        [phoneNumbers addObject: phoneNumberObject];
     }
-    ceaselessContact.emails = emails;
+    return phoneNumbers;
+}
+
+- (NSMutableSet *)buildEmails:(NSSet *)unifiedRecord {
+    NSMutableSet *emails = [[NSMutableSet alloc]init];
+    NSMutableSet *rawEmails = [self collectMultiValueRefAcrossSetMembers:unifiedRecord propertyKey:kABPersonEmailProperty];
+    for (NSString *email in rawEmails) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                                  @"ANY address like %@", email];
+        Email *emailObject = (Email *) [self getOrCreateManagedObject: @"Email" withPredicate:predicate];
+        emailObject.address = email;
+        [emails addObject: emailObject];
+    }
+    return emails;
+}
+
+- (NSManagedObject*) getOrCreateManagedObject:(NSString *)entityName withPredicate: (NSPredicate*)predicate{
+    NSManagedObject *result;
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:context];
+    [request setEntity:entity];
+    NSError *errorFetch = nil;
+    NSArray *existingResults = [context executeFetchRequest:request error:&errorFetch];
+    if([existingResults count] < 1) {
+        result = [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:self.managedObjectContext];
+    } else {
+        result = existingResults[0];
+    }
+    return result;
 }
 
 - (void) copyDataFromCeaselessContact: (Person *) src toContact: (Person *) dst {
@@ -372,6 +424,17 @@
     // test it out.
     [src addNotes:dst.notes];
     [src addPrayerRecords:dst.prayerRecords];
+}
+
+- (NSMutableSet*) collectMultiValueRefAcrossSetMembers: (NSSet *)unifiedRecord propertyKey: (ABPropertyID) property {
+    
+    NSMutableSet *resultSet = [[NSMutableSet alloc]init];
+    for (id record in unifiedRecord) {
+        ABRecordRef personData = (__bridge ABRecordRef) record;
+        NSSet *recordValues = [self convertABMultiValueStringRefToSet:ABRecordCopyValue(personData, property)];
+        [resultSet unionSet:recordValues];
+    }
+    return resultSet;
 }
 
 @end
