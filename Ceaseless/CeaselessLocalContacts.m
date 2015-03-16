@@ -39,9 +39,20 @@
 }
 
 - (NSArray *) lookupContactsByFirstName:(NSString*) firstName andLastName: (NSString*) lastName {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                              @"ANY firstName like %@ AND lastName like %@", firstName, lastName];
-    return [_contacts filteredArrayUsingPredicate:predicate];
+    NSMutableArray *results = [[NSMutableArray alloc]init];
+    for(Person *contact in _contacts) {
+        NSPredicate *firstNamePredicate = [NSPredicate predicateWithFormat:
+                                  @"name like %@", firstName];
+        NSPredicate *lastNamePredicate = [NSPredicate predicateWithFormat:
+                                           @"name like %@", lastName];
+        NSSet *firstNameMatches = [contact.firstNames filteredSetUsingPredicate: firstNamePredicate];
+        NSSet *lastNameMatches = [contact.lastNames filteredSetUsingPredicate: lastNamePredicate];
+        
+        if([firstNameMatches count] > 0 && [lastNameMatches count] > 0) {
+            [results addObject: contact];
+        }
+    }
+    return results;
 }
 
 - (NSArray *) lookupContactsByAddressBookId:(NSString*) addressBookId {
@@ -51,9 +62,11 @@
     for(Person *contact in _contacts) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:
                                   @"ANY recordId like %@ AND deviceId like %@", addressBookId, deviceId];
+        if(contact.addressBookIds != nil) {
         NSSet *idMatches = [contact.addressBookIds filteredSetUsingPredicate: predicate];
-        if([idMatches count] > 0) {
-            [results addObject: contact];
+            if([idMatches count] > 0) {
+                [results addObject: contact];
+            }
         }
     }
     return results;

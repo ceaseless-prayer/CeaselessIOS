@@ -30,7 +30,6 @@
 }
 
 - (void) loadContacts {
-
 	self.ceaselessPeople = [[NSMutableArray alloc] initWithCapacity: 3];
 	ABAuthorizationStatus status = ABAddressBookGetAuthorizationStatus();
 
@@ -45,7 +44,7 @@
 
 	CFErrorRef error = NULL;
 	ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, &error);
-
+    
 	if (error) {
 		NSLog(@"ABAddressBookCreateWithOptions error: %@", CFBridgingRelease(error));
 		if (addressBook) CFRelease(addressBook);
@@ -80,6 +79,7 @@
 
 	} else if (status == kABAuthorizationStatusAuthorized) {
 		[self pickPeopleInAddressBook:addressBook];
+        [self refreshCeaselessContactsFromAddressBook:addressBook];
 		if (addressBook) CFRelease(addressBook);
 	}
 	if ([self.ceaselessPeople count] > 0) {
@@ -87,14 +87,17 @@
 		appDelegate.peopleArray = self.ceaselessPeople;
 
 	}
-
 }
 
 - (void) refreshCeaselessContactsFromAddressBook: (ABAddressBookRef)addressBook {
     NSArray * allAddressBookContacts = [self getUnifiedAddressBookRecords:addressBook];
-    for(NSSet *unifiedRecord in allAddressBookContacts) {
-        [self updateCeaselessContactFromABRecord:(__bridge ABRecordRef)[unifiedRecord anyObject]];
-    }
+    ABRecordRef rawPerson = (__bridge ABRecordRef)[allAddressBookContacts[0] anyObject];
+    [self updateCeaselessContactFromABRecord: rawPerson];
+    Person *person = [self getCeaselessContactFromABRecord:rawPerson];
+    NSLog(@"Here is a person: %@", person);
+//    for(NSSet *unifiedRecord in allAddressBookContacts) {
+//        [self updateCeaselessContactFromABRecord:(__bridge ABRecordRef)[unifiedRecord anyObject]];
+//    }
 }
 
 - (NSArray *)getUnifiedAddressBookRecords:(ABAddressBookRef)addressBook
@@ -203,11 +206,13 @@
 }
 
 - (NSArray *) getAllCeaselessContacts {
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Person"];
-    fetchRequest.resultType = NSCountResultType;
-    NSError *error;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Person"
+                                              inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    NSError * error = nil;
     NSArray *persons = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
     if(persons == nil) {
         NSLog(@"Fetch error: %@", error);
     }
@@ -226,6 +231,7 @@
 
 - (Person *) getCeaselessContactFromABRecord: (ABRecordRef) rawPerson {
     CeaselessLocalContacts *cc = [[CeaselessLocalContacts alloc]init];
+    cc.contacts = [self getAllCeaselessContacts];
     NSString *addressBookId = @(ABRecordGetRecordID(rawPerson)).stringValue;
     NSString *firstName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonFirstNameProperty));
     NSString *lastName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonLastNameProperty));
@@ -236,7 +242,6 @@
     
     CFRelease(rawPhoneNumbers);
     CFRelease(rawEmails);
-    
 
     NSArray *byName = [cc lookupContactsByFirstName:firstName andLastName:lastName];
     NSUInteger resultSize = [byName count];
@@ -244,12 +249,17 @@
         NSArray *resultsFilteredByPhoneOrEmail = [cc filterResults:byName byEmails:emails orPhoneNumbers:phoneNumbers];
         NSUInteger filteredResultSize = [resultsFilteredByPhoneOrEmail count];
         if (filteredResultSize > 1) {
+            // so we found multiple contacts by name but could not disambiguate them by email or phone
             // throw an exception
+            NSLog(@"This should not happen, we can do nothing when we have more than 1 result");
+            return nil;
         } else if (filteredResultSize == 1) {
             return resultsFilteredByPhoneOrEmail[0];
         } else {
             // so we found multiple contacts by name but could not disambiguate them by email or phone
             // throw an exception
+            NSLog(@"This should not happen, we can do nothing when we have more than 1 result");
+            return nil;
         }
     } else if (resultSize == 1) {
         return byName[0];
@@ -258,6 +268,8 @@
         NSUInteger byLocalIdResultSize = [resultsByDeviceAndAddressBookId count];
         if (byLocalIdResultSize > 1) {
             // throw an exception. Ceaseless messed up in creating multiple contacts for the same record id
+            NSLog(@"This should not happen, we shouldn't get multiple results for a local id");
+            return nil;
         } else if(byLocalIdResultSize == 1) {
             return resultsByDeviceAndAddressBookId[0];
         } else {
@@ -285,7 +297,10 @@
     NSSet *unifiedRecord = [self getUnifiedAddressBookRecordFor:rawPerson];
     for(id record in unifiedRecord) {
         ABRecordRef personData = (__bridge ABRecordRef) record;
-        [matchingCeaselessContacts addObject: [self getCeaselessContactFromABRecord:personData]];
+        Person *ceaselessContact = [self getCeaselessContactFromABRecord:personData];
+        if(ceaselessContact != nil) {
+            [matchingCeaselessContacts addObject: ceaselessContact];
+        }
     }
     NSUInteger resultSize = [matchingCeaselessContacts count];
    
@@ -328,9 +343,10 @@
         ABRecordRef personData = (__bridge ABRecordRef) record;
         NSString *firstName = CFBridgingRelease(ABRecordCopyValue(personData, kABPersonFirstNameProperty));
         NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                                  @"ANY name like %@", firstName];
+                                  @"name like %@", firstName];
         if(firstName != nil && ![firstName isEqual: @""]) {
             Name *name = (Name *) [self getOrCreateManagedObject:@"Name" withPredicate:predicate];
+            name.name = firstName;
             [firstNames addObject: name];
         }
     }
@@ -343,9 +359,10 @@
         ABRecordRef personData = (__bridge ABRecordRef) record;
         NSString *lastName = CFBridgingRelease(ABRecordCopyValue(personData, kABPersonLastNameProperty));
         NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                                  @"ANY name like %@", lastName];
+                                  @"name like %@", lastName];
         if(lastName != nil && ![lastName isEqual: @""]) {
             Name *name = (Name *) [self getOrCreateManagedObject:@"Name" withPredicate:predicate];
+            name.name = lastName;
             [lastNames addObject: name];
         }
     }
@@ -376,7 +393,7 @@
     NSMutableSet *rawPhoneNumbers = [self collectMultiValueRefAcrossSetMembers:unifiedRecord propertyKey:kABPersonPhoneProperty];
     for (NSString *phoneNumber in rawPhoneNumbers) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                                  @"ANY number like %@", phoneNumber];
+                                  @"number like %@", phoneNumber];
         PhoneNumber *phoneNumberObject = (PhoneNumber *) [self getOrCreateManagedObject: @"PhoneNumber" withPredicate:predicate];
         phoneNumberObject.number = phoneNumber;
         [phoneNumbers addObject: phoneNumberObject];
@@ -389,7 +406,7 @@
     NSMutableSet *rawEmails = [self collectMultiValueRefAcrossSetMembers:unifiedRecord propertyKey:kABPersonEmailProperty];
     for (NSString *email in rawEmails) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                                  @"ANY address like %@", email];
+                                  @"address like %@", email];
         Email *emailObject = (Email *) [self getOrCreateManagedObject: @"Email" withPredicate:predicate];
         emailObject.address = email;
         [emails addObject: emailObject];
@@ -397,12 +414,13 @@
     return emails;
 }
 
-- (NSManagedObject*) getOrCreateManagedObject:(NSString *)entityName withPredicate: (NSPredicate*)predicate{
+- (NSManagedObject*) getOrCreateManagedObject:(NSString *)entityName withPredicate: (NSPredicate*)predicate {
     NSManagedObject *result;
     NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:context];
     [request setEntity:entity];
+    [request setPredicate:predicate];
     NSError *errorFetch = nil;
     NSArray *existingResults = [context executeFetchRequest:request error:&errorFetch];
     if([existingResults count] < 1) {
