@@ -15,6 +15,7 @@
 
 @property (strong, nonatomic) NSMutableArray *ceaselessPeople;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) CeaselessLocalContacts *ceaselessContacts;
 
 @end
 
@@ -91,13 +92,15 @@
 
 - (void) refreshCeaselessContactsFromAddressBook: (ABAddressBookRef)addressBook {
     NSArray * allAddressBookContacts = [self getUnifiedAddressBookRecords:addressBook];
-    ABRecordRef rawPerson = (__bridge ABRecordRef)[allAddressBookContacts[0] anyObject];
-    [self updateCeaselessContactFromABRecord: rawPerson];
-    Person *person = [self getCeaselessContactFromABRecord:rawPerson];
-    NSLog(@"Here is a person: %@", person);
-//    for(NSSet *unifiedRecord in allAddressBookContacts) {
-//        [self updateCeaselessContactFromABRecord:(__bridge ABRecordRef)[unifiedRecord anyObject]];
-//    }
+    self.ceaselessContacts = [[CeaselessLocalContacts alloc]init];
+    _ceaselessContacts.contacts = [self getAllCeaselessContacts];
+//    ABRecordRef rawPerson = (__bridge ABRecordRef)[allAddressBookContacts[0] anyObject];
+//    [self updateCeaselessContactFromABRecord: rawPerson];
+//    Person *person = [self getCeaselessContactFromABRecord:rawPerson];
+//    NSLog(@"Here is a person: %@", person);
+    for(NSSet *unifiedRecord in allAddressBookContacts) {
+        [self updateCeaselessContactFromABRecord:(__bridge ABRecordRef)[unifiedRecord anyObject]];
+    }
 }
 
 - (NSArray *)getUnifiedAddressBookRecords:(ABAddressBookRef)addressBook
@@ -230,8 +233,6 @@
 }
 
 - (Person *) getCeaselessContactFromABRecord: (ABRecordRef) rawPerson {
-    CeaselessLocalContacts *cc = [[CeaselessLocalContacts alloc]init];
-    cc.contacts = [self getAllCeaselessContacts];
     NSString *addressBookId = @(ABRecordGetRecordID(rawPerson)).stringValue;
     NSString *firstName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonFirstNameProperty));
     NSString *lastName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonLastNameProperty));
@@ -243,10 +244,10 @@
     CFRelease(rawPhoneNumbers);
     CFRelease(rawEmails);
 
-    NSArray *byName = [cc lookupContactsByFirstName:firstName andLastName:lastName];
+    NSArray *byName = [_ceaselessContacts lookupContactsByFirstName:firstName andLastName:lastName];
     NSUInteger resultSize = [byName count];
     if (resultSize > 1) {
-        NSArray *resultsFilteredByPhoneOrEmail = [cc filterResults:byName byEmails:emails orPhoneNumbers:phoneNumbers];
+        NSArray *resultsFilteredByPhoneOrEmail = [_ceaselessContacts filterResults:byName byEmails:emails orPhoneNumbers:phoneNumbers];
         NSUInteger filteredResultSize = [resultsFilteredByPhoneOrEmail count];
         if (filteredResultSize > 1) {
             // so we found multiple contacts by name but could not disambiguate them by email or phone
@@ -264,7 +265,7 @@
     } else if (resultSize == 1) {
         return byName[0];
     } else {
-        NSArray *resultsByDeviceAndAddressBookId = [cc lookupContactsByAddressBookId: addressBookId];
+        NSArray *resultsByDeviceAndAddressBookId = [_ceaselessContacts lookupContactsByAddressBookId: addressBookId];
         NSUInteger byLocalIdResultSize = [resultsByDeviceAndAddressBookId count];
         if (byLocalIdResultSize > 1) {
             // throw an exception. Ceaseless messed up in creating multiple contacts for the same record id
@@ -379,7 +380,7 @@
         ABRecordRef personData = (__bridge ABRecordRef) record;
         NSString * addressBookId = @(ABRecordGetRecordID(personData)).stringValue;
         NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                                  @"ANY recordId like %@ AND deviceId like %@", addressBookId, deviceId];
+                                  @"recordId like %@ AND deviceId like %@", addressBookId, deviceId];
         AddressBookId *abId = (AddressBookId *) [self getOrCreateManagedObject:@"AddressBookId" withPredicate:predicate];
         abId.recordId = addressBookId;
         abId.deviceId = deviceId;

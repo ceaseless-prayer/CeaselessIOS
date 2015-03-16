@@ -40,6 +40,9 @@
 
 - (NSArray *) lookupContactsByFirstName:(NSString*) firstName andLastName: (NSString*) lastName {
     NSMutableArray *results = [[NSMutableArray alloc]init];
+//    NSPredicate *namePredicate = [NSPredicate predicateWithFormat: @"%@ IN firstNames AND %@ IN lastNames", firstName, lastName];
+//    NSArray *filteredResults = [_contacts filteredArrayUsingPredicate:namePredicate];
+//    return filteredResults;
     for(Person *contact in _contacts) {
         NSPredicate *firstNamePredicate = [NSPredicate predicateWithFormat:
                                   @"name like %@", firstName];
@@ -61,7 +64,7 @@
     NSMutableArray *results = [[NSMutableArray alloc]init];
     for(Person *contact in _contacts) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                                  @"ANY recordId like %@ AND deviceId like %@", addressBookId, deviceId];
+                                  @"recordId like %@ AND deviceId like %@", addressBookId, deviceId];
         if(contact.addressBookIds != nil) {
         NSSet *idMatches = [contact.addressBookIds filteredSetUsingPredicate: predicate];
             if([idMatches count] > 0) {
