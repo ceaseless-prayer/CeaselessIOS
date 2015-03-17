@@ -45,9 +45,9 @@
 //    return filteredResults;
     for(Person *contact in _contacts) {
         NSPredicate *firstNamePredicate = [NSPredicate predicateWithFormat:
-                                  @"name like %@", firstName];
+                                  @"name = %@", firstName];
         NSPredicate *lastNamePredicate = [NSPredicate predicateWithFormat:
-                                           @"name like %@", lastName];
+                                           @"name = %@", lastName];
         NSSet *firstNameMatches = [contact.firstNames filteredSetUsingPredicate: firstNamePredicate];
         NSSet *lastNameMatches = [contact.lastNames filteredSetUsingPredicate: lastNamePredicate];
         
@@ -64,7 +64,7 @@
     NSMutableArray *results = [[NSMutableArray alloc]init];
     for(Person *contact in _contacts) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                                  @"recordId like %@ AND deviceId like %@", addressBookId, deviceId];
+                                  @"recordId = %@ AND deviceId = %@", addressBookId, deviceId];
         if(contact.addressBookIds != nil) {
         NSSet *idMatches = [contact.addressBookIds filteredSetUsingPredicate: predicate];
             if([idMatches count] > 0) {

@@ -344,7 +344,7 @@
         ABRecordRef personData = (__bridge ABRecordRef) record;
         NSString *firstName = CFBridgingRelease(ABRecordCopyValue(personData, kABPersonFirstNameProperty));
         NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                                  @"name like %@", firstName];
+                                  @"name = %@", firstName];
         if(firstName != nil && ![firstName isEqual: @""]) {
             Name *name = (Name *) [self getOrCreateManagedObject:@"Name" withPredicate:predicate];
             name.name = firstName;
@@ -360,7 +360,7 @@
         ABRecordRef personData = (__bridge ABRecordRef) record;
         NSString *lastName = CFBridgingRelease(ABRecordCopyValue(personData, kABPersonLastNameProperty));
         NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                                  @"name like %@", lastName];
+                                  @"name = %@", lastName];
         if(lastName != nil && ![lastName isEqual: @""]) {
             Name *name = (Name *) [self getOrCreateManagedObject:@"Name" withPredicate:predicate];
             name.name = lastName;
@@ -380,7 +380,7 @@
         ABRecordRef personData = (__bridge ABRecordRef) record;
         NSString * addressBookId = @(ABRecordGetRecordID(personData)).stringValue;
         NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                                  @"recordId like %@ AND deviceId like %@", addressBookId, deviceId];
+                                  @"recordId = %@ AND deviceId = %@", addressBookId, deviceId];
         AddressBookId *abId = (AddressBookId *) [self getOrCreateManagedObject:@"AddressBookId" withPredicate:predicate];
         abId.recordId = addressBookId;
         abId.deviceId = deviceId;
@@ -394,7 +394,7 @@
     NSMutableSet *rawPhoneNumbers = [self collectMultiValueRefAcrossSetMembers:unifiedRecord propertyKey:kABPersonPhoneProperty];
     for (NSString *phoneNumber in rawPhoneNumbers) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                                  @"number like %@", phoneNumber];
+                                  @"number = %@", phoneNumber];
         PhoneNumber *phoneNumberObject = (PhoneNumber *) [self getOrCreateManagedObject: @"PhoneNumber" withPredicate:predicate];
         phoneNumberObject.number = phoneNumber;
         [phoneNumbers addObject: phoneNumberObject];
@@ -407,7 +407,7 @@
     NSMutableSet *rawEmails = [self collectMultiValueRefAcrossSetMembers:unifiedRecord propertyKey:kABPersonEmailProperty];
     for (NSString *email in rawEmails) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                                  @"address like %@", email];
+                                  @"address = %@", email];
         Email *emailObject = (Email *) [self getOrCreateManagedObject: @"Email" withPredicate:predicate];
         emailObject.address = email;
         [emails addObject: emailObject];
