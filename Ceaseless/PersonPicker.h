@@ -12,7 +12,11 @@
 
 @interface PersonPicker : NSObject
 
--(void)loadContacts;
--(void) refreshContactsFromAddressBook: (ABAddressBookRef)addressBook;
-
+- (void)loadContacts;
+- (void) refreshCeaselessContactsFromAddressBook: (ABAddressBookRef)addressBook;
+- (Person *) getCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
+- (void) updateCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
+- (Person *) createCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
+- (NSArray *) getAllCeaselessContacts;
+    
 @end
