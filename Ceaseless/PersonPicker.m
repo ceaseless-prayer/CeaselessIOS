@@ -94,6 +94,7 @@
     NSArray * allAddressBookContacts = [self getUnifiedAddressBookRecords:addressBook];
     self.ceaselessContacts = [[CeaselessLocalContacts alloc]init];
     _ceaselessContacts.contacts = [self getAllCeaselessContacts];
+    _ceaselessContacts.names = [self getAllNames];
 //    ABRecordRef rawPerson = (__bridge ABRecordRef)[allAddressBookContacts[0] anyObject];
 //    [self updateCeaselessContactFromABRecord: rawPerson];
 //    Person *person = [self getCeaselessContactFromABRecord:rawPerson];
@@ -220,6 +221,20 @@
         NSLog(@"Fetch error: %@", error);
     }
     return persons;
+}
+
+- (NSArray *) getAllNames {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Name"
+                                              inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    NSError * error = nil;
+    NSArray *names = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    if(names == nil) {
+        NSLog(@"Fetch error: %@", error);
+    }
+    return names;
 }
 
 - (NSMutableSet *) convertABMultiValueStringRefToSet: (ABMultiValueRef) multiValue {

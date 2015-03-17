@@ -16,6 +16,7 @@
 
 @interface CeaselessLocalContacts : NSObject
 @property (strong, nonatomic) NSArray *contacts;
+@property (strong, nonatomic) NSArray *names;
 - (NSArray *) filterResults: (NSArray*) results byEmails:(NSSet*) emails orPhoneNumbers: (NSSet*) phoneNumber;
 - (NSArray *) lookupContactsByFirstName:(NSString*) firstName andLastName: (NSString*) lastName;
 - (NSArray *) lookupContactsByAddressBookId:(NSString*) addressBookId;

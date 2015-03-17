@@ -40,21 +40,16 @@
 
 - (NSArray *) lookupContactsByFirstName:(NSString*) firstName andLastName: (NSString*) lastName {
     NSMutableArray *results = [[NSMutableArray alloc]init];
-//    NSPredicate *namePredicate = [NSPredicate predicateWithFormat: @"%@ IN firstNames AND %@ IN lastNames", firstName, lastName];
-//    NSArray *filteredResults = [_contacts filteredArrayUsingPredicate:namePredicate];
-//    return filteredResults;
-    for(Person *contact in _contacts) {
-        NSPredicate *firstNamePredicate = [NSPredicate predicateWithFormat:
-                                  @"name = %@", firstName];
-        NSPredicate *lastNamePredicate = [NSPredicate predicateWithFormat:
-                                           @"name = %@", lastName];
-        NSSet *firstNameMatches = [contact.firstNames filteredSetUsingPredicate: firstNamePredicate];
-        NSSet *lastNameMatches = [contact.lastNames filteredSetUsingPredicate: lastNamePredicate];
-        
-        if([firstNameMatches count] > 0 && [lastNameMatches count] > 0) {
-            [results addObject: contact];
-        }
+    NSPredicate *getFirstNameObj = [NSPredicate predicateWithFormat:@"name = %@", firstName];
+    NSPredicate *getLastNameObj = [NSPredicate predicateWithFormat:@"name = %@", lastName];
+    NSArray* firstNameObj = [_names filteredArrayUsingPredicate:getFirstNameObj];
+    NSArray* lastNameObj = [_names filteredArrayUsingPredicate:getLastNameObj];
+    
+    if([firstNameObj count] > 0 && [lastNameObj count] > 0) {
+        NSPredicate *namePredicate = [NSPredicate predicateWithFormat: @"%@ IN firstNames AND %@ IN lastNames", firstNameObj[0], lastNameObj[0]];
+        results = [[NSMutableArray alloc]initWithArray:[_contacts filteredArrayUsingPredicate: namePredicate]];
     }
+    
     return results;
 }
 
