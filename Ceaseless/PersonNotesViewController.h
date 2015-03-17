@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PersonNotesViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate>
+@interface PersonNotesViewController : UITableViewController <UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *notesTableView;
 
 @property (strong, nonatomic) NSArray *notesArray;

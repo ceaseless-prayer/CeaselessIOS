@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C1510" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="AddressBookId" representedClassName="AddressBookId" syncable="YES">
+        <attribute name="deviceId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="recordId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="ceaselessContact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="addressBookIds" inverseEntity="Person" syncable="YES"/>
+    </entity>
     <entity name="Email" representedClassName="Email" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="person" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="emails" inverseEntity="Person" syncable="YES"/>
+    </entity>
+    <entity name="Name" representedClassName="Name" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="firstNameFor" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="firstNames" inverseEntity="Person" syncable="YES"/>
+        <relationship name="lastNameFor" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="lastNames" inverseEntity="Person" syncable="YES"/>
     </entity>
     <entity name="Note" representedClassName="Note" syncable="YES">
         <attribute name="createDate" optional="YES" attributeType="Date" syncable="YES"/>
@@ -16,9 +26,10 @@
     <entity name="Person" representedClassName="Person" syncable="YES">
         <attribute name="addressBookId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="ceaselessId" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="addressBookIds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AddressBookId" inverseName="ceaselessContact" inverseEntity="AddressBookId" syncable="YES"/>
         <relationship name="emails" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Email" inverseName="person" inverseEntity="Email" syncable="YES"/>
+        <relationship name="firstNames" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Name" inverseName="firstNameFor" inverseEntity="Name" syncable="YES"/>
+        <relationship name="lastNames" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Name" inverseName="lastNameFor" inverseEntity="Name" syncable="YES"/>
         <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="peopleTagged" inverseEntity="Note" syncable="YES"/>
         <relationship name="phoneNumbers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PhoneNumber" inverseName="person" inverseEntity="PhoneNumber" syncable="YES"/>
         <relationship name="prayerRecords" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PrayerRecord" inverseName="person" inverseEntity="PrayerRecord" syncable="YES"/>
@@ -43,9 +54,11 @@
         <element name="Email" positionX="-216" positionY="-144" width="128" height="73"/>
         <element name="Note" positionX="-200" positionY="-54" width="128" height="103"/>
         <element name="PeopleQueue" positionX="-387" positionY="-180" width="128" height="58"/>
-        <element name="Person" positionX="-396" positionY="-73" width="128" height="178"/>
+        <element name="Person" positionX="-396" positionY="-73" width="128" height="193"/>
         <element name="PhoneNumber" positionX="-45" positionY="-1" width="128" height="73"/>
         <element name="PrayerRecord" positionX="-173" positionY="81" width="128" height="88"/>
         <element name="ScriptureQueue" positionX="-576" positionY="-180" width="128" height="105"/>
+        <element name="Name" positionX="-369" positionY="-27" width="128" height="88"/>
+        <element name="AddressBookId" positionX="-360" positionY="-18" width="128" height="88"/>
     </elements>
 </model>

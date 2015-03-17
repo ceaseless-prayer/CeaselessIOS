@@ -36,7 +36,8 @@ int const kDefaultQueueMinSize = 1;
 	self = [super init];
 	if (self) {
 		AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
-		self.managedObjectContext = appDelegate.managedObjectContext;	}
+		self.managedObjectContext = appDelegate.managedObjectContext;
+	}
 	return self;
 }
 - (void) verseOfTheDay {

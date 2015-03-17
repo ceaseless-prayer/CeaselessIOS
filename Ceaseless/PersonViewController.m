@@ -7,12 +7,14 @@
 //
 
 #import "PersonViewController.h"
+#import "PersonNotesViewController.h"
+#import "NoteViewController.h"
 #import "NonMOPerson.h"
 #import <MessageUI/MessageUI.h>
-//#import <QuartzCore/QuartzCore.h>
 
 @interface PersonViewController () <MFMessageComposeViewControllerDelegate>
 
+@property (strong, nonatomic) UINavigationController *navController;
 @end
 
 @implementation PersonViewController
@@ -30,10 +32,11 @@ static NSString *kSMSMessage;
 
     [super viewDidLoad];
 
-	UIStoryboard *sb = [UIStoryboard storyboardWithName:@"PersonNotes" bundle:nil];
+	UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 	self.personNotesViewController = [sb instantiateViewControllerWithIdentifier:@"PersonNotesViewController"];
 	[self.personView.notesView addSubview: self.personNotesViewController.tableView];
-	self.personNotesViewController.notesArray = [[NSArray alloc] initWithObjects: @"Note 1", @"Note 2", @"Note 3", @"Note 4", @"Note 5", nil];
+	self.personNotesViewController.tableView.delegate = self;
+	self.personNotesViewController.notesArray = [[NSArray alloc] initWithObjects: @"Add a new note", @"Note 2", @"Note 3", @"Note 4", @"Note 5", nil];
 	[self setDynamicViewConstraintsToView: self.personView.notesView forSubview: self.personNotesViewController.tableView ];
 
     [self registerForNotifications];
@@ -105,6 +108,36 @@ static NSString *kSMSMessage;
 															  attribute:NSLayoutAttributeTrailing
 															 multiplier:1.0
 															   constant:0.0]];
+}
+
+#pragma mark - TableView Delegate
+
+- (void)tableView:(UITableView *)tableView
+didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+	NoteViewController *noteViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"NoteViewController"];
+	noteViewController.delegate = self;
+	if (indexPath.row != 0) {
+			//uncomment this when there are real notes to pass
+//		noteViewController.currentNote = self.personNotesViewController.notesArray[indexPath.row];
+	}
+
+	[self presentViewController:noteViewController animated:YES completion:NULL];
+
+}
+#pragma mark - NoteViewControllerDelegate protocol conformance
+
+- (void)noteViewControllerDidFinish:(NoteViewController *)noteViewController
+{
+
+	[noteViewController dismissViewControllerAnimated:YES completion:NULL];
+
+}
+
+- (void)noteViewControllerDidCancel:(NoteViewController *)noteViewController
+{
+	[noteViewController dismissViewControllerAnimated:YES completion:NULL];
+
 }
 #pragma mark - Action Sheet
 

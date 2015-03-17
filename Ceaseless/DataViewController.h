@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) id dataObject;
 @property (nonatomic) NSUInteger index;
+@property (strong, nonatomic)  UIStoryboard *mainStoryboard;
 
 - (void) formatCardView: (UIView *) cardView withShadowView: (UIView *) shadowView;
 @end

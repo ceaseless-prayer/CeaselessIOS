@@ -18,7 +18,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
 	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    
+
+	NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+											   [UIColor whiteColor], NSForegroundColorAttributeName,
+											   [UIFont fontWithName:@"AvenirNext-Medium" size:16.0f],NSFontAttributeName,
+											   nil];
+
+	[[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
+
     // TODO we may want to re-think if we want to ask for local notification permission when the app opens.
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
         [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound categories:nil]];

@@ -126,4 +126,7 @@
 	self.backgroundImageView.image = blurredImage;
 }
 
+- (IBAction)settingsButtonPressed:(id)sender {
+	NSLog (@"settings button pressed");
+}
 @end

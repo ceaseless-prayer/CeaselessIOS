@@ -9,8 +9,10 @@
 #import "DataViewController.h"
 #import "PersonView.h"
 #import "PersonNotesViewController.h"
+#import "NoteViewController.h"
 
-@interface PersonViewController : DataViewController
+@interface PersonViewController : DataViewController <UITableViewDelegate, NoteViewControllerDelegate>
     @property (strong, nonatomic) IBOutlet PersonView *personView;
 @property (strong, nonatomic) PersonNotesViewController *personNotesViewController;
+@property (strong, nonatomic) UIStoryboard *mainStoryboard;
 @end
