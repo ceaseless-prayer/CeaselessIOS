@@ -70,8 +70,10 @@
     DataViewController *contentViewController;
     if ([self.cardArray[index] isMemberOfClass:[ScriptureQueue class]]) {
         contentViewController = [[ScriptureViewController alloc] init];
+		self.mainStoryboard = storyboard;
     } else {
         contentViewController = [[PersonViewController alloc] init];
+		contentViewController.mainStoryboard = self.mainStoryboard;
     }
 
     contentViewController.dataObject = self.cardArray[index];

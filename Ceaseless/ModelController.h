@@ -14,6 +14,7 @@
 @interface ModelController : NSObject <UIPageViewControllerDataSource>
 
 @property (strong, nonatomic) PersonPicker *personPicker;
+@property (strong, nonatomic)  UIStoryboard *mainStoryboard;
 
 - (DataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard;
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController;

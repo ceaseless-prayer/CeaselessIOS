@@ -17,6 +17,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @property (strong, nonatomic) UIPageViewController *pageViewController;
+- (IBAction)settingsButtonPressed:(id)sender;
 
 @end
 
