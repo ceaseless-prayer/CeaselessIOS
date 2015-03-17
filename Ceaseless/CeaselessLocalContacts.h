@@ -15,8 +15,9 @@
 #import "Name.h"
 
 @interface CeaselessLocalContacts : NSObject
-@property (strong, nonatomic) NSArray *contacts;
-@property (strong, nonatomic) NSArray *names;
+@property (strong, nonatomic) NSMutableArray *contacts;
+@property (strong, nonatomic) NSMutableArray *names;
+@property (strong, nonatomic) NSMutableArray *addressBookIds;
 - (NSArray *) filterResults: (NSArray*) results byEmails:(NSSet*) emails orPhoneNumbers: (NSSet*) phoneNumber;
 - (NSArray *) lookupContactsByFirstName:(NSString*) firstName andLastName: (NSString*) lastName;
 - (NSArray *) lookupContactsByAddressBookId:(NSString*) addressBookId;

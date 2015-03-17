@@ -11,26 +11,16 @@
 @implementation CeaselessLocalContacts
 - (NSArray *) filterResults: (NSArray*) results byEmails:(NSSet*) emails orPhoneNumbers: (NSSet*) phoneNumbers {
     NSMutableArray *filteredResults = [[NSMutableArray alloc]init];
+    
+    NSPredicate *getEmailObj = [NSPredicate predicateWithFormat:@"address IN %@", emails];
+    NSPredicate *getPhoneNumberObj = [NSPredicate predicateWithFormat:@"number IN %@", phoneNumbers];
+    
     for (Person *contact in results) {
         
-        BOOL emailMatch = NO;
-        BOOL phoneNumberMatch = NO;
+        NSSet *matchingEmails = [contact.emails filteredSetUsingPredicate: getEmailObj];
+        NSSet *matchingPhoneNumbers = [contact.phoneNumbers filteredSetUsingPredicate: getPhoneNumberObj];
         
-        for(NSString *email in emails) {
-            if([contact.emails containsObject:email]){
-                emailMatch = YES;
-                break;
-            }
-        }
-        
-        for(NSString *phoneNumber in phoneNumbers) {
-            if([contact.phoneNumbers containsObject:phoneNumber]) {
-                phoneNumberMatch = YES;
-                break;
-            };
-        }
-        
-        if(emailMatch || phoneNumbers) {
+        if([matchingEmails count] > 0 || [matchingPhoneNumbers count] > 0) {
             [filteredResults addObject:contact];
         }
     }
@@ -54,19 +44,19 @@
 }
 
 - (NSArray *) lookupContactsByAddressBookId:(NSString*) addressBookId {
+    NSMutableArray *results = [[NSMutableArray alloc]init];
     NSUUID *oNSUUID = [[UIDevice currentDevice] identifierForVendor];
     NSString *deviceId = [oNSUUID UUIDString];
-    NSMutableArray *results = [[NSMutableArray alloc]init];
-    for(Person *contact in _contacts) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                                  @"recordId = %@ AND deviceId = %@", addressBookId, deviceId];
-        if(contact.addressBookIds != nil) {
-        NSSet *idMatches = [contact.addressBookIds filteredSetUsingPredicate: predicate];
-            if([idMatches count] > 0) {
-                [results addObject: contact];
-            }
-        }
+    
+    NSPredicate *getAddressBookIdObj = [NSPredicate predicateWithFormat:
+                                        @"recordId = %@ AND deviceId = %@", addressBookId, deviceId];
+    NSArray *addressBookIdObj = [_addressBookIds filteredArrayUsingPredicate:getAddressBookIdObj];
+    
+    if([addressBookIdObj count] > 0) {
+        NSPredicate *idPredicate = [NSPredicate predicateWithFormat: @"%@ IN addressBookIds", addressBookIdObj[0]];
+        results = [[NSMutableArray alloc]initWithArray:[_contacts filteredArrayUsingPredicate: idPredicate]];
     }
+    
     return results;
 }
 @end

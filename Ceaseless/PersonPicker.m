@@ -93,13 +93,18 @@
 - (void) refreshCeaselessContactsFromAddressBook: (ABAddressBookRef)addressBook {
     NSArray * allAddressBookContacts = [self getUnifiedAddressBookRecords:addressBook];
     self.ceaselessContacts = [[CeaselessLocalContacts alloc]init];
-    _ceaselessContacts.contacts = [self getAllCeaselessContacts];
-    _ceaselessContacts.names = [self getAllNames];
+    _ceaselessContacts.contacts = [[NSMutableArray alloc] initWithArray:[self getAllCeaselessContacts]];
+    _ceaselessContacts.names = [[NSMutableArray alloc] initWithArray:[self getAllNames]];
+    _ceaselessContacts.addressBookIds = [[NSMutableArray alloc] initWithArray:[self getAllAddressBookIds]];
+    
 //    ABRecordRef rawPerson = (__bridge ABRecordRef)[allAddressBookContacts[0] anyObject];
 //    [self updateCeaselessContactFromABRecord: rawPerson];
 //    Person *person = [self getCeaselessContactFromABRecord:rawPerson];
 //    NSLog(@"Here is a person: %@", person);
+    NSLog(@"Total Ceaseless contacts: %lu", (unsigned long)[_ceaselessContacts.contacts count]);
     for(NSSet *unifiedRecord in allAddressBookContacts) {
+        // do not do anything for contacts with no first name
+        
         [self updateCeaselessContactFromABRecord:(__bridge ABRecordRef)[unifiedRecord anyObject]];
     }
 }
@@ -237,6 +242,20 @@
     return names;
 }
 
+- (NSArray *) getAllAddressBookIds {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"AddressBookId"
+                                              inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    NSError * error = nil;
+    NSArray *ids = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    if(ids == nil) {
+        NSLog(@"Fetch error: %@", error);
+    }
+    return ids;
+}
+
 - (NSMutableSet *) convertABMultiValueStringRefToSet: (ABMultiValueRef) multiValue {
     NSMutableSet *result = [[NSMutableSet alloc] init];
     CFIndex numberOfValues = ABMultiValueGetCount(multiValue);
@@ -248,49 +267,68 @@
 }
 
 - (Person *) getCeaselessContactFromABRecord: (ABRecordRef) rawPerson {
+    
+    // first look up by id
     NSString *addressBookId = @(ABRecordGetRecordID(rawPerson)).stringValue;
+    NSArray *resultsByDeviceAndAddressBookId = [_ceaselessContacts lookupContactsByAddressBookId: addressBookId];
+    NSUInteger byLocalIdResultSize = [resultsByDeviceAndAddressBookId count];
+    
+    if (byLocalIdResultSize == 1) {
+        // we found an exact match, this is the right one.
+        return resultsByDeviceAndAddressBookId[0];
+    } else if (byLocalIdResultSize > 1) {
+        // throw an exception. Ceaseless messed up in creating multiple contacts for the same record id
+        NSLog(@"This should not happen, we shouldn't get multiple results for a local id %@", addressBookId);
+        return nil;
+    }
+    
+    // if id lookup fails, then look up by names, emails and phone numbers.
     NSString *firstName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonFirstNameProperty));
     NSString *lastName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonLastNameProperty));
     ABMultiValueRef rawPhoneNumbers = ABRecordCopyValue(rawPerson, kABPersonPhoneProperty);
     ABMultiValueRef rawEmails = ABRecordCopyValue(rawPerson, kABPersonEmailProperty);
     NSSet *phoneNumbers = [self convertABMultiValueStringRefToSet:rawPhoneNumbers];
     NSSet *emails = [self convertABMultiValueStringRefToSet:rawEmails];
+    NSSet *unifiedRecord = [self getUnifiedAddressBookRecordFor:rawPerson];
     
     CFRelease(rawPhoneNumbers);
     CFRelease(rawEmails);
 
-    NSArray *byName = [_ceaselessContacts lookupContactsByFirstName:firstName andLastName:lastName];
-    NSUInteger resultSize = [byName count];
-    if (resultSize > 1) {
-        NSArray *resultsFilteredByPhoneOrEmail = [_ceaselessContacts filterResults:byName byEmails:emails orPhoneNumbers:phoneNumbers];
-        NSUInteger filteredResultSize = [resultsFilteredByPhoneOrEmail count];
-        if (filteredResultSize > 1) {
-            // so we found multiple contacts by name but could not disambiguate them by email or phone
-            // throw an exception
-            NSLog(@"This should not happen, we can do nothing when we have more than 1 result");
-            return nil;
-        } else if (filteredResultSize == 1) {
-            return resultsFilteredByPhoneOrEmail[0];
-        } else {
-            // so we found multiple contacts by name but could not disambiguate them by email or phone
-            // throw an exception
-            NSLog(@"This should not happen, we can do nothing when we have more than 1 result");
-            return nil;
-        }
-    } else if (resultSize == 1) {
-        return byName[0];
-    } else {
-        NSArray *resultsByDeviceAndAddressBookId = [_ceaselessContacts lookupContactsByAddressBookId: addressBookId];
-        NSUInteger byLocalIdResultSize = [resultsByDeviceAndAddressBookId count];
-        if (byLocalIdResultSize > 1) {
-            // throw an exception. Ceaseless messed up in creating multiple contacts for the same record id
-            NSLog(@"This should not happen, we shouldn't get multiple results for a local id");
-            return nil;
-        } else if(byLocalIdResultSize == 1) {
-            return resultsByDeviceAndAddressBookId[0];
-        } else {
-            return nil; // we really found nothing in this case
-        }
+    NSArray *resultsByName = [_ceaselessContacts lookupContactsByFirstName:firstName andLastName:lastName];
+    NSUInteger resultSize = [resultsByName count];
+    
+    // Note: We chose to let users handle cases of contacts that are unlinked, but
+    // are actually the same. Although these cases may show up multiple times in Ceaseless
+    // we let users decide what to do by either:
+    // linking the contacts or ignoring a contact from their prayer list.
+    
+    if ([phoneNumbers count] == 0  && [emails count] == 0
+        && [unifiedRecord count] == 1 && resultSize == 1) {
+        // we are dealing with a record that has no phone number or email.
+        // we can only treat it as a Ceaseless contact if it has no other
+        // contacts that match its name and has no linked contacts.
+        return resultsByName[0];
+    }
+    
+    NSArray *resultsFilteredByPhoneOrEmail = [_ceaselessContacts filterResults:resultsByName byEmails:emails orPhoneNumbers:phoneNumbers];
+    NSUInteger filteredResultSize = [resultsFilteredByPhoneOrEmail count];
+    
+    if (filteredResultSize == 0) {
+        // There is no Ceaseless contact which shares first name, last name and email/phone number with this record.
+        return nil; // we really found nothing in this case
+    }
+    
+    if (filteredResultSize == 1) {
+        // we found exactly one match, return it
+        return resultsFilteredByPhoneOrEmail[0];
+    }
+    
+    if(filteredResultSize > 1) {
+        // we could not disambiguate multiple Ceaseless contacts
+        // by their first name, last name, email or phone.
+        // we need to throw an exception.
+        NSLog(@"This should not happen, we can do nothing when we have more than 1 result");
+        return nil;
     }
     return nil;
 }
@@ -305,42 +343,50 @@
     if (![self.managedObjectContext save:&error]) {
         NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
     }
+    [self.ceaselessContacts.contacts addObject:newCeaselessPerson];
     return newCeaselessPerson;
 }
 
 - (void) updateCeaselessContactFromABRecord: (ABRecordRef) rawPerson {
     NSMutableSet *matchingCeaselessContacts = [[NSMutableSet alloc]init];
     NSSet *unifiedRecord = [self getUnifiedAddressBookRecordFor:rawPerson];
+    BOOL hasFirstName = NO;
     for(id record in unifiedRecord) {
         ABRecordRef personData = (__bridge ABRecordRef) record;
+        NSString *firstName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonFirstNameProperty));
+        if (firstName != nil) {
+            hasFirstName = YES;
+        }
         Person *ceaselessContact = [self getCeaselessContactFromABRecord:personData];
         if(ceaselessContact != nil) {
             [matchingCeaselessContacts addObject: ceaselessContact];
         }
     }
     NSUInteger resultSize = [matchingCeaselessContacts count];
-   
-    if (resultSize == 1) {
-        Person *ceaselessContact = [matchingCeaselessContacts anyObject];
-        [self buildCeaselessContact:ceaselessContact fromABRecord:rawPerson];
-    } else if(resultSize > 1) {
-        // when we get multiple, keep the first
-        Person *personToKeep = [matchingCeaselessContacts anyObject];
-        [matchingCeaselessContacts removeObject: personToKeep];
-        // remove the rest
-        for(Person *personToRemove in matchingCeaselessContacts) {
-            [self copyDataFromCeaselessContact: personToRemove toContact: personToKeep];
-            [self.managedObjectContext deleteObject: personToRemove];
-        }
-    } else {
-        // either create it or do nothing
-        [self createCeaselessContactFromABRecord:rawPerson];
-    }
 
-    // save our changes
-    NSError *error;
-    if (![self.managedObjectContext save:&error]) {
-        NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
+    if (hasFirstName) { // only operate on records with a first name
+        if (resultSize == 1) {
+            Person *ceaselessContact = [matchingCeaselessContacts anyObject];
+            [self buildCeaselessContact:ceaselessContact fromABRecord:rawPerson];
+        } else if(resultSize > 1) {
+            // when we get multiple, keep the first
+            Person *personToKeep = [matchingCeaselessContacts anyObject];
+            [matchingCeaselessContacts removeObject: personToKeep];
+            // remove the rest
+            for(Person *personToRemove in matchingCeaselessContacts) {
+                [self copyDataFromCeaselessContact: personToRemove toContact: personToKeep];
+                [self.managedObjectContext deleteObject: personToRemove];
+            }
+        } else {
+            // either create it or do nothing
+            [self createCeaselessContactFromABRecord:rawPerson];
+        }
+        
+        // save our changes
+        NSError *error;
+        if (![self.managedObjectContext save:&error]) {
+            NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
+        }
     }
 }
 
@@ -441,6 +487,13 @@
     NSArray *existingResults = [context executeFetchRequest:request error:&errorFetch];
     if([existingResults count] < 1) {
         result = [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:self.managedObjectContext];
+        // HACK I don't want to have to check just for name specifically here.
+        // for now we need to add it to the cached array of names if it is new.
+        if([entityName isEqual: @"Name"]) {
+            [self.ceaselessContacts.names addObject: result];
+        } else if([entityName isEqual: @"AddressBookId"]) {
+            [self.ceaselessContacts.addressBookIds addObject: result];
+        }
     } else {
         result = existingResults[0];
     }
