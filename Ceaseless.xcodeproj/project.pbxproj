@@ -486,6 +486,7 @@
 				70F12B871AB2082B0090F47A /* NoteViewController.m in Sources */,
 				42F3AE1E1AA4DD7F003A88F5 /* main.m in Sources */,
 				42F3AE241AA4DD7F003A88F5 /* RootViewController.m in Sources */,
+				425271BF1AB3A664005098F6 /* AddressBookId.m in Sources */,
 				70F12B841AB208000090F47A /* PrayerJournalViewController.m in Sources */,
 				70F12B8A1AB231DF0090F47A /* TaggedPersonPicker.m in Sources */,
 			);
