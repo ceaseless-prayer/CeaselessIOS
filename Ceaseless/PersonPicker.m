@@ -140,8 +140,19 @@
 {
     
     NSInteger numberOfPeople = 5;
-    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"prayerRecords.@count" ascending:YES];
-    NSArray *ceaselessPeople = [[self getAllCeaselessContacts] sortedArrayUsingDescriptors:[NSArray arrayWithObject:descriptor]];
+    
+    // TODO filter out blacklisted contacts
+    // TODO first get at least one contact who has been favorited if any are available.
+    
+    
+    // second fill in the rest of the queue with contacts--take the one who has either never been prayed for
+    // or who has not been prayed for in a long time.
+
+    // in case you didn't notice, the following line is beautiful.
+    NSSortDescriptor *prayerRecordCountDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"prayerRecords.@max.createDate" ascending:YES];
+    
+    NSArray *ceaselessPeople = [[self getAllCeaselessContacts] sortedArrayUsingDescriptors:[NSArray arrayWithObject:prayerRecordCountDescriptor]];
+    
     if ([ceaselessPeople count] < numberOfPeople) {
         numberOfPeople = [ceaselessPeople count];
     }
@@ -213,6 +224,9 @@
             NSMutableSet *addressBookIds = [[NSMutableSet alloc] initWithSet:person.addressBookIds];
             [addressBookIds removeObject:abId];
             person.addressBookIds = addressBookIds;
+            // if addressBookIds reaches count 0,
+            // should we consider the Ceaseless Contact deleted from the address book?
+            // should there be a separate clean up process for that?
         }
     }
     
