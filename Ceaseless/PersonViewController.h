@@ -15,4 +15,7 @@
     @property (strong, nonatomic) IBOutlet PersonView *personView;
 @property (strong, nonatomic) PersonNotesViewController *personNotesViewController;
 @property (strong, nonatomic) UIStoryboard *mainStoryboard;
+
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
 @end

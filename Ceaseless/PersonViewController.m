@@ -10,6 +10,7 @@
 #import "PersonNotesViewController.h"
 #import "NoteViewController.h"
 #import "NonMOPerson.h"
+#import "AppDelegate.h"
 #import <MessageUI/MessageUI.h>
 
 @interface PersonViewController () <MFMessageComposeViewControllerDelegate>
@@ -32,28 +33,11 @@ static NSString *kSMSMessage;
 
     [super viewDidLoad];
 
-	UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-	self.personNotesViewController = [sb instantiateViewControllerWithIdentifier:@"PersonNotesViewController"];
-	[self.personView.notesView addSubview: self.personNotesViewController.tableView];
-	self.personNotesViewController.tableView.delegate = self;
-	self.personNotesViewController.notesArray = [[NSArray alloc] initWithObjects: @"Add a new note", @"Note 2", @"Note 3", @"Note 4", @"Note 5", nil];
-	[self setDynamicViewConstraintsToView: self.personView.notesView forSubview: self.personNotesViewController.tableView ];
-
-    [self registerForNotifications];
-
-	[self formatCardView: self.personView.cardView withShadowView: self.personView.shadowView];
-
-    // fallback if user disables transparency/blur effect
-    if(UIAccessibilityIsReduceTransparencyEnabled()) {
-        ((UIView *) self.personView.blurEffect.subviews[0]).backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:0.5f];
-    }
-
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    NonMOPerson *person = self.dataObject;
-    self.personView.nameLabel.text = [NSString stringWithFormat: @"%@ %@", person.firstName, person.lastName];
+	AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
+	self.managedObjectContext = appDelegate.managedObjectContext;
+	
+	NonMOPerson *person = self.dataObject;
+	self.personView.nameLabel.text = [NSString stringWithFormat: @"%@ %@", person.firstName, person.lastName];
 	if (person.profileImage) {
 		self.personView.personImageView.image = person.profileImage;
 		self.personView.personImageView.hidden = NO;
@@ -69,9 +53,31 @@ static NSString *kSMSMessage;
 		self.personView.placeholderText.text = [NSString stringWithFormat: @"%@%@", firstInitial, lastInitial];
 	}
 
-        
-    [self.personView.moreButton addTarget:self
-                                   action:@selector(presentActionSheet:)forControlEvents:UIControlEventTouchUpInside];
+
+	[self.personView.moreButton addTarget:self
+								   action:@selector(presentActionSheet:)forControlEvents:UIControlEventTouchUpInside];
+	UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+	self.personNotesViewController = [sb instantiateViewControllerWithIdentifier:@"PersonNotesViewController"];
+	self.personNotesViewController.ceaselessId = person.person.ceaselessId;
+	[self.personView.notesView addSubview: self.personNotesViewController.tableView];
+	self.personNotesViewController.tableView.delegate = self;
+//	self.personNotesViewController.notesArray = [[NSArray alloc] initWithObjects: @"Add a new note", @"Note 2", @"Note 3", @"Note 4", @"Note 5", nil];
+	[self setDynamicViewConstraintsToView: self.personView.notesView forSubview: self.personNotesViewController.tableView ];
+
+    [self registerForNotifications];
+
+	[self formatCardView: self.personView.cardView withShadowView: self.personView.shadowView];
+
+    // fallback if user disables transparency/blur effect
+    if(UIAccessibilityIsReduceTransparencyEnabled()) {
+        ((UIView *) self.personView.blurEffect.subviews[0]).backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:0.5f];
+    }
+
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
 
 }
 - (void)setDynamicViewConstraintsToView: (UIView *) parentView forSubview: (UIView *) newSubview {
@@ -117,10 +123,13 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 	NoteViewController *noteViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"NoteViewController"];
 	noteViewController.delegate = self;
-	if (indexPath.row != 0) {
-			//uncomment this when there are real notes to pass
-//		noteViewController.currentNote = self.personNotesViewController.notesArray[indexPath.row];
-	}
+
+	noteViewController.currentNote = [self.personNotesViewController.fetchedResultsController objectAtIndexPath:indexPath];
+
+//	if (indexPath.row != 0) {
+//			//uncomment this when there are real notes to pass
+////		noteViewController.currentNote = self.personNotesViewController.notesArray[indexPath.row];
+//	}
 
 	[self presentViewController:noteViewController animated:YES completion:NULL];
 
