@@ -26,6 +26,10 @@
     if (self) {
         AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
         self.managedObjectContext = appDelegate.managedObjectContext;
+        self.ceaselessContacts = [[CeaselessLocalContacts alloc]init];
+        _ceaselessContacts.contacts = [[NSMutableArray alloc] initWithArray:[self getAllCeaselessContacts]];
+        _ceaselessContacts.names = [[NSMutableArray alloc] initWithArray:[self getAllNames]];
+        _ceaselessContacts.addressBookIds = [[NSMutableArray alloc] initWithArray:[self getAllAddressBookIds]];
     }
     return self;
 }
@@ -90,6 +94,46 @@
 	}
 }
 
+- (void)pickPerson:(ABRecordRef)rawPerson personToShow:(Person *)personToShow {
+    NSSet *unifiedRecord = [self getUnifiedAddressBookRecordFor:rawPerson];
+    NonMOPerson *person = [[NonMOPerson alloc] init];
+    person.person = personToShow;
+    
+    NSEnumerator *enumerator = [unifiedRecord objectEnumerator];
+    
+    id value;
+    
+    while ((value = [enumerator nextObject])) {
+        ABRecordRef rawPerson = (__bridge ABRecordRef) value;
+        
+        // Check for contact picture
+        if (rawPerson != nil && ABPersonHasImageData(rawPerson)) {
+            if ( &ABPersonCopyImageDataWithFormat != nil ) {
+                person.profileImage = [UIImage imageWithData:(__bridge NSData *)ABPersonCopyImageDataWithFormat(rawPerson, kABPersonImageFormatOriginalSize)];
+            }
+        }
+        
+        person.firstName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonFirstNameProperty));
+        person.lastName  = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonLastNameProperty));
+        
+        // TODO:  this needs to be mobile or iphone first the other because it is used for texting from the device
+        
+        ABMultiValueRef phoneNumbers = ABRecordCopyValue(rawPerson, kABPersonPhoneProperty);
+        
+        CFIndex numberOfPhoneNumbers = ABMultiValueGetCount(phoneNumbers);
+        for (CFIndex i = 0; i < numberOfPhoneNumbers; i++) {
+            NSString *phoneNumber = CFBridgingRelease(ABMultiValueCopyValueAtIndex(phoneNumbers, i));
+            person.phoneNumber = phoneNumber;
+            NSLog(@"  phone:%@", phoneNumber);
+        }
+        
+        CFRelease(phoneNumbers);
+    }
+    
+    [self.ceaselessPeople addObject: person];
+    NSLog(@"Name:%@ %@", person.firstName, person.lastName);
+}
+
 - (void)pickPeopleInAddressBook:(ABAddressBookRef)addressBook
 {
     
@@ -101,53 +145,28 @@
     
     for (NSInteger i = 0; i< numberOfPeople; i++) {
         Person *personToShow = ceaselessPeople[i];
-        ABRecordRef rawPerson;
-        if ([personToShow.addressBookIds count] > 0) {
-            AddressBookId *abId = [personToShow.addressBookIds anyObject];
+        ABRecordRef rawPerson = NULL;
+        BOOL personPicked = NO;
+        
+        for(AddressBookId *abId in personToShow.addressBookIds) { // try address book records until you have a valid one.
             rawPerson = ABAddressBookGetPersonWithRecordID(addressBook, (ABRecordID) [abId.recordId intValue]);
-        }
-        
-        NSSet *unifiedRecord = [self getUnifiedAddressBookRecordFor:rawPerson];
-        NonMOPerson *person = [[NonMOPerson alloc] init];
-        person.person = personToShow;
-        
-        NSEnumerator *enumerator = [unifiedRecord objectEnumerator];
-        
-        id value;
-        
-        while ((value = [enumerator nextObject])) {
-            ABRecordRef rawPerson = (__bridge ABRecordRef) value;
-            
-            // Check for contact picture
-            if (rawPerson != nil && ABPersonHasImageData(rawPerson)) {
-                if ( &ABPersonCopyImageDataWithFormat != nil ) {
-                    person.profileImage = [UIImage imageWithData:(__bridge NSData *)ABPersonCopyImageDataWithFormat(rawPerson, kABPersonImageFormatOriginalSize)];
+            if (rawPerson != NULL) { // we got one that points to a record
+                // check if the record matches our original person contact, since it could be something else entirely
+                Person *validatedPerson = [self getCeaselessContactFromABRecord:rawPerson];
+                if(validatedPerson == personToShow) {
+                    // since it matches, we can pick this person
+                    [self pickPerson: rawPerson personToShow: personToShow];
+                    personPicked = YES;
                 }
+                // we gotta pick something else if it doesn't match
+                // let background refresh processes solve the consistency issues.
             }
-            
-            person.firstName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonFirstNameProperty));
-            person.lastName  = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonLastNameProperty));
-            
-            // TODO:  this needs to be mobile or iphone first the other because it is used for texting from the device
-            
-            ABMultiValueRef phoneNumbers = ABRecordCopyValue(rawPerson, kABPersonPhoneProperty);
-            
-            CFIndex numberOfPhoneNumbers = ABMultiValueGetCount(phoneNumbers);
-            for (CFIndex i = 0; i < numberOfPhoneNumbers; i++) {
-                NSString *phoneNumber = CFBridgingRelease(ABMultiValueCopyValueAtIndex(phoneNumbers, i));
-                person.phoneNumber = phoneNumber;
-                NSLog(@"  phone:%@", phoneNumber);
-            }
-            
-            CFRelease(phoneNumbers);
         }
         
-        // filter out contacts without names
-        if (!(person.firstName == nil && person.lastName == nil)) {
-            [self.ceaselessPeople addObject: person];
-            NSLog(@"Name:%@ %@", person.firstName, person.lastName);
-        } else {
-            ++numberOfPeople; // need to loop through one more person
+        if(!personPicked && numberOfPeople < [ceaselessPeople count]) {
+            NSLog(@"Could not pick %@", personToShow);
+            // we gotta loop through again if we haven't picked someone yet.
+            ++numberOfPeople;
         }
     }
 }
@@ -155,16 +174,45 @@
 
 - (void) refreshCeaselessContactsFromAddressBook: (ABAddressBookRef)addressBook {
     NSArray * allAddressBookContacts = [self getUnifiedAddressBookRecords:addressBook];
-    self.ceaselessContacts = [[CeaselessLocalContacts alloc]init];
-    _ceaselessContacts.contacts = [[NSMutableArray alloc] initWithArray:[self getAllCeaselessContacts]];
-    _ceaselessContacts.names = [[NSMutableArray alloc] initWithArray:[self getAllNames]];
-    _ceaselessContacts.addressBookIds = [[NSMutableArray alloc] initWithArray:[self getAllAddressBookIds]];
     
     NSLog(@"Total Ceaseless contacts: %lu", (unsigned long)[_ceaselessContacts.contacts count]);
-    for(NSSet *unifiedRecord in allAddressBookContacts) {
-        // do not do anything for contacts with no first name
-        
+    for (NSSet *unifiedRecord in allAddressBookContacts) {
         [self updateCeaselessContactFromABRecord:(__bridge ABRecordRef)[unifiedRecord anyObject]];
+    }
+    
+    NSArray *allCeaselessContacts = [self getAllCeaselessContacts];
+    for (Person *person in allCeaselessContacts) {
+        [self updateCeaselessContactLocalIds: person fromAddressBook: addressBook];
+    }
+}
+
+- (void) updateCeaselessContactLocalIds: (Person *) person fromAddressBook: (ABAddressBookRef) addressBook {
+    ABRecordRef rawPerson = NULL;
+    for (AddressBookId *abId in person.addressBookIds) {
+        rawPerson = ABAddressBookGetPersonWithRecordID(addressBook, (ABRecordID) [abId.recordId intValue]);
+        if (rawPerson != NULL) { // we got one that points to a record
+            // check if the record matches our original person contact, since it could be something else entirely
+            Person *validatedPerson = [self getCeaselessContactFromABRecord:rawPerson];
+            if(validatedPerson != person) {
+                // we are pointing to a record that is not pointing back to us
+                // prune it from our list of local ids.
+                NSMutableSet *addressBookIds = [[NSMutableSet alloc] initWithSet:person.addressBookIds];
+                [addressBookIds removeObject:abId];
+                person.addressBookIds = addressBookIds;
+            }
+        } else {
+            // we are pointing to a record that is not pointing back to us
+            // prune it from our list of local ids.
+            NSMutableSet *addressBookIds = [[NSMutableSet alloc] initWithSet:person.addressBookIds];
+            [addressBookIds removeObject:abId];
+            person.addressBookIds = addressBookIds;
+        }
+    }
+    
+    // save
+    NSError *error;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
     }
 }
 
