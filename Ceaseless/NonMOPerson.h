@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <CommonCrypto/CommonDigest.h>
+#import "Person.h"
 
 @interface NonMOPerson : NSObject
 
@@ -18,6 +19,7 @@
 @property (strong, nonatomic) UIImage *profileImage;
 @property (strong, nonatomic) NSArray *emails;
 @property (strong, nonatomic) NSArray *phoneNumbers;
+@property (strong, nonatomic) Person *person;
 
 - (Boolean) equivalentTo: (NonMOPerson *) person;
 - (BOOL) isEqualToPerson:(NonMOPerson *) person;

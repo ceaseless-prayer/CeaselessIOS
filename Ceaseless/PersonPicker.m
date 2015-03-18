@@ -90,6 +90,69 @@
 	}
 }
 
+- (void)pickPeopleInAddressBook:(ABAddressBookRef)addressBook
+{
+    
+    NSInteger numberOfPeople = 5;
+    NSArray *ceaselessPeople = [self getAllCeaselessContacts];
+    if ([ceaselessPeople count] < numberOfPeople) {
+        numberOfPeople = [ceaselessPeople count];
+    }
+    
+    for (NSInteger i = 0; i< numberOfPeople; i++) {
+        Person *personToShow = ceaselessPeople[i];
+        ABRecordRef rawPerson;
+        if ([personToShow.addressBookIds count] > 0) {
+            AddressBookId *abId = [personToShow.addressBookIds anyObject];
+            rawPerson = ABAddressBookGetPersonWithRecordID(addressBook, (ABRecordID) [abId.recordId intValue]);
+        }
+        
+        NSSet *unifiedRecord = [self getUnifiedAddressBookRecordFor:rawPerson];
+        NonMOPerson *person = [[NonMOPerson alloc] init];
+        person.person = personToShow;
+        
+        NSEnumerator *enumerator = [unifiedRecord objectEnumerator];
+        
+        id value;
+        
+        while ((value = [enumerator nextObject])) {
+            ABRecordRef rawPerson = (__bridge ABRecordRef) value;
+            
+            // Check for contact picture
+            if (rawPerson != nil && ABPersonHasImageData(rawPerson)) {
+                if ( &ABPersonCopyImageDataWithFormat != nil ) {
+                    person.profileImage = [UIImage imageWithData:(__bridge NSData *)ABPersonCopyImageDataWithFormat(rawPerson, kABPersonImageFormatOriginalSize)];
+                }
+            }
+            
+            person.firstName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonFirstNameProperty));
+            person.lastName  = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonLastNameProperty));
+            
+            // TODO:  this needs to be mobile or iphone first the other because it is used for texting from the device
+            
+            ABMultiValueRef phoneNumbers = ABRecordCopyValue(rawPerson, kABPersonPhoneProperty);
+            
+            CFIndex numberOfPhoneNumbers = ABMultiValueGetCount(phoneNumbers);
+            for (CFIndex i = 0; i < numberOfPhoneNumbers; i++) {
+                NSString *phoneNumber = CFBridgingRelease(ABMultiValueCopyValueAtIndex(phoneNumbers, i));
+                person.phoneNumber = phoneNumber;
+                NSLog(@"  phone:%@", phoneNumber);
+            }
+            
+            CFRelease(phoneNumbers);
+        }
+        
+        // filter out contacts without names
+        if (!(person.firstName == nil && person.lastName == nil)) {
+            [self.ceaselessPeople addObject: person];
+            NSLog(@"Name:%@ %@", person.firstName, person.lastName);
+        } else {
+            ++numberOfPeople; // need to loop through one more person
+        }
+    }
+}
+
+
 - (void) refreshCeaselessContactsFromAddressBook: (ABAddressBookRef)addressBook {
     NSArray * allAddressBookContacts = [self getUnifiedAddressBookRecords:addressBook];
     self.ceaselessContacts = [[CeaselessLocalContacts alloc]init];
@@ -97,10 +160,6 @@
     _ceaselessContacts.names = [[NSMutableArray alloc] initWithArray:[self getAllNames]];
     _ceaselessContacts.addressBookIds = [[NSMutableArray alloc] initWithArray:[self getAllAddressBookIds]];
     
-//    ABRecordRef rawPerson = (__bridge ABRecordRef)[allAddressBookContacts[0] anyObject];
-//    [self updateCeaselessContactFromABRecord: rawPerson];
-//    Person *person = [self getCeaselessContactFromABRecord:rawPerson];
-//    NSLog(@"Here is a person: %@", person);
     NSLog(@"Total Ceaseless contacts: %lu", (unsigned long)[_ceaselessContacts.contacts count]);
     for(NSSet *unifiedRecord in allAddressBookContacts) {
         // do not do anything for contacts with no first name
@@ -158,60 +217,6 @@
     
     // Your own custom "unified record" class (or just an NSSet!)
     return [[NSSet alloc] initWithSet:contactSet];
-}
-
-- (void)pickPeopleInAddressBook:(ABAddressBookRef)addressBook
-{
-//	NSInteger numberOfPeople = ABAddressBookGetPersonCount(addressBook);
-	NSInteger numberOfPeople = 5;
-
-	NSArray *allPeople = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(addressBook));
-    
-    allPeople = [self getUnifiedAddressBookRecords:addressBook];
-    
-	for (NSInteger i = 0; i < numberOfPeople; i++) {
-        NSSet *unifiedRecord = allPeople[i];
-        NonMOPerson *person = [[NonMOPerson alloc] init];
-        
-        NSEnumerator *enumerator = [unifiedRecord objectEnumerator];
-        
-        id value;
-        
-        while ((value = [enumerator nextObject])) {
-            ABRecordRef rawPerson = (__bridge ABRecordRef) value;
-            
-            // Check for contact picture
-            if (rawPerson != nil && ABPersonHasImageData(rawPerson)) {
-                if ( &ABPersonCopyImageDataWithFormat != nil ) {
-                    person.profileImage = [UIImage imageWithData:(__bridge NSData *)ABPersonCopyImageDataWithFormat(rawPerson, kABPersonImageFormatOriginalSize)];
-                }
-            }
-            
-            person.firstName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonFirstNameProperty));
-            person.lastName  = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonLastNameProperty));
-            
-            // TODO:  this needs to be mobile or iphone first the other because it is used for texting from the device
-
-			ABMultiValueRef phoneNumbers = ABRecordCopyValue(rawPerson, kABPersonPhoneProperty);
-
-			CFIndex numberOfPhoneNumbers = ABMultiValueGetCount(phoneNumbers);
-			for (CFIndex i = 0; i < numberOfPhoneNumbers; i++) {
-				NSString *phoneNumber = CFBridgingRelease(ABMultiValueCopyValueAtIndex(phoneNumbers, i));
-				person.phoneNumber = phoneNumber;
-				NSLog(@"  phone:%@", phoneNumber);
-			}
-
-			CFRelease(phoneNumbers);
-        }
-        
-        // filter out contacts without names
-        if (!(person.firstName == nil && person.lastName == nil)) {
-            [self.ceaselessPeople addObject: person];
-            NSLog(@"Name:%@ %@", person.firstName, person.lastName);
-        } else {
-            ++numberOfPeople; // need to loop through one more person
-        }
-	}
 }
 
 - (NSArray *) getAllCeaselessContacts {
