@@ -10,6 +10,7 @@
 #import "PersonNotesViewController.h"
 #import "NoteViewController.h"
 #import "NonMOPerson.h"
+#import "ModelController.h"
 #import <MessageUI/MessageUI.h>
 
 @interface PersonViewController () <MFMessageComposeViewControllerDelegate>
@@ -172,6 +173,24 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                             NSLog(@"Send Message");
                                         }];
     
+    UIAlertAction *removeFromCeaselessAction = [UIAlertAction
+                                        actionWithTitle:NSLocalizedString(@"Remove from Ceaseless", @"Remove from Ceaseless")
+                                        style:UIAlertActionStyleDefault
+                                        handler:^(UIAlertAction *action)
+                                        {
+                                            [self removePersonFromCeaseless];
+                                            NSLog(@"Remove from Ceaseless");
+                                        }];
+    
+    UIAlertAction *addToFavoritesAction = [UIAlertAction
+                                        actionWithTitle:NSLocalizedString(@"Add to Favorites", @"Add to Favorites")
+                                        style:UIAlertActionStyleDefault
+                                        handler:^(UIAlertAction *action)
+                                        {
+                                            //[self showSMS: kSMSMessage];
+                                            NSLog(@"Add to Favorites");
+                                        }];
+    
     //	UIAlertAction *createNoteAction = [UIAlertAction
     //									actionWithTitle:NSLocalizedString(@"Create Note", @"Create Note")
     //									   style:UIAlertActionStyleDefault
@@ -181,8 +200,16 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //									   }];
     
     [alertController addAction:cancelAction];
+    [alertController addAction: removeFromCeaselessAction];
     [alertController addAction:inviteAction];
     [alertController addAction:sendMessageAction];
+    
+    // TODO this should toggle between adding or removing from favorites.
+    // for now only show it if it isn't already favorited
+    if (((Person*)((NonMOPerson*)self.dataObject).person).favoritedDate == nil) {
+        [alertController addAction: addToFavoritesAction];
+    }
+    
     //	[alertController addAction:createNoteAction];
     
     //this prevents crash on iPad in iOS 8 - known Apple bug
@@ -195,6 +222,41 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     
     [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)removePersonFromCeaseless {
+    [((NonMOPerson*)self.dataObject) removeFromCeaseless];
+    UIPageViewController *pageViewController =(UIPageViewController*)self.parentViewController;
+    ModelController *mc = pageViewController.dataSource;
+    [mc removeControllerAtIndex:self.index];
+    DataViewController *startingViewController; // card to transition to.
+    // if there is a card after us, transition there.
+    if([mc modelCount] > self.index) {
+        // self.index is now pointing to the next card
+        startingViewController = [mc viewControllerAtIndex:self.index storyboard:self.storyboard];
+        startingViewController.index = self.index;
+        [pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+
+    } else if(self.index > 0) {
+        // otherwise, if there is a card before us, transition there.
+        --self.index;
+        startingViewController.index = self.index;
+        startingViewController = [mc viewControllerAtIndex:self.index storyboard:self.storyboard];
+        [pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
+
+    } else {
+        // by default go to the first card in the array
+        startingViewController.index = 0;
+        startingViewController = [mc viewControllerAtIndex:0 storyboard:self.storyboard];
+        [pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+
+    }
+
+}
+
+- (void)addPersonToFavorites {
+    [((NonMOPerson*)self.dataObject) favorite];    
+    // TODO animate?
 }
 
 - (void)showSMS:(NSString*)file {

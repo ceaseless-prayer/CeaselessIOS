@@ -31,6 +31,7 @@
 @property (readonly, strong, nonatomic) NSArray *personData;
 @property (readonly, strong, nonatomic) ScriptureQueue *scripture;
 @property (strong, nonatomic) NSMutableArray *cardArray;
+@property (nonatomic) NSInteger index;
 
 @end
 
@@ -39,6 +40,8 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        _index = 0;
+        
         // Create the data model.
         // Initializes to app delegate card array
 		ScripturePicker *scripturePicker = [[ScripturePicker alloc] init];
@@ -78,6 +81,8 @@
 
     contentViewController.dataObject = self.cardArray[index];
 	contentViewController.index = index;
+    _index = index;
+    
     return contentViewController;
 }
 
@@ -85,6 +90,18 @@
     // Return the index of the given data view controller.
     // For simplicity, this implementation uses a static array of model objects and the view controller stores the model object; you can therefore use the model object to identify the index.
     return [self.cardArray indexOfObject:viewController.dataObject];
+}
+
+- (void)removeControllerAtIndex:(NSUInteger)index {
+    [self.cardArray removeObjectAtIndex:index];
+    // TODO, update the index?
+    // The way it is happening right now
+    // breaks encapsulation--the caller is setting the right index by its logic
+    // this is for the page indicator at the bottom
+}
+
+- (NSInteger) modelCount {
+    return [self.cardArray count];
 }
 
 #pragma mark - Page View Controller Data Source
@@ -97,6 +114,7 @@
     }
     
     index--;
+    _index = index;
     return [self viewControllerAtIndex:index storyboard:viewController.storyboard];
 }
 
@@ -108,6 +126,7 @@
     }
     
     index++;
+    _index = index;
     if (index == [self.cardArray count]) {
         return nil;
     }
@@ -124,7 +143,7 @@
 
 - (NSInteger) presentationIndexForPageViewController: (UIPageViewController *) pageViewController
 {
-    return 0;
+    return _index;
 }
 
 @end
