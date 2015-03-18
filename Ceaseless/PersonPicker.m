@@ -150,7 +150,7 @@
     // or who has not been prayed for in a long time.
 
     // in case you didn't notice, the following line is beautiful.
-    NSSortDescriptor *prayerRecordCountDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"prayerRecords.@max.createDate" ascending:NO];
+    NSSortDescriptor *prayerRecordCountDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"prayerRecords.@max.createDate" ascending:NO]; // TODO switch ascending to YES for prod. NO makes the people we pick more stable on each run.
     NSPredicate *filterRemovedContacts = [NSPredicate predicateWithFormat: @"removedDate = nil"];
     NSArray *ceaselessPeople = [[[self getAllCeaselessContacts] filteredArrayUsingPredicate:filterRemovedContacts] sortedArrayUsingDescriptors:[NSArray arrayWithObject:prayerRecordCountDescriptor]];
     NSLog(@"Total filtered Ceaseless contacts: %lu", (unsigned long)[ceaselessPeople count]);
