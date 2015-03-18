@@ -160,25 +160,25 @@
 	return _fetchedResultsController;
 }
 
-//- (void) listAll {
-//	  // Test listing all tagData from the store
-////  AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-////  NSManagedObjectContext *managedObjectContext = appDelegate.managedObjectContext;
-//  NSError * error = nil;
-//
-//  NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-//  NSEntityDescription *entity = [NSEntityDescription entityForName:@"Note"
-//											inManagedObjectContext:self.managedObjectContext];
-//  [fetchRequest setEntity:entity];
-//
-//
-//  NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-//  for (id managedObject in fetchedObjects) {
-//
-//	  NSLog(@"create date: %@", [managedObject valueForKey: @"createDate"]);
-//	  NSLog(@"text: %@", [managedObject valueForKey: @"text"]);
-//	  NSLog(@"last update date: %@", [managedObject valueForKey: @"lastUpdatedDate"]);
-//  }
-//}
+- (void) listAll {
+	  // Test listing all tagData from the store
+//  AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+//  NSManagedObjectContext *managedObjectContext = appDelegate.managedObjectContext;
+  NSError * error = nil;
+
+  NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+  NSEntityDescription *entity = [NSEntityDescription entityForName:@"Note"
+											inManagedObjectContext:self.managedObjectContext];
+  [fetchRequest setEntity:entity];
+
+
+  NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+  for (id managedObject in fetchedObjects) {
+
+	  NSLog(@"create date: %@", [managedObject valueForKey: @"createDate"]);
+	  NSLog(@"text: %@", [managedObject valueForKey: @"text"]);
+	  NSLog(@"last update date: %@", [managedObject valueForKey: @"lastUpdatedDate"]);
+  }
+}
 
 @end

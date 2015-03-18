@@ -9,12 +9,16 @@
 #import <AddressBook/AddressBook.h>
 #import "AppDelegate.h"
 #import "Person.h"
+#import "PersonPicker.h"
+#import "CeaselessLocalContacts.h"
+#import "Name.h"
 
 @interface NoteViewController ()
 
 @property (nonatomic, strong) NSMutableArray *namesArray;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) UINavigationItem *item;
+@property (strong, nonatomic) NSMutableSet *mutablePeopleSet;
 
 @end
 
@@ -26,6 +30,10 @@ NSString *const kPlaceHolderText = @"Enter note";
     [super viewDidLoad];
 	AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
 	self.managedObjectContext = appDelegate.managedObjectContext;
+
+	self.namesArray = [NSMutableArray arrayWithCapacity: 1];
+	self.mutablePeopleSet = [[NSMutableSet alloc] initWithCapacity: 1];
+
 	self.notesTextView.delegate = self;
 
 
@@ -41,7 +49,6 @@ NSString *const kPlaceHolderText = @"Enter note";
 		navBar.titleTextAttributes = navbarTitleTextAttributes;
 		self.verticalSpaceTopToView.constant = 44;
 
-			//do something like background color, title, etc you self
 		UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelClick:)];
 
 		self.item = [[UINavigationItem alloc] initWithTitle:@"Notes"];
@@ -52,6 +59,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 	}
 		//if there is a note, just display it and set the right bar button to "Edit"
+//	[self listAll];
 	if (self.currentNote) {
 		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 		dateFormatter.timeStyle = NSDateFormatterNoStyle;
@@ -59,10 +67,15 @@ NSString *const kPlaceHolderText = @"Enter note";
 		NSDate *date = [self.currentNote valueForKey: @"createDate"];
 
 		self.notesTextView.text = [self.currentNote valueForKey: @"text"];
-//		NSString *namesString = [[self.currentNote valueForKey: @"peopleTagged"] componentsJoinedByString:@", "];
-		NSSet *peopleTagged = [NSSet setWithObjects: @"Shelli Jackson", @"Virginia Yanoff", nil];
-		NSString *namesString = [[peopleTagged allObjects] componentsJoinedByString:@", "];
-		self.personsTaggedView.text = namesString;
+		NSSet *peopleTagged = [self.currentNote valueForKey: @"peopleTagged"];
+		NSMutableSet *namesSet = [[NSMutableSet alloc] initWithCapacity: [peopleTagged count]];
+		for (Person *personTagged in peopleTagged) {
+			NSString *personName = [NSString stringWithFormat: @"%@ %@", ((Name*)[personTagged.firstNames anyObject]).name, ((Name*) [personTagged.lastNames anyObject]).name];
+			[namesSet addObject: personName];
+			[self.namesArray addObject:personName];
+		}
+		NSString *allNamesString = [[namesSet allObjects] componentsJoinedByString:@", "];
+		self.personsTaggedView.text = allNamesString;
 		self.personsTaggedView.editable = NO;
 		self.notesTextView.editable = NO;
 		self.tagFriendsButton.enabled = NO;
@@ -88,6 +101,13 @@ NSString *const kPlaceHolderText = @"Enter note";
 		} else {
 			self.navigationItem.title = @"Add Note";
 			self.navigationItem.rightBarButtonItem = saveButton;
+		}
+
+		if (self.personForNewNote) {
+			[self.mutablePeopleSet addObject: self.personForNewNote];
+			NSString *personName = [NSString stringWithFormat: @"%@ %@", ((Name*)[self.personForNewNote.firstNames anyObject]).name, ((Name*) [self.personForNewNote.lastNames anyObject]).name];
+			self.personsTaggedView.text = personName;
+			[self.namesArray addObject:personName];
 
 		}
 		self.notesTextView.text = kPlaceHolderText;
@@ -105,9 +125,16 @@ NSString *const kPlaceHolderText = @"Enter note";
 }
 - (void) editMode: (id) sender {
 	UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveButtonPressed:)];
-	self.navigationItem.rightBarButtonItem = saveButton;
+	if (!self.navigationController) {
+		self.item.title = @"Add Note";
+		self.item.rightBarButtonItem = saveButton;
+	} else {
+		self.navigationItem.title = @"Add Note";
+		self.navigationItem.rightBarButtonItem = saveButton;
+	}
 	self.personsTaggedView.editable = YES;
 	self.notesTextView.editable = YES;
+	self.tagFriendsButton.enabled = YES;
 		//bring up keyboard and move cursor to text view
 	[self.notesTextView becomeFirstResponder];
 
@@ -160,13 +187,17 @@ NSString *const kPlaceHolderText = @"Enter note";
 {
 	ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
 
-	self.namesArray = [NSMutableArray arrayWithCapacity:abRecordIDs.count];
-
 	for (NSNumber *number in abRecordIDs)
 		{
 		ABRecordID abRecordID = [number intValue];
 
 		ABRecordRef abPerson = ABAddressBookGetPersonWithRecordID(addressBook, abRecordID);
+
+		PersonPicker *personPicker = [[PersonPicker alloc] init];
+		
+		[personPicker updateCeaselessContactFromABRecord: abPerson];
+		Person *person = [personPicker getCeaselessContactFromABRecord: abPerson];
+       [self.mutablePeopleSet addObject: person];
 
 		NSString *name = (__bridge_transfer NSString *)ABRecordCopyCompositeName(abPerson);
 
@@ -197,35 +228,41 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 - (IBAction)saveButtonPressed:(id)sender {
 
-//	NSMutableSet *mutablePeopleSet = [NSMutableSet alloc];
-//	for (NSString *name in self.namesArray) {
-//       use the name to get a Person Object
-//       [mutablePeopleSet addObject: Person Object];
-//	}
-//	NSSet *peopleTaggedSet = [[NSSet alloc] initWithSet: mutablePeopleSet];
+
 	NSError *error = nil;
 
 	Note *note = [self containsItem:[self.currentNote valueForKey: @"createDate"]];
 	if (note) {
 			//if the object is found, update its fields
-			//		[[self.fetchedObjects objectAtIndex:0] setValue: dataForPost.title forKey: @"title"];
-		[note setValue: self.notesTextView.text forKey: @"text"];
-		[note setValue: [NSDate date] forKey: @"lastUpdatedDate"];
-		//	[note setValue: peopleTaggedSet forKey:@"peopleTagged"];
+//		[note setValue: self.notesTextView.text forKey: @"text"];
+//		[note setValue: [NSDate date] forKey: @"lastUpdatedDate"];
+		note.text = self.notesTextView.text;
+		note.lastUpdatedDate = [NSDate date];
+		[note addPeopleTagged: self.mutablePeopleSet];
+//		for (Person *person in self.mutablePeopleSet) {
+//			NSMutableSet *mutableNoteSet = [[NSMutableSet alloc] initWithSet: person.notes];
+//			[mutableNoteSet addObject: note];
+//			person.notes = [[NSSet alloc] initWithSet: mutableNoteSet];
+//		}
 
 
 	} else {
-	NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
-		[newManagedObject setValue: [NSDate date] forKey: @"createDate"];
-		[newManagedObject setValue: self.notesTextView.text forKey: @"text"];
-		[newManagedObject setValue: [NSDate date] forKey: @"lastUpdatedDate"];
-	//	[newManagedObject setValue: peopleTaggedSet forKey:@"peopleTagged"];
+	Note *newNote = [NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
+		[newNote setValue: [NSDate date] forKey: @"createDate"];
+		[newNote setValue: self.notesTextView.text forKey: @"text"];
+		[newNote setValue: [NSDate date] forKey: @"lastUpdatedDate"];
+		[newNote addPeopleTagged: self.mutablePeopleSet];
+//		for (Person *person in self.mutablePeopleSet) {
+//			NSMutableSet *mutableNoteSet = [[NSMutableSet alloc] initWithSet: person.notes];
+//			[mutableNoteSet addObject: newManagedObject];
+//			person.notes = [[NSSet alloc] initWithSet: mutableNoteSet];
+//		}
 		}
 	if (![self.managedObjectContext save: &error]) {
 		NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
 	}
 
-//	[self listAll];
+	[self listAll];
 	if (self.delegate) {
 		[self.delegate noteViewControllerDidFinish:self];
 	} else {
@@ -283,23 +320,32 @@ NSString *const kPlaceHolderText = @"Enter note";
 }
 - (void) listAll {
 		// Test listing all tagData from the store
-	AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-	NSManagedObjectContext *managedObjectContext = appDelegate.managedObjectContext;
+
 	NSError * error = nil;
 
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
 	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Note"
-											  inManagedObjectContext:managedObjectContext];
+											  inManagedObjectContext:self.managedObjectContext];
 	[fetchRequest setEntity:entity];
 
 
-	NSArray *fetchedObjects = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+	NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
 	for (id managedObject in fetchedObjects) {
 
 		NSLog(@"create date: %@", [managedObject valueForKey: @"createDate"]);
 		NSLog(@"text: %@", [managedObject valueForKey: @"text"]);
 		NSLog(@"last update date: %@", [managedObject valueForKey: @"lastUpdatedDate"]);
-
+		NSSet *peopleTagged = [managedObject valueForKey: @"peopleTagged"];
+		for (Person *person in peopleTagged) {
+			NSSet *firstNames = [person valueForKey: @"firstNames"];
+			NSSet *lastNames = [person valueForKey: @"lastNames"];
+			NSString *firstName = ((Name*)[firstNames anyObject]).name;
+			NSLog (@"first Name is .......  %@", firstName);
+			NSString *lastName = ((Name*)[lastNames anyObject]).name;
+			NSLog (@"last Name is ......... %@", lastName);
+//			NSLog(@"personTagged: %@ %@", firstName, lastName);
+		}
 	}
 }
+
 @end
