@@ -10,6 +10,7 @@
 #import "PersonNotesViewController.h"
 #import "NoteViewController.h"
 #import "NonMOPerson.h"
+#import "AppDelegate.h"
 #import "ModelController.h"
 #import <MessageUI/MessageUI.h>
 
