@@ -16,6 +16,7 @@
 		425271BF1AB3A664005098F6 /* AddressBookId.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271BE1AB3A664005098F6 /* AddressBookId.m */; };
 		429E60891AAA5FD8003F37BF /* ScriptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E60881AAA5FD7003F37BF /* ScriptureViewController.m */; };
 		429E608C1AAA61B1003F37BF /* PersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E608B1AAA61B1003F37BF /* PersonViewController.m */; };
+		42A5AF881AB9497F00F209B8 /* PrayerRecordConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A5AF871AB9497F00F209B8 /* PrayerRecordConstants.m */; };
 		42F3AE1E1AA4DD7F003A88F5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F3AE1D1AA4DD7F003A88F5 /* main.m */; };
 		42F3AE211AA4DD7F003A88F5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F3AE201AA4DD7F003A88F5 /* AppDelegate.m */; };
 		42F3AE241AA4DD7F003A88F5 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F3AE231AA4DD7F003A88F5 /* RootViewController.m */; };
@@ -84,6 +85,8 @@
 		429E60881AAA5FD7003F37BF /* ScriptureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptureViewController.m; sourceTree = "<group>"; };
 		429E608A1AAA61B1003F37BF /* PersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonViewController.h; sourceTree = "<group>"; };
 		429E608B1AAA61B1003F37BF /* PersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonViewController.m; sourceTree = "<group>"; };
+		42A5AF861AB9497F00F209B8 /* PrayerRecordConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrayerRecordConstants.h; sourceTree = "<group>"; };
+		42A5AF871AB9497F00F209B8 /* PrayerRecordConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrayerRecordConstants.m; sourceTree = "<group>"; };
 		42F3AE181AA4DD7F003A88F5 /* Ceaseless.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ceaseless.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42F3AE1C1AA4DD7F003A88F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		42F3AE1D1AA4DD7F003A88F5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -293,6 +296,8 @@
 				425271AB1AB37CE8005098F6 /* Name.h */,
 				425271AC1AB37CE8005098F6 /* Name.m */,
 				704D5CF21AAFA96200BD48B3 /* PrayerRecord.h */,
+				42A5AF861AB9497F00F209B8 /* PrayerRecordConstants.h */,
+				42A5AF871AB9497F00F209B8 /* PrayerRecordConstants.m */,
 				704D5CF31AAFA96200BD48B3 /* PrayerRecord.m */,
 				704D5CEF1AAFA96200BD48B3 /* ScriptureQueue.h */,
 				704D5CF01AAFA96200BD48B3 /* ScriptureQueue.m */,
@@ -386,7 +391,7 @@
 					};
 					42F3AE361AA4DD80003A88F5 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 98FUBN4YVB;
+						DevelopmentTeam = 28DYBASY7W;
 						TestTargetID = 42F3AE171AA4DD7F003A88F5;
 					};
 				};
@@ -461,6 +466,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42F3AE271AA4DD7F003A88F5 /* DataViewController.m in Sources */,
+				42A5AF881AB9497F00F209B8 /* PrayerRecordConstants.m in Sources */,
 				704D5CE21AAFA96100BD48B3 /* Note.m in Sources */,
 				70D51C161AA6800D00FA7CDC /* PersonView.m in Sources */,
 				429E60891AAA5FD8003F37BF /* ScriptureViewController.m in Sources */,

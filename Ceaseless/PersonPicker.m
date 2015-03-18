@@ -10,6 +10,7 @@
 #import "NonMOPerson.h"
 #import "AppDelegate.h"
 #import "CeaselessLocalContacts.h"
+#import "PrayerRecord.h"
 
 @interface PersonPicker ()
 
@@ -131,6 +132,7 @@
     }
     
     [self.ceaselessPeople addObject: person];
+    [self createPrayerRecordForPerson: personToShow];
     NSLog(@"Name:%@ %@", person.firstName, person.lastName);
 }
 
@@ -138,13 +140,15 @@
 {
     
     NSInteger numberOfPeople = 5;
-    NSArray *ceaselessPeople = [self getAllCeaselessContacts];
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"prayerRecords.@count" ascending:YES];
+    NSArray *ceaselessPeople = [[self getAllCeaselessContacts] sortedArrayUsingDescriptors:[NSArray arrayWithObject:descriptor]];
     if ([ceaselessPeople count] < numberOfPeople) {
         numberOfPeople = [ceaselessPeople count];
     }
     
     for (NSInteger i = 0; i< numberOfPeople; i++) {
         Person *personToShow = ceaselessPeople[i];
+        
         ABRecordRef rawPerson = NULL;
         BOOL personPicked = NO;
         
@@ -157,16 +161,19 @@
                     // since it matches, we can pick this person
                     [self pickPerson: rawPerson personToShow: personToShow];
                     personPicked = YES;
+                    break;
                 }
                 // we gotta pick something else if it doesn't match
                 // let background refresh processes solve the consistency issues.
             }
         }
         
-        if(!personPicked && numberOfPeople < [ceaselessPeople count]) {
+        if(!personPicked) {
             NSLog(@"Could not pick %@", personToShow);
             // we gotta loop through again if we haven't picked someone yet.
-            ++numberOfPeople;
+            if (numberOfPeople < [ceaselessPeople count]) {
+                ++numberOfPeople;
+            }
         }
     }
 }
@@ -398,6 +405,20 @@
     }
     [self.ceaselessContacts.contacts addObject:newCeaselessPerson];
     return newCeaselessPerson;
+}
+
+- (PrayerRecord *) createPrayerRecordForPerson: (Person*) person {
+    PrayerRecord *prayerRecord = [NSEntityDescription insertNewObjectForEntityForName:@"PrayerRecord" inManagedObjectContext:self.managedObjectContext];
+    prayerRecord.person = person;
+    prayerRecord.createDate = [NSDate date];
+    prayerRecord.type = kPrayerRecordTypePersonSuggested;
+
+    // save our changes
+    NSError *error;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
+    }
+    return prayerRecord;
 }
 
 - (void) updateCeaselessContactFromABRecord: (ABRecordRef) rawPerson {
