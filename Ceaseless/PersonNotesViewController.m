@@ -34,30 +34,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-//#pragma mark - Table view data source
-//
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//		// Return the number of sections.
-//	return 1;
-//}
-//
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//		// Return the number of rows in the section.
-//	return [self.notesArray count];
-//}
-//
-//
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-// UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-//
-//	cell.textLabel.text = [self.notesArray objectAtIndex: indexPath.row];
-//	cell.textLabel.textColor = [UIColor whiteColor];
-//	cell.detailTextLabel.textColor = [UIColor whiteColor];
-//    cell.backgroundColor = [UIColor clearColor];
-//	NSLog (@"cell text %@", cell.textLabel.text);
-// return cell;
-//}
-
 #pragma mark - Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -66,18 +42,45 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-	return [sectionInfo numberOfObjects];
+	if ([sectionInfo numberOfObjects] == 0) {
+		self.notesAvailable = NO;
+		return 1;
+	} else {
+		self.notesAvailable = YES;
+		return [sectionInfo numberOfObjects];
+	}
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	NotesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 	[self configureCell:cell atIndexPath:indexPath];
 	return cell;
 }
 
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+
+	if (self.notesAvailable) {
+		Note *note = [self.fetchedResultsController objectAtIndexPath:indexPath];
+			//not using this yet
+			//		cell.imageView.image = [UIImage imageNamed: @"icon_ceaseless_comment"];
+
+		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+		dateFormatter.timeStyle = NSDateFormatterNoStyle;
+		dateFormatter.dateStyle = NSDateFormatterShortStyle;
+		NSDate *date = note.lastUpdatedDate;
+
+		cell.textLabel.text = [dateFormatter stringFromDate:date];
+		cell.detailTextLabel.text = note.text;
+	} else {
+		cell.textLabel.text = @"";
+		cell.detailTextLabel.text = @"Add new note";
+	}
+	NSLog (@"detail cell text %@", cell.detailTextLabel.text);
+	
+}
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
 		// Return NO if you do not want the specified item to be editable.
-	return YES;
+	return NO;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -95,26 +98,6 @@
 	}
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-	NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-
-	cell.imageView.image = [UIImage imageNamed: @"icon_ceaseless_comment"];
-
-	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-	dateFormatter.timeStyle = NSDateFormatterNoStyle;
-	dateFormatter.dateStyle = NSDateFormatterShortStyle;
-	NSDate *date = [object valueForKey:@"lastUpdatedDate"];
-
-	cell.textLabel.text = [dateFormatter stringFromDate:date];
-	cell.detailTextLabel.text = [[object valueForKey:@"text"] description];
-
-//	cell.textLabel.text = [self.notesArray objectAtIndex: indexPath.row];
-//	cell.textLabel.textColor = [UIColor whiteColor];
-//	cell.detailTextLabel.textColor = [UIColor whiteColor];
-//	cell.backgroundColor = [UIColor clearColor];
-	NSLog (@"cell text %@", cell.textLabel.text);
-
-}
 
 #pragma mark - Fetched results controller
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
@@ -142,7 +125,7 @@
 
 	[fetchRequest setSortDescriptors:sortDescriptors];
 
-	NSPredicate *ceaselessIdInNotes = [NSPredicate predicateWithFormat:@"%@ IN peopleTagged", self.ceaselessId];
+	NSPredicate *ceaselessIdInNotes = [NSPredicate predicateWithFormat:@"%@ IN peopleTagged", self.person];
 
 	[fetchRequest setPredicate: ceaselessIdInNotes];
 		// Edit the section name key path and cache name if appropriate.

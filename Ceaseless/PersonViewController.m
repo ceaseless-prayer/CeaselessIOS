@@ -58,7 +58,7 @@ static NSString *kSMSMessage;
 								   action:@selector(presentActionSheet:)forControlEvents:UIControlEventTouchUpInside];
 	UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 	self.personNotesViewController = [sb instantiateViewControllerWithIdentifier:@"PersonNotesViewController"];
-	self.personNotesViewController.ceaselessId = person.person.ceaselessId;
+	self.personNotesViewController.person = person.person;
 	[self.personView.notesView addSubview: self.personNotesViewController.tableView];
 	self.personNotesViewController.tableView.delegate = self;
 //	self.personNotesViewController.notesArray = [[NSArray alloc] initWithObjects: @"Add a new note", @"Note 2", @"Note 3", @"Note 4", @"Note 5", nil];
@@ -124,12 +124,11 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	NoteViewController *noteViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"NoteViewController"];
 	noteViewController.delegate = self;
 
-	noteViewController.currentNote = [self.personNotesViewController.fetchedResultsController objectAtIndexPath:indexPath];
-
-//	if (indexPath.row != 0) {
-//			//uncomment this when there are real notes to pass
-////		noteViewController.currentNote = self.personNotesViewController.notesArray[indexPath.row];
-//	}
+	if (self.personNotesViewController.notesAvailable == YES) {
+		noteViewController.currentNote = [self.personNotesViewController.fetchedResultsController objectAtIndexPath:indexPath];
+	} else {
+		noteViewController.personForNewNote = self.personNotesViewController.person;
+	}
 
 	[self presentViewController:noteViewController animated:YES completion:NULL];
 

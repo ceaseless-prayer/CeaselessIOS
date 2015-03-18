@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TaggedPersonPicker.h"
 #import "Note.h"
+#import "Person.h"
 
 #define UIColorFromRGBWithAlpha(rgbValue,a) [UIColor \
 colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
@@ -27,6 +28,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceTopToView;
 
 @property (strong, nonatomic) Note *currentNote;
+@property (strong, nonatomic) Person *personForNewNote;
 
 - (IBAction)saveButtonPressed:(id)sender;
 
