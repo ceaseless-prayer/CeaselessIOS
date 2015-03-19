@@ -195,7 +195,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                         style:UIAlertActionStyleDefault
                                         handler:^(UIAlertAction *action)
                                         {
-                                            //[self showSMS: kSMSMessage];
+                                            [self addPersonToFavorites];
                                             NSLog(@"Add to Favorites");
                                         }];
     

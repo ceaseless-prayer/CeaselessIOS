@@ -140,20 +140,29 @@
 {
     
     NSInteger numberOfPeople = 5;
-    
-    // TODO filter out blacklisted contacts
-    
-    // TODO first get at least one contact who has been favorited if any are available.
-    
-    
-    // second fill in the rest of the queue with contacts--take the one who has either never been prayed for
-    // or who has not been prayed for in a long time.
 
     // in case you didn't notice, the following line is beautiful.
-    NSSortDescriptor *prayerRecordCountDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"prayerRecords.@max.createDate" ascending:NO]; // TODO switch ascending to YES for prod. NO makes the people we pick more stable on each run.
+    NSSortDescriptor *prayerRecordCountDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"prayerRecords.@max.createDate" ascending:YES];
+    // TODO switch ascending to YES for prod. NO makes the people we pick more stable on each run.
+
+    // filter out removed contacts
     NSPredicate *filterRemovedContacts = [NSPredicate predicateWithFormat: @"removedDate = nil"];
     NSArray *ceaselessPeople = [[[self getAllCeaselessContacts] filteredArrayUsingPredicate:filterRemovedContacts] sortedArrayUsingDescriptors:[NSArray arrayWithObject:prayerRecordCountDescriptor]];
     NSLog(@"Total filtered Ceaseless contacts: %lu", (unsigned long)[ceaselessPeople count]);
+    
+    // first get at least one contact who has been favorited if any are available.
+    NSPredicate *keepFavoriteContacts = [NSPredicate predicateWithFormat: @"favoritedDate != nil"];
+    NSArray *favoriteContacts = [ceaselessPeople filteredArrayUsingPredicate: keepFavoriteContacts];
+    if ([favoriteContacts count] > 0) {
+        // TODO add intelligence based on how many contacts have been favorited
+        // if only 1 has been favorite, don't just show it every single day...
+        if([self pickPersonIfPossible:favoriteContacts[0] fromAddressBook:addressBook]) {
+            --numberOfPeople;
+        }
+    }
+    
+    // fill in the rest of the queue with contacts--take the one who has either never been prayed for
+    // or who has not been prayed for in a long time.
     
     if ([ceaselessPeople count] < numberOfPeople) {
         numberOfPeople = [ceaselessPeople count];
@@ -161,25 +170,7 @@
     
     for (NSInteger i = 0; i< numberOfPeople; i++) {
         Person *personToShow = ceaselessPeople[i];
-        
-        ABRecordRef rawPerson = NULL;
-        BOOL personPicked = NO;
-        
-        for(AddressBookId *abId in personToShow.addressBookIds) { // try address book records until you have a valid one.
-            rawPerson = ABAddressBookGetPersonWithRecordID(addressBook, (ABRecordID) [abId.recordId intValue]);
-            if (rawPerson != NULL) { // we got one that points to a record
-                // check if the record matches our original person contact, since it could be something else entirely
-                Person *validatedPerson = [self getCeaselessContactFromABRecord:rawPerson];
-                if(validatedPerson == personToShow) {
-                    // since it matches, we can pick this person
-                    [self pickPerson: rawPerson personToShow: personToShow];
-                    personPicked = YES;
-                    break;
-                }
-                // we gotta pick something else if it doesn't match
-                // let background refresh processes solve the consistency issues.
-            }
-        }
+        BOOL personPicked = [self pickPersonIfPossible:personToShow fromAddressBook:addressBook];
         
         if(!personPicked) {
             NSLog(@"Could not pick %@", personToShow);
@@ -189,6 +180,34 @@
             }
         }
     }
+}
+
+- (BOOL) pickPersonIfPossible: (Person *) personToPick fromAddressBook: (ABAddressBookRef) addressBook {
+    
+    // you can't pick a person who has already been picked.
+    if ([self.ceaselessPeople containsObject:personToPick]) {
+        return NO;
+    }
+    
+    ABRecordRef rawPerson = NULL;
+    BOOL personPicked = NO;
+    
+    for(AddressBookId *abId in personToPick.addressBookIds) { // try address book records until you have a valid one.
+        rawPerson = ABAddressBookGetPersonWithRecordID(addressBook, (ABRecordID) [abId.recordId intValue]);
+        if (rawPerson != NULL) { // we got one that points to a record
+            // check if the record matches our original person contact, since it could be something else entirely
+            Person *validatedPerson = [self getCeaselessContactFromABRecord:rawPerson];
+            if(validatedPerson == personToPick) {
+                // since it matches, we can pick this person
+                [self pickPerson: rawPerson personToShow: personToPick];
+                personPicked = YES;
+                break;
+            }
+            // we gotta pick something else if it doesn't match
+            // let background refresh processes solve the consistency issues.
+        }
+    }
+    return personPicked;
 }
 
 
