@@ -10,8 +10,18 @@
 #import "NoteViewController.h"
 #import "AppDelegate.h"
 #import "NotesTableViewCell.h"
+typedef enum
+{
+	searchScopeFriends = 0,
+	searchScopeMe = 1
+} PrayerJournalSearchScope;
 
 @interface PrayerJournalViewController ()
+
+@property (strong, nonatomic) NSArray *filteredList;
+@property (strong, nonatomic) NSFetchRequest *searchFetchRequest;
+@property (nonatomic, strong) UISearchController *searchController;
+
 
 @end
 
@@ -47,6 +57,8 @@
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];
 		// Dispose of any resources that can be recreated.
+	self.searchFetchRequest = nil;
+
 }
 
 #pragma mark - Segues
@@ -54,10 +66,18 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
 	if ([[segue identifier] isEqualToString:@"ShowNote"]) {
-		self.noteViewController = segue.destinationViewController;
+		Note *currentNote = nil;
 
-		NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-		Note *currentNote = [self.fetchedResultsController objectAtIndexPath:indexPath];
+		if (self.searchController.active == YES) {
+			NSIndexPath *indexPath = [((UITableViewController *)self.searchController.searchResultsController).tableView indexPathForSelectedRow];
+			currentNote = [self.filteredList objectAtIndex:indexPath.row];
+		} else {
+
+			NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+			currentNote = [self.fetchedResultsController objectAtIndexPath:indexPath];
+		}
+
+		self.noteViewController = segue.destinationViewController;
 		self.noteViewController.currentNote = currentNote;
 	}
 }
@@ -67,21 +87,54 @@
 }
 #pragma mark - Table View
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return [[self.fetchedResultsController sections] count];
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+	if (tableView == self.tableView) {
+		return [[self.fetchedResultsController sections] count];
+	} else {
+		return 1;
+	}
 }
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-	return [sectionInfo numberOfObjects];
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+	if (tableView == self.tableView) {
+		id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+		return [sectionInfo numberOfObjects];
+	} else {
+		return [self.filteredList count];
+	}
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	NotesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-	[self configureCell:cell atIndexPath:indexPath];
+
+	NotesTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+
+	[self configureCell:cell forTableView: tableView atIndexPath:indexPath];
 	return cell;
 }
 
+- (void)configureCell:(UITableViewCell *)cell forTableView: tableView atIndexPath:(NSIndexPath *)indexPath {
+
+	Note *note = nil;
+	if (tableView == self.tableView) {
+		note = [self.fetchedResultsController objectAtIndexPath:indexPath];
+	} else {
+		note = [self.filteredList objectAtIndex:indexPath.row];
+	}
+
+//	NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+
+	cell.imageView.image = [UIImage imageNamed: @"icon_ceaseless_comment"];
+
+	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+	dateFormatter.timeStyle = NSDateFormatterNoStyle;
+	dateFormatter.dateStyle = NSDateFormatterShortStyle;
+	NSDate *date = [note valueForKey:@"lastUpdatedDate"];
+
+	cell.textLabel.text = [dateFormatter stringFromDate:date];
+	cell.detailTextLabel.text = [[note valueForKey:@"text"] description];
+	
+}
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
 		// Return NO if you do not want the specified item to be editable.
 	return YES;
@@ -102,21 +155,48 @@
 	}
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-	NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
 
-	cell.imageView.image = [UIImage imageNamed: @"icon_ceaseless_comment"];
+#pragma mark - Search Controller
 
-	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-	dateFormatter.timeStyle = NSDateFormatterNoStyle;
-	dateFormatter.dateStyle = NSDateFormatterShortStyle;
-	NSDate *date = [object valueForKey:@"lastUpdatedDate"];
+- (void)searchForText:(NSString *)searchText scope:(PrayerJournalSearchScope)scopeOption
+{
+	if (self.managedObjectContext) {
+		NSString *predicateFormat;
 
-	cell.textLabel.text = [dateFormatter stringFromDate:date];
-	cell.detailTextLabel.text = [[object valueForKey:@"text"] description];
+		if (scopeOption == searchScopeFriends) {
+			predicateFormat = @"peopleTagged.@count > 0 AND text contains[cd] %@";
+		} else {
+			predicateFormat = @"peopleTagged.@count < 1 AND text contains[cd] %@";
 
+		}
+
+		NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, searchText];
+
+		[self.searchFetchRequest setPredicate:predicate];
+
+		NSError *error = nil;
+	self.filteredList = [self.managedObjectContext executeFetchRequest:self.searchFetchRequest error:&error];
+  }
 }
 
+- (BOOL)searchDisplayController:(UISearchController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+	PrayerJournalSearchScope scopeKey = (int)controller.searchBar.selectedScopeButtonIndex;
+	[self searchForText:searchString scope:scopeKey];
+	return YES;
+}
+
+- (BOOL)searchDisplayController:(UISearchController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption
+{
+	NSString *searchString = controller.searchBar.text;
+	[self searchForText:searchString scope: (int) searchOption];
+	return YES;
+}
+
+- (void)searchDisplayController:(UISearchController *)controller didLoadSearchResultsTableView:(UITableView *)tableView
+{
+	tableView.rowHeight = 130;
+}
 #pragma mark - Fetched results controller
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
@@ -135,10 +215,10 @@
 	[fetchRequest setEntity:entity];
 
 		// Set the batch size to a suitable number.
-	[fetchRequest setFetchBatchSize:200];
+	[fetchRequest setFetchBatchSize:20];
 
 		// Edit the sort key as appropriate.
-	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createDate" ascending:NO];
+	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastUpdatedDate" ascending:NO];
 	NSArray *sortDescriptors = @[sortDescriptor];
 
 	[fetchRequest setSortDescriptors:sortDescriptors];
@@ -159,7 +239,23 @@
 
 	return _fetchedResultsController;
 }
+- (NSFetchRequest *)searchFetchRequest
+{
+	if (_searchFetchRequest != nil)
+  {
+  return _searchFetchRequest;
+  }
 
+	_searchFetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
+	[_searchFetchRequest setEntity:entity];
+
+	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastUpdatedDate" ascending:NO];
+	NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
+	[_searchFetchRequest setSortDescriptors:sortDescriptors];
+
+	return _searchFetchRequest;
+}
 - (void) listAll {
 	  // Test listing all tagData from the store
 //  AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];

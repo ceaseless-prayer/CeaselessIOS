@@ -140,7 +140,9 @@
 {
     
     NSInteger numberOfPeople = 5;
-    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"prayerRecords.@count" ascending:YES];
+//    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"prayerRecords.@count" ascending:YES];
+	NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"prayerRecords.@count" ascending:NO];
+
     NSArray *ceaselessPeople = [[self getAllCeaselessContacts] sortedArrayUsingDescriptors:[NSArray arrayWithObject:descriptor]];
     if ([ceaselessPeople count] < numberOfPeople) {
         numberOfPeople = [ceaselessPeople count];
