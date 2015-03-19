@@ -17,6 +17,7 @@
 @property (strong, nonatomic) NSMutableArray *ceaselessPeople;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) CeaselessLocalContacts *ceaselessContacts;
+@property (nonatomic) ABAddressBookRef addressBook;
 @property (nonatomic) NSInteger numberOfPeople;
 
 @end
@@ -37,89 +38,103 @@
         _ceaselessContacts.contacts = [[NSMutableArray alloc] initWithArray:[self getAllCeaselessContacts]];
         _ceaselessContacts.names = [[NSMutableArray alloc] initWithArray:[self getAllNames]];
         _ceaselessContacts.addressBookIds = [[NSMutableArray alloc] initWithArray:[self getAllAddressBookIds]];
+        
+        [self initializeAddressBook];
     }
     return self;
 }
 
-- (void) loadContacts {
-	self.ceaselessPeople = [[NSMutableArray alloc] initWithCapacity: 3];
+- (void)initializeAddressBook {
+    // get address book authorization
+    ABAuthorizationStatus status = ABAddressBookGetAuthorizationStatus();
+    if (status == kABAuthorizationStatusDenied) {
+        // if you got here, user had previously denied/revoked permission for your
+        // app to access the contacts, and all you can do is handle this gracefully,
+        // perhaps telling the user that they have to go to settings to grant access
+        // to contacts
+        [[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit to the \"Privacy\" section in the iPhone Settings app." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
     
-	ABAuthorizationStatus status = ABAddressBookGetAuthorizationStatus();
-
-	if (status == kABAuthorizationStatusDenied) {
-			// if you got here, user had previously denied/revoked permission for your
-			// app to access the contacts, and all you can do is handle this gracefully,
-			// perhaps telling the user that they have to go to settings to grant access
-			// to contacts
-
-		[[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit to the \"Privacy\" section in the iPhone Settings app." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-	}
-
-	CFErrorRef error = NULL;
-	ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, &error);
+    CFErrorRef error = NULL;
+    _addressBook = ABAddressBookCreateWithOptions(NULL, &error);
     
-	if (error) {
-		NSLog(@"ABAddressBookCreateWithOptions error: %@", CFBridgingRelease(error));
-		if (addressBook) CFRelease(addressBook);
-	}
-
-	if (status == kABAuthorizationStatusNotDetermined) {
-
-			// present the user the UI that requests permission to contacts ...
-		ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
-			if (error) {
-				NSLog(@"ABAddressBookRequestAccessWithCompletion error: %@", CFBridgingRelease(error));
-			}
-
-			if (granted) {
-					// if they gave you permission, then just carry on
-                // TODO need to make sure all initialization code happens here.
-				[self pickPeopleInAddressBook:addressBook];
-
-			} else {
-					// however, if they didn't give you permission, handle it gracefully, for example...
-
-				dispatch_async(dispatch_get_main_queue(), ^{
-						// BTW, this is not on the main thread, so dispatch UI updates back to the main queue
-
-					[[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit to the \"Privacy\" section in the iPhone Settings app." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-				});
-
-			}
-
-			if (addressBook) CFRelease(addressBook);
-		});
-
-	} else if (status == kABAuthorizationStatusAuthorized) {
-        // initial load when we have no Ceaseless contacts whatsoever.
-        if([_ceaselessContacts.contacts count] == 0) {
-            // preload the first 5 contacts
-            [self initializeFirst:_numberOfPeople ContactsFromAddressBook: addressBook];
-        }
-        [self pickPeopleInAddressBook:addressBook];
-        if (addressBook) CFRelease(addressBook);
-
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            CFErrorRef error = NULL;
-            ABAddressBookRef addressBook2 = ABAddressBookCreateWithOptions(NULL, &error);
+    if (error) {
+        NSLog(@"ABAddressBookCreateWithOptions error: %@", CFBridgingRelease(error));
+        if (_addressBook) CFRelease(_addressBook);
+    }
+    
+    if (status == kABAuthorizationStatusNotDetermined) {
+        // present the user the UI that requests permission to contacts ...
+        ABAddressBookRequestAccessWithCompletion(_addressBook, ^(bool granted, CFErrorRef error) {
+            if (error) {
+                NSLog(@"ABAddressBookRequestAccessWithCompletion error: %@", CFBridgingRelease(error));
+            }
             
-            NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-            [managedObjectContext setParentContext:self.managedObjectContext];
-            
-            // initialize a new personpicker
-            PersonPicker *pp =  [[PersonPicker alloc]initWith:managedObjectContext numberOfPeople:5];
-            [pp.managedObjectContext performBlockAndWait: ^{
-                [pp refreshCeaselessContactsFromAddressBook:addressBook2];
-            }];
-
-            if (addressBook2) CFRelease(addressBook2);
+            if (granted) {
+                // TODO this should probably be a notification
+                // which then kicks off the initalization process.
+                // show a housekeeping loading view and hide it when the process is done.
+                // if they gave you permission, then just carry on
+                // send out notification that permission is granted.
+                // we can detect the notification, kick off ensureContactsAreInitializedAndRefreshed
+                // and show the UI.
+                [self ensureContactsAreInitializedAndRefreshed]; // TODO refresh UI to show them now.
+            } else {
+                // however, if they didn't give you permission, handle it gracefully, for example...
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    // BTW, this is not on the main thread, so dispatch UI updates back to the main queue
+                    [[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit to the \"Privacy\" section in the iPhone Settings app." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                });
+            }
+            if (_addressBook) CFRelease(_addressBook);
         });
-	}
-	if ([self.ceaselessPeople count] > 0) {
-		AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
-		appDelegate.peopleArray = self.ceaselessPeople;
+        
+    } else if (status == kABAuthorizationStatusAuthorized) {
+        NSLog(@"Address Book initialized");
+    }
+}
 
-	}
+- (void) ensureContactsAreInitializedAndRefreshed {
+    // initial load when we have no Ceaseless contacts whatsoever.
+    if([_ceaselessContacts.contacts count] == 0) {
+        // preload the first 5 contacts
+        [self initializeFirstContacts:_numberOfPeople];
+    }
+    [self pickPeople];
+    if (_addressBook) CFRelease(_addressBook);
+    
+    // refresh address book in the background
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        CFErrorRef error = NULL;
+        ABAddressBookRef addressBook2 = ABAddressBookCreateWithOptions(NULL, &error);
+        
+        NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        [managedObjectContext setParentContext:self.managedObjectContext];
+        
+        // initialize a new personpicker
+        PersonPicker *pp =  [[PersonPicker alloc]initWith:managedObjectContext numberOfPeople:5];
+        pp.addressBook = addressBook2;
+        [pp.managedObjectContext performBlockAndWait: ^{
+            [pp refreshCeaselessContacts];
+        }];
+        
+        if (addressBook2) CFRelease(addressBook2);
+    });
+}
+
+- (void)setPeopleToShow {
+    if ([self.ceaselessPeople count] > 0) {
+        AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
+        appDelegate.peopleArray = self.ceaselessPeople;
+    }
+}
+
+- (void) loadContacts {
+    if(ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
+        self.ceaselessPeople = [[NSMutableArray alloc] initWithCapacity: 3];
+        [self ensureContactsAreInitializedAndRefreshed];
+        [self setPeopleToShow];
+    }
 }
 
 - (void)pickPerson:(ABRecordRef)rawPerson personToShow:(Person *)personToShow {
@@ -163,7 +178,7 @@
     NSLog(@"Name:%@ %@", person.firstName, person.lastName);
 }
 
-- (void)pickPeopleInAddressBook:(ABAddressBookRef)addressBook
+- (void)pickPeople
 {
     NSInteger numberOfPeople = _numberOfPeople;
 
@@ -195,7 +210,7 @@
         pickFavoriteContact = YES;
         
         // if only 1 has been favorite, don't just show it every single day...
-        if(pickFavoriteContact && [self pickPersonIfPossible:favoriteContacts[0] fromAddressBook:addressBook]) {
+        if(pickFavoriteContact && [self pickPersonIfPossible:favoriteContacts[0]]) {
             --numberOfPeople;
         }
     }
@@ -209,7 +224,7 @@
     
     for (NSInteger i = 0; i< numberOfPeople; i++) {
         Person *personToShow = ceaselessPeople[i];
-        BOOL personPicked = [self pickPersonIfPossible:personToShow fromAddressBook:addressBook];
+        BOOL personPicked = [self pickPersonIfPossible:personToShow];
         
         if(!personPicked) {
             NSLog(@"Could not pick %@", personToShow);
@@ -221,7 +236,7 @@
     }
 }
 
-- (BOOL) pickPersonIfPossible: (Person *) personToPick fromAddressBook: (ABAddressBookRef) addressBook {
+- (BOOL) pickPersonIfPossible: (Person *) personToPick {
     
     // you can't pick a person who has already been picked.
     if ([self.ceaselessPeople containsObject:personToPick]) {
@@ -232,7 +247,7 @@
     BOOL personPicked = NO;
     
     for(AddressBookId *abId in personToPick.addressBookIds) { // try address book records until you have a valid one.
-        rawPerson = ABAddressBookGetPersonWithRecordID(addressBook, (ABRecordID) [abId.recordId intValue]);
+        rawPerson = ABAddressBookGetPersonWithRecordID(_addressBook, (ABRecordID) [abId.recordId intValue]);
         if (rawPerson != NULL) { // we got one that points to a record
             // check if the record matches our original person contact, since it could be something else entirely
             Person *validatedPerson = [self getCeaselessContactFromABRecord:rawPerson];
@@ -250,8 +265,8 @@
 }
 
 
-- (void) refreshCeaselessContactsFromAddressBook: (ABAddressBookRef)addressBook {
-    NSArray * allAddressBookContacts = [self getUnifiedAddressBookRecords:addressBook];
+- (void) refreshCeaselessContacts {
+    NSArray * allAddressBookContacts = [self getUnifiedAddressBookRecords:_addressBook];
     
     NSLog(@"Total Ceaseless contacts: %lu", (unsigned long)[_ceaselessContacts.contacts count]);
     for (NSSet *unifiedRecord in allAddressBookContacts) {
@@ -260,12 +275,12 @@
     
     NSArray *allCeaselessContacts = [self getAllCeaselessContacts];
     for (Person *person in allCeaselessContacts) {
-        [self updateCeaselessContactLocalIds: person fromAddressBook: addressBook];
+        [self updateCeaselessContactLocalIds: person fromAddressBook: _addressBook];
     }
 }
 
-- (void) initializeFirst: (NSInteger) n ContactsFromAddressBook: (ABAddressBookRef) addressBook {
-    NSArray *allAddressBookContacts = [self getUnifiedAddressBookRecords:addressBook];
+- (void) initializeFirstContacts: (NSInteger) n {
+    NSArray *allAddressBookContacts = [self getUnifiedAddressBookRecords:_addressBook];
     n = MIN(n, [allAddressBookContacts count]);
     for(NSInteger i = 0; i < n; i++) {
             [self updateCeaselessContactFromABRecord:(__bridge ABRecordRef)[allAddressBookContacts[i] anyObject]];
@@ -273,6 +288,7 @@
 }
 
 - (void) updateCeaselessContactLocalIds: (Person *) person fromAddressBook: (ABAddressBookRef) addressBook {
+    _addressBook = addressBook;
     ABRecordRef rawPerson = NULL;
     for (AddressBookId *abId in person.addressBookIds) {
         rawPerson = ABAddressBookGetPersonWithRecordID(addressBook, (ABRecordID) [abId.recordId intValue]);
@@ -305,8 +321,8 @@
     }
 }
 
-- (NSArray *)getUnifiedAddressBookRecords:(ABAddressBookRef)addressBook
-{
+- (NSArray *)getUnifiedAddressBookRecords:(ABAddressBookRef)addressBook {
+    _addressBook = addressBook;
     // http://stackoverflow.com/questions/11351454/dealing-with-duplicate-contacts-due-to-linked-cards-in-ios-address-book-api
     NSMutableSet *unifiedRecordsSet = [NSMutableSet set];
     
@@ -405,6 +421,23 @@
         NSString *value = CFBridgingRelease(ABMultiValueCopyValueAtIndex(multiValue, i));
         [result addObject:value];
     }
+    return result;
+}
+
+- (UIImage *) getImageForCeaselessContact: (Person*) person {
+    UIImage *result = nil;
+    ABRecordRef rawPerson;
+    for (AddressBookId *abId in person.addressBookIds) {
+        rawPerson = ABAddressBookGetPersonWithRecordID(_addressBook, (ABRecordID) [abId.recordId intValue]);
+        // Check for contact picture
+        if (rawPerson != nil && ABPersonHasImageData(rawPerson)) {
+            if ( &ABPersonCopyImageDataWithFormat != nil ) {
+                result = [UIImage imageWithData:(__bridge NSData *)ABPersonCopyImageDataWithFormat(rawPerson, kABPersonImageFormatOriginalSize)];
+                break;
+            }
+        }
+    }
+    
     return result;
 }
 

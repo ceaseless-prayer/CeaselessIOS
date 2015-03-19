@@ -18,6 +18,7 @@
 @implementation ScripturePicker
 NSString *const kDefaultScripture = @"\"And whatever you ask in prayer, you will receive, if you have faith.\"";
 NSString *const kDefaultCitation = @"(Matthew 21:22,ESV)";
+NSString *const kDefaultShareLink = @"http://www.bible.is/ENGESV/Matt/21#22";
 NSString *const kVerseOfTheDayURL = @"http://test.ceaselessprayer.com/api/votd";
 NSString *const kGetScriptureURL = @"http://test.ceaselessprayer.com/api/getScripture";
 int const kDefaultQueueMaxSize = 5;
@@ -143,16 +144,15 @@ int const kDefaultQueueMinSize = 1;
 
 	[request setHTTPMethod:@"POST"];
 
-	if (!dailyVerseData)
-		{
-			//default scripture if there was not a reference
+	if (!dailyVerseData) {
+        //default scripture if there was not a reference
 		dailyVerseData = [[NSDictionary alloc] initWithObjectsAndKeys:
 						  @"22", @"verse_start",
 						  @"21", @"chapter",
 						  @"Matt", @"book",
 						  @"22", @"verse_end",
 						  nil];
-		}
+    }
 	NSDictionary *jsonData = dailyVerseData;
 	NSError *error;
 	NSData *postData = [NSJSONSerialization dataWithJSONObject:jsonData options:0 error:&error];
@@ -175,6 +175,11 @@ int const kDefaultQueueMinSize = 1;
 				  NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"ScriptureQueue" inManagedObjectContext:self.managedObjectContext];
 				  [newManagedObject setValue: [verseDictionary objectForKey:@"text"]forKey: @"verse"];
 				  [newManagedObject setValue: [verseDictionary objectForKey:@"citation"] forKey: @"citation"];
+                  
+                  // TODO configure the right bible for the local language
+                  NSString *shareLink = [NSString stringWithFormat:@"%@/%@/%@#%@", @"http://www.bible.is/ENGESV/", jsonData[@"book"], jsonData[@"chapter"], jsonData[@"verse_start"]];
+                  
+                  [newManagedObject setValue: shareLink forKey: @"shareLink"];
 				  if (![self.managedObjectContext save: &error]) {
 					  NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
 				  }
@@ -208,6 +213,7 @@ int const kDefaultQueueMinSize = 1;
 	NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"ScriptureQueue" inManagedObjectContext:self.managedObjectContext];
 	[newManagedObject setValue: kDefaultScripture forKey: @"verse"];
 	[newManagedObject setValue: kDefaultCitation forKey: @"citation"];
+    	[newManagedObject setValue: kDefaultShareLink forKey: @"shareLink"];
 	if (![self.managedObjectContext save: &error]) {
 		NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
 	}
