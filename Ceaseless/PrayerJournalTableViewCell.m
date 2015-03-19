@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Christopher Lim. All rights reserved.
 //
 
-#import "NotesTableViewCell.h"
+#import "PrayerJournalTableViewCell.h"
 
-@implementation NotesTableViewCell
+@implementation PrayerJournalTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code

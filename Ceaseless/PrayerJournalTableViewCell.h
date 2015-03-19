@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NotesTableViewCell : UITableViewCell
+@interface PrayerJournalTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIView *notesContentView;
+@property (weak, nonatomic) IBOutlet UILabel *date;
+@property (weak, nonatomic) IBOutlet UILabel *text;
 
 @end
