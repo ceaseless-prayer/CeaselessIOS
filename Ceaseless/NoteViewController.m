@@ -36,6 +36,20 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 	self.notesTextView.delegate = self;
 
+//		//done Button on toolbar above keyboard
+//	UIToolbar* keyboardToolbar = [[UIToolbar alloc] init];
+//	[keyboardToolbar sizeToFit];
+//	UIBarButtonItem *flexBarButton = [[UIBarButtonItem alloc]
+//									  initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+//									  target:nil action:nil];
+//	UIBarButtonItem *doneBarButton = [[UIBarButtonItem alloc]
+//									  initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+//									  target:self action:@selector(doneButtonPressed:)];
+//	keyboardToolbar.items = @[flexBarButton, doneBarButton];
+//	keyboardToolbar.tintColor = [UIColor whiteColor];
+//	self.personsTaggedView.inputAccessoryView = keyboardToolbar;
+//	self.notesTextView.inputAccessoryView = keyboardToolbar;
+
 
 
 		//create navigation bar if there is no navigation controller
@@ -157,6 +171,19 @@ NSString *const kPlaceHolderText = @"Enter note";
 	}
 	return YES;
 }
+//- (IBAction)doneButtonPressed:(id)sender {
+//
+//		//sender is UIBarButtonItem
+//
+//	if ([self.personsTaggedView isFirstResponder]) {  //comments entered, Done pressed
+//		[self.personsTaggedView resignFirstResponder];
+//
+//	} else {
+//		if ([self.notesTextView isFirstResponder]) { //location was entered, Done was pressed
+//			[self.notesTextView resignFirstResponder];
+//		}
+//	}
+//}
 /*
 #pragma mark - Navigation
 

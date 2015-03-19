@@ -10,8 +10,18 @@
 #import "NoteViewController.h"
 #import "AppDelegate.h"
 #import "NotesTableViewCell.h"
+typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
+{
+	searchScopeFriends = 0,
+	searchScopeMe = 1
+};
 
-@interface PrayerJournalViewController ()
+@interface PrayerJournalViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating>
+
+@property (strong, nonatomic) NSArray *filteredList;
+@property (strong, nonatomic) NSFetchRequest *searchFetchRequest;
+@property (nonatomic, strong) UISearchController *searchController;
+
 
 @end
 
@@ -34,7 +44,27 @@
 	
 	self.tableView.backgroundView = imageView;
 
-	}
+	self.tableView.estimatedRowHeight = 130.0;
+	self.tableView.rowHeight = UITableViewAutomaticDimension;
+
+		//searchController cannot be set up in IB, so set it up here
+	self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+	self.searchController.searchResultsUpdater = self;
+	self.searchController.dimsBackgroundDuringPresentation = NO;
+	self.searchController.searchBar.barTintColor = UIColorFromRGBWithAlpha(0x24292f , 0.4);
+	self.searchController.searchBar.tintColor = [UIColor whiteColor];
+	self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"Friends",@"Friends"),
+														  NSLocalizedString(@"Me",@"Me")];
+	self.searchController.searchBar.delegate = self;
+//		// Hide the search bar until user scrolls up
+	CGRect newBounds = self.tableView.bounds;
+	newBounds.origin.y = newBounds.origin.y + self.searchController.searchBar.bounds.size.height;
+	self.tableView.bounds = newBounds;
+
+	self.tableView.tableHeaderView = self.searchController.searchBar;
+	self.definesPresentationContext = YES;
+
+}
 - (void) viewDidAppear:(BOOL)animated {
 	[super viewDidAppear: animated];
 
@@ -47,6 +77,8 @@
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];
 		// Dispose of any resources that can be recreated.
+	self.searchFetchRequest = nil;
+
 }
 
 #pragma mark - Segues
@@ -54,10 +86,18 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
 	if ([[segue identifier] isEqualToString:@"ShowNote"]) {
-		self.noteViewController = segue.destinationViewController;
+		Note *currentNote = nil;
 
-		NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-		Note *currentNote = [self.fetchedResultsController objectAtIndexPath:indexPath];
+		if (self.searchController.isActive) {
+			NSIndexPath *indexPath = [((UITableViewController *)self.searchController.searchResultsController).tableView indexPathForSelectedRow];
+			currentNote = [self.filteredList objectAtIndex:indexPath.row];
+		} else {
+
+			NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+			currentNote = [self.fetchedResultsController objectAtIndexPath:indexPath];
+		}
+
+		self.noteViewController = segue.destinationViewController;
 		self.noteViewController.currentNote = currentNote;
 	}
 }
@@ -67,21 +107,56 @@
 }
 #pragma mark - Table View
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return [[self.fetchedResultsController sections] count];
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+	if (self.searchController.active) {
+		return 1;
+	} else {
+		return [[self.fetchedResultsController sections] count];
+	}
 }
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-	return [sectionInfo numberOfObjects];
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+	if (self.searchController.active) {
+		return [self.filteredList count];
+	} else {
+		id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+		return [sectionInfo numberOfObjects];
+	}
 }
-
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+	return 0;
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	NotesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+
+	NotesTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+
 	[self configureCell:cell atIndexPath:indexPath];
 	return cell;
 }
 
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+
+	Note *note = nil;
+	if (self.searchController.active) {
+		note = [self.filteredList objectAtIndex:indexPath.row];
+	} else {
+		note = [self.fetchedResultsController objectAtIndexPath:indexPath];
+	}
+
+//	NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+
+	cell.imageView.image = [UIImage imageNamed: @"icon_ceaseless_comment"];
+
+	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+	dateFormatter.timeStyle = NSDateFormatterNoStyle;
+	dateFormatter.dateStyle = NSDateFormatterShortStyle;
+	NSDate *date = [note valueForKey:@"lastUpdatedDate"];
+
+	cell.textLabel.text = [dateFormatter stringFromDate:date];
+	cell.detailTextLabel.text = [[note valueForKey:@"text"] description];
+	
+}
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
 		// Return NO if you do not want the specified item to be editable.
 	return YES;
@@ -102,19 +177,46 @@
 	}
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-	NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+#pragma mark -
+#pragma mark === UISearchBarDelegate ===
+#pragma mark -
 
-	cell.imageView.image = [UIImage imageNamed: @"icon_ceaseless_comment"];
+- (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
+{
+	[self updateSearchResultsForSearchController:self.searchController];
 
-	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-	dateFormatter.timeStyle = NSDateFormatterNoStyle;
-	dateFormatter.dateStyle = NSDateFormatterShortStyle;
-	NSDate *date = [object valueForKey:@"lastUpdatedDate"];
+}
 
-	cell.textLabel.text = [dateFormatter stringFromDate:date];
-	cell.detailTextLabel.text = [[object valueForKey:@"text"] description];
+#pragma mark -
+#pragma mark === UISearchResultsUpdating ===
+#pragma mark -
 
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+{
+	NSString *searchString = searchController.searchBar.text;
+	[self searchForText:searchString scope: searchController.searchBar.selectedScopeButtonIndex];
+	[self.tableView reloadData];
+}
+
+- (void)searchForText:(NSString *)searchText scope:(PrayerJournalSearchScope)scopeOption
+{
+	if (self.managedObjectContext) {
+		NSString *predicateFormat;
+
+		if (scopeOption == searchScopeFriends) {
+			predicateFormat = @"peopleTagged.@count > 0 AND text contains[cd] %@";
+		} else {
+			predicateFormat = @"peopleTagged.@count < 1 AND text contains[cd] %@";
+
+		}
+
+		NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, searchText];
+
+		[self.searchFetchRequest setPredicate:predicate];
+
+		NSError *error = nil;
+		self.filteredList = [self.managedObjectContext executeFetchRequest:self.searchFetchRequest error:&error];
+	}
 }
 
 #pragma mark - Fetched results controller
@@ -135,10 +237,10 @@
 	[fetchRequest setEntity:entity];
 
 		// Set the batch size to a suitable number.
-	[fetchRequest setFetchBatchSize:200];
+	[fetchRequest setFetchBatchSize:20];
 
 		// Edit the sort key as appropriate.
-	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createDate" ascending:NO];
+	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastUpdatedDate" ascending:NO];
 	NSArray *sortDescriptors = @[sortDescriptor];
 
 	[fetchRequest setSortDescriptors:sortDescriptors];
@@ -159,7 +261,23 @@
 
 	return _fetchedResultsController;
 }
+- (NSFetchRequest *)searchFetchRequest
+{
+	if (_searchFetchRequest != nil)
+  {
+  return _searchFetchRequest;
+  }
 
+	_searchFetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
+	[_searchFetchRequest setEntity:entity];
+
+	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastUpdatedDate" ascending:NO];
+	NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
+	[_searchFetchRequest setSortDescriptors:sortDescriptors];
+
+	return _searchFetchRequest;
+}
 - (void) listAll {
 	  // Test listing all tagData from the store
 //  AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
