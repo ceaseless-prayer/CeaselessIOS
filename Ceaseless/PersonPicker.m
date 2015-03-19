@@ -73,6 +73,7 @@
             if (granted) {
                 // TODO this should probably be a notification
                 // which then kicks off the initalization process.
+                // show a housekeeping loading view and hide it when the process is done.
                 // if they gave you permission, then just carry on
                 // send out notification that permission is granted.
                 // we can detect the notification, kick off ensureContactsAreInitializedAndRefreshed

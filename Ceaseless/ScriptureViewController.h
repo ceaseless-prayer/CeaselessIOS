@@ -13,4 +13,5 @@
 
 @interface ScriptureViewController : DataViewController
     @property (strong, nonatomic) IBOutlet ScriptureView *scriptureView;
+- (IBAction)share:(id)sender;
 @end
