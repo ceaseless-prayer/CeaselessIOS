@@ -17,16 +17,22 @@
 @property (strong, nonatomic) NSMutableArray *ceaselessPeople;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) CeaselessLocalContacts *ceaselessContacts;
+@property (nonatomic) NSInteger numberOfPeople;
 
 @end
 
 @implementation PersonPicker
 
 - (instancetype) init {
+    AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
+    return [self initWith: appDelegate.managedObjectContext numberOfPeople: 5];
+}
+
+- (instancetype) initWith: (NSManagedObjectContext*) managedObjectContext numberOfPeople: (int) numberOfPeople {
     self = [super init];
     if (self) {
-        AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
-        self.managedObjectContext = appDelegate.managedObjectContext;
+        self.managedObjectContext = managedObjectContext;
+        _numberOfPeople = numberOfPeople;
         self.ceaselessContacts = [[CeaselessLocalContacts alloc]init];
         _ceaselessContacts.contacts = [[NSMutableArray alloc] initWithArray:[self getAllCeaselessContacts]];
         _ceaselessContacts.names = [[NSMutableArray alloc] initWithArray:[self getAllNames]];
@@ -37,6 +43,7 @@
 
 - (void) loadContacts {
 	self.ceaselessPeople = [[NSMutableArray alloc] initWithCapacity: 3];
+    
 	ABAuthorizationStatus status = ABAddressBookGetAuthorizationStatus();
 
 	if (status == kABAuthorizationStatusDenied) {
@@ -66,7 +73,7 @@
 
 			if (granted) {
 					// if they gave you permission, then just carry on
-
+                // TODO need to make sure all initialization code happens here.
 				[self pickPeopleInAddressBook:addressBook];
 
 			} else {
@@ -84,9 +91,29 @@
 		});
 
 	} else if (status == kABAuthorizationStatusAuthorized) {
-		[self pickPeopleInAddressBook:addressBook];
-        [self refreshCeaselessContactsFromAddressBook:addressBook];
-		if (addressBook) CFRelease(addressBook);
+        // initial load when we have no Ceaseless contacts whatsoever.
+        if([_ceaselessContacts.contacts count] == 0) {
+            // preload the first 5 contacts
+            [self initializeFirst:_numberOfPeople ContactsFromAddressBook: addressBook];
+        }
+        [self pickPeopleInAddressBook:addressBook];
+        if (addressBook) CFRelease(addressBook);
+
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            CFErrorRef error = NULL;
+            ABAddressBookRef addressBook2 = ABAddressBookCreateWithOptions(NULL, &error);
+            
+            NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+            [managedObjectContext setParentContext:self.managedObjectContext];
+            
+            // initialize a new personpicker
+            PersonPicker *pp =  [[PersonPicker alloc]initWith:managedObjectContext numberOfPeople:5];
+            [pp.managedObjectContext performBlockAndWait: ^{
+                [pp refreshCeaselessContactsFromAddressBook:addressBook2];
+            }];
+
+            if (addressBook2) CFRelease(addressBook2);
+        });
 	}
 	if ([self.ceaselessPeople count] > 0) {
 		AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
@@ -156,9 +183,22 @@
     NSPredicate *keepFavoriteContacts = [NSPredicate predicateWithFormat: @"favoritedDate != nil"];
     NSArray *favoriteContacts = [ceaselessPeople filteredArrayUsingPredicate: keepFavoriteContacts];
     if ([favoriteContacts count] > 0) {
-        // TODO add intelligence based on how many contacts have been favorited
+        BOOL pickFavoriteContact = YES;
+        
+        // when you have less than 7 favorited contacts
+        // it will only pick a favorite to show with a probability of 1/3
+        // otherwise you could be seeing the same person every single day.
+        if([favoriteContacts count] < 7) {
+            NSInteger diceRoll =  arc4random_uniform(3);
+            if(diceRoll != 0) {
+                pickFavoriteContact = NO;
+            }
+        }
+        // TODO remove this override for prod. We always show favorites for test.
+        pickFavoriteContact = YES;
+        
         // if only 1 has been favorite, don't just show it every single day...
-        if([self pickPersonIfPossible:favoriteContacts[0] fromAddressBook:addressBook]) {
+        if(pickFavoriteContact && [self pickPersonIfPossible:favoriteContacts[0] fromAddressBook:addressBook]) {
             --numberOfPeople;
         }
     }
@@ -224,6 +264,14 @@
     NSArray *allCeaselessContacts = [self getAllCeaselessContacts];
     for (Person *person in allCeaselessContacts) {
         [self updateCeaselessContactLocalIds: person fromAddressBook: addressBook];
+    }
+}
+
+- (void) initializeFirst: (NSInteger) n ContactsFromAddressBook: (ABAddressBookRef) addressBook {
+    NSArray *allAddressBookContacts = [self getUnifiedAddressBookRecords:addressBook];
+    n = MIN(n, [allAddressBookContacts count]);
+    for(NSInteger i = 0; i < n; i++) {
+            [self updateCeaselessContactFromABRecord:(__bridge ABRecordRef)[allAddressBookContacts[i] anyObject]];
     }
 }
 
@@ -508,6 +556,7 @@
     ceaselessContact.addressBookIds = [self buildAddressBookIds:unifiedRecord];
     ceaselessContact.phoneNumbers = [self buildPhoneNumbers:unifiedRecord];
     ceaselessContact.emails = [self buildEmails:unifiedRecord];
+
 }
 
 - (NSMutableSet *)buildFirstNames:(NSSet *)unifiedRecord {

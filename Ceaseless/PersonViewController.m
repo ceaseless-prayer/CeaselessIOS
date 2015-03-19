@@ -199,6 +199,15 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                             NSLog(@"Add to Favorites");
                                         }];
     
+    UIAlertAction *unfavoriteAction = [UIAlertAction
+                                           actionWithTitle:NSLocalizedString(@"Remove from Favorites", @"Remove from Favorites")
+                                           style:UIAlertActionStyleDefault
+                                           handler:^(UIAlertAction *action)
+                                           {
+                                               [self removePersonFromFavorites];
+                                               NSLog(@"Remove from Favorites");
+                                           }];
+    
     //	UIAlertAction *createNoteAction = [UIAlertAction
     //									actionWithTitle:NSLocalizedString(@"Create Note", @"Create Note")
     //									   style:UIAlertActionStyleDefault
@@ -216,6 +225,8 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // for now only show it if it isn't already favorited
     if (((Person*)((NonMOPerson*)self.dataObject).person).favoritedDate == nil) {
         [alertController addAction: addToFavoritesAction];
+    } else {
+        [alertController addAction: unfavoriteAction];
     }
     
     //	[alertController addAction:createNoteAction];
@@ -264,6 +275,11 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)addPersonToFavorites {
     [((NonMOPerson*)self.dataObject) favorite];    
+    // TODO animate?
+}
+
+- (void)removePersonFromFavorites {
+    [((NonMOPerson*)self.dataObject) unfavorite];
     // TODO animate?
 }
 
