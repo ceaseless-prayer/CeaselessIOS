@@ -165,10 +165,7 @@
 
 - (void)pickPeopleInAddressBook:(ABAddressBookRef)addressBook
 {
-    
-    NSInteger numberOfPeople = 5;
-//    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"prayerRecords.@count" ascending:YES];
-	NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"prayerRecords.@count" ascending:NO];
+    NSInteger numberOfPeople = _numberOfPeople;
 
     // in case you didn't notice, the following line is beautiful.
     NSSortDescriptor *prayerRecordCountDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"prayerRecords.@max.createDate" ascending:YES];
