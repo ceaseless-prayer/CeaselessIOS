@@ -154,9 +154,22 @@
     NSPredicate *keepFavoriteContacts = [NSPredicate predicateWithFormat: @"favoritedDate != nil"];
     NSArray *favoriteContacts = [ceaselessPeople filteredArrayUsingPredicate: keepFavoriteContacts];
     if ([favoriteContacts count] > 0) {
-        // TODO add intelligence based on how many contacts have been favorited
+        BOOL pickFavoriteContact = YES;
+        
+        // when you have less than 7 favorited contacts
+        // it will only pick a favorite to show with a probability of 1/3
+        // otherwise you could be seeing the same person every single day.
+        if([favoriteContacts count] < 7) {
+            NSInteger diceRoll =  arc4random_uniform(3);
+            if(diceRoll != 0) {
+                pickFavoriteContact = NO;
+            }
+        }
+        // TODO remove this override for prod. We always show favorites for test.
+        pickFavoriteContact = YES;
+        
         // if only 1 has been favorite, don't just show it every single day...
-        if([self pickPersonIfPossible:favoriteContacts[0] fromAddressBook:addressBook]) {
+        if(pickFavoriteContact && [self pickPersonIfPossible:favoriteContacts[0] fromAddressBook:addressBook]) {
             --numberOfPeople;
         }
     }
