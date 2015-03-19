@@ -8,7 +8,7 @@
 
 #import "PersonNotesViewController.h"
 #import "AppDelegate.h"
-#import "NotesTableViewCell.h"
+#import "PersonNotesTableViewCell.h"
 #import "Note.h"
 
 @interface PersonNotesViewController ()
@@ -21,6 +21,9 @@
     [super viewDidLoad];
 	AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
 	self.managedObjectContext = appDelegate.managedObjectContext;
+
+	self.tableView.estimatedRowHeight = 130.0;
+	self.tableView.rowHeight = UITableViewAutomaticDimension;
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -52,12 +55,12 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+	PersonNotesTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 	[self configureCell:cell atIndexPath:indexPath];
 	return cell;
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)configureCell:(PersonNotesTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     cell.backgroundColor = [UIColor clearColor];
 	if (self.notesAvailable) {
 		Note *note = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -69,13 +72,13 @@
 		dateFormatter.dateStyle = NSDateFormatterShortStyle;
 		NSDate *date = note.lastUpdatedDate;
 
-		cell.textLabel.text = [dateFormatter stringFromDate:date];
-		cell.detailTextLabel.text = note.text;
+		cell.date.text = [dateFormatter stringFromDate:date];
+		cell.text.text = note.text;
 	} else {
-		cell.textLabel.text = @"";
-		cell.detailTextLabel.text = @"Add new note";
+		cell.date.text = @"";
+		cell.text.text = @"Add new note";
 	}
-	NSLog (@"detail cell text %@", cell.detailTextLabel.text);
+	NSLog (@"detail cell text %@", cell.text.text);
 	
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

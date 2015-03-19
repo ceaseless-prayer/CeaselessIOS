@@ -9,7 +9,7 @@
 #import "PrayerJournalViewController.h"
 #import "NoteViewController.h"
 #import "AppDelegate.h"
-#import "NotesTableViewCell.h"
+#import "PrayerJournalTableViewCell.h"
 typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 {
 	searchScopeFriends = 0,
@@ -129,13 +129,13 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-	NotesTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+	PrayerJournalTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
 	[self configureCell:cell atIndexPath:indexPath];
 	return cell;
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)configureCell:(PrayerJournalTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 
 	Note *note = nil;
 	if (self.searchController.active) {
@@ -153,8 +153,8 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	dateFormatter.dateStyle = NSDateFormatterShortStyle;
 	NSDate *date = [note valueForKey:@"lastUpdatedDate"];
 
-	cell.textLabel.text = [dateFormatter stringFromDate:date];
-	cell.detailTextLabel.text = [[note valueForKey:@"text"] description];
+	cell.date.text = [dateFormatter stringFromDate:date];
+	cell.text.text = [[note valueForKey:@"text"] description];
 	
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
