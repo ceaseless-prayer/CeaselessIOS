@@ -10,13 +10,13 @@
 #import "NoteViewController.h"
 #import "AppDelegate.h"
 #import "NotesTableViewCell.h"
-typedef enum
+typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 {
 	searchScopeFriends = 0,
 	searchScopeMe = 1
-} PrayerJournalSearchScope;
+};
 
-@interface PrayerJournalViewController ()
+@interface PrayerJournalViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating>
 
 @property (strong, nonatomic) NSArray *filteredList;
 @property (strong, nonatomic) NSFetchRequest *searchFetchRequest;
@@ -44,7 +44,27 @@ typedef enum
 	
 	self.tableView.backgroundView = imageView;
 
-	}
+	self.tableView.estimatedRowHeight = 130.0;
+	self.tableView.rowHeight = UITableViewAutomaticDimension;
+
+		//searchController cannot be set up in IB, so set it up here
+	self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+	self.searchController.searchResultsUpdater = self;
+	self.searchController.dimsBackgroundDuringPresentation = NO;
+	self.searchController.searchBar.barTintColor = UIColorFromRGBWithAlpha(0x24292f , 0.4);
+	self.searchController.searchBar.tintColor = [UIColor whiteColor];
+	self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"Friends",@"Friends"),
+														  NSLocalizedString(@"Me",@"Me")];
+	self.searchController.searchBar.delegate = self;
+//		// Hide the search bar until user scrolls up
+	CGRect newBounds = self.tableView.bounds;
+	newBounds.origin.y = newBounds.origin.y + self.searchController.searchBar.bounds.size.height;
+	self.tableView.bounds = newBounds;
+
+	self.tableView.tableHeaderView = self.searchController.searchBar;
+	self.definesPresentationContext = YES;
+
+}
 - (void) viewDidAppear:(BOOL)animated {
 	[super viewDidAppear: animated];
 
@@ -68,7 +88,7 @@ typedef enum
 	if ([[segue identifier] isEqualToString:@"ShowNote"]) {
 		Note *currentNote = nil;
 
-		if (self.searchController.active == YES) {
+		if (self.searchController.isActive) {
 			NSIndexPath *indexPath = [((UITableViewController *)self.searchController.searchResultsController).tableView indexPathForSelectedRow];
 			currentNote = [self.filteredList objectAtIndex:indexPath.row];
 		} else {
@@ -89,37 +109,39 @@ typedef enum
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	if (tableView == self.tableView) {
-		return [[self.fetchedResultsController sections] count];
-	} else {
+	if (self.searchController.active) {
 		return 1;
+	} else {
+		return [[self.fetchedResultsController sections] count];
 	}
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	if (tableView == self.tableView) {
+	if (self.searchController.active) {
+		return [self.filteredList count];
+	} else {
 		id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
 		return [sectionInfo numberOfObjects];
-	} else {
-		return [self.filteredList count];
 	}
 }
-
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+	return 0;
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
 	NotesTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
-	[self configureCell:cell forTableView: tableView atIndexPath:indexPath];
+	[self configureCell:cell atIndexPath:indexPath];
 	return cell;
 }
 
-- (void)configureCell:(UITableViewCell *)cell forTableView: tableView atIndexPath:(NSIndexPath *)indexPath {
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 
 	Note *note = nil;
-	if (tableView == self.tableView) {
-		note = [self.fetchedResultsController objectAtIndexPath:indexPath];
-	} else {
+	if (self.searchController.active) {
 		note = [self.filteredList objectAtIndex:indexPath.row];
+	} else {
+		note = [self.fetchedResultsController objectAtIndexPath:indexPath];
 	}
 
 //	NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -155,8 +177,26 @@ typedef enum
 	}
 }
 
+#pragma mark -
+#pragma mark === UISearchBarDelegate ===
+#pragma mark -
 
-#pragma mark - Search Controller
+- (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
+{
+	[self updateSearchResultsForSearchController:self.searchController];
+
+}
+
+#pragma mark -
+#pragma mark === UISearchResultsUpdating ===
+#pragma mark -
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+{
+	NSString *searchString = searchController.searchBar.text;
+	[self searchForText:searchString scope: searchController.searchBar.selectedScopeButtonIndex];
+	[self.tableView reloadData];
+}
 
 - (void)searchForText:(NSString *)searchText scope:(PrayerJournalSearchScope)scopeOption
 {
@@ -175,28 +215,10 @@ typedef enum
 		[self.searchFetchRequest setPredicate:predicate];
 
 		NSError *error = nil;
-	self.filteredList = [self.managedObjectContext executeFetchRequest:self.searchFetchRequest error:&error];
-  }
+		self.filteredList = [self.managedObjectContext executeFetchRequest:self.searchFetchRequest error:&error];
+	}
 }
 
-- (BOOL)searchDisplayController:(UISearchController *)controller shouldReloadTableForSearchString:(NSString *)searchString
-{
-	PrayerJournalSearchScope scopeKey = (int)controller.searchBar.selectedScopeButtonIndex;
-	[self searchForText:searchString scope:scopeKey];
-	return YES;
-}
-
-- (BOOL)searchDisplayController:(UISearchController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption
-{
-	NSString *searchString = controller.searchBar.text;
-	[self searchForText:searchString scope: (int) searchOption];
-	return YES;
-}
-
-- (void)searchDisplayController:(UISearchController *)controller didLoadSearchResultsTableView:(UITableView *)tableView
-{
-	tableView.rowHeight = 130;
-}
 #pragma mark - Fetched results controller
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {

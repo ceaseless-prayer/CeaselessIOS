@@ -143,7 +143,29 @@
 //    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"prayerRecords.@count" ascending:YES];
 	NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"prayerRecords.@count" ascending:NO];
 
-    NSArray *ceaselessPeople = [[self getAllCeaselessContacts] sortedArrayUsingDescriptors:[NSArray arrayWithObject:descriptor]];
+    // in case you didn't notice, the following line is beautiful.
+    NSSortDescriptor *prayerRecordCountDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"prayerRecords.@max.createDate" ascending:YES];
+    // TODO switch ascending to YES for prod. NO makes the people we pick more stable on each run.
+
+    // filter out removed contacts
+    NSPredicate *filterRemovedContacts = [NSPredicate predicateWithFormat: @"removedDate = nil"];
+    NSArray *ceaselessPeople = [[[self getAllCeaselessContacts] filteredArrayUsingPredicate:filterRemovedContacts] sortedArrayUsingDescriptors:[NSArray arrayWithObject:prayerRecordCountDescriptor]];
+    NSLog(@"Total filtered Ceaseless contacts: %lu", (unsigned long)[ceaselessPeople count]);
+    
+    // first get at least one contact who has been favorited if any are available.
+    NSPredicate *keepFavoriteContacts = [NSPredicate predicateWithFormat: @"favoritedDate != nil"];
+    NSArray *favoriteContacts = [ceaselessPeople filteredArrayUsingPredicate: keepFavoriteContacts];
+    if ([favoriteContacts count] > 0) {
+        // TODO add intelligence based on how many contacts have been favorited
+        // if only 1 has been favorite, don't just show it every single day...
+        if([self pickPersonIfPossible:favoriteContacts[0] fromAddressBook:addressBook]) {
+            --numberOfPeople;
+        }
+    }
+    
+    // fill in the rest of the queue with contacts--take the one who has either never been prayed for
+    // or who has not been prayed for in a long time.
+    
     if ([ceaselessPeople count] < numberOfPeople) {
         numberOfPeople = [ceaselessPeople count];
     }
