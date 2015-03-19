@@ -18,6 +18,8 @@
 
 - (DataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard;
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController;
+- (void) removeControllerAtIndex: (NSUInteger) index;
+- (NSInteger) modelCount;
 
 @end
 

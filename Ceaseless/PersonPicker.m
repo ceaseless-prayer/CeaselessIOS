@@ -150,25 +150,7 @@
     
     for (NSInteger i = 0; i< numberOfPeople; i++) {
         Person *personToShow = ceaselessPeople[i];
-        
-        ABRecordRef rawPerson = NULL;
-        BOOL personPicked = NO;
-        
-        for(AddressBookId *abId in personToShow.addressBookIds) { // try address book records until you have a valid one.
-            rawPerson = ABAddressBookGetPersonWithRecordID(addressBook, (ABRecordID) [abId.recordId intValue]);
-            if (rawPerson != NULL) { // we got one that points to a record
-                // check if the record matches our original person contact, since it could be something else entirely
-                Person *validatedPerson = [self getCeaselessContactFromABRecord:rawPerson];
-                if(validatedPerson == personToShow) {
-                    // since it matches, we can pick this person
-                    [self pickPerson: rawPerson personToShow: personToShow];
-                    personPicked = YES;
-                    break;
-                }
-                // we gotta pick something else if it doesn't match
-                // let background refresh processes solve the consistency issues.
-            }
-        }
+        BOOL personPicked = [self pickPersonIfPossible:personToShow fromAddressBook:addressBook];
         
         if(!personPicked) {
             NSLog(@"Could not pick %@", personToShow);
@@ -178,6 +160,34 @@
             }
         }
     }
+}
+
+- (BOOL) pickPersonIfPossible: (Person *) personToPick fromAddressBook: (ABAddressBookRef) addressBook {
+    
+    // you can't pick a person who has already been picked.
+    if ([self.ceaselessPeople containsObject:personToPick]) {
+        return NO;
+    }
+    
+    ABRecordRef rawPerson = NULL;
+    BOOL personPicked = NO;
+    
+    for(AddressBookId *abId in personToPick.addressBookIds) { // try address book records until you have a valid one.
+        rawPerson = ABAddressBookGetPersonWithRecordID(addressBook, (ABRecordID) [abId.recordId intValue]);
+        if (rawPerson != NULL) { // we got one that points to a record
+            // check if the record matches our original person contact, since it could be something else entirely
+            Person *validatedPerson = [self getCeaselessContactFromABRecord:rawPerson];
+            if(validatedPerson == personToPick) {
+                // since it matches, we can pick this person
+                [self pickPerson: rawPerson personToShow: personToPick];
+                personPicked = YES;
+                break;
+            }
+            // we gotta pick something else if it doesn't match
+            // let background refresh processes solve the consistency issues.
+        }
+    }
+    return personPicked;
 }
 
 
@@ -215,6 +225,9 @@
             NSMutableSet *addressBookIds = [[NSMutableSet alloc] initWithSet:person.addressBookIds];
             [addressBookIds removeObject:abId];
             person.addressBookIds = addressBookIds;
+            // TODO if addressBookIds reaches count 0,
+            // should we consider the Ceaseless Contact deleted from the address book?
+            // should there be a separate clean up process for that?
         }
     }
     

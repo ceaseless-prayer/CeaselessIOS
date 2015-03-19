@@ -58,7 +58,7 @@
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-
+    cell.backgroundColor = [UIColor clearColor];
 	if (self.notesAvailable) {
 		Note *note = [self.fetchedResultsController objectAtIndexPath:indexPath];
 			//not using this yet

@@ -21,6 +21,11 @@
 @property (strong, nonatomic) NSArray *phoneNumbers;
 @property (strong, nonatomic) Person *person;
 
-- (Boolean) equivalentTo: (NonMOPerson *) person;
-- (BOOL) isEqualToPerson:(NonMOPerson *) person;
+- (void) favorite;
+- (void) unfavorite;
+- (void) removeFromCeaseless;
+- (void) enableForCeaseless;
+
+
+
 @end
