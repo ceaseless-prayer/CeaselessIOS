@@ -16,13 +16,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self formatCardView: self.webViewCard.cardView withShadowView:self.webViewCard.shadowView];
+    NSURL* url = [NSURL URLWithString: self.dataObject];
+    [self.webCardView.webView loadRequest: [NSURLRequest requestWithURL:url]];
+    [self formatCardView: self.webCardView.cardView withShadowView:self.webCardView.shadowView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    NSURL* url = [NSURL URLWithString: self.dataObject];
-    [self.webViewCard.webView loadRequest: [NSURLRequest requestWithURL:url]];
 }
 
 - (void)didReceiveMemoryWarning {

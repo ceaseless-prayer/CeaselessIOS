@@ -61,7 +61,8 @@
         
         // TODO check the server if new content needs to be shown.
         if (YES) {
-            [_cardArray addObject: @"http://www.ceaselessprayer.com"];
+            [_cardArray insertObject: @"http://www.ceaselessprayer.com" atIndex: 0];
+//            [_cardArray addObject: @"http://www.ceaselessprayer.com"];
         }
 
     }
@@ -81,7 +82,7 @@
 		self.mainStoryboard = storyboard;
     } else if ([self.cardArray[index] isKindOfClass:[NSString class]]) {
         contentViewController = [[WebCardViewController alloc] init];
-        self.mainStoryboard = self.mainStoryboard;
+        contentViewController.mainStoryboard = self.mainStoryboard;
     } else {
         contentViewController = [[PersonViewController alloc] init];
 		contentViewController.mainStoryboard = self.mainStoryboard;

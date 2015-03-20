@@ -11,5 +11,5 @@
 #import "WebCardView.h"
 
 @interface WebCardViewController : DataViewController
-    @property (strong, nonatomic) IBOutlet WebCardView *webViewCard;
+    @property (strong, nonatomic) IBOutlet WebCardView *webCardView;
 @end
