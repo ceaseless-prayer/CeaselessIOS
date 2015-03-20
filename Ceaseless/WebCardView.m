@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Christopher Lim. All rights reserved.
 //
 
-#import "WebViewCard.h"
+#import "WebCardView.h"
 
-@implementation WebViewCard
+@implementation WebCardView
 
 /*
 // Only override drawRect: if you perform custom drawing.

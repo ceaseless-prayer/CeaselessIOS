@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "DataViewController.h"
-#import "WebViewCard.h"
+#import "WebCardView.h"
 
 @interface WebCardViewController : DataViewController
-    @property (strong, nonatomic) WebViewCard *webViewCard;
+    @property (strong, nonatomic) IBOutlet WebCardView *webViewCard;
 @end

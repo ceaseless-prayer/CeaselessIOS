@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WebCardViewController">
+            <connections>
+                <outlet property="view" destination="mjr-rz-if3" id="jAa-vP-khm"/>
+                <outlet property="webViewCard" destination="mjr-rz-if3" id="ngx-M2-PfM"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mjr-rz-if3" userLabel="WebViewCard" customClass="WebCardView">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bvl-qT-aze">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <subviews>
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s9D-HS-pA6" userLabel="CardView">
+                            <rect key="frame" x="8" y="2" width="584" height="596"/>
+                            <subviews>
+                                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ukQ-Es-ztq" userLabel="WebView">
+                                    <rect key="frame" x="1" y="1" width="582" height="594"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="354" id="tVY-vn-KMb"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="tVY-vn-KMb"/>
+                                        </mask>
+                                    </variation>
+                                </webView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="ukQ-Es-ztq" firstAttribute="leading" secondItem="s9D-HS-pA6" secondAttribute="leading" id="00M-2l-VqV"/>
+                                <constraint firstAttribute="bottomMargin" secondItem="ukQ-Es-ztq" secondAttribute="bottom" constant="146" id="75f-bH-V75"/>
+                                <constraint firstItem="ukQ-Es-ztq" firstAttribute="top" secondItem="s9D-HS-pA6" secondAttribute="top" constant="1" id="9qt-pv-ub9"/>
+                                <constraint firstItem="ukQ-Es-ztq" firstAttribute="top" secondItem="s9D-HS-pA6" secondAttribute="top" id="BXq-5f-AcW"/>
+                                <constraint firstAttribute="bottom" secondItem="ukQ-Es-ztq" secondAttribute="bottom" id="G2l-10-dus"/>
+                                <constraint firstAttribute="bottom" secondItem="ukQ-Es-ztq" secondAttribute="bottom" id="Hxu-mf-PyP"/>
+                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ukQ-Es-ztq" secondAttribute="trailing" id="IjA-hG-X6Y"/>
+                                <constraint firstAttribute="trailing" secondItem="ukQ-Es-ztq" secondAttribute="trailing" constant="1" id="MGr-4s-wlT"/>
+                                <constraint firstItem="ukQ-Es-ztq" firstAttribute="leading" secondItem="s9D-HS-pA6" secondAttribute="leading" constant="60" id="PDw-7f-FFU"/>
+                                <constraint firstAttribute="trailing" secondItem="ukQ-Es-ztq" secondAttribute="trailing" id="Pz4-yg-QRK"/>
+                                <constraint firstAttribute="bottom" secondItem="ukQ-Es-ztq" secondAttribute="bottom" constant="1" id="QkC-3b-1Rs"/>
+                                <constraint firstAttribute="trailingMargin" secondItem="ukQ-Es-ztq" secondAttribute="trailing" constant="90" id="SI4-Na-JJL"/>
+                                <constraint firstItem="ukQ-Es-ztq" firstAttribute="leading" secondItem="s9D-HS-pA6" secondAttribute="leading" constant="1" id="SVX-6h-1yl"/>
+                                <constraint firstItem="ukQ-Es-ztq" firstAttribute="top" secondItem="s9D-HS-pA6" secondAttribute="top" constant="88" id="Tov-8p-qdJ"/>
+                                <constraint firstItem="ukQ-Es-ztq" firstAttribute="top" relation="greaterThanOrEqual" secondItem="s9D-HS-pA6" secondAttribute="top" id="Zqo-W5-PYc"/>
+                                <constraint firstItem="ukQ-Es-ztq" firstAttribute="leading" secondItem="s9D-HS-pA6" secondAttribute="leadingMargin" constant="52" id="aF7-sC-zC0"/>
+                                <constraint firstItem="ukQ-Es-ztq" firstAttribute="top" secondItem="s9D-HS-pA6" secondAttribute="topMargin" constant="80" id="c7d-BR-dFe"/>
+                                <constraint firstAttribute="trailing" secondItem="ukQ-Es-ztq" secondAttribute="trailing" constant="98" id="p6V-SU-p8I"/>
+                                <constraint firstItem="ukQ-Es-ztq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="s9D-HS-pA6" secondAttribute="leading" id="sxg-W8-6fN"/>
+                            </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="00M-2l-VqV"/>
+                                    <exclude reference="75f-bH-V75"/>
+                                    <exclude reference="BXq-5f-AcW"/>
+                                    <exclude reference="G2l-10-dus"/>
+                                    <exclude reference="Hxu-mf-PyP"/>
+                                    <exclude reference="IjA-hG-X6Y"/>
+                                    <exclude reference="PDw-7f-FFU"/>
+                                    <exclude reference="Pz4-yg-QRK"/>
+                                    <exclude reference="SI4-Na-JJL"/>
+                                    <exclude reference="Tov-8p-qdJ"/>
+                                    <exclude reference="Zqo-W5-PYc"/>
+                                    <exclude reference="aF7-sC-zC0"/>
+                                    <exclude reference="c7d-BR-dFe"/>
+                                    <exclude reference="p6V-SU-p8I"/>
+                                    <exclude reference="sxg-W8-6fN"/>
+                                </mask>
+                            </variation>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K2Q-gQ-1Sc" userLabel="ShadowView">
+                            <rect key="frame" x="8" y="2" width="584" height="596"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="584" id="SBA-t7-iPe"/>
+                                <constraint firstAttribute="height" constant="596" id="fof-bD-mR1"/>
+                            </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="SBA-t7-iPe"/>
+                                    <exclude reference="fof-bD-mR1"/>
+                                </mask>
+                            </variation>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="s9D-HS-pA6" firstAttribute="top" secondItem="K2Q-gQ-1Sc" secondAttribute="top" id="Btx-wp-l5i"/>
+                        <constraint firstItem="s9D-HS-pA6" firstAttribute="leading" secondItem="bvl-qT-aze" secondAttribute="leading" constant="8" id="UUk-4M-a5L"/>
+                        <constraint firstItem="s9D-HS-pA6" firstAttribute="leading" secondItem="K2Q-gQ-1Sc" secondAttribute="leading" id="ZNq-uR-me5"/>
+                        <constraint firstAttribute="bottom" secondItem="s9D-HS-pA6" secondAttribute="bottom" constant="2" id="cEP-A2-asZ"/>
+                        <constraint firstItem="s9D-HS-pA6" firstAttribute="bottom" secondItem="K2Q-gQ-1Sc" secondAttribute="bottom" id="j4E-J1-mpp"/>
+                        <constraint firstAttribute="trailing" secondItem="s9D-HS-pA6" secondAttribute="trailing" constant="8" id="l4Q-tb-bpa"/>
+                        <constraint firstItem="s9D-HS-pA6" firstAttribute="top" secondItem="bvl-qT-aze" secondAttribute="top" constant="2" id="nYO-Ky-cCV"/>
+                        <constraint firstItem="s9D-HS-pA6" firstAttribute="trailing" secondItem="K2Q-gQ-1Sc" secondAttribute="trailing" id="sEf-PG-0HL"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="width" constant="600" id="LAv-g7-xJF"/>
+                <constraint firstItem="bvl-qT-aze" firstAttribute="top" secondItem="mjr-rz-if3" secondAttribute="top" id="NhF-j2-Oxe"/>
+                <constraint firstItem="bvl-qT-aze" firstAttribute="leading" secondItem="mjr-rz-if3" secondAttribute="leading" id="eTl-77-7Wr"/>
+                <constraint firstAttribute="bottom" secondItem="bvl-qT-aze" secondAttribute="bottom" id="fvy-Dg-NcP"/>
+                <constraint firstAttribute="trailing" secondItem="bvl-qT-aze" secondAttribute="trailing" id="jgm-q3-beX"/>
+                <constraint firstAttribute="height" constant="600" id="oOE-IN-pn0"/>
+                <constraint firstAttribute="height" constant="600" id="zba-Xq-pse"/>
+            </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="LAv-g7-xJF"/>
+                    <exclude reference="oOE-IN-pn0"/>
+                    <exclude reference="zba-Xq-pse"/>
+                </mask>
+            </variation>
+            <connections>
+                <outlet property="cardView" destination="s9D-HS-pA6" id="Mqb-US-S7x"/>
+                <outlet property="shadowView" destination="K2Q-gQ-1Sc" id="1Cw-VM-gkG"/>
+                <outlet property="webView" destination="ukQ-Es-ztq" id="lay-Yl-Nxq"/>
+            </connections>
+        </view>
+    </objects>
+</document>

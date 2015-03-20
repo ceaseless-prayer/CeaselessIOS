@@ -59,6 +59,7 @@
 			[_cardArray insertObject: _scripture atIndex: 0];
 		}
         
+        // TODO check the server if new content needs to be shown.
         if (YES) {
             [_cardArray addObject: @"http://www.ceaselessprayer.com"];
         }
