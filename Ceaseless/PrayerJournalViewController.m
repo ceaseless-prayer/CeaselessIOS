@@ -180,6 +180,7 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 
 	cell.date.text = [dateFormatter stringFromDate:date];
 	cell.text.text = [[note valueForKey:@"text"] description];
+    cell.backgroundColor = [UIColor clearColor];
 	
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
