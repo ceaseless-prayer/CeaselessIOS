@@ -157,14 +157,14 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	if ([peopleArray count] > 0) {
 		cell.topImageView.image = [self.personPicker getImageForCeaselessContact:[peopleArray firstObject]];
 		cell.topImageView.contentMode = UIViewContentModeScaleAspectFit;
-
+	} else {
+		cell.topImageView.image = nil;
 	}
 	if ([peopleArray count] > 1) {
 		cell.bottomImageView.image = [self.personPicker getImageForCeaselessContact:[peopleArray lastObject]];
 		cell.bottomImageView.contentMode = UIViewContentModeScaleAspectFit;
-
-
-
+	} else {
+		cell.bottomImageView.image = nil;
 	}
 	NSMutableSet *namesSet = [[NSMutableSet alloc] initWithCapacity: [note.peopleTagged count]];
 	for (Person *personTagged in note.peopleTagged) {
