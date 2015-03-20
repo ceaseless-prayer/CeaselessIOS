@@ -1,44 +1,38 @@
 //
-//  SettingsViewController.m
+//  MenuViewController.m
 //  Ceaseless
 //
 //  Created by Lori Hill on 3/20/15.
 //  Copyright (c) 2015 Christopher Lim. All rights reserved.
 //
 
-#import "SettingsViewController.h"
+#import "MenuViewController.h"
 
-@interface SettingsViewController ()
+@interface MenuViewController ()
 
 @end
 
-@implementation SettingsViewController
+@implementation MenuViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-	self.settingsTableView.delegate = self;
-	self.settingsTableView.dataSource = self;
-	self.profileImage.image = [UIImage imageNamed: @"IMG_0023.JPG"];
-	self.backgroundImage.image = [UIImage imageNamed: @"IMG_0023.JPG"];
-	self.backgroundImage.contentMode = UIViewContentModeScaleAspectFill;
-
-
-	self.profileImage.layer.cornerRadius = 6.0f;
-	[self.profileImage setClipsToBounds:YES];
-	self.profileImage.contentMode = UIViewContentModeScaleAspectFill;
-
-
-	self.profileName.text = @"Alex Hill";
-
-	self.settingsInfoArray = [[NSArray alloc] initWithObjects: @"Pray For Daily", @"Notification time", nil];
     // Do any additional setup after loading the view.
+	self.tableView.delegate = self;
+	self.tableView.dataSource = self;
+	self.menuInfoArray = [[NSArray alloc] initWithObjects: @"Contact Lists", @"Settings", nil];
+
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:animated];
+	[super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 #pragma mark - Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -46,7 +40,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return [self.settingsInfoArray count];
+	return [self.menuInfoArray count];
 
 }
 
@@ -57,7 +51,7 @@
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-	cell.textLabel.text = [self.settingsInfoArray objectAtIndex: indexPath.row];
+	cell.textLabel.text = [self.menuInfoArray objectAtIndex: indexPath.row];
 
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -65,7 +59,13 @@
 	return NO;
 }
 
-
+- (void)tableView:(UITableView *)tableView
+didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (indexPath.row == 1) {
+		[self performSegueWithIdentifier:@"ShowSettings" sender: self];
+	}
+	
+}
 /*
 #pragma mark - Navigation
 
