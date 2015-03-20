@@ -126,6 +126,8 @@ NSString *const kPlaceHolderText = @"Enter note";
 		}
 		self.notesTextView.text = kPlaceHolderText;
 		self.notesTextView.textColor = [UIColor lightGrayColor];
+         // if this is a new note, the first thing we want to do is take the note.
+        [self.notesTextView becomeFirstResponder];
 	}
     // Do any additional setup after loading the view.
 }
@@ -200,12 +202,11 @@ NSString *const kPlaceHolderText = @"Enter note";
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
 		// Check the segue identifier
-	if ([[segue identifier] isEqualToString:@"ShowTaggedPersonPicker"])
-		{
+	if ([[segue identifier] isEqualToString:@"ShowTaggedPersonPicker"]) {
 		UINavigationController *navController = segue.destinationViewController;
 		TaggedPersonPicker *picker = (TaggedPersonPicker *)navController.topViewController;
 		picker.delegate = self;
-		}
+    }
 }
 
 #pragma mark - Update Person info
@@ -214,8 +215,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 {
 	ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
 
-	for (NSNumber *number in abRecordIDs)
-		{
+	for (NSNumber *number in abRecordIDs) {
 		ABRecordID abRecordID = [number intValue];
 
 		ABRecordRef abPerson = ABAddressBookGetPersonWithRecordID(addressBook, abRecordID);
@@ -224,12 +224,12 @@ NSString *const kPlaceHolderText = @"Enter note";
 		
 		[personPicker updateCeaselessContactFromABRecord: abPerson];
 		Person *person = [personPicker getCeaselessContactFromABRecord: abPerson];
-       [self.mutablePeopleSet addObject: person];
+        [self.mutablePeopleSet addObject: person];
 
 		NSString *name = (__bridge_transfer NSString *)ABRecordCopyCompositeName(abPerson);
 
-		[self.namesArray addObject:name];
-		}
+        [self.namesArray addObject:name];
+    }
 
 	CFRelease(addressBook);
 
@@ -241,15 +241,13 @@ NSString *const kPlaceHolderText = @"Enter note";
 #pragma mark - TaggedPersonPickerDelegate protocol conformance
 
 - (void)taggedPersonPickerDidFinish:(TaggedPersonPicker *)taggedPersonPicker
-					withABRecordIDs:(NSOrderedSet *)abRecordIDs
-{
+					withABRecordIDs:(NSOrderedSet *)abRecordIDs {
 	[self updatePersonInfo:abRecordIDs];
 
 	[taggedPersonPicker dismissViewControllerAnimated:YES completion:NULL];
 }
 
-- (void)taggedPersonPickerDidCancel:(TaggedPersonPicker *)taggedPersonPicker
-{
+- (void)taggedPersonPickerDidCancel:(TaggedPersonPicker *)taggedPersonPicker {
 	[taggedPersonPicker dismissViewControllerAnimated:YES completion:NULL];
 }
 
@@ -258,42 +256,38 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 	NSError *error = nil;
 
+    // TODO should we create a key for the note besides the date?
+    // Date is sufficient for now since the same person cannot simultaneously
+    // create two notes, but could this result in two notes with the same "id"?
 	Note *note = [self containsItem:[self.currentNote valueForKey: @"createDate"]];
 	if (note) {
-			//if the object is found, update its fields
+        //if the object is found, update its fields
 //		[note setValue: self.notesTextView.text forKey: @"text"];
 //		[note setValue: [NSDate date] forKey: @"lastUpdatedDate"];
 		note.text = self.notesTextView.text;
 		note.lastUpdatedDate = [NSDate date];
 		[note addPeopleTagged: self.mutablePeopleSet];
-//		for (Person *person in self.mutablePeopleSet) {
-//			NSMutableSet *mutableNoteSet = [[NSMutableSet alloc] initWithSet: person.notes];
-//			[mutableNoteSet addObject: note];
-//			person.notes = [[NSSet alloc] initWithSet: mutableNoteSet];
-//		}
 
 
 	} else {
-	Note *newNote = [NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
+        Note *newNote = [NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
 		[newNote setValue: [NSDate date] forKey: @"createDate"];
 		[newNote setValue: self.notesTextView.text forKey: @"text"];
 		[newNote setValue: [NSDate date] forKey: @"lastUpdatedDate"];
 		[newNote addPeopleTagged: self.mutablePeopleSet];
-//		for (Person *person in self.mutablePeopleSet) {
-//			NSMutableSet *mutableNoteSet = [[NSMutableSet alloc] initWithSet: person.notes];
-//			[mutableNoteSet addObject: newManagedObject];
-//			person.notes = [[NSSet alloc] initWithSet: mutableNoteSet];
-//		}
-		}
+    }
 	if (![self.managedObjectContext save: &error]) {
 		NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
 	}
 
 	[self listAll];
+    
+    // TODO this could be causing some memory/cleanup issues, which lead to erratic crashing.
+    
 	if (self.delegate) {
 		[self.delegate noteViewControllerDidFinish:self];
 	} else {
-		[self performSegueWithIdentifier:@"UnwindSegue" sender: self];
+		[self performSegueWithIdentifier:@"UnwindAddNoteSegue" sender: self];
 
 	}
 }
@@ -342,7 +336,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 	if (self.delegate) {
 		[self.delegate noteViewControllerDidCancel:self];
 	} else {
-		[self performSegueWithIdentifier:@"UnwindSegue" sender: self];
+		[self performSegueWithIdentifier:@"UnwindAddNoteSegue" sender: self];
 	}
 }
 - (void) listAll {

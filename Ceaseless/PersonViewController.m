@@ -129,8 +129,7 @@ static NSString *kSMSMessage;
 
 - (void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
-	NoteViewController *noteViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"NoteViewController"];
+	NoteViewController *noteViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"NoteViewController"];
 	noteViewController.delegate = self;
 
 	if (self.personNotesViewController.notesAvailable == YES) {
