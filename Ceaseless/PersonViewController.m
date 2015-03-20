@@ -215,18 +215,20 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                                NSLog(@"Remove from Favorites");
                                            }];
     
-    //	UIAlertAction *createNoteAction = [UIAlertAction
-    //									actionWithTitle:NSLocalizedString(@"Create Note", @"Create Note")
-    //									   style:UIAlertActionStyleDefault
-    //									   handler:^(UIAlertAction *action)
-    //									   {
-    //									   NSLog(@"Create Note");
-    //									   }];
+    UIAlertAction *addNote = [UIAlertAction
+                                       actionWithTitle:NSLocalizedString(@"Add note", @"Add note")
+                                       style:UIAlertActionStyleDefault
+                                       handler:^(UIAlertAction *action)
+                                       {
+                                           [self addNote];
+                                           NSLog(@"Add note");
+                                       }];
     
     [alertController addAction:cancelAction];
     [alertController addAction: removeFromCeaselessAction];
     [alertController addAction:inviteAction];
     [alertController addAction:sendMessageAction];
+    [alertController addAction:addNote];
     
     // TODO this should toggle between adding or removing from favorites.
     // for now only show it if it isn't already favorited
@@ -235,8 +237,6 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     } else {
         [alertController addAction: unfavoriteAction];
     }
-    
-    //	[alertController addAction:createNoteAction];
     
     //this prevents crash on iPad in iOS 8 - known Apple bug
     UIPopoverPresentationController *popover = alertController.popoverPresentationController;
@@ -278,6 +278,13 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
     }
 
+}
+
+- (void)addNote {
+    NoteViewController *noteViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"NoteViewController"];
+    noteViewController.delegate = self;
+    noteViewController.personForNewNote = self.personNotesViewController.person;
+    [self presentViewController:noteViewController animated:YES completion:nil];
 }
 
 - (void)addPersonToFavorites {
