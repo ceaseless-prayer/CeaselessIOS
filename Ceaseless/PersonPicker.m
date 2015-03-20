@@ -508,6 +508,23 @@
     return nil;
 }
 
+- (Person *) getCeaselessContactFromCeaselessId: (NSString *) ceaselessId {
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Person" inManagedObjectContext:context];
+    [request setEntity:entity];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                              @"ceaselessId = %@", ceaselessId];
+    [request setPredicate:predicate];
+    NSError *errorFetch = nil;
+    NSArray *existingResults = [context executeFetchRequest:request error:&errorFetch];
+    if([existingResults count] < 1) {
+        return nil;
+    } else {
+        return existingResults[0];
+    }
+}
+
 - (Person *) createCeaselessContactFromABRecord: (ABRecordRef) rawPerson {
     Person *newCeaselessPerson = [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:self.managedObjectContext];
     [self buildCeaselessContact:newCeaselessPerson fromABRecord:rawPerson];

@@ -14,6 +14,7 @@
 
 - (void)loadContacts;
 - (Person *) getCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
+- (Person *) getCeaselessContactFromCeaselessId: (NSString *) ceaselessId;
 - (void) updateCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
 - (Person *) createCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
 - (NSArray *) getAllCeaselessContacts;
