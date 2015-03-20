@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WebCardViewController">
@@ -22,72 +21,28 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hEW-dC-O9l" userLabel="CardView">
                             <rect key="frame" x="8" y="2" width="584" height="596"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Screen Shot 2015-02-18 at 8.22.42 AM.png" translatesAutoresizingMaskIntoConstraints="NO" id="km0-oE-VSQ">
+                                <view opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="KWS-Ba-d4C">
                                     <rect key="frame" x="0.0" y="0.0" width="584" height="596"/>
-                                </imageView>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MJm-BX-Npc" userLabel="ClearTopView">
-                                    <rect key="frame" x="0.0" y="0.0" width="584" height="168"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <subviews>
+                                        <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PiV-RI-TmQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="584" height="596"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </webView>
+                                    </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="243" id="8TJ-rb-lqz"/>
-                                        <constraint firstAttribute="height" constant="250" id="VQS-6b-XLq"/>
-                                        <constraint firstAttribute="height" constant="150" id="n3E-Ui-Oan"/>
-                                        <constraint firstAttribute="height" constant="200" id="zWw-fS-wD7"/>
+                                        <constraint firstItem="PiV-RI-TmQ" firstAttribute="centerY" secondItem="KWS-Ba-d4C" secondAttribute="centerY" id="Cn9-AM-U5Y"/>
+                                        <constraint firstItem="PiV-RI-TmQ" firstAttribute="top" secondItem="KWS-Ba-d4C" secondAttribute="top" id="JqM-ax-ba4"/>
+                                        <constraint firstAttribute="trailing" secondItem="PiV-RI-TmQ" secondAttribute="trailing" id="NTa-q4-ysa"/>
+                                        <constraint firstItem="PiV-RI-TmQ" firstAttribute="leading" secondItem="KWS-Ba-d4C" secondAttribute="leading" id="eOy-jt-Yr0"/>
                                     </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="zWw-fS-wD7"/>
-                                            <exclude reference="8TJ-rb-lqz"/>
-                                            <exclude reference="VQS-6b-XLq"/>
-                                            <exclude reference="n3E-Ui-Oan"/>
-                                        </mask>
-                                    </variation>
                                 </view>
-                                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g24-N4-poS">
-                                    <rect key="frame" x="0.0" y="168" width="584" height="428"/>
-                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="vnK-fw-aK3">
-                                        <rect key="frame" x="0.0" y="0.0" width="584" height="428"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <subviews>
-                                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BmN-iA-sKg">
-                                                <rect key="frame" x="0.0" y="-84" width="584" height="596"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            </webView>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstItem="BmN-iA-sKg" firstAttribute="top" secondItem="vnK-fw-aK3" secondAttribute="top" constant="-84" id="3vy-To-vul"/>
-                                            <constraint firstAttribute="trailing" secondItem="BmN-iA-sKg" secondAttribute="trailing" id="91L-tM-G8S"/>
-                                            <constraint firstItem="BmN-iA-sKg" firstAttribute="centerY" secondItem="vnK-fw-aK3" secondAttribute="centerY" id="C5i-n4-Cj3"/>
-                                            <constraint firstItem="BmN-iA-sKg" firstAttribute="leading" secondItem="vnK-fw-aK3" secondAttribute="leading" id="g06-rQ-TZm"/>
-                                        </constraints>
-                                    </view>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="350" id="41K-gL-xNJ"/>
-                                        <constraint firstAttribute="height" constant="52" id="LUi-Wm-pq5"/>
-                                    </constraints>
-                                    <blurEffect style="light"/>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="LUi-Wm-pq5"/>
-                                            <exclude reference="41K-gL-xNJ"/>
-                                        </mask>
-                                    </variation>
-                                </visualEffectView>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="bottom" secondItem="g24-N4-poS" secondAttribute="bottom" id="0ph-Yn-62U"/>
-                                <constraint firstItem="g24-N4-poS" firstAttribute="leading" secondItem="hEW-dC-O9l" secondAttribute="leading" id="G0K-Mf-e01"/>
-                                <constraint firstAttribute="trailing" secondItem="g24-N4-poS" secondAttribute="trailing" id="JAa-aP-Xtr"/>
-                                <constraint firstItem="g24-N4-poS" firstAttribute="top" secondItem="MJm-BX-Npc" secondAttribute="bottom" id="Myg-au-7aV"/>
-                                <constraint firstItem="MJm-BX-Npc" firstAttribute="width" secondItem="g24-N4-poS" secondAttribute="height" multiplier="600:440" id="Ps8-PV-tdX"/>
-                                <constraint firstItem="MJm-BX-Npc" firstAttribute="top" secondItem="hEW-dC-O9l" secondAttribute="top" id="ZsM-Hu-mnG"/>
-                                <constraint firstItem="km0-oE-VSQ" firstAttribute="top" secondItem="hEW-dC-O9l" secondAttribute="top" id="c8m-2t-cFM"/>
-                                <constraint firstAttribute="bottom" secondItem="km0-oE-VSQ" secondAttribute="bottom" id="ji5-mu-avX"/>
-                                <constraint firstItem="MJm-BX-Npc" firstAttribute="leading" secondItem="hEW-dC-O9l" secondAttribute="leading" id="jz9-Q1-dKV"/>
-                                <constraint firstItem="km0-oE-VSQ" firstAttribute="leading" secondItem="hEW-dC-O9l" secondAttribute="leading" id="n8h-Yx-mqn"/>
-                                <constraint firstAttribute="trailing" secondItem="MJm-BX-Npc" secondAttribute="trailing" id="vRe-c7-phW"/>
-                                <constraint firstAttribute="trailing" secondItem="km0-oE-VSQ" secondAttribute="trailing" id="yL8-sy-BCY"/>
+                                <constraint firstAttribute="trailing" secondItem="KWS-Ba-d4C" secondAttribute="trailing" id="PRT-ET-fgW"/>
+                                <constraint firstItem="KWS-Ba-d4C" firstAttribute="leading" secondItem="hEW-dC-O9l" secondAttribute="leading" id="eJI-uH-0PQ"/>
+                                <constraint firstItem="KWS-Ba-d4C" firstAttribute="top" secondItem="hEW-dC-O9l" secondAttribute="top" id="kjS-9R-1xn"/>
+                                <constraint firstItem="KWS-Ba-d4C" firstAttribute="centerY" secondItem="hEW-dC-O9l" secondAttribute="centerY" id="t7A-C3-Gk9"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="INo-O8-ATa" userLabel="ShadowView">
@@ -129,12 +84,9 @@
             <connections>
                 <outlet property="cardView" destination="hEW-dC-O9l" id="RYm-WV-mxG"/>
                 <outlet property="shadowView" destination="INo-O8-ATa" id="w1z-Iy-yhp"/>
-                <outlet property="webView" destination="BmN-iA-sKg" id="yV2-5r-kWQ"/>
+                <outlet property="webView" destination="PiV-RI-TmQ" id="2LG-Gv-wdA"/>
             </connections>
             <point key="canvasLocation" x="454" y="706"/>
         </view>
     </objects>
-    <resources>
-        <image name="Screen Shot 2015-02-18 at 8.22.42 AM.png" width="466" height="312"/>
-    </resources>
 </document>
