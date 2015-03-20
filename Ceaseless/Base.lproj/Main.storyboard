@@ -254,11 +254,9 @@
                     <connections>
                         <outlet property="searchDisplayController" destination="3pV-Nu-bbV" id="HBL-J2-PxB"/>
                         <outlet property="tableView" destination="BWv-6U-ZJD" id="pq3-xy-Haq"/>
-                        <segue destination="aFO-Kj-oZz" kind="unwind" identifier="UnwindSegue" unwindAction="unwindToPrayerJournal:" id="h1W-LY-ybJ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C51-oO-Qte" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="aFO-Kj-oZz" userLabel="Exit" sceneMemberID="exit"/>
                 <view contentMode="scaleToFill" id="rOH-9k-Bty">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -409,7 +407,7 @@
                         <outlet property="personsTaggedView" destination="UwZ-9y-D3i" id="WVr-iN-00A"/>
                         <outlet property="tagFriendsButton" destination="xk4-ex-sCc" id="zmp-10-RIR"/>
                         <outlet property="verticalSpaceTopToView" destination="3XY-rA-ZPm" id="0HX-ER-QWt"/>
-                        <segue destination="Ty4-NT-ce9" kind="unwind" identifier="UnwindSegue" unwindAction="unwindToPrayerJournal:" id="h1S-3D-5PE"/>
+                        <segue destination="Ty4-NT-ce9" kind="unwind" identifier="UnwindAddNoteSegue" unwindAction="unwindToPrayerJournal:" id="h1S-3D-5PE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5cl-HE-jhL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -634,7 +632,7 @@
         <image name="icon_settings" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="8RU-RJ-S7s"/>
+        <segue reference="tHB-F0-kAC"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>

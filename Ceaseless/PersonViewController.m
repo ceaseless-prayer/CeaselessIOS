@@ -38,6 +38,16 @@ static NSString *kSMSMessage;
 	self.managedObjectContext = appDelegate.managedObjectContext;
 	
 	NonMOPerson *person = self.dataObject;
+    
+    // deal with cases of no lastName or firstName
+    // We had an Akbar (null) name show up.
+    if([person.firstName length] == 0) {
+        person.firstName = @" "; // 1 character space for initials if needed
+    }
+    if([person.lastName length] == 0) {
+        person.lastName = @" "; // 1 character space for initials if needed
+    }
+    
 	self.personView.nameLabel.text = [NSString stringWithFormat: @"%@ %@", person.firstName, person.lastName];
 	if (person.profileImage) {
 		self.personView.personImageView.image = person.profileImage;
@@ -54,7 +64,6 @@ static NSString *kSMSMessage;
 		self.personView.placeholderText.text = [NSString stringWithFormat: @"%@%@", firstInitial, lastInitial];
 	}
 
-
 	[self.personView.moreButton addTarget:self
 								   action:@selector(presentActionSheet:)forControlEvents:UIControlEventTouchUpInside];
 	UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -62,7 +71,6 @@ static NSString *kSMSMessage;
 	self.personNotesViewController.person = person.person;
 	[self.personView.notesView addSubview: self.personNotesViewController.tableView];
 	self.personNotesViewController.tableView.delegate = self;
-//	self.personNotesViewController.notesArray = [[NSArray alloc] initWithObjects: @"Add a new note", @"Note 2", @"Note 3", @"Note 4", @"Note 5", nil];
 	[self setDynamicViewConstraintsToView: self.personView.notesView forSubview: self.personNotesViewController.tableView ];
 
     [self registerForNotifications];
@@ -121,8 +129,7 @@ static NSString *kSMSMessage;
 
 - (void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
-	NoteViewController *noteViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"NoteViewController"];
+	NoteViewController *noteViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"NoteViewController"];
 	noteViewController.delegate = self;
 
 	if (self.personNotesViewController.notesAvailable == YES) {
