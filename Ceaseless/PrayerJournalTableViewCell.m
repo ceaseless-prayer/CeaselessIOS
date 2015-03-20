@@ -12,6 +12,12 @@
 
 - (void)awakeFromNib {
     // Initialization code
+	self.cellBackground.layer.cornerRadius = 6.0f;
+	self.topImageView.layer.cornerRadius = 6.0f;
+	[self.topImageView setClipsToBounds:YES];
+	self.bottomImageView.layer.cornerRadius = 6.0f;
+	[self.bottomImageView setClipsToBounds:YES];
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -10,6 +10,10 @@
 #import "NoteViewController.h"
 #import "AppDelegate.h"
 #import "PrayerJournalTableViewCell.h"
+#import "PersonPicker.h"
+#import "Person.h"
+#import "Name.h"
+
 typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 {
 	searchScopeFriends = 0,
@@ -21,6 +25,7 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 @property (strong, nonatomic) NSArray *filteredList;
 @property (strong, nonatomic) NSFetchRequest *searchFetchRequest;
 @property (nonatomic, strong) UISearchController *searchController;
+@property (nonatomic, strong) PersonPicker *personPicker;
 
 
 @end
@@ -31,6 +36,8 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	[super awakeFromNib];
 	AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
 	self.managedObjectContext = appDelegate.managedObjectContext;
+	self.personPicker = [[PersonPicker alloc] init];
+
 
 }
 
@@ -144,10 +151,28 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 		note = [self.fetchedResultsController objectAtIndexPath:indexPath];
 	}
 
-//	NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
 
-	cell.imageView.image = [UIImage imageNamed: @"icon_ceaseless_comment"];
+	NSArray *peopleArray = [note.peopleTagged allObjects];
 
+	if ([peopleArray count] > 0) {
+		cell.topImageView.image = [self.personPicker getImageForCeaselessContact:[peopleArray firstObject]];
+		cell.topImageView.contentMode = UIViewContentModeScaleAspectFit;
+
+	}
+	if ([peopleArray count] > 1) {
+		cell.bottomImageView.image = [self.personPicker getImageForCeaselessContact:[peopleArray lastObject]];
+		cell.bottomImageView.contentMode = UIViewContentModeScaleAspectFit;
+
+
+
+	}
+	NSMutableSet *namesSet = [[NSMutableSet alloc] initWithCapacity: [note.peopleTagged count]];
+	for (Person *personTagged in note.peopleTagged) {
+		NSString *personName = [NSString stringWithFormat: @"%@ %@", ((Name*)[personTagged.firstNames anyObject]).name, ((Name*) [personTagged.lastNames anyObject]).name];
+		[namesSet addObject: personName];
+	}
+	NSString *allNamesString = [[namesSet allObjects] componentsJoinedByString:@", "];
+	cell.peopleTagged.text = allNamesString;
 	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 	dateFormatter.timeStyle = NSDateFormatterNoStyle;
 	dateFormatter.dateStyle = NSDateFormatterShortStyle;
