@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TaggedPersonPicker.h"
 
-@interface SettingsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface SettingsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, TaggedPersonPickerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
-@property (weak, nonatomic) IBOutlet UILabel *profileName;
+@property (weak, nonatomic) IBOutlet UITextField *placeholderText;
+@property (weak, nonatomic) IBOutlet UIButton *profileNameButton;
 @property (weak, nonatomic) IBOutlet UITableView *settingsTableView;
 @property (strong, nonatomic) NSArray *settingsInfoArray;
 
