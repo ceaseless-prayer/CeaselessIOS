@@ -32,6 +32,8 @@
 
 	if ([[NSUserDefaults standardUserDefaults] stringForKey: @"CeaselessId"]) {
 			//get the image and name from the Person
+		Person *persongetCeaselessContactFromCeaselessId: (NSString *) ceaselessId;
+
 		[self formatProfileForPerson: self.nonMOPerson];
 	} else {
 		self.placeholderText.hidden = NO;
@@ -121,8 +123,8 @@
 
 	CFRelease(addressBook);
 
-//	self.nonMOPerson = newMethod;
-	[self formatProfileForPerson: person];
+	self.nonMOPerson = [self.personPicker getNonMOPersonForCeaselessContact: person];
+	[self formatProfileForPerson: self.nonMOPerson];
 
 	[[NSUserDefaults standardUserDefaults] setObject: person.ceaselessId forKey: @"CeaselessId"];
 
