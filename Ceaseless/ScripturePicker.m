@@ -177,7 +177,7 @@ int const kDefaultQueueMinSize = 1;
 				  [newManagedObject setValue: [verseDictionary objectForKey:@"citation"] forKey: @"citation"];
                   
                   // TODO configure the right bible for the local language
-                  NSString *shareLink = [NSString stringWithFormat:@"%@/%@/%@#%@", @"http://www.bible.is/ENGESV/", jsonData[@"book"], jsonData[@"chapter"], jsonData[@"verse_start"]];
+                  NSString *shareLink = [NSString stringWithFormat:@"%@/%@/%@#%@", @"http://www.bible.is/ENGESV", jsonData[@"book"], jsonData[@"chapter"], jsonData[@"verse_start"]];
                   
                   [newManagedObject setValue: shareLink forKey: @"shareLink"];
 				  if (![self.managedObjectContext save: &error]) {
