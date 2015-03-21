@@ -16,7 +16,6 @@
 @interface SettingsViewController ()
 
 @property (nonatomic, strong) PersonPicker *personPicker;
-@property (nonatomic, strong) NonMOPerson *nonMOPerson;
 
 @end
 
@@ -28,23 +27,19 @@
 	self.settingsTableView.delegate = self;
 	self.settingsTableView.dataSource = self;
 	self.personPicker = [[PersonPicker alloc] init];
-	self.nonMOPerson = [[NonMOPerson alloc] init];
 
 	if ([[NSUserDefaults standardUserDefaults] stringForKey: @"CeaselessId"]) {
 			//get the image and name from the Person
-		Person *persongetCeaselessContactFromCeaselessId: (NSString *) ceaselessId;
-
-		[self formatProfileForPerson: self.nonMOPerson];
+		Person *person = [self.personPicker getCeaselessContactFromCeaselessId:[[NSUserDefaults standardUserDefaults] stringForKey: @"CeaselessId"]];
+		NonMOPerson *nonMOPerson = [self.personPicker getNonMOPersonForCeaselessContact: person];
+		[self formatProfileForPerson: nonMOPerson];
 	} else {
 		self.placeholderText.hidden = NO;
 		self.profileImage.hidden = YES;
 		self.profileNameButton.enabled = YES;
+		self.profileImage.contentMode = UIViewContentModeScaleAspectFill;
+		self.placeholderText.layer.cornerRadius = 6.0f;
 	}
-
-	self.profileImage.layer.cornerRadius = 6.0f;
-	[self.profileImage setClipsToBounds:YES];
-	self.profileImage.contentMode = UIViewContentModeScaleAspectFill;
-	self.placeholderText.layer.cornerRadius = 6.0f;
 
 	self.settingsInfoArray = [[NSArray alloc] initWithObjects: @"Pray For Daily", @"Notification time", nil];
     // Do any additional setup after loading the view.
@@ -119,12 +114,10 @@
 	[self.personPicker updateCeaselessContactFromABRecord: abPerson];
 	Person *person = [self.personPicker getCeaselessContactFromABRecord: abPerson];
 
-//	NSString *name = (__bridge_transfer NSString *)ABRecordCopyCompositeName(abPerson);
-
 	CFRelease(addressBook);
 
-	self.nonMOPerson = [self.personPicker getNonMOPersonForCeaselessContact: person];
-	[self formatProfileForPerson: self.nonMOPerson];
+	NonMOPerson *nonMOPerson = [self.personPicker getNonMOPersonForCeaselessContact: person];
+	[self formatProfileForPerson: nonMOPerson];
 
 	[[NSUserDefaults standardUserDefaults] setObject: person.ceaselessId forKey: @"CeaselessId"];
 
@@ -136,6 +129,9 @@
 
 	self.profileImage.image = person.profileImage;
 	self.profileImage.contentMode = UIViewContentModeScaleAspectFit;
+	self.profileImage.layer.cornerRadius = 6.0f;
+	[self.profileImage setClipsToBounds:YES];
+
 	self.backgroundImage.image = self.profileImage.image;
 	self.backgroundImage.contentMode = UIViewContentModeScaleAspectFill;
 
@@ -151,6 +147,8 @@
 	} else {
 		self.placeholderText.hidden = NO;
 		self.profileImage.hidden = YES;
+		self.profileImage.contentMode = UIViewContentModeScaleAspectFill;
+		self.placeholderText.layer.cornerRadius = 6.0f;
 	}
 }
 
