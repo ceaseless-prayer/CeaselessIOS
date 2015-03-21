@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import "Person.h"
+#import "NonMOPerson.h"
 
 @interface PersonPicker : NSObject
 
@@ -18,6 +19,6 @@
 - (void) updateCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
 - (Person *) createCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
 - (NSArray *) getAllCeaselessContacts;
-- (UIImage *) getImageForCeaselessContact: (Person*) person;
+- (NonMOPerson *) getNonMOPersonForCeaselessContact: (Person*) person;
     
 @end
