@@ -290,6 +290,46 @@
                                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ndd-Gy-bbr">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                         </scrollView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q4p-O7-h4F" userLabel="NotificationSelectorCell">
+                                            <rect key="frame" x="8" y="358" width="584" height="242"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remind me to pray at:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OMp-Bh-HQ6" userLabel="Remind">
+                                                    <rect key="frame" x="207" y="0.0" width="171" height="55"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="55" id="KNv-HW-2mZ"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="30" translatesAutoresizingMaskIntoConstraints="NO" id="5B7-R2-A0H">
+                                                    <rect key="frame" x="0.0" y="46" width="584" height="180"/>
+                                                    <date key="date" timeIntervalSinceReferenceDate="451279916.93028498">
+                                                        <!--2015-04-21 03:31:56 +0000-->
+                                                    </date>
+                                                </datePicker>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.0" green="0.0039215686269999999" blue="0.031372549020000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="5B7-R2-A0H" secondAttribute="bottom" id="46m-po-eVA"/>
+                                                <constraint firstAttribute="centerY" secondItem="OMp-Bh-HQ6" secondAttribute="centerY" id="Hht-iy-TVT"/>
+                                                <constraint firstAttribute="height" constant="110" id="IrE-HV-3WQ"/>
+                                                <constraint firstAttribute="trailing" secondItem="5B7-R2-A0H" secondAttribute="trailing" id="Thp-TP-1AG"/>
+                                                <constraint firstAttribute="centerX" secondItem="OMp-Bh-HQ6" secondAttribute="centerX" id="WgR-a6-qjV"/>
+                                                <constraint firstItem="5B7-R2-A0H" firstAttribute="top" secondItem="Q4p-O7-h4F" secondAttribute="top" constant="30" id="Z64-Qc-8Uj"/>
+                                                <constraint firstItem="5B7-R2-A0H" firstAttribute="leading" secondItem="Q4p-O7-h4F" secondAttribute="leading" id="dcq-d1-g5V"/>
+                                                <constraint firstItem="OMp-Bh-HQ6" firstAttribute="leading" secondItem="Q4p-O7-h4F" secondAttribute="leading" id="iBL-Kd-kRX"/>
+                                                <constraint firstItem="OMp-Bh-HQ6" firstAttribute="top" secondItem="Q4p-O7-h4F" secondAttribute="top" id="roO-Wu-HgC"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="IrE-HV-3WQ"/>
+                                                    <exclude reference="Hht-iy-TVT"/>
+                                                    <exclude reference="iBL-Kd-kRX"/>
+                                                </mask>
+                                            </variation>
+                                        </view>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Dmq-eC-Fkc">
                                             <rect key="frame" x="225" y="15" width="150" height="150"/>
                                             <constraints>
@@ -452,11 +492,16 @@
                                         </view>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="ndd-Gy-bbr" firstAttribute="leading" secondItem="Q4p-O7-h4F" secondAttribute="trailing" id="0E7-e9-AAX"/>
                                         <constraint firstItem="YvC-sY-Zh1" firstAttribute="leading" secondItem="rG3-3I-IoE" secondAttribute="leading" id="0Mu-0m-PPN"/>
                                         <constraint firstAttribute="trailing" secondItem="S1y-f9-OXI" secondAttribute="trailing" constant="8" id="2bo-hQ-I7v"/>
                                         <constraint firstAttribute="centerX" secondItem="S1y-f9-OXI" secondAttribute="centerX" id="3El-5D-gyl"/>
+                                        <constraint firstItem="Q4p-O7-h4F" firstAttribute="top" secondItem="rG3-3I-IoE" secondAttribute="top" constant="400" id="3j6-f0-imn"/>
                                         <constraint firstAttribute="bottom" secondItem="ndd-Gy-bbr" secondAttribute="bottom" id="91D-K2-5kT"/>
                                         <constraint firstItem="Ap3-56-gqg" firstAttribute="top" secondItem="Dmq-eC-Fkc" secondAttribute="bottom" constant="8" id="Dcl-vM-lPa"/>
+                                        <constraint firstItem="Q4p-O7-h4F" firstAttribute="leading" secondItem="rG3-3I-IoE" secondAttribute="leading" constant="8" id="Emf-fT-z7V"/>
+                                        <constraint firstItem="Q4p-O7-h4F" firstAttribute="top" secondItem="S1y-f9-OXI" secondAttribute="bottom" constant="1" id="EtL-Re-Pdp"/>
+                                        <constraint firstAttribute="trailing" secondItem="Q4p-O7-h4F" secondAttribute="trailing" constant="8" id="FoT-rD-rgt"/>
                                         <constraint firstItem="Dmq-eC-Fkc" firstAttribute="bottom" secondItem="oqk-y9-t0v" secondAttribute="bottom" id="Gm5-1U-C1R"/>
                                         <constraint firstAttribute="centerY" secondItem="S1y-f9-OXI" secondAttribute="centerY" id="LjX-L5-Wva"/>
                                         <constraint firstItem="Dmq-eC-Fkc" firstAttribute="top" secondItem="rG3-3I-IoE" secondAttribute="top" constant="15" id="Ml4-97-QOU"/>
@@ -471,7 +516,10 @@
                                         <constraint firstItem="Dmq-eC-Fkc" firstAttribute="top" secondItem="Ap3-56-gqg" secondAttribute="top" id="iWj-tE-3lS"/>
                                         <constraint firstItem="Ap3-56-gqg" firstAttribute="bottom" secondItem="YvC-sY-Zh1" secondAttribute="bottom" id="k5V-m1-8Ei"/>
                                         <constraint firstAttribute="trailing" secondItem="Ap3-56-gqg" secondAttribute="trailing" id="kHH-OR-Eil"/>
+                                        <constraint firstAttribute="bottom" secondItem="Q4p-O7-h4F" secondAttribute="bottom" id="kah-nG-8yy"/>
                                         <constraint firstItem="ndd-Gy-bbr" firstAttribute="top" secondItem="rG3-3I-IoE" secondAttribute="top" id="keG-j9-sDf"/>
+                                        <constraint firstItem="S1y-f9-OXI" firstAttribute="leading" secondItem="Q4p-O7-h4F" secondAttribute="trailing" id="oCD-bH-uLj"/>
+                                        <constraint firstItem="Q4p-O7-h4F" firstAttribute="top" secondItem="rG3-3I-IoE" secondAttribute="top" constant="400" id="qPZ-N1-uov"/>
                                         <constraint firstItem="Dmq-eC-Fkc" firstAttribute="leading" secondItem="oqk-y9-t0v" secondAttribute="leading" id="qUs-0v-Q3m"/>
                                         <constraint firstAttribute="trailing" secondItem="YvC-sY-Zh1" secondAttribute="trailing" id="scO-yB-zmv"/>
                                         <constraint firstItem="Ap3-56-gqg" firstAttribute="leading" secondItem="rG3-3I-IoE" secondAttribute="leading" id="yCv-Ly-iqh"/>
@@ -479,10 +527,14 @@
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
+                                            <exclude reference="0E7-e9-AAX"/>
                                             <exclude reference="iWj-tE-3lS"/>
                                             <exclude reference="3El-5D-gyl"/>
                                             <exclude reference="LjX-L5-Wva"/>
                                             <exclude reference="ekI-tp-zuA"/>
+                                            <exclude reference="oCD-bH-uLj"/>
+                                            <exclude reference="3j6-f0-imn"/>
+                                            <exclude reference="qPZ-N1-uov"/>
                                         </mask>
                                     </variation>
                                 </view>
@@ -504,6 +556,7 @@
                     <navigationItem key="navigationItem" title="Settings" id="vb3-cf-jfP"/>
                     <connections>
                         <outlet property="backgroundImage" destination="diK-xK-oxu" id="lic-BC-DSe"/>
+                        <outlet property="datePicker" destination="5B7-R2-A0H" id="0CY-5c-6JB"/>
                         <outlet property="nameLabel" destination="Ap3-56-gqg" id="vNZ-gl-jgO"/>
                         <outlet property="peopleCount" destination="vCr-G0-epe" id="1An-39-UmX"/>
                         <outlet property="placeholderText" destination="oqk-y9-t0v" id="7ie-m4-ZHB"/>
@@ -515,7 +568,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XUr-0u-Aj1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2322" y="-257"/>
+            <point key="canvasLocation" x="2586" y="-257"/>
         </scene>
         <!--Add Notes-->
         <scene sceneID="usz-EQ-0zd">

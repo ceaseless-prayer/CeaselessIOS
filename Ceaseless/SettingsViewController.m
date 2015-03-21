@@ -49,36 +49,22 @@
 		self.stepper.value = 3;
 	}
 	NSLog (@"stepper is %@", self.peopleCount.text);
+
+		//Set Color of Date Picker
+	self.datePicker.datePickerMode = UIDatePickerModeTime;
+	[self.datePicker setValue:[UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1.0f] forKeyPath:@"textColor"];
+	SEL selector = NSSelectorFromString(@"setHighlightsToday:");
+	NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDatePicker instanceMethodSignatureForSelector:selector]];
+	BOOL no = NO;
+	[invocation setSelector:selector];
+	[invocation setArgument:&no atIndex:2];
+	[invocation invokeWithTarget:self.datePicker];
+
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-#pragma mark - Table View
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return [self.settingsInfoArray count];
-
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-	[self configureCell:cell atIndexPath:indexPath];
-	return cell;
-}
-
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-	cell.textLabel.text = [self.settingsInfoArray objectAtIndex: indexPath.row];
-
-}
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-		// Return NO if you do not want the specified item to be editable.
-	return NO;
 }
 
 
@@ -174,5 +160,14 @@
 
 
 	NSLog (@"what is saved in dailyPersonCount %li", (long)[[NSUserDefaults standardUserDefaults] integerForKey:@"DailyPersonCount"]);
+}
+-(void)getSelection:(id)sender
+{
+
+	NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
+	timeFormatter.dateFormat = @"HH:mm";
+
+	NSString *timeString = [timeFormatter stringFromDate: [self.datePicker date]];
+	NSLog (@"timeString is %@", timeString);
 }
 @end

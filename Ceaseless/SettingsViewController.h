@@ -19,7 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UILabel *peopleCount;
 @property (weak, nonatomic) IBOutlet UIStepper *stepper;
-@property (strong, nonatomic) NSArray *settingsInfoArray;
+@property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 
 - (IBAction)stepperChanged:(id)sender;
 
