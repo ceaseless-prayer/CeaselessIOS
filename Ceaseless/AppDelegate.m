@@ -49,13 +49,19 @@ NSString *const kDeveloperMode = @"developerMode";
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     NSCalendar *gregorian = [[NSCalendar alloc]
                              initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    
-    NSDateComponents *dateComponent = [gregorian components:NSCalendarUnitYear | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitWeekday | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour fromDate:[NSDate date]];
-    
-//    [dateComponent setHour:7]; // When we load from config.
 
-    dateComponent.second += 30; // for testing--a notification shows up 30 seconds after you close the app.
-    
+	NSDate *notificationDate;
+	if ([[NSUserDefaults standardUserDefaults] objectForKey:@"NotificationDate"]) {
+		notificationDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"NotificationDate"];
+	} else {
+		notificationDate = [NSDate date];
+	}
+//		notificationDate = [NSDate date]; //for testing uncomment this line and the dateComponent.second line below
+	
+    NSDateComponents *dateComponent = [gregorian components:NSCalendarUnitYear | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitWeekday | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour fromDate: notificationDate];
+
+//    dateComponent.second += 30; // for testing--a notification shows up 30 seconds after you close the app.
+
     NSDate *fireDate = [[NSCalendar currentCalendar] dateFromComponents:dateComponent];
     
     UILocalNotification *notification = [[UILocalNotification alloc]init];

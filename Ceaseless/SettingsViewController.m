@@ -50,6 +50,10 @@
 	}
 	NSLog (@"stepper is %@", self.peopleCount.text);
 
+	if ([[NSUserDefaults standardUserDefaults] objectForKey:@"NotificationDate"]) {
+		[self.datePicker setDate: [[NSUserDefaults standardUserDefaults] objectForKey:@"NotificationDate"] animated: NO];
+	}
+
 		//Set Color of Date Picker
 	self.datePicker.datePickerMode = UIDatePickerModeTime;
 	[self.datePicker setValue:[UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1.0f] forKeyPath:@"textColor"];
@@ -67,7 +71,13 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+- (void) viewWillDisappear:(BOOL)animated {
+	[super viewWillDisappear:animated];
+	if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
+			// back button code
+		[[NSUserDefaults standardUserDefaults] setObject:[self.datePicker date] forKey:@"NotificationDate"];
+	}
+}
 /*
 #pragma mark - Navigation
 
@@ -161,13 +171,5 @@
 
 	NSLog (@"what is saved in dailyPersonCount %li", (long)[[NSUserDefaults standardUserDefaults] integerForKey:@"DailyPersonCount"]);
 }
--(void)getSelection:(id)sender
-{
 
-	NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
-	timeFormatter.dateFormat = @"HH:mm";
-
-	NSString *timeString = [timeFormatter stringFromDate: [self.datePicker date]];
-	NSLog (@"timeString is %@", timeString);
-}
 @end
