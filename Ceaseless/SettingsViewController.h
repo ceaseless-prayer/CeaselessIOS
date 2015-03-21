@@ -9,13 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "TaggedPersonPicker.h"
 
-@interface SettingsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, TaggedPersonPickerDelegate>
+@interface SettingsViewController : UIViewController <UIScrollViewDelegate, TaggedPersonPickerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UITextField *placeholderText;
-@property (weak, nonatomic) IBOutlet UIButton *profileNameButton;
-@property (weak, nonatomic) IBOutlet UITableView *settingsTableView;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UIButton *selectMeButton;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UILabel *peopleCount;
+@property (weak, nonatomic) IBOutlet UIStepper *stepper;
 @property (strong, nonatomic) NSArray *settingsInfoArray;
+
+- (IBAction)stepperChanged:(id)sender;
 
 @end

@@ -26,7 +26,14 @@
 
 - (instancetype) init {
     AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
-    return [self initWith: appDelegate.managedObjectContext numberOfPeople: 5];
+	int dailyPersonCount;
+	if ([[NSUserDefaults standardUserDefaults] doubleForKey:@"DailyPersonCount"]) {
+		dailyPersonCount= [[NSUserDefaults standardUserDefaults] doubleForKey:@"DailyPersonCount"];
+	} else {
+		dailyPersonCount = 5;
+	}
+
+    return [self initWith: appDelegate.managedObjectContext numberOfPeople: dailyPersonCount];
 }
 
 - (instancetype) initWith: (NSManagedObjectContext*) managedObjectContext numberOfPeople: (int) numberOfPeople {

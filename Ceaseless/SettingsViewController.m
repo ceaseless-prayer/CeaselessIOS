@@ -24,8 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-	self.settingsTableView.delegate = self;
-	self.settingsTableView.dataSource = self;
+	self.scrollView.delegate = self;
 	self.personPicker = [[PersonPicker alloc] init];
 
 	if ([[NSUserDefaults standardUserDefaults] stringForKey: @"CeaselessId"]) {
@@ -35,14 +34,21 @@
 		[self formatProfileForPerson: nonMOPerson];
 	} else {
 		self.placeholderText.hidden = NO;
+		self.nameLabel.hidden = YES;
 		self.profileImage.hidden = YES;
-		self.profileNameButton.enabled = YES;
+		self.selectMeButton.hidden = NO;
 		self.profileImage.contentMode = UIViewContentModeScaleAspectFill;
 		self.placeholderText.layer.cornerRadius = 6.0f;
 	}
 
-	self.settingsInfoArray = [[NSArray alloc] initWithObjects: @"Pray For Daily", @"Notification time", nil];
-    // Do any additional setup after loading the view.
+	if ([[NSUserDefaults standardUserDefaults] doubleForKey:@"DailyPersonCount"]) {
+		self.peopleCount.text = [NSString stringWithFormat:@"%.f",[[NSUserDefaults standardUserDefaults] doubleForKey:@"DailyPersonCount"]];
+		self.stepper.value = [[NSUserDefaults standardUserDefaults] doubleForKey:@"DailyPersonCount"];
+	} else {
+		self.peopleCount.text = @"3";
+		self.stepper.value = 3;
+	}
+	NSLog (@"stepper is %@", self.peopleCount.text);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -137,8 +143,9 @@
 
 	NSString *fullName = [NSString stringWithFormat: @"%@ %@", person.firstName, person.lastName];
 	if (fullName) {
-		[self.profileNameButton setTitle: fullName forState:UIControlStateNormal];
-		self.profileNameButton.enabled = NO;
+		self.nameLabel.text = fullName;
+		self.nameLabel.hidden = NO;
+		self.selectMeButton.hidden = YES;
 	}
 
 	if (self.profileImage.image) {
@@ -156,5 +163,16 @@
 - (void)taggedPersonPickerDidCancel:(TaggedPersonPicker *)taggedPersonPicker {
 	[taggedPersonPicker dismissViewControllerAnimated:YES completion:NULL];
 
+}
+
+- (IBAction)stepperChanged:(UIStepper*)sender {
+	
+	double value = [sender value];
+
+	[self.peopleCount setText:[NSString stringWithFormat:@"%d", (int)value]];
+	[[NSUserDefaults standardUserDefaults] setDouble: value forKey:@"DailyPersonCount"];
+
+
+	NSLog (@"what is saved in dailyPersonCount %li", (long)[[NSUserDefaults standardUserDefaults] integerForKey:@"DailyPersonCount"]);
 }
 @end
