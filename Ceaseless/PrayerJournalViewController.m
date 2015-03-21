@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "PrayerJournalTableViewCell.h"
 #import "PersonPicker.h"
+#import "NonMOPerson.h"
 #import "Person.h"
 #import "Name.h"
 
@@ -155,13 +156,16 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	NSArray *peopleArray = [note.peopleTagged allObjects];
 
 	if ([peopleArray count] > 0) {
-		cell.topImageView.image = [self.personPicker getImageForCeaselessContact:[peopleArray firstObject]];
+        NonMOPerson *p = [self.personPicker getNonMOPersonForCeaselessContact:[peopleArray firstObject]];
+		cell.topImageView.image = p.profileImage;
 		cell.topImageView.contentMode = UIViewContentModeScaleAspectFit;
 	} else {
 		cell.topImageView.image = nil;
 	}
+    
 	if ([peopleArray count] > 1) {
-		cell.bottomImageView.image = [self.personPicker getImageForCeaselessContact:[peopleArray lastObject]];
+        NonMOPerson *p = [self.personPicker getNonMOPersonForCeaselessContact:[peopleArray lastObject]];
+		cell.bottomImageView.image = p.profileImage;
 		cell.bottomImageView.contentMode = UIViewContentModeScaleAspectFit;
 	} else {
 		cell.bottomImageView.image = nil;

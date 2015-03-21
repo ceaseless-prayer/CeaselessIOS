@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WebCardViewController">
+            <connections>
+                <outlet property="view" destination="YVr-NA-2Cm" id="kao-jr-tzD"/>
+                <outlet property="webCardView" destination="YVr-NA-2Cm" id="46a-JN-LVb"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="YVr-NA-2Cm" userLabel="Web Card View" customClass="WebCardView">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A8i-8l-8LP">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hEW-dC-O9l" userLabel="CardView">
+                            <rect key="frame" x="8" y="2" width="584" height="596"/>
+                            <subviews>
+                                <view opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="KWS-Ba-d4C">
+                                    <rect key="frame" x="0.0" y="0.0" width="584" height="596"/>
+                                    <subviews>
+                                        <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PiV-RI-TmQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="584" height="596"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </webView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="PiV-RI-TmQ" firstAttribute="centerY" secondItem="KWS-Ba-d4C" secondAttribute="centerY" id="Cn9-AM-U5Y"/>
+                                        <constraint firstItem="PiV-RI-TmQ" firstAttribute="top" secondItem="KWS-Ba-d4C" secondAttribute="top" id="JqM-ax-ba4"/>
+                                        <constraint firstAttribute="trailing" secondItem="PiV-RI-TmQ" secondAttribute="trailing" id="NTa-q4-ysa"/>
+                                        <constraint firstItem="PiV-RI-TmQ" firstAttribute="leading" secondItem="KWS-Ba-d4C" secondAttribute="leading" id="eOy-jt-Yr0"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="KWS-Ba-d4C" secondAttribute="trailing" id="PRT-ET-fgW"/>
+                                <constraint firstItem="KWS-Ba-d4C" firstAttribute="leading" secondItem="hEW-dC-O9l" secondAttribute="leading" id="eJI-uH-0PQ"/>
+                                <constraint firstItem="KWS-Ba-d4C" firstAttribute="top" secondItem="hEW-dC-O9l" secondAttribute="top" id="kjS-9R-1xn"/>
+                                <constraint firstItem="KWS-Ba-d4C" firstAttribute="centerY" secondItem="hEW-dC-O9l" secondAttribute="centerY" id="t7A-C3-Gk9"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="INo-O8-ATa" userLabel="ShadowView">
+                            <rect key="frame" x="8" y="2" width="584" height="596"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="INo-O8-ATa" secondAttribute="bottom" id="2Ep-Rk-WfA"/>
+                        <constraint firstItem="INo-O8-ATa" firstAttribute="bottom" secondItem="hEW-dC-O9l" secondAttribute="bottom" id="CYA-Nu-U8L"/>
+                        <constraint firstAttribute="trailing" secondItem="INo-O8-ATa" secondAttribute="trailing" id="EuS-iK-tEe"/>
+                        <constraint firstItem="INo-O8-ATa" firstAttribute="top" secondItem="hEW-dC-O9l" secondAttribute="top" id="F6t-qa-cmk"/>
+                        <constraint firstItem="INo-O8-ATa" firstAttribute="leading" secondItem="hEW-dC-O9l" secondAttribute="leading" id="KMk-eh-lq3"/>
+                        <constraint firstAttribute="trailing" secondItem="hEW-dC-O9l" secondAttribute="trailing" constant="8" id="KTt-34-Ec6"/>
+                        <constraint firstItem="INo-O8-ATa" firstAttribute="trailing" secondItem="hEW-dC-O9l" secondAttribute="trailing" id="RBn-tn-MQI"/>
+                        <constraint firstItem="hEW-dC-O9l" firstAttribute="leading" secondItem="A8i-8l-8LP" secondAttribute="leading" constant="8" id="bbk-88-36U"/>
+                        <constraint firstItem="INo-O8-ATa" firstAttribute="top" secondItem="A8i-8l-8LP" secondAttribute="top" id="h1o-wM-1bT"/>
+                        <constraint firstItem="hEW-dC-O9l" firstAttribute="top" secondItem="A8i-8l-8LP" secondAttribute="top" constant="2" id="hea-UU-5d7"/>
+                        <constraint firstAttribute="bottom" secondItem="hEW-dC-O9l" secondAttribute="bottom" constant="2" id="k0P-d6-RdG"/>
+                        <constraint firstItem="INo-O8-ATa" firstAttribute="leading" secondItem="A8i-8l-8LP" secondAttribute="leading" id="pNs-T0-djB"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="EuS-iK-tEe"/>
+                            <exclude reference="h1o-wM-1bT"/>
+                            <exclude reference="pNs-T0-djB"/>
+                            <exclude reference="2Ep-Rk-WfA"/>
+                        </mask>
+                    </variation>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="A8i-8l-8LP" secondAttribute="trailing" id="GuP-T4-VAm"/>
+                <constraint firstAttribute="bottom" secondItem="A8i-8l-8LP" secondAttribute="bottom" id="J1D-QM-ILj"/>
+                <constraint firstItem="A8i-8l-8LP" firstAttribute="top" secondItem="YVr-NA-2Cm" secondAttribute="top" id="JCP-r1-Cyg"/>
+                <constraint firstItem="A8i-8l-8LP" firstAttribute="leading" secondItem="YVr-NA-2Cm" secondAttribute="leading" id="e4U-W9-vvv"/>
+            </constraints>
+            <connections>
+                <outlet property="cardView" destination="hEW-dC-O9l" id="RYm-WV-mxG"/>
+                <outlet property="shadowView" destination="INo-O8-ATa" id="w1z-Iy-yhp"/>
+                <outlet property="webView" destination="PiV-RI-TmQ" id="2LG-Gv-wdA"/>
+            </connections>
+            <point key="canvasLocation" x="454" y="706"/>
+        </view>
+    </objects>
+</document>

@@ -15,6 +15,7 @@
 #import "ScriptureQueue.h"
 #import "ScriptureViewController.h"
 #import "PersonViewController.h"
+#import "WebCardViewController.h"
 
 /*
  A controller object that manages a simple model -- a collection of month names.
@@ -57,6 +58,12 @@
 		if (_scripture) {
 			[_cardArray insertObject: _scripture atIndex: 0];
 		}
+        
+        // TODO check the server if new content needs to be shown.
+        if (YES) {
+            [_cardArray insertObject: @"http://www.ceaselessprayer.com" atIndex: 0];
+//            [_cardArray addObject: @"http://www.ceaselessprayer.com"];
+        }
 
     }
     return self;
@@ -69,11 +76,13 @@
     }
 
     // Create a new view controller and pass suitable data.
-
     DataViewController *contentViewController;
     if ([self.cardArray[index] isMemberOfClass:[ScriptureQueue class]]) {
         contentViewController = [[ScriptureViewController alloc] init];
 		self.mainStoryboard = storyboard;
+    } else if ([self.cardArray[index] isKindOfClass:[NSString class]]) {
+        contentViewController = [[WebCardViewController alloc] init];
+        contentViewController.mainStoryboard = self.mainStoryboard;
     } else {
         contentViewController = [[PersonViewController alloc] init];
 		contentViewController.mainStoryboard = self.mainStoryboard;

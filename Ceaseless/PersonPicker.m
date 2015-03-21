@@ -139,6 +139,7 @@
 
 - (void)pickPerson:(ABRecordRef)rawPerson personToShow:(Person *)personToShow {
     NSSet *unifiedRecord = [self getUnifiedAddressBookRecordFor:rawPerson];
+    // TODO can we use the getNonMOPersonForCeaselessId method here?
     NonMOPerson *person = [[NonMOPerson alloc] init];
     person.person = personToShow;
     
@@ -424,21 +425,35 @@
     return result;
 }
 
-- (UIImage *) getImageForCeaselessContact: (Person*) person {
-    UIImage *result = nil;
+- (NonMOPerson *) getNonMOPersonForCeaselessContact: (Person*) person {
+    NonMOPerson *nonMOPerson = [[NonMOPerson alloc] init];
+    nonMOPerson.person = person;
     ABRecordRef rawPerson;
     for (AddressBookId *abId in person.addressBookIds) {
         rawPerson = ABAddressBookGetPersonWithRecordID(_addressBook, (ABRecordID) [abId.recordId intValue]);
         // Check for contact picture
         if (rawPerson != nil && ABPersonHasImageData(rawPerson)) {
             if ( &ABPersonCopyImageDataWithFormat != nil ) {
-                result = [UIImage imageWithData:(__bridge NSData *)ABPersonCopyImageDataWithFormat(rawPerson, kABPersonImageFormatOriginalSize)];
-                break;
+                nonMOPerson.profileImage = [UIImage imageWithData:(__bridge NSData *)ABPersonCopyImageDataWithFormat(rawPerson, kABPersonImageFormatOriginalSize)];
             }
         }
-    }
+        
+        nonMOPerson.firstName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonFirstNameProperty));
+        nonMOPerson.lastName  = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonLastNameProperty));
+
+        // TODO:  this needs to be mobile or iphone first the other because it is used for texting from the device
     
-    return result;
+        ABMultiValueRef phoneNumbers = ABRecordCopyValue(rawPerson, kABPersonPhoneProperty);
+        
+        CFIndex numberOfPhoneNumbers = ABMultiValueGetCount(phoneNumbers);
+        for (CFIndex i = 0; i < numberOfPhoneNumbers; i++) {
+            NSString *phoneNumber = CFBridgingRelease(ABMultiValueCopyValueAtIndex(phoneNumbers, i));
+            nonMOPerson.phoneNumber = phoneNumber;
+        }
+        
+        CFRelease(phoneNumbers);
+    }
+    return nonMOPerson;
 }
 
 - (Person *) getCeaselessContactFromABRecord: (ABRecordRef) rawPerson {
@@ -506,6 +521,23 @@
         return nil;
     }
     return nil;
+}
+
+- (Person *) getCeaselessContactFromCeaselessId: (NSString *) ceaselessId {
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Person" inManagedObjectContext:context];
+    [request setEntity:entity];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                              @"ceaselessId = %@", ceaselessId];
+    [request setPredicate:predicate];
+    NSError *errorFetch = nil;
+    NSArray *existingResults = [context executeFetchRequest:request error:&errorFetch];
+    if([existingResults count] < 1) {
+        return nil;
+    } else {
+        return existingResults[0];
+    }
 }
 
 - (Person *) createCeaselessContactFromABRecord: (ABRecordRef) rawPerson {

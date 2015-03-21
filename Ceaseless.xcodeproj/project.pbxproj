@@ -17,6 +17,9 @@
 		429E608C1AAA61B1003F37BF /* PersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E608B1AAA61B1003F37BF /* PersonViewController.m */; };
 		42A5AF881AB9497F00F209B8 /* PrayerRecordConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A5AF871AB9497F00F209B8 /* PrayerRecordConstants.m */; };
 		42A5AF8B1ABA1A9900F209B8 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A5AF8A1ABA1A9900F209B8 /* Person.m */; };
+		42C13BB11ABCC074000D5C08 /* WebCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C13BB01ABCC074000D5C08 /* WebCardViewController.m */; };
+		42C13BB41ABCC285000D5C08 /* WebCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C13BB31ABCC285000D5C08 /* WebCardView.m */; };
+		42CBFBAE1ABBC9BA00F9FB1D /* WebCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42CBFBAD1ABBC9BA00F9FB1D /* WebCardView.xib */; };
 		42F3AE1E1AA4DD7F003A88F5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F3AE1D1AA4DD7F003A88F5 /* main.m */; };
 		42F3AE211AA4DD7F003A88F5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F3AE201AA4DD7F003A88F5 /* AppDelegate.m */; };
 		42F3AE241AA4DD7F003A88F5 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F3AE231AA4DD7F003A88F5 /* RootViewController.m */; };
@@ -89,6 +92,11 @@
 		42A5AF871AB9497F00F209B8 /* PrayerRecordConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrayerRecordConstants.m; sourceTree = "<group>"; };
 		42A5AF891ABA1A9900F209B8 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
 		42A5AF8A1ABA1A9900F209B8 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		42C13BAF1ABCC074000D5C08 /* WebCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebCardViewController.h; sourceTree = "<group>"; };
+		42C13BB01ABCC074000D5C08 /* WebCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebCardViewController.m; sourceTree = "<group>"; };
+		42C13BB21ABCC285000D5C08 /* WebCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebCardView.h; sourceTree = "<group>"; };
+		42C13BB31ABCC285000D5C08 /* WebCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebCardView.m; sourceTree = "<group>"; };
+		42CBFBAD1ABBC9BA00F9FB1D /* WebCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebCardView.xib; sourceTree = "<group>"; };
 		42F3AE181AA4DD7F003A88F5 /* Ceaseless.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ceaseless.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42F3AE1C1AA4DD7F003A88F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		42F3AE1D1AA4DD7F003A88F5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -270,7 +278,10 @@
 				70BCCC201ABB768F00386D51 /* PersonNotesTableViewCell.m */,
 				70F6640A1AA83CC60073801E /* ScriptureView.h */,
 				70F6640B1AA83CC60073801E /* ScriptureView.m */,
+				42C13BB21ABCC285000D5C08 /* WebCardView.h */,
+				42C13BB31ABCC285000D5C08 /* WebCardView.m */,
 				70D51C101AA6694400FA7CDC /* ScriptureView.xib */,
+				42CBFBAD1ABBC9BA00F9FB1D /* WebCardView.xib */,
 				70D51C141AA6800D00FA7CDC /* PersonView.h */,
 				70D51C151AA6800D00FA7CDC /* PersonView.m */,
 				70D51C121AA66F5100FA7CDC /* PersonView.xib */,
@@ -332,6 +343,8 @@
 				429E60881AAA5FD7003F37BF /* ScriptureViewController.m */,
 				429E608A1AAA61B1003F37BF /* PersonViewController.h */,
 				429E608B1AAA61B1003F37BF /* PersonViewController.m */,
+				42C13BAF1ABCC074000D5C08 /* WebCardViewController.h */,
+				42C13BB01ABCC074000D5C08 /* WebCardViewController.m */,
 				704D5C9E1AAF6D5200BD48B3 /* PersonNotesViewController.h */,
 				704D5C9F1AAF6D5200BD48B3 /* PersonNotesViewController.m */,
 				70F12B821AB208000090F47A /* PrayerJournalViewController.h */,
@@ -403,7 +416,7 @@
 					};
 					42F3AE361AA4DD80003A88F5 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 98FUBN4YVB;
+						DevelopmentTeam = 28DYBASY7W;
 						TestTargetID = 42F3AE171AA4DD7F003A88F5;
 					};
 				};
@@ -439,6 +452,7 @@
 				42F3AE2D1AA4DD7F003A88F5 /* Main.storyboard in Resources */,
 				70F663F51AA7BF420073801E /* Screen Shot 2015-02-18 at 8.25.07 AM.png in Resources */,
 				42F3AE321AA4DD80003A88F5 /* LaunchScreen.xib in Resources */,
+				42CBFBAE1ABBC9BA00F9FB1D /* WebCardView.xib in Resources */,
 				42F3AE2F1AA4DD7F003A88F5 /* Images.xcassets in Resources */,
 				707BE2E61AAA1B1A0020FF29 /* Screen Shot 2015-02-17 at 9.05.16 PM.png in Resources */,
 				709D83391AA598A600C3486E /* Screen Shot 2015-02-18 at 8.25.51 AM.png in Resources */,
@@ -476,6 +490,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42C13BB41ABCC285000D5C08 /* WebCardView.m in Sources */,
 				42F3AE271AA4DD7F003A88F5 /* DataViewController.m in Sources */,
 				42A5AF881AB9497F00F209B8 /* PrayerRecordConstants.m in Sources */,
 				704D5CE21AAFA96100BD48B3 /* Note.m in Sources */,
@@ -493,6 +508,7 @@
 				42F3AE211AA4DD7F003A88F5 /* AppDelegate.m in Sources */,
 				70D51C0E1AA627DF00FA7CDC /* NonMOPerson.m in Sources */,
 				704D5CA11AAF6D5200BD48B3 /* PersonNotesViewController.m in Sources */,
+				42C13BB11ABCC074000D5C08 /* WebCardViewController.m in Sources */,
 				42F3AE2A1AA4DD7F003A88F5 /* ModelController.m in Sources */,
 				425271AD1AB37CE8005098F6 /* Name.m in Sources */,
 				704D5CA71AAF90A200BD48B3 /* Ceaseless.xcdatamodeld in Sources */,
