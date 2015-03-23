@@ -19,7 +19,6 @@
 - (NSURL *)applicationDocumentsDirectory;
 
 @property (strong, nonatomic) UIWindow *window;
-@property (nonatomic, strong) NSArray *peopleArray;
 @property (nonatomic, strong) NSArray *cardArray;
 
 @end

@@ -29,7 +29,7 @@
 
 @interface ModelController ()
 
-@property (readonly, strong, nonatomic) NSArray *personData;
+@property (readonly, strong, nonatomic) NSArray *people;
 @property (readonly, strong, nonatomic) ScriptureQueue *scripture;
 @property (strong, nonatomic) NSMutableArray *cardArray;
 @property (nonatomic) NSInteger index;
@@ -38,23 +38,33 @@
 
 @implementation ModelController
 
+NSString *const kLocalLastRefreshDate = @"localLastRefreshDate";
+NSString *const kDeveloperMode = @"developerMode";
+
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _index = 0;
-        
-        // Create the data model.
-        // Initializes to app delegate card array
-		ScripturePicker *scripturePicker = [[ScripturePicker alloc] init];
-		[scripturePicker manageScriptureQueue];
-		_scripture = [scripturePicker popScriptureQueue];
-		PersonPicker *personPicker = [[PersonPicker alloc] init];
-		[personPicker loadContacts];
-        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(runIfNewDay)
+                                                     name:UIApplicationDidBecomeActiveNotification object:nil];
+        // optional cleanup observer code
+        //[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+
         // set local members to point to app delegate
-		AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
+		ScripturePicker *scripturePicker = [[ScripturePicker alloc] init];
+        PersonPicker *personPicker = [[PersonPicker alloc] init];
+        _index = 0;
+        _scripture = [scripturePicker peekScriptureQueue];
+        _people = [personPicker queuedPeople];
         
-        _cardArray = [[NSMutableArray alloc] initWithArray: appDelegate.peopleArray];
+        // convert selected people into form the view can use
+        NSMutableArray *nonMOPeople = [[NSMutableArray alloc]init];
+        for(Person *p in _people) {
+            [nonMOPeople addObject: [personPicker getNonMOPersonForCeaselessContact:p]];
+        }
+        
+        _cardArray = [[NSMutableArray alloc] initWithArray: nonMOPeople];
+        
 		if (_scripture) {
 			[_cardArray insertObject: _scripture atIndex: 0];
 		}
@@ -69,6 +79,56 @@
     return self;
 }
 
+#pragma mark - Ceaseless daily digest process
+// when the app becomes active, this method is run to update the model
+- (void) runIfNewDay {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDate *lastRefreshDate = [defaults objectForKey:kLocalLastRefreshDate];
+    NSDate *now = [NSDate date];
+    BOOL developerMode = [defaults boolForKey:kDeveloperMode];
+    
+    // we consider it a new day if:
+    // developer mode is enabled (that way the application refreshes each time it is newly opened)
+    // there is no refresh date
+    // there is at least 1 midnight since the last date
+    if(developerMode || lastRefreshDate == nil || [self daysWithinEraFromDate: lastRefreshDate toDate: now] > 0) {
+        if(developerMode) {
+            NSLog(@"Debug Mode enabled: refreshing application every time it is newly opened.");
+        }
+        
+        ScripturePicker *scripturePicker = [[ScripturePicker alloc] init];
+        PersonPicker *personPicker = [[PersonPicker alloc] init];
+        [scripturePicker manageScriptureQueue];
+        _scripture = [scripturePicker popScriptureQueue];
+        [personPicker loadContacts];
+        _people = [personPicker queuedPeople];
+        // TODO reinitialize everything--although data has changed, transformed version of people has not yet.
+        
+        NSLog(@"It's a new day!");
+    }
+    
+    // Update the last refresh date
+    [defaults setObject:now forKey:kLocalLastRefreshDate];
+    [defaults synchronize];
+    
+    NSLog(@"Ceaseless has been refreshed");
+}
+
+// https://developer.apple.com/library/prerelease/ios//documentation/Cocoa/Conceptual/DatesAndTimes/Articles/dtCalendricalCalculations.html#//apple_ref/doc/uid/TP40007836-SW1
+// Listing 13. Days between two dates, as the number of midnights between
+-(NSInteger) daysWithinEraFromDate:(NSDate *) startDate toDate:(NSDate *) endDate
+{
+    NSCalendar *gregorian = [[NSCalendar alloc]
+                             initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSInteger startDay = [gregorian ordinalityOfUnit:NSCalendarUnitDay
+                                              inUnit: NSCalendarUnitEra forDate:startDate];
+    NSInteger endDay = [gregorian ordinalityOfUnit:NSCalendarUnitDay
+                                            inUnit: NSCalendarUnitEra forDate:endDate];
+    return endDay-startDay;
+}
+
+
+#pragma mark - RootViewController/PageViewController methods
 - (DataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard {
     // Return the data view controller for the given index.
     if (([self.cardArray count] == 0) || (index >= [self.cardArray count])) {
