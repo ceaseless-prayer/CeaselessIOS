@@ -42,6 +42,14 @@ int const kDefaultQueueMinSize = 1;
 	return self;
 }
 
+- (instancetype) initWith: (NSManagedObjectContext*) managedObjectContext {
+    self = [super init];
+    if (self) {
+        self.managedObjectContext = managedObjectContext;
+    }
+    return self;
+}
+
 // This method refreshes the Scripture queue.
 - (void) manageScriptureQueue {
 
@@ -73,7 +81,7 @@ int const kDefaultQueueMinSize = 1;
     NSSortDescriptor *scripturePresentedDateSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"lastPresentedDate" ascending:NO];
     scriptureArray = [[self getScriptureWithPredicate:@"TRUEPREDICATE"]sortedArrayUsingDescriptors:[NSArray arrayWithObject:scripturePresentedDateSortDescriptor]];
     if([scriptureArray count] > 0) {
-        return scriptureArray[0];
+        return [scriptureArray objectAtIndex:0];
     } else {
         // TODO should this do the initialization logic too?
         return nil;

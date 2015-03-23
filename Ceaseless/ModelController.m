@@ -9,6 +9,7 @@
 #import "ModelController.h"
 #import "DataViewController.h"
 #import "PersonPicker.h"
+#import "PeopleQueue.h"
 #import "NonMOPerson.h"
 #import "AppDelegate.h"
 #import "ScripturePicker.h"
@@ -44,39 +45,42 @@ NSString *const kDeveloperMode = @"developerMode";
 - (instancetype)init {
     self = [super init];
     if (self) {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(runIfNewDay)
-                                                     name:UIApplicationDidBecomeActiveNotification object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(runIfNewDay) name:UIApplicationDidBecomeActiveNotification object:nil];
         // optional cleanup observer code
         //[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
-
-        // set local members to point to app delegate
-		ScripturePicker *scripturePicker = [[ScripturePicker alloc] init];
-        PersonPicker *personPicker = [[PersonPicker alloc] init];
-        _index = 0;
-        _scripture = [scripturePicker peekScriptureQueue];
-        _people = [personPicker queuedPeople];
-        
-        // convert selected people into form the view can use
-        NSMutableArray *nonMOPeople = [[NSMutableArray alloc]init];
-        for(Person *p in _people) {
-            [nonMOPeople addObject: [personPicker getNonMOPersonForCeaselessContact:p]];
-        }
-        
-        _cardArray = [[NSMutableArray alloc] initWithArray: nonMOPeople];
-        
-		if (_scripture) {
-			[_cardArray insertObject: _scripture atIndex: 0];
-		}
-        
-        // TODO check the server if new content needs to be shown.
-        if (YES) {
-            [_cardArray insertObject: @"http://www.ceaselessprayer.com" atIndex: 0];
-//            [_cardArray addObject: @"http://www.ceaselessprayer.com"];
-        }
-
+        [self prepareCardArray];
     }
     return self;
+}
+
+// this method sets up the card array for display
+// everything here should be read only
+// changing the contents of the array happens through other processes.
+- (void) prepareCardArray {
+    // set local members to point to app delegate
+    ScripturePicker *scripturePicker = [[ScripturePicker alloc] init];
+    PersonPicker *personPicker = [[PersonPicker alloc] init];
+    _index = 0;
+    _scripture = [scripturePicker peekScriptureQueue];
+    _people = [personPicker queuedPeople];
+    
+    // convert selected people into form the view can use
+    NSMutableArray *nonMOPeople = [[NSMutableArray alloc]init];
+    for(PeopleQueue *pq in _people) {
+        [nonMOPeople addObject: [personPicker getNonMOPersonForCeaselessContact:(Person*)pq.person]];
+    }
+    
+    _cardArray = [[NSMutableArray alloc] initWithArray: nonMOPeople];
+    
+    if (_scripture) {
+        [_cardArray insertObject: _scripture atIndex: 0];
+    }
+    
+    // TODO check the server if new content needs to be shown.
+    if (NO) {
+        [_cardArray insertObject: @"http://www.ceaselessprayer.com" atIndex: 0];
+        //            [_cardArray addObject: @"http://www.ceaselessprayer.com"];
+    }
 }
 
 #pragma mark - Ceaseless daily digest process
@@ -86,6 +90,7 @@ NSString *const kDeveloperMode = @"developerMode";
     NSDate *lastRefreshDate = [defaults objectForKey:kLocalLastRefreshDate];
     NSDate *now = [NSDate date];
     BOOL developerMode = [defaults boolForKey:kDeveloperMode];
+    developerMode = YES;
     
     // we consider it a new day if:
     // developer mode is enabled (that way the application refreshes each time it is newly opened)
@@ -97,12 +102,12 @@ NSString *const kDeveloperMode = @"developerMode";
         }
         
         ScripturePicker *scripturePicker = [[ScripturePicker alloc] init];
-        PersonPicker *personPicker = [[PersonPicker alloc] init];
         [scripturePicker manageScriptureQueue];
-        _scripture = [scripturePicker popScriptureQueue];
+        [scripturePicker popScriptureQueue];
+        PersonPicker *personPicker = [[PersonPicker alloc] init];
         [personPicker loadContacts];
-        _people = [personPicker queuedPeople];
-        // TODO reinitialize everything--although data has changed, transformed version of people has not yet.
+        // reinitialize everything
+        [self prepareCardArray];
         
         NSLog(@"It's a new day!");
     }

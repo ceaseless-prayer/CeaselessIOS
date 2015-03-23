@@ -201,7 +201,7 @@
     // you can't pick a person who has already been picked.
     NSArray *queuedPeople = [self queuedPeople];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                              @"ceaselessId = %@", personToPick.ceaselessId];
+                              @"person = %@", personToPick];
     if([[queuedPeople filteredArrayUsingPredicate:predicate] count] > 0) {
         return NO;
     }
@@ -245,16 +245,12 @@
     [fetchRequest setEntity:entity];
     NSError * error = nil;
     NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    NSMutableArray *people = [[NSMutableArray alloc]init];
-    for(PeopleQueue *pq in fetchedObjects) {
-        [people addObject: pq.person];
-    }
-    return people;
+    return fetchedObjects;
 }
 
 - (void) emptyQueue {
-    for(Person *p in [self queuedPeople]) {
-        [self.managedObjectContext deleteObject: p];
+    for(PeopleQueue *pq in [self queuedPeople]) {
+        [self.managedObjectContext deleteObject: pq];
     }
     NSError * error = nil;
     if (![self.managedObjectContext save:&error]) {
