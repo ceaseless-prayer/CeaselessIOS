@@ -38,14 +38,15 @@
 @end
 
 @implementation ModelController
-
+NSString *const kModelRefreshNotification = @"ceaselessModelRefreshed";
 NSString *const kLocalLastRefreshDate = @"localLastRefreshDate";
 NSString *const kDeveloperMode = @"developerMode";
+
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(runIfNewDay) name:UIApplicationDidBecomeActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(runIfNewDay) name:UIApplicationDidBecomeActiveNotification object:nil];
         // optional cleanup observer code
         //[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
         [self prepareCardArray];
@@ -90,7 +91,7 @@ NSString *const kDeveloperMode = @"developerMode";
     NSDate *lastRefreshDate = [defaults objectForKey:kLocalLastRefreshDate];
     NSDate *now = [NSDate date];
     BOOL developerMode = [defaults boolForKey:kDeveloperMode];
-    developerMode = YES;
+    developerMode = NO;
     
     // we consider it a new day if:
     // developer mode is enabled (that way the application refreshes each time it is newly opened)
@@ -108,7 +109,7 @@ NSString *const kDeveloperMode = @"developerMode";
         [personPicker loadContacts];
         // reinitialize everything
         [self prepareCardArray];
-        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];
         NSLog(@"It's a new day!");
     }
     
