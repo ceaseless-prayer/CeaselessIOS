@@ -41,14 +41,16 @@ int const kDefaultQueueMinSize = 1;
 	}
 	return self;
 }
-- (void) verseOfTheDay {
 
-
-	// if it is a new day, remove the top of the queue
-
-
-
+- (instancetype) initWith: (NSManagedObjectContext*) managedObjectContext {
+    self = [super init];
+    if (self) {
+        self.managedObjectContext = managedObjectContext;
+    }
+    return self;
 }
+
+// This method refreshes the Scripture queue.
 - (void) manageScriptureQueue {
 
 	NSInteger totalCount = [self countObjectsInCoreData];
@@ -73,8 +75,21 @@ int const kDefaultQueueMinSize = 1;
 	}
 }
 
-- (ScriptureQueue *)popScriptureQueue
-{
+// gets the most recently presented scripture from the queue
+- (ScriptureQueue *) peekScriptureQueue {
+    NSArray *scriptureArray = [[NSArray alloc] init];
+    NSSortDescriptor *scripturePresentedDateSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"lastPresentedDate" ascending:NO];
+    scriptureArray = [[self getScriptureWithPredicate:@"TRUEPREDICATE"]sortedArrayUsingDescriptors:[NSArray arrayWithObject:scripturePresentedDateSortDescriptor]];
+    if([scriptureArray count] > 0) {
+        return [scriptureArray objectAtIndex:0];
+    } else {
+        // TODO should this do the initialization logic too?
+        return nil;
+    }
+}
+
+// returns the last scripture from the queue and marks it as presented.
+- (ScriptureQueue *)popScriptureQueue {
 	NSArray *scriptureArray = [[NSArray alloc] init];
 		//get unused scripture
 	scriptureArray = [self getScriptureWithPredicate: @"lastPresentedDate == nil"];
@@ -97,7 +112,7 @@ int const kDefaultQueueMinSize = 1;
 		if (![self.managedObjectContext save: &error]) {
 			NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
 		}
-			//return the selected scripture object
+        //return the selected scripture object
 		return [scriptureArray objectAtIndex:0];
 
 	} else {

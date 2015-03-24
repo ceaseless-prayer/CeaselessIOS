@@ -11,10 +11,10 @@
 #import "AppDelegate.h"
 #import "CeaselessLocalContacts.h"
 #import "PrayerRecord.h"
+#import "PeopleQueue.h"
 
 @interface PersonPicker ()
 
-@property (strong, nonatomic) NSMutableArray *ceaselessPeople;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) CeaselessLocalContacts *ceaselessContacts;
 @property (nonatomic) ABAddressBookRef addressBook;
@@ -32,6 +32,7 @@
 	} else {
 		dailyPersonCount = 5;
 	}
+    
 
     return [self initWith: appDelegate.managedObjectContext numberOfPeople: dailyPersonCount];
 }
@@ -129,63 +130,15 @@
     });
 }
 
-- (void)setPeopleToShow {
-    if ([self.ceaselessPeople count] > 0) {
-        AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
-        appDelegate.peopleArray = self.ceaselessPeople;
-    }
-}
-
+// this method is run to get new people to pray for.
 - (void) loadContacts {
     if(ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
-        self.ceaselessPeople = [[NSMutableArray alloc] initWithCapacity: 3];
+        [self emptyQueue];
         [self ensureContactsAreInitializedAndRefreshed];
-        [self setPeopleToShow];
     }
 }
 
-- (void)pickPerson:(ABRecordRef)rawPerson personToShow:(Person *)personToShow {
-    NSSet *unifiedRecord = [self getUnifiedAddressBookRecordFor:rawPerson];
-    // TODO can we use the getNonMOPersonForCeaselessId method here?
-    NonMOPerson *person = [[NonMOPerson alloc] init];
-    person.person = personToShow;
-    
-    NSEnumerator *enumerator = [unifiedRecord objectEnumerator];
-    
-    id value;
-    
-    while ((value = [enumerator nextObject])) {
-        ABRecordRef rawPerson = (__bridge ABRecordRef) value;
-        
-        // Check for contact picture
-        if (rawPerson != nil && ABPersonHasImageData(rawPerson)) {
-            if ( &ABPersonCopyImageDataWithFormat != nil ) {
-                person.profileImage = [UIImage imageWithData:(__bridge NSData *)ABPersonCopyImageDataWithFormat(rawPerson, kABPersonImageFormatOriginalSize)];
-            }
-        }
-        
-        person.firstName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonFirstNameProperty));
-        person.lastName  = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonLastNameProperty));
-        
-        // TODO:  this needs to be mobile or iphone first the other because it is used for texting from the device
-        
-        ABMultiValueRef phoneNumbers = ABRecordCopyValue(rawPerson, kABPersonPhoneProperty);
-        
-        CFIndex numberOfPhoneNumbers = ABMultiValueGetCount(phoneNumbers);
-        for (CFIndex i = 0; i < numberOfPhoneNumbers; i++) {
-            NSString *phoneNumber = CFBridgingRelease(ABMultiValueCopyValueAtIndex(phoneNumbers, i));
-            person.phoneNumber = phoneNumber;
-            NSLog(@"  phone:%@", phoneNumber);
-        }
-        
-        CFRelease(phoneNumbers);
-    }
-    
-    [self.ceaselessPeople addObject: person];
-    [self createPrayerRecordForPerson: personToShow];
-    NSLog(@"Name:%@ %@", person.firstName, person.lastName);
-}
-
+#pragma mark - Selecting people to show
 - (void)pickPeople
 {
     NSInteger numberOfPeople = _numberOfPeople;
@@ -245,14 +198,16 @@
 }
 
 - (BOOL) pickPersonIfPossible: (Person *) personToPick {
-    
     // you can't pick a person who has already been picked.
-    if ([self.ceaselessPeople containsObject:personToPick]) {
+    NSArray *queuedPeople = [self queuedPeople];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                              @"person = %@", personToPick];
+    if([[queuedPeople filteredArrayUsingPredicate:predicate] count] > 0) {
         return NO;
     }
     
     ABRecordRef rawPerson = NULL;
-    BOOL personPicked = NO;
+    BOOL personHasBeenPicked = NO;
     
     for(AddressBookId *abId in personToPick.addressBookIds) { // try address book records until you have a valid one.
         rawPerson = ABAddressBookGetPersonWithRecordID(_addressBook, (ABRecordID) [abId.recordId intValue]);
@@ -261,18 +216,49 @@
             Person *validatedPerson = [self getCeaselessContactFromABRecord:rawPerson];
             if(validatedPerson == personToPick) {
                 // since it matches, we can pick this person
-                [self pickPerson: rawPerson personToShow: personToPick];
-                personPicked = YES;
+                [self queuePerson:personToPick];
+                personHasBeenPicked = YES;
                 break;
             }
             // we gotta pick something else if it doesn't match
             // let background refresh processes solve the consistency issues.
         }
     }
-    return personPicked;
+    return personHasBeenPicked;
 }
 
+- (void) queuePerson: (Person*) person {
+    [self createPrayerRecordForPerson: person];
+    PeopleQueue *pq = [NSEntityDescription insertNewObjectForEntityForName:@"PeopleQueue" inManagedObjectContext:self.managedObjectContext];
+    pq.person = person;
+    // save our changes
+    NSError *error;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
+    }
+}
 
+- (NSArray *) queuedPeople {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PeopleQueue"
+                                              inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    NSError * error = nil;
+    NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    return fetchedObjects;
+}
+
+- (void) emptyQueue {
+    for(PeopleQueue *pq in [self queuedPeople]) {
+        [self.managedObjectContext deleteObject: pq];
+    }
+    NSError * error = nil;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"%s: Problem emptying queue: %@", __PRETTY_FUNCTION__, error);
+    }
+}
+
+#pragma mark - Keeping Ceaseless and the address book in sync
 - (void) refreshCeaselessContacts {
     NSArray * allAddressBookContacts = [self getUnifiedAddressBookRecords:_addressBook];
     
@@ -329,6 +315,7 @@
     }
 }
 
+#pragma mark - Manipulating records
 - (NSArray *)getUnifiedAddressBookRecords:(ABAddressBookRef)addressBook {
     _addressBook = addressBook;
     // http://stackoverflow.com/questions/11351454/dealing-with-duplicate-contacts-due-to-linked-cards-in-ios-address-book-api

@@ -15,6 +15,7 @@
 
 @property (strong, nonatomic) PersonPicker *personPicker;
 @property (strong, nonatomic)  UIStoryboard *mainStoryboard;
+FOUNDATION_EXPORT NSString *const kModelRefreshNotification;
 
 - (DataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard;
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController;

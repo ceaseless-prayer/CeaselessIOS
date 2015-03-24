@@ -20,5 +20,6 @@
 - (Person *) createCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
 - (NSArray *) getAllCeaselessContacts;
 - (NonMOPerson *) getNonMOPersonForCeaselessContact: (Person*) person;
+- (NSArray *) queuedPeople;
     
 @end

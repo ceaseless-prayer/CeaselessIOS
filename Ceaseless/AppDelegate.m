@@ -14,9 +14,6 @@
 
 @implementation AppDelegate
 
-NSString *const kLocalLastRefreshDate = @"localLastRefreshDate";
-NSString *const kDeveloperMode = @"developerMode";
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
 	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
@@ -78,48 +75,10 @@ NSString *const kDeveloperMode = @"developerMode";
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    [self runIfNewDay];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
-
-#pragma mark - Ceaseless daily digest process
-- (void) runIfNewDay {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSDate *lastRefreshDate = [defaults objectForKey:kLocalLastRefreshDate];
-    NSDate *now = [NSDate date];
-    BOOL developerMode = [defaults boolForKey:kDeveloperMode];
-    
-    // TODO implement a different case if we are in developer mode.
-    
-    // we consider it a new day if:
-    // there is no refresh date
-    // there is at least 1 midnight since the last date
-    if(lastRefreshDate == nil || [self daysWithinEraFromDate: lastRefreshDate toDate: now] > 0) {
-        NSLog(@"It's a new day!");
-    }
-    
-    // Update the last refresh date
-    [defaults setObject:now forKey:kLocalLastRefreshDate];
-    
-    [defaults synchronize];
-    
-    NSLog(@"Ceaseless has been refreshed");
-}
-
-// https://developer.apple.com/library/prerelease/ios//documentation/Cocoa/Conceptual/DatesAndTimes/Articles/dtCalendricalCalculations.html#//apple_ref/doc/uid/TP40007836-SW1
-// Listing 13 Days between two dates, as the number of midnights between
--(NSInteger) daysWithinEraFromDate:(NSDate *) startDate toDate:(NSDate *) endDate
-{
-    NSCalendar *gregorian = [[NSCalendar alloc]
-                             initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSInteger startDay = [gregorian ordinalityOfUnit:NSCalendarUnitDay
-                                       inUnit: NSCalendarUnitEra forDate:startDate];
-    NSInteger endDay = [gregorian ordinalityOfUnit:NSCalendarUnitDay
-                                     inUnit: NSCalendarUnitEra forDate:endDate];
-    return endDay-startDay;
 }
 
 #pragma mark - Core Data stack

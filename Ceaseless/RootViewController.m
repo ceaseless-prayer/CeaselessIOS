@@ -22,6 +22,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshPageView) name:kModelRefreshNotification object:nil];
+    // TODO figure out when/where we need to call this
+    //[[NSNotificationCenter defaultCenter] removeObserver:self name:kModelRefreshNotification object:nil];
+    
     // Do any additional setup after loading the view, typically from a nib.
 	self.navigationItem.titleView = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"logo_main"]];
 
@@ -66,6 +70,11 @@
         _modelController = [[ModelController alloc] init];
     }
     return _modelController;
+}
+
+- (void) refreshPageView {
+    DataViewController *startingViewController = [self.modelController viewControllerAtIndex:0 storyboard:self.storyboard];
+    [self.pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
 }
 
 #pragma mark - UIPageViewController delegate methods
