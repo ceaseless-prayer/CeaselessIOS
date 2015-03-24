@@ -108,7 +108,7 @@
         // preload the first 5 contacts
         [self initializeFirstContacts:_numberOfPeople];
     }
-    [self pickPeople];
+
     if (_addressBook) CFRelease(_addressBook);
     
     // refresh address book in the background
@@ -128,14 +128,6 @@
         
         if (addressBook2) CFRelease(addressBook2);
     });
-}
-
-// this method is run to get new people to pray for.
-- (void) loadContacts {
-    if(ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
-        [self emptyQueue];
-        [self ensureContactsAreInitializedAndRefreshed];
-    }
 }
 
 #pragma mark - Selecting people to show

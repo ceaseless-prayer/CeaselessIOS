@@ -21,5 +21,7 @@
 - (NSArray *) getAllCeaselessContacts;
 - (NonMOPerson *) getNonMOPersonForCeaselessContact: (Person*) person;
 - (NSArray *) queuedPeople;
+- (void) emptyQueue;
+- (void) pickPeople;
     
 @end
