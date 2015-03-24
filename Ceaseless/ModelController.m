@@ -105,8 +105,11 @@ NSString *const kDeveloperMode = @"developerMode";
         ScripturePicker *scripturePicker = [[ScripturePicker alloc] init];
         [scripturePicker manageScriptureQueue];
         [scripturePicker popScriptureQueue];
+        
         PersonPicker *personPicker = [[PersonPicker alloc] init];
-        [personPicker loadContacts];
+        [personPicker emptyQueue];
+        [personPicker pickPeople];
+        
         // reinitialize everything
         [self prepareCardArray];
         [[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import "ModelController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -19,7 +20,6 @@
 - (NSURL *)applicationDocumentsDirectory;
 
 @property (strong, nonatomic) UIWindow *window;
-@property (nonatomic, strong) NSArray *cardArray;
 
 @end
 
