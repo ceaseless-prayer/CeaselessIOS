@@ -61,6 +61,9 @@
 
 - (void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (indexPath.row == 0) {
+		[self performSegueWithIdentifier:@"ShowContactsLists" sender: self];
+	}
 	if (indexPath.row == 1) {
 		[self performSegueWithIdentifier:@"ShowSettings" sender: self];
 	}

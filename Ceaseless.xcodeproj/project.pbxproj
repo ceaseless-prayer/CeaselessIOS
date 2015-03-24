@@ -44,6 +44,7 @@
 		70BBEDC31ABC768400D446AF /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70BBEDC21ABC768400D446AF /* SettingsViewController.m */; };
 		70BCCC211ABB768F00386D51 /* PersonNotesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70BCCC201ABB768F00386D51 /* PersonNotesTableViewCell.m */; };
 		70BFCAFF1ABCA78B0014C4BC /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70BFCAFE1ABCA78B0014C4BC /* MenuViewController.m */; };
+		70BFCB021AC070C50014C4BC /* ContactsListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70BFCB011AC070C50014C4BC /* ContactsListsViewController.m */; };
 		70D51C0B1AA6222700FA7CDC /* PersonPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D51C0A1AA6222700FA7CDC /* PersonPicker.m */; };
 		70D51C0E1AA627DF00FA7CDC /* NonMOPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D51C0D1AA627DF00FA7CDC /* NonMOPerson.m */; };
 		70D51C111AA6694400FA7CDC /* ScriptureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70D51C101AA6694400FA7CDC /* ScriptureView.xib */; };
@@ -139,6 +140,8 @@
 		70BCCC201ABB768F00386D51 /* PersonNotesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonNotesTableViewCell.m; sourceTree = "<group>"; };
 		70BFCAFD1ABCA78B0014C4BC /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		70BFCAFE1ABCA78B0014C4BC /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		70BFCB001AC070C50014C4BC /* ContactsListsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsListsViewController.h; sourceTree = "<group>"; };
+		70BFCB011AC070C50014C4BC /* ContactsListsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsListsViewController.m; sourceTree = "<group>"; };
 		70D51C091AA6222700FA7CDC /* PersonPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonPicker.h; sourceTree = "<group>"; };
 		70D51C0A1AA6222700FA7CDC /* PersonPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonPicker.m; sourceTree = "<group>"; };
 		70D51C0C1AA627DF00FA7CDC /* NonMOPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NonMOPerson.h; sourceTree = "<group>"; };
@@ -315,9 +318,9 @@
 				425271AB1AB37CE8005098F6 /* Name.h */,
 				425271AC1AB37CE8005098F6 /* Name.m */,
 				704D5CF21AAFA96200BD48B3 /* PrayerRecord.h */,
+				704D5CF31AAFA96200BD48B3 /* PrayerRecord.m */,
 				42A5AF861AB9497F00F209B8 /* PrayerRecordConstants.h */,
 				42A5AF871AB9497F00F209B8 /* PrayerRecordConstants.m */,
-				704D5CF31AAFA96200BD48B3 /* PrayerRecord.m */,
 				704D5CEF1AAFA96200BD48B3 /* ScriptureQueue.h */,
 				704D5CF01AAFA96200BD48B3 /* ScriptureQueue.m */,
 				704D5CEC1AAFA96200BD48B3 /* Email.h */,
@@ -355,6 +358,8 @@
 				70F12B891AB231DF0090F47A /* TaggedPersonPicker.m */,
 				70BFCAFD1ABCA78B0014C4BC /* MenuViewController.h */,
 				70BFCAFE1ABCA78B0014C4BC /* MenuViewController.m */,
+				70BFCB001AC070C50014C4BC /* ContactsListsViewController.h */,
+				70BFCB011AC070C50014C4BC /* ContactsListsViewController.m */,
 				70BBEDC11ABC768400D446AF /* SettingsViewController.h */,
 				70BBEDC21ABC768400D446AF /* SettingsViewController.m */,
 				42F3AE281AA4DD7F003A88F5 /* ModelController.h */,
@@ -519,6 +524,7 @@
 				70D51C0B1AA6222700FA7CDC /* PersonPicker.m in Sources */,
 				70F12B871AB2082B0090F47A /* NoteViewController.m in Sources */,
 				70BCCC211ABB768F00386D51 /* PersonNotesTableViewCell.m in Sources */,
+				70BFCB021AC070C50014C4BC /* ContactsListsViewController.m in Sources */,
 				42F3AE1E1AA4DD7F003A88F5 /* main.m in Sources */,
 				42F3AE241AA4DD7F003A88F5 /* RootViewController.m in Sources */,
 				425271BF1AB3A664005098F6 /* AddressBookId.m in Sources */,
