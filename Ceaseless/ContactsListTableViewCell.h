@@ -12,5 +12,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *personImageView;
 @property (weak, nonatomic) IBOutlet UILabel *placeholderLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *rowSwitch;
 
 @end

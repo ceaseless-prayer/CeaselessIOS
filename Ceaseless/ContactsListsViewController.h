@@ -21,6 +21,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
-- (IBAction)contactsPicker:(id)sender;
+- (IBAction)contactsListSelector:(id)sender;
 
 @end

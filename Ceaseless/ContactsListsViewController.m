@@ -13,6 +13,7 @@
 #import "NonMOPerson.h"
 #import "Person.h"
 #import "Name.h"
+#import "PersonViewController.h"
 
 typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 {
@@ -28,6 +29,7 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 @property (nonatomic, strong) UISearchController *searchController;
 @property (nonatomic, strong) NSString *selectedListPredicate;
 @property (nonatomic, strong) PersonPicker *personPicker;
+@property ContactsListsSearchScope selectedList;
 
 @end
 
@@ -96,21 +98,22 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-//	if ([[segue identifier] isEqualToString:@"ShowNote"]) {
-//		Note *currentNote = nil;
-//
-//		if (self.searchController.isActive) {
-//			NSIndexPath *indexPath = [((UITableViewController *)self.searchController.searchResultsController).tableView indexPathForSelectedRow];
-//			currentNote = [self.filteredList objectAtIndex:indexPath.row];
-//		} else {
-//
-//			NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-//			currentNote = [self.fetchedResultsController objectAtIndexPath:indexPath];
-//		}
-//
-//		self.noteViewController = segue.destinationViewController;
-//		self.noteViewController.currentNote = currentNote;
-//	}
+	if ([[segue identifier] isEqualToString:@"ShowPerson"]) {
+		Person *person = nil;
+
+		if (self.searchController.isActive) {
+			NSIndexPath *indexPath = [((UITableViewController *)self.searchController.searchResultsController).tableView indexPathForSelectedRow];
+			person = [self.filteredList objectAtIndex:indexPath.row];
+		} else {
+
+			NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+			person = [self.fetchedResultsController objectAtIndexPath:indexPath];
+		}
+
+		PersonViewController *personViewController = [[PersonViewController alloc] init];
+		personViewController = segue.destinationViewController;
+		personViewController.dataObject = [self.personPicker getNonMOPersonForCeaselessContact:person];
+	}
 }
 
 #pragma mark - Table View
@@ -181,6 +184,11 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 	NSString *personName = [NSString stringWithFormat: @"%@ %@", nonMOPerson.firstName, nonMOPerson.lastName];
 	cell.nameLabel.text = personName;
 
+	if (self.selectedList == searchScopeActive) {
+		cell.rowSwitch.hidden = YES;
+	} else {
+		cell.rowSwitch.hidden = NO;
+	}
 	cell.backgroundColor = [UIColor clearColor];
 
 }
@@ -314,27 +322,35 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 	}
 }
 
-- (IBAction)contactsPicker:(id)sender {
+- (IBAction)contactsListSelector:(id)sender {
 	[self selectContactsPredicate];
-
+	[self.tableView reloadData];
 }
+
 - (void) selectContactsPredicate {
 	{
 	switch (self.segment.selectedSegmentIndex){
 		case 0:
 			self.selectedListPredicate = @"removedDate == nil";
+			_fetchedResultsController = nil;
+			self.selectedList = self.segment.selectedSegmentIndex;
 			break;
 
 		case 1:
 			self.selectedListPredicate = @"favoritedDate != nil";
+			_fetchedResultsController = nil;
+			self.selectedList = self.segment.selectedSegmentIndex;
 			break;
 
 		case 2:
 			self.selectedListPredicate = @"removedDate != nil";
+			_fetchedResultsController = nil;
+			self.selectedList = self.segment.selectedSegmentIndex;
 			break;
 		default:
 			break;
 	}
 	}
 }
+
 @end
