@@ -7,6 +7,7 @@
 //
 
 #import "ContactsListsViewController.h"
+#import "ContactsListTableViewCell.h"
 #import "AppDelegate.h"
 #import "PersonPicker.h"
 #import "NonMOPerson.h"
@@ -134,15 +135,15 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
 	return 0;
 }
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (ContactsListTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-	UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+	ContactsListTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
 	[self configureCell:cell atIndexPath:indexPath];
 	return cell;
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)configureCell:(ContactsListTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 
 	Person *person = nil;
 	if (self.searchController.active) {
@@ -151,25 +152,35 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 		person = [self.fetchedResultsController objectAtIndexPath:indexPath];
 	}
 
-
 	NonMOPerson *nonMOPerson = [self.personPicker getNonMOPersonForCeaselessContact:person];
+
+		// deal with cases of no lastName or firstName
+		// We had an Akbar (null) name show up.
+	if([nonMOPerson.firstName length] == 0) {
+		nonMOPerson.firstName = @" "; // 1 character space for initials if needed
+	}
+	if([nonMOPerson.lastName length] == 0) {
+		nonMOPerson.lastName = @" "; // 1 character space for initials if needed
+	}
+
 	if (nonMOPerson.profileImage) {
-		cell.imageView.image = nonMOPerson.profileImage;
-		cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
+		cell.personImageView.image = nonMOPerson.profileImage;
+		cell.personImageView.contentMode = UIViewContentModeScaleAspectFit;
+		cell.placeholderLabel.hidden = YES;
+
 	} else {
-		cell.imageView.image = nil;
+		cell.personImageView.image = nil;
+
+		NSString *firstInitial = [nonMOPerson.firstName substringToIndex: 1];
+		NSString *lastInitial = [nonMOPerson.lastName substringToIndex: 1];
+		cell.placeholderLabel.text = [NSString stringWithFormat: @"%@%@", firstInitial, lastInitial];
+		cell.placeholderLabel.hidden = NO;
+
 	}
 
 	NSString *personName = [NSString stringWithFormat: @"%@ %@", nonMOPerson.firstName, nonMOPerson.lastName];
-	cell.textLabel.text = personName;
-	cell.detailTextLabel.text = nonMOPerson.phoneNumber;
+	cell.nameLabel.text = personName;
 
-//	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//	dateFormatter.timeStyle = NSDateFormatterNoStyle;
-//	dateFormatter.dateStyle = NSDateFormatterShortStyle;
-//	NSDate *date = nonMOPerson.person.prayerRecords.@max.createDate;
-//
-//	cell.date.text = [dateFormatter stringFromDate:date];
 	cell.backgroundColor = [UIColor clearColor];
 
 }
@@ -236,7 +247,7 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 	[fetchRequest setFetchBatchSize:20];
 
 		// Edit the sort key as appropriate.
-//	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"prayerRecords.@max.createDate" ascending:YES];
+//	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"lastNames.name" ascending:YES];
 //
 //	NSArray *sortDescriptors = @[sortDescriptor];
 
@@ -276,8 +287,9 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 	[_searchFetchRequest setEntity:entity];
 
 		// Edit the sort key as appropriate.
-	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"prayerRecords.@max.createDate" ascending:YES];
-	NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
+//	((Name*) [personTagged.lastNames anyObject]).lastNameFor]
+//	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"prayerRecords.@max.createDate" ascending:YES];
+	NSArray *sortDescriptors = [NSArray arrayWithObjects: nil];
 	[_searchFetchRequest setSortDescriptors:sortDescriptors];
 
 	return _searchFetchRequest;

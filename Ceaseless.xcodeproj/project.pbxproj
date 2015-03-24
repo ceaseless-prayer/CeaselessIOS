@@ -45,6 +45,7 @@
 		70BCCC211ABB768F00386D51 /* PersonNotesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70BCCC201ABB768F00386D51 /* PersonNotesTableViewCell.m */; };
 		70BFCAFF1ABCA78B0014C4BC /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70BFCAFE1ABCA78B0014C4BC /* MenuViewController.m */; };
 		70BFCB021AC070C50014C4BC /* ContactsListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70BFCB011AC070C50014C4BC /* ContactsListsViewController.m */; };
+		70D155D61AC1BC1700FB9486 /* ContactsListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D155D51AC1BC1700FB9486 /* ContactsListTableViewCell.m */; };
 		70D51C0B1AA6222700FA7CDC /* PersonPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D51C0A1AA6222700FA7CDC /* PersonPicker.m */; };
 		70D51C0E1AA627DF00FA7CDC /* NonMOPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D51C0D1AA627DF00FA7CDC /* NonMOPerson.m */; };
 		70D51C111AA6694400FA7CDC /* ScriptureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70D51C101AA6694400FA7CDC /* ScriptureView.xib */; };
@@ -142,6 +143,8 @@
 		70BFCAFE1ABCA78B0014C4BC /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		70BFCB001AC070C50014C4BC /* ContactsListsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsListsViewController.h; sourceTree = "<group>"; };
 		70BFCB011AC070C50014C4BC /* ContactsListsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsListsViewController.m; sourceTree = "<group>"; };
+		70D155D41AC1BC1700FB9486 /* ContactsListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsListTableViewCell.h; sourceTree = "<group>"; };
+		70D155D51AC1BC1700FB9486 /* ContactsListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsListTableViewCell.m; sourceTree = "<group>"; };
 		70D51C091AA6222700FA7CDC /* PersonPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonPicker.h; sourceTree = "<group>"; };
 		70D51C0A1AA6222700FA7CDC /* PersonPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonPicker.m; sourceTree = "<group>"; };
 		70D51C0C1AA627DF00FA7CDC /* NonMOPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NonMOPerson.h; sourceTree = "<group>"; };
@@ -279,6 +282,8 @@
 				70F12B8F1AB396590090F47A /* PrayerJournalTableViewCell.m */,
 				70BCCC1F1ABB768F00386D51 /* PersonNotesTableViewCell.h */,
 				70BCCC201ABB768F00386D51 /* PersonNotesTableViewCell.m */,
+				70D155D41AC1BC1700FB9486 /* ContactsListTableViewCell.h */,
+				70D155D51AC1BC1700FB9486 /* ContactsListTableViewCell.m */,
 				70F6640A1AA83CC60073801E /* ScriptureView.h */,
 				70F6640B1AA83CC60073801E /* ScriptureView.m */,
 				42C13BB21ABCC285000D5C08 /* WebCardView.h */,
@@ -504,6 +509,7 @@
 				429E60891AAA5FD8003F37BF /* ScriptureViewController.m in Sources */,
 				425271B01AB37F29005098F6 /* CeaselessLocalContacts.m in Sources */,
 				704D5CE51AAFA96200BD48B3 /* PeopleQueue.m in Sources */,
+				70D155D61AC1BC1700FB9486 /* ContactsListTableViewCell.m in Sources */,
 				429E608C1AAA61B1003F37BF /* PersonViewController.m in Sources */,
 				704D5CF41AAFA96200BD48B3 /* PrayerRecord.m in Sources */,
 				704D5CE81AAFA96200BD48B3 /* PhoneNumber.m in Sources */,
