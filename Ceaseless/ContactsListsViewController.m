@@ -14,6 +14,7 @@
 #import "Person.h"
 #import "Name.h"
 #import "PersonViewController.h"
+#import "PersonView.h"
 
 typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 {
@@ -113,6 +114,12 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 		PersonViewController *personViewController = [[PersonViewController alloc] init];
 		personViewController = segue.destinationViewController;
 		personViewController.dataObject = [self.personPicker getNonMOPersonForCeaselessContact:person];
+//		PersonView* personView = [[[NSBundle mainBundle] loadNibNamed:@"PersonView"
+//																owner:personViewController
+//															  options:nil] objectAtIndex:0];
+//		[personViewController.bigPersonView addSubview: personView];
+//		[personViewController setDynamicViewConstraintsToView: personViewController.bigPersonView forSubview: personView];
+
 	}
 }
 

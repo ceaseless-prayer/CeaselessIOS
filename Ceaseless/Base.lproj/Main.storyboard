@@ -455,16 +455,49 @@
         <!--Person View Controller-->
         <scene sceneID="ECR-EG-bRE">
             <objects>
-                <viewController id="XQ3-hm-6GX" customClass="PersonViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PersonViewController" id="XQ3-hm-6GX" customClass="PersonViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cAe-v5-geG"/>
                         <viewControllerLayoutGuide type="bottom" id="mL4-XX-0kc"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="x3n-uw-Fhz" customClass="PersonView">
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="P3k-Td-X3K">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fgB-hN-hbk">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <color key="backgroundColor" red="0.84239130429999998" green="0.042207587339999998" blue="0.16187008259999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="fgB-hN-hbk" firstAttribute="top" secondItem="cAe-v5-geG" secondAttribute="bottom" id="1sJ-F0-zSa"/>
+                            <constraint firstItem="fgB-hN-hbk" firstAttribute="leading" secondItem="P3k-Td-X3K" secondAttribute="leading" id="2he-2q-aMs"/>
+                            <constraint firstAttribute="height" constant="600" id="7Dz-ay-YN7"/>
+                            <constraint firstItem="fgB-hN-hbk" firstAttribute="top" secondItem="cAe-v5-geG" secondAttribute="bottom" id="LxU-Uw-XhJ"/>
+                            <constraint firstItem="fgB-hN-hbk" firstAttribute="leading" secondItem="P3k-Td-X3K" secondAttribute="leadingMargin" constant="-16" id="RYS-eI-b94"/>
+                            <constraint firstAttribute="trailing" secondItem="fgB-hN-hbk" secondAttribute="trailing" id="UnD-lJ-1sa"/>
+                            <constraint firstAttribute="height" constant="600" id="VBy-Wr-ZcP"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="fgB-hN-hbk" secondAttribute="trailing" constant="-16" id="VK2-NN-wPu"/>
+                            <constraint firstAttribute="bottom" secondItem="fgB-hN-hbk" secondAttribute="bottom" id="h0i-ov-2KA"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="fgB-hN-hbk" secondAttribute="bottom" constant="-16" id="iNk-ES-nkZ"/>
+                            <constraint firstAttribute="width" constant="600" id="v56-tw-WK5"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="7Dz-ay-YN7"/>
+                                <exclude reference="VBy-Wr-ZcP"/>
+                                <exclude reference="v56-tw-WK5"/>
+                                <exclude reference="1sJ-F0-zSa"/>
+                                <exclude reference="RYS-eI-b94"/>
+                                <exclude reference="VK2-NN-wPu"/>
+                                <exclude reference="iNk-ES-nkZ"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="bigPersonView" destination="fgB-hN-hbk" id="NpE-KN-0LI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uwi-Rv-oVP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
