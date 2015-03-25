@@ -113,7 +113,7 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 
 		PersonViewController *personViewController = [[PersonViewController alloc] init];
 		personViewController = segue.destinationViewController;
-		personViewController.dataObject = [self.personPicker getNonMOPersonForCeaselessContact:person];
+		personViewController.dataObject = [self.ceaselessContacts getNonMOPersonForCeaselessContact:person];
 //		PersonView* personView = [[[NSBundle mainBundle] loadNibNamed:@"PersonView"
 //																owner:personViewController
 //															  options:nil] objectAtIndex:0];
@@ -162,7 +162,7 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 		person = [self.fetchedResultsController objectAtIndexPath:indexPath];
 	}
 
-	NonMOPerson *nonMOPerson = [self.personPicker getNonMOPersonForCeaselessContact:person];
+	NonMOPerson *nonMOPerson = [self.ceaselessContacts getNonMOPersonForCeaselessContact:person];
 
 		// deal with cases of no lastName or firstName
 		// We had an Akbar (null) name show up.

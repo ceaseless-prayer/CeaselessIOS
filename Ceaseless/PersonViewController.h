@@ -12,8 +12,7 @@
 #import "NoteViewController.h"
 
 @interface PersonViewController : DataViewController <UITableViewDelegate, NoteViewControllerDelegate>
-@property (weak, nonatomic) IBOutlet UIView *bigPersonView;
-    @property (strong, nonatomic) IBOutlet PersonView *personView;
+//    @property (strong, nonatomic) IBOutlet PersonView *personView;
 @property (strong, nonatomic) PersonNotesViewController *personNotesViewController;
 @property (strong, nonatomic) UIStoryboard *mainStoryboard;
 
