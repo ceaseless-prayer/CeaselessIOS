@@ -9,7 +9,7 @@
 #import "ContactsListsViewController.h"
 #import "ContactsListTableViewCell.h"
 #import "AppDelegate.h"
-#import "PersonPicker.h"
+#import "CeaselessLocalContacts.h"
 #import "NonMOPerson.h"
 #import "Person.h"
 #import "Name.h"
@@ -40,7 +40,7 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 	[super awakeFromNib];
 	AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
 	self.managedObjectContext = appDelegate.managedObjectContext;
-	self.personPicker = [[PersonPicker alloc] init];
+	self.ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
 	[self selectContactsPredicate];
 
 }
@@ -323,7 +323,7 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 
 	NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
 	for (Person *person in fetchedObjects) {
-		NonMOPerson *nonMOPerson = [self.personPicker getNonMOPersonForCeaselessContact: person];
+		NonMOPerson *nonMOPerson = [_ceaselessContacts getNonMOPersonForCeaselessContact: person];
 		NSLog(@"name: %@ %@", nonMOPerson.firstName, nonMOPerson.lastName);
 
 	}

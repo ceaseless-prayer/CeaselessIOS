@@ -22,10 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshPageView) name:kModelRefreshNotification object:nil];
-    // TODO figure out when/where we need to call this
-    //[[NSNotificationCenter defaultCenter] removeObserver:self name:kModelRefreshNotification object:nil];
-    
+
     // Do any additional setup after loading the view, typically from a nib.
 	self.navigationItem.titleView = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"logo_main"]];
 
@@ -40,6 +37,9 @@
     self.pageViewController.delegate = self;
 
     DataViewController *startingViewController = [self.modelController viewControllerAtIndex:0 storyboard:self.storyboard];
+    if(startingViewController == nil) {
+        startingViewController = [[DataViewController alloc]init];
+    }
     NSArray *viewControllers = @[startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
 
@@ -68,6 +68,12 @@
     // In more complex implementations, the model controller may be passed to the view controller.
     if (!_modelController) {
         _modelController = [[ModelController alloc] init];
+        [_modelController runIfNewDay];
+        // add observer's the first time.
+        [[NSNotificationCenter defaultCenter] addObserver:_modelController selector:@selector(runIfNewDay) name:UIApplicationDidBecomeActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshPageView) name:kModelRefreshNotification object:nil];
+        // TODO figure out when/where we need to call this
+        //[[NSNotificationCenter defaultCenter] removeObserver:self name:kModelRefreshNotification object:nil];
     }
     return _modelController;
 }

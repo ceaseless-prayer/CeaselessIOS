@@ -8,14 +8,14 @@
 
 #import "SettingsViewController.h"
 #import "TaggedPersonPicker.h"
-#import "PersonPicker.h"
+#import "CeaselessLocalContacts.h"
 #import "NonMOPerson.h"
 #import "Person.h"
 #import "PersonPicker.h"
 
 @interface SettingsViewController ()
 
-@property (nonatomic, strong) PersonPicker *personPicker;
+@property (nonatomic, strong) CeaselessLocalContacts *ceaselessContacts;
 
 @end
 
@@ -25,12 +25,12 @@
     [super viewDidLoad];
 
 	self.scrollView.delegate = self;
-	self.personPicker = [[PersonPicker alloc] init];
+    self.ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
 
 	if ([[NSUserDefaults standardUserDefaults] stringForKey: @"CeaselessId"]) {
 			//get the image and name from the Person
-		Person *person = [self.personPicker getCeaselessContactFromCeaselessId:[[NSUserDefaults standardUserDefaults] stringForKey: @"CeaselessId"]];
-		NonMOPerson *nonMOPerson = [self.personPicker getNonMOPersonForCeaselessContact: person];
+		Person *person = [_ceaselessContacts getCeaselessContactFromCeaselessId:[[NSUserDefaults standardUserDefaults] stringForKey: @"CeaselessId"]];
+		NonMOPerson *nonMOPerson = [_ceaselessContacts getNonMOPersonForCeaselessContact: person];
 		[self formatProfileForPerson: nonMOPerson];
 	} else {
 		self.placeholderText.hidden = NO;
@@ -113,12 +113,12 @@
 	ABRecordRef abPerson = ABAddressBookGetPersonWithRecordID(addressBook, abRecordID);
 
 
-	[self.personPicker updateCeaselessContactFromABRecord: abPerson];
-	Person *person = [self.personPicker getCeaselessContactFromABRecord: abPerson];
+	[_ceaselessContacts updateCeaselessContactFromABRecord: abPerson];
+	Person *person = [_ceaselessContacts getCeaselessContactFromABRecord: abPerson];
 
 	CFRelease(addressBook);
 
-	NonMOPerson *nonMOPerson = [self.personPicker getNonMOPersonForCeaselessContact: person];
+	NonMOPerson *nonMOPerson = [_ceaselessContacts getNonMOPersonForCeaselessContact: person];
 	[self formatProfileForPerson: nonMOPerson];
 
 	[[NSUserDefaults standardUserDefaults] setObject: person.ceaselessId forKey: @"CeaselessId"];

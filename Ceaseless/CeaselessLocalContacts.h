@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <AddressBookUI/AddressBookUI.h>
+#import "AppDelegate.h"
+#import "PrayerRecord.h"
+#import "NonMOPerson.h"
 #import "Person.h"
 #import "AddressBookId.h"
 #import "Email.h"
@@ -18,7 +22,23 @@
 @property (strong, nonatomic) NSMutableArray *contacts;
 @property (strong, nonatomic) NSMutableArray *names;
 @property (strong, nonatomic) NSMutableArray *addressBookIds;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic) ABAddressBookRef addressBook;
+
++ (id) sharedCeaselessLocalContacts;
+- (instancetype) initWithManagedObjectContext: (NSManagedObjectContext *) context andAddressBook: (ABAddressBookRef) addressBook;
+- (instancetype) init;
 - (NSArray *) filterResults: (NSArray*) results byEmails:(NSSet*) emails orPhoneNumbers: (NSSet*) phoneNumber;
 - (NSArray *) lookupContactsByFirstName:(NSString*) firstName andLastName: (NSString*) lastName;
 - (NSArray *) lookupContactsByAddressBookId:(NSString*) addressBookId;
+- (Person *) getCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
+- (Person *) getCeaselessContactFromCeaselessId: (NSString *) ceaselessId;
+- (void) updateCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
+- (PrayerRecord *) createPrayerRecordForPerson: (Person *) person;
+- (Person *) createCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
+- (NSArray *) getAllCeaselessContacts;
+- (NonMOPerson *) getNonMOPersonForCeaselessContact: (Person*) person;
+- (void) initializeFirstContacts: (NSInteger) n;
+- (void) refreshCeaselessContacts;
+- (void) ensureCeaselessContactsSynced;
 @end

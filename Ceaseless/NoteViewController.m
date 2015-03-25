@@ -9,7 +9,6 @@
 #import <AddressBook/AddressBook.h>
 #import "AppDelegate.h"
 #import "Person.h"
-#import "PersonPicker.h"
 #import "CeaselessLocalContacts.h"
 #import "Name.h"
 
@@ -220,10 +219,9 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 		ABRecordRef abPerson = ABAddressBookGetPersonWithRecordID(addressBook, abRecordID);
 
-		PersonPicker *personPicker = [[PersonPicker alloc] init];
-		
-		[personPicker updateCeaselessContactFromABRecord: abPerson];
-		Person *person = [personPicker getCeaselessContactFromABRecord: abPerson];
+        CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
+		[ceaselessContacts updateCeaselessContactFromABRecord: abPerson];
+		Person *person = [ceaselessContacts getCeaselessContactFromABRecord: abPerson];
         [self.mutablePeopleSet addObject: person];
 
 		NSString *name = (__bridge_transfer NSString *)ABRecordCopyCompositeName(abPerson);
