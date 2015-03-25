@@ -106,7 +106,7 @@ NSString *const kDeveloperMode = @"developerMode";
         [self prepareCardArray];
         
         // reinitialize everything
-//        [[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];
         NSLog(@"It's a new day!");
     }
     
