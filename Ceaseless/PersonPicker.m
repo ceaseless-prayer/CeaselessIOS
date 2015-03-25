@@ -25,24 +25,19 @@
 @implementation PersonPicker
 
 - (instancetype) init {
-    AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
-	int dailyPersonCount;
-	if ([[NSUserDefaults standardUserDefaults] doubleForKey:@"DailyPersonCount"]) {
-		dailyPersonCount= [[NSUserDefaults standardUserDefaults] doubleForKey:@"DailyPersonCount"];
-	} else {
-		dailyPersonCount = 5;
-	}
-    
-    return [self initWith: appDelegate.managedObjectContext numberOfPeople: dailyPersonCount];
-}
-
-- (instancetype) initWith: (NSManagedObjectContext*) managedObjectContext numberOfPeople: (int) numberOfPeople {
     self = [super init];
     if (self) {
-        self.managedObjectContext = managedObjectContext;
-        _numberOfPeople = numberOfPeople;
+        AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
+        int dailyPersonCount;
+        if ([[NSUserDefaults standardUserDefaults] doubleForKey:@"DailyPersonCount"]) {
+            dailyPersonCount= [[NSUserDefaults standardUserDefaults] doubleForKey:@"DailyPersonCount"];
+        } else {
+            dailyPersonCount = 5;
+        }
         [self initializeAddressBook];
-        self.ceaselessContacts = [[CeaselessLocalContacts alloc] initWithManagedObjectContext: managedObjectContext andAddressBook:_addressBook];        
+        self.managedObjectContext = appDelegate.managedObjectContext;
+        self.numberOfPeople = dailyPersonCount;
+        self.ceaselessContacts =  [CeaselessLocalContacts sharedCeaselessLocalContacts];
     }
     return self;
 }
@@ -83,7 +78,6 @@
                 // send out notification that permission is granted.
                 // we can detect the notification, kick off ensureContactsAreInitializedAndRefreshed
                 // and show the UI.
-                [self ensureContactsAreInitializedAndRefreshed]; // TODO refresh UI to show them now.
             } else {
                 // however, if they didn't give you permission, handle it gracefully, for example...
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -95,34 +89,6 @@
         
     } else if (status == kABAuthorizationStatusAuthorized) {
         NSLog(@"Address Book initialized");
-        [self ensureContactsAreInitializedAndRefreshed];
-    }
-}
-
-- (void) ensureContactsAreInitializedAndRefreshed {
-    if(ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
-        // initial load when we have no Ceaseless contacts whatsoever.
-        if([_ceaselessContacts.contacts count] == 0) {
-            // preload the first 5 contacts
-            [_ceaselessContacts initializeFirstContacts:_numberOfPeople];
-        }
-        
-        // refresh address book in the background
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            CFErrorRef error = NULL;
-            ABAddressBookRef addressBook2 = ABAddressBookCreateWithOptions(NULL, &error);
-            
-            NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-            [managedObjectContext setParentContext:self.managedObjectContext];
-            
-            // initialize a new persoupdatenpicker
-            CeaselessLocalContacts *clc = [[CeaselessLocalContacts alloc] initWithManagedObjectContext:managedObjectContext andAddressBook: addressBook2];
-            [clc.managedObjectContext performBlockAndWait: ^{
-                [clc refreshCeaselessContacts];
-            }];
-            
-            if (addressBook2) CFRelease(addressBook2);
-        });
     }
 }
 

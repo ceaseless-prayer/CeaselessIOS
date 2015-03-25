@@ -219,7 +219,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 		ABRecordRef abPerson = ABAddressBookGetPersonWithRecordID(addressBook, abRecordID);
 
-        CeaselessLocalContacts *ceaselessContacts = [[CeaselessLocalContacts alloc]init];
+        CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
 		[ceaselessContacts updateCeaselessContactFromABRecord: abPerson];
 		Person *person = [ceaselessContacts getCeaselessContactFromABRecord: abPerson];
         [self.mutablePeopleSet addObject: person];

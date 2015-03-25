@@ -37,9 +37,7 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	[super awakeFromNib];
 	AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
 	self.managedObjectContext = appDelegate.managedObjectContext;
-	self.ceaselessContacts = [[CeaselessLocalContacts alloc] init];
-
-
+    self.ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
 }
 
 - (void)viewDidLoad {

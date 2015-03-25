@@ -50,7 +50,7 @@ NSString *const kDeveloperMode = @"developerMode";
     // set local members to point to app delegate
     ScripturePicker *scripturePicker = [[ScripturePicker alloc] init];
     PersonPicker *personPicker = [[PersonPicker alloc] init];
-    CeaselessLocalContacts *ceaselessContacts = [[CeaselessLocalContacts alloc]init];
+    CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
     _index = 0;
     _scripture = [scripturePicker peekScriptureQueue];
     _people = [personPicker queuedPeople];
@@ -91,6 +91,9 @@ NSString *const kDeveloperMode = @"developerMode";
         if(developerMode) {
             NSLog(@"Debug Mode enabled: refreshing application every time it is newly opened.");
         }
+
+        CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
+        [ceaselessContacts ensureCeaselessContactsSynced];
         
         ScripturePicker *scripturePicker = [[ScripturePicker alloc] init];
         [scripturePicker manageScriptureQueue];

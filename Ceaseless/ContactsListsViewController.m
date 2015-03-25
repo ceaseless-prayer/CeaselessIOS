@@ -36,7 +36,7 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 	[super awakeFromNib];
 	AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
 	self.managedObjectContext = appDelegate.managedObjectContext;
-	self.ceaselessContacts = [[CeaselessLocalContacts alloc] init];
+	self.ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
 	[self selectContactsPredicate];
 
 }

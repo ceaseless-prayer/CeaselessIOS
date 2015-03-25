@@ -25,6 +25,7 @@
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic) ABAddressBookRef addressBook;
 
++ (id) sharedCeaselessLocalContacts;
 - (instancetype) initWithManagedObjectContext: (NSManagedObjectContext *) context andAddressBook: (ABAddressBookRef) addressBook;
 - (instancetype) init;
 - (NSArray *) filterResults: (NSArray*) results byEmails:(NSSet*) emails orPhoneNumbers: (NSSet*) phoneNumber;
@@ -39,4 +40,5 @@
 - (NonMOPerson *) getNonMOPersonForCeaselessContact: (Person*) person;
 - (void) initializeFirstContacts: (NSInteger) n;
 - (void) refreshCeaselessContacts;
+- (void) ensureCeaselessContactsSynced;
 @end

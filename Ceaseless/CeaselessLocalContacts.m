@@ -10,6 +10,16 @@
 
 @implementation CeaselessLocalContacts
 
++ (id) sharedCeaselessLocalContacts {
+    static CeaselessLocalContacts *sharedCeaselessLocalContacts = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedCeaselessLocalContacts = [[self alloc] init];
+    });
+    
+    return sharedCeaselessLocalContacts;
+}
+
 - (instancetype) init {
     AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
     CFErrorRef error = NULL;
@@ -25,11 +35,15 @@
         self.addressBook = addressBook;
         self.managedObjectContext = context;
         _managedObjectContext = context;
-        _contacts = [[NSMutableArray alloc] initWithArray:[self getAllCeaselessContacts]];
-        _names = [[NSMutableArray alloc] initWithArray:[self getAllNames]];
-        _addressBookIds = [[NSMutableArray alloc] initWithArray:[self getAllAddressBookIds]];
+        [self reloadIndices];
     }
     return self;
+}
+
+- (void) reloadIndices {
+    _contacts = [[NSMutableArray alloc] initWithArray:[self getAllCeaselessContacts]];
+    _names = [[NSMutableArray alloc] initWithArray:[self getAllNames]];
+    _addressBookIds = [[NSMutableArray alloc] initWithArray:[self getAllAddressBookIds]];
 }
 
 - (NSArray *) filterResults: (NSArray*) results byEmails:(NSSet*) emails orPhoneNumbers: (NSSet*) phoneNumbers {
@@ -84,10 +98,29 @@
 }
 
 #pragma mark - Keeping Ceaseless and the address book in sync
+- (void) ensureCeaselessContactsSynced {
+    if(ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
+        // refresh address book in the background
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            CFErrorRef error = NULL;
+            ABAddressBookRef addressBook2 = ABAddressBookCreateWithOptions(NULL, &error);
+            
+            NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+            [managedObjectContext setParentContext:self.managedObjectContext];
+            
+            // initialize a new persoupdatenpicker
+            CeaselessLocalContacts *clc = [[CeaselessLocalContacts alloc] initWithManagedObjectContext:managedObjectContext andAddressBook: addressBook2];
+            [clc.managedObjectContext performBlockAndWait: ^{
+                [clc refreshCeaselessContacts];
+            }];
+            
+            if (addressBook2) CFRelease(addressBook2);
+        });
+    }
+}
+
 - (void) refreshCeaselessContacts {
     NSArray * allAddressBookContacts = [self getUnifiedAddressBookRecords:_addressBook];
-    
-    NSLog(@"Total Ceaseless contacts: %lu", (unsigned long)[_contacts count]);
     for (NSSet *unifiedRecord in allAddressBookContacts) {
         [self updateCeaselessContactFromABRecord:(__bridge ABRecordRef)[unifiedRecord anyObject]];
     }
@@ -96,6 +129,11 @@
     for (Person *person in allCeaselessContacts) {
         [self updateCeaselessContactLocalIds: person];
     }
+    
+    [self reloadIndices];
+    
+    NSLog(@"Total address book records: %lu", (unsigned long) [allAddressBookContacts count]);
+    NSLog(@"Total Ceaseless contacts: %lu", (unsigned long)[_contacts count]);
 }
 
 - (void) initializeFirstContacts: (NSInteger) n {
@@ -146,17 +184,6 @@
     _addressBook = addressBook;
     // http://stackoverflow.com/questions/11351454/dealing-with-duplicate-contacts-due-to-linked-cards-in-ios-address-book-api
     NSMutableSet *unifiedRecordsSet = [NSMutableSet set];
-    
-    // TODO remove this block of code.
-    CFArrayRef sources = ABAddressBookCopyArrayOfAllSources(addressBook);
-    NSLog(@" total sources:%ld", CFArrayGetCount(sources));
-    for (CFIndex i=0; i < CFArrayGetCount(sources); i++) {
-        ABRecordRef source = CFArrayGetValueAtIndex(sources, i);
-        NSString* sourceName = CFBridgingRelease(ABRecordCopyValue(source, kABSourceNameProperty));
-        NSString* sourceType = CFBridgingRelease(ABRecordCopyValue(source, kABSourceTypeProperty));
-        NSLog(@"  source:%@, type: %@", sourceName, sourceType);
-    }
-    CFRelease(sources);
     
     CFArrayRef records = ABAddressBookCopyArrayOfAllPeople(addressBook);
     for (CFIndex i = 0; i < CFArrayGetCount(records); i++)
@@ -370,6 +397,7 @@
     if (![self.managedObjectContext save:&error]) {
         NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
     }
+
     [_contacts addObject:newCeaselessPerson];
     return newCeaselessPerson;
 }

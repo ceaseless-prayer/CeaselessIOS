@@ -25,7 +25,7 @@
     [super viewDidLoad];
 
 	self.scrollView.delegate = self;
-	self.ceaselessContacts = [[CeaselessLocalContacts alloc] init];
+    self.ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
 
 	if ([[NSUserDefaults standardUserDefaults] stringForKey: @"CeaselessId"]) {
 			//get the image and name from the Person
