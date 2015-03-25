@@ -13,13 +13,6 @@
 
 @interface PersonPicker : NSObject
 
-- (void)loadContacts;
-- (Person *) getCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
-- (Person *) getCeaselessContactFromCeaselessId: (NSString *) ceaselessId;
-- (void) updateCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
-- (Person *) createCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
-- (NSArray *) getAllCeaselessContacts;
-- (NonMOPerson *) getNonMOPersonForCeaselessContact: (Person*) person;
 - (NSArray *) queuedPeople;
 - (void) emptyQueue;
 - (void) pickPeople;

@@ -10,7 +10,7 @@
 #import "NoteViewController.h"
 #import "AppDelegate.h"
 #import "PrayerJournalTableViewCell.h"
-#import "PersonPicker.h"
+#import "CeaselessLocalContacts.h"
 #import "NonMOPerson.h"
 #import "Person.h"
 #import "Name.h"
@@ -26,7 +26,7 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 @property (strong, nonatomic) NSArray *filteredList;
 @property (strong, nonatomic) NSFetchRequest *searchFetchRequest;
 @property (nonatomic, strong) UISearchController *searchController;
-@property (nonatomic, strong) PersonPicker *personPicker;
+@property (nonatomic, strong) CeaselessLocalContacts *ceaselessContacts;
 
 
 @end
@@ -37,7 +37,7 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	[super awakeFromNib];
 	AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
 	self.managedObjectContext = appDelegate.managedObjectContext;
-	self.personPicker = [[PersonPicker alloc] init];
+	self.ceaselessContacts = [[CeaselessLocalContacts alloc] init];
 
 
 }
@@ -156,7 +156,7 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	NSArray *peopleArray = [note.peopleTagged allObjects];
 
 	if ([peopleArray count] > 0) {
-        NonMOPerson *p = [self.personPicker getNonMOPersonForCeaselessContact:[peopleArray firstObject]];
+        NonMOPerson *p = [_ceaselessContacts getNonMOPersonForCeaselessContact:[peopleArray firstObject]];
 		cell.topImageView.image = p.profileImage;
 		cell.topImageView.contentMode = UIViewContentModeScaleAspectFit;
 	} else {
@@ -164,7 +164,7 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	}
     
 	if ([peopleArray count] > 1) {
-        NonMOPerson *p = [self.personPicker getNonMOPersonForCeaselessContact:[peopleArray lastObject]];
+        NonMOPerson *p = [_ceaselessContacts getNonMOPersonForCeaselessContact:[peopleArray lastObject]];
 		cell.bottomImageView.image = p.profileImage;
 		cell.bottomImageView.contentMode = UIViewContentModeScaleAspectFit;
 	} else {

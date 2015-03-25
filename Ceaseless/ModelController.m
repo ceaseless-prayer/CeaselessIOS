@@ -17,6 +17,7 @@
 #import "ScriptureViewController.h"
 #import "PersonViewController.h"
 #import "WebCardViewController.h"
+#import "CeaselessLocalContacts.h"
 
 /*
  A controller object that manages a simple model -- a collection of month names.
@@ -46,9 +47,12 @@ NSString *const kDeveloperMode = @"developerMode";
 - (instancetype)init {
     self = [super init];
     if (self) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(runIfNewDay) name:UIApplicationDidBecomeActiveNotification object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(runIfNewDay) name:UIApplicationDidBecomeActiveNotification object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(prepareCardArray) name:UIApplicationDidBecomeActiveNotification object:nil];
+//        [self prepareCardArray];
         // optional cleanup observer code
         //[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+        [[self class] runIfNewDay];
         [self prepareCardArray];
     }
     return self;
@@ -61,6 +65,7 @@ NSString *const kDeveloperMode = @"developerMode";
     // set local members to point to app delegate
     ScripturePicker *scripturePicker = [[ScripturePicker alloc] init];
     PersonPicker *personPicker = [[PersonPicker alloc] init];
+    CeaselessLocalContacts *ceaselessContacts = [[CeaselessLocalContacts alloc]init];
     _index = 0;
     _scripture = [scripturePicker peekScriptureQueue];
     _people = [personPicker queuedPeople];
@@ -68,7 +73,7 @@ NSString *const kDeveloperMode = @"developerMode";
     // convert selected people into form the view can use
     NSMutableArray *nonMOPeople = [[NSMutableArray alloc]init];
     for(PeopleQueue *pq in _people) {
-        [nonMOPeople addObject: [personPicker getNonMOPersonForCeaselessContact:(Person*)pq.person]];
+        [nonMOPeople addObject: [ceaselessContacts getNonMOPersonForCeaselessContact:(Person*)pq.person]];
     }
     
     _cardArray = [[NSMutableArray alloc] initWithArray: nonMOPeople];
@@ -86,12 +91,12 @@ NSString *const kDeveloperMode = @"developerMode";
 
 #pragma mark - Ceaseless daily digest process
 // when the app becomes active, this method is run to update the model
-- (void) runIfNewDay {
++ (void) runIfNewDay {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSDate *lastRefreshDate = [defaults objectForKey:kLocalLastRefreshDate];
     NSDate *now = [NSDate date];
     BOOL developerMode = [defaults boolForKey:kDeveloperMode];
-    developerMode = NO;
+    developerMode = YES;
     
     // we consider it a new day if:
     // developer mode is enabled (that way the application refreshes each time it is newly opened)
@@ -111,8 +116,7 @@ NSString *const kDeveloperMode = @"developerMode";
         [personPicker pickPeople];
         
         // reinitialize everything
-        [self prepareCardArray];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];
+        //[[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];
         NSLog(@"It's a new day!");
     }
     
@@ -125,7 +129,7 @@ NSString *const kDeveloperMode = @"developerMode";
 
 // https://developer.apple.com/library/prerelease/ios//documentation/Cocoa/Conceptual/DatesAndTimes/Articles/dtCalendricalCalculations.html#//apple_ref/doc/uid/TP40007836-SW1
 // Listing 13. Days between two dates, as the number of midnights between
--(NSInteger) daysWithinEraFromDate:(NSDate *) startDate toDate:(NSDate *) endDate
++(NSInteger) daysWithinEraFromDate:(NSDate *) startDate toDate:(NSDate *) endDate
 {
     NSCalendar *gregorian = [[NSCalendar alloc]
                              initWithCalendarIdentifier:NSCalendarIdentifierGregorian];

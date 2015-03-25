@@ -21,6 +21,8 @@ FOUNDATION_EXPORT NSString *const kModelRefreshNotification;
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController;
 - (void) removeControllerAtIndex: (NSUInteger) index;
 - (NSInteger) modelCount;
++ (void) runIfNewDay;
++ (NSInteger) daysWithinEraFromDate:(NSDate *) startDate toDate:(NSDate *) endDate;
 
 @end
 
