@@ -13,9 +13,10 @@
 - (instancetype) init {
     AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
     CFErrorRef error = NULL;
-    self.addressBook = ABAddressBookCreateWithOptions(NULL, &error);
-    self.managedObjectContext = appDelegate.managedObjectContext;
-    return self;
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, &error);
+    CFBridgingRelease(error);
+    // TODO when is this address book cleaned up?
+    return [self initWithManagedObjectContext:appDelegate.managedObjectContext andAddressBook:addressBook];
 }
 
 - (instancetype) initWithManagedObjectContext: (NSManagedObjectContext *) context andAddressBook:(ABAddressBookRef)addressBook {
@@ -93,7 +94,7 @@
     
     NSArray *allCeaselessContacts = [self getAllCeaselessContacts];
     for (Person *person in allCeaselessContacts) {
-        [self updateCeaselessContactLocalIds: person fromAddressBook: _addressBook];
+        [self updateCeaselessContactLocalIds: person];
     }
 }
 
@@ -103,16 +104,14 @@
     for(NSInteger i = 0; i < n; i++) {
         ABRecordRef rawPerson = (__bridge ABRecordRef)([allAddressBookContacts[i] anyObject]);
         [self updateCeaselessContactFromABRecord:rawPerson];
-        //[self queuePerson: [self getCeaselessContactFromABRecord:rawPerson]];
         CFRelease(rawPerson);
     }
 }
 
-- (void) updateCeaselessContactLocalIds: (Person *) person fromAddressBook: (ABAddressBookRef) addressBook {
-    _addressBook = addressBook;
+- (void) updateCeaselessContactLocalIds: (Person *) person {
     ABRecordRef rawPerson = NULL;
     for (AddressBookId *abId in person.addressBookIds) {
-        rawPerson = ABAddressBookGetPersonWithRecordID(addressBook, (ABRecordID) [abId.recordId intValue]);
+        rawPerson = ABAddressBookGetPersonWithRecordID(_addressBook, (ABRecordID) [abId.recordId intValue]);
         if (rawPerson != NULL) { // we got one that points to a record
             // check if the record matches our original person contact, since it could be something else entirely
             Person *validatedPerson = [self getCeaselessContactFromABRecord:rawPerson];

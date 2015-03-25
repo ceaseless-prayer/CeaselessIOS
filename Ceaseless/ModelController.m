@@ -43,21 +43,6 @@ NSString *const kModelRefreshNotification = @"ceaselessModelRefreshed";
 NSString *const kLocalLastRefreshDate = @"localLastRefreshDate";
 NSString *const kDeveloperMode = @"developerMode";
 
-
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(runIfNewDay) name:UIApplicationDidBecomeActiveNotification object:nil];
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(prepareCardArray) name:UIApplicationDidBecomeActiveNotification object:nil];
-//        [self prepareCardArray];
-        // optional cleanup observer code
-        //[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
-        [[self class] runIfNewDay];
-        [self prepareCardArray];
-    }
-    return self;
-}
-
 // this method sets up the card array for display
 // everything here should be read only
 // changing the contents of the array happens through other processes.
@@ -91,7 +76,7 @@ NSString *const kDeveloperMode = @"developerMode";
 
 #pragma mark - Ceaseless daily digest process
 // when the app becomes active, this method is run to update the model
-+ (void) runIfNewDay {
+- (void) runIfNewDay {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSDate *lastRefreshDate = [defaults objectForKey:kLocalLastRefreshDate];
     NSDate *now = [NSDate date];
@@ -115,8 +100,10 @@ NSString *const kDeveloperMode = @"developerMode";
         [personPicker emptyQueue];
         [personPicker pickPeople];
         
+        [self prepareCardArray];
+        
         // reinitialize everything
-        //[[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];
         NSLog(@"It's a new day!");
     }
     
@@ -129,8 +116,7 @@ NSString *const kDeveloperMode = @"developerMode";
 
 // https://developer.apple.com/library/prerelease/ios//documentation/Cocoa/Conceptual/DatesAndTimes/Articles/dtCalendricalCalculations.html#//apple_ref/doc/uid/TP40007836-SW1
 // Listing 13. Days between two dates, as the number of midnights between
-+(NSInteger) daysWithinEraFromDate:(NSDate *) startDate toDate:(NSDate *) endDate
-{
+- (NSInteger) daysWithinEraFromDate:(NSDate *) startDate toDate:(NSDate *) endDate {
     NSCalendar *gregorian = [[NSCalendar alloc]
                              initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSInteger startDay = [gregorian ordinalityOfUnit:NSCalendarUnitDay

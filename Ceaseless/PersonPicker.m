@@ -60,6 +60,8 @@
     
     CFErrorRef error = NULL;
     _addressBook = ABAddressBookCreateWithOptions(NULL, &error);
+    // TODO figure out when we release the address book.
+    //        if (_addressBook) CFRelease(_addressBook);
     
     if (error) {
         NSLog(@"ABAddressBookCreateWithOptions error: %@", CFBridgingRelease(error));
@@ -89,7 +91,6 @@
                     [[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit to the \"Privacy\" section in the iPhone Settings app." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                 });
             }
-            if (_addressBook) CFRelease(_addressBook);
         });
         
     } else if (status == kABAuthorizationStatusAuthorized) {
@@ -105,8 +106,6 @@
             // preload the first 5 contacts
             [_ceaselessContacts initializeFirstContacts:_numberOfPeople];
         }
-
-        if (_addressBook) CFRelease(_addressBook);
         
         // refresh address book in the background
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -116,7 +115,7 @@
             NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
             [managedObjectContext setParentContext:self.managedObjectContext];
             
-            // initialize a new personpicker
+            // initialize a new persoupdatenpicker
             CeaselessLocalContacts *clc = [[CeaselessLocalContacts alloc] initWithManagedObjectContext:managedObjectContext andAddressBook: addressBook2];
             [clc.managedObjectContext performBlockAndWait: ^{
                 [clc refreshCeaselessContacts];
@@ -128,7 +127,7 @@
 }
 
 #pragma mark - Selecting people to show
-- (void)pickPeople {
+- (void) pickPeople {
     NSInteger numberOfPeople = _numberOfPeople;
 
     // in case you didn't notice, the following line is beautiful.
