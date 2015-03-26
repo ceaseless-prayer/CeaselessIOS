@@ -1094,7 +1094,7 @@
         <!--PersonNotesViewController-->
         <scene sceneID="kxe-Gh-krz">
             <objects>
-                <tableViewController storyboardIdentifier="PersonNotesViewController" title="NotesTableViewController" id="XQe-6l-Oah" userLabel="PersonNotesViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PersonNotesViewController" title="NotesTableViewController" id="XQe-6l-Oah" userLabel="PersonNotesViewController" customClass="PersonNotesViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="130" sectionHeaderHeight="1" sectionFooterHeight="1" id="BBR-Ng-0Ot">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
