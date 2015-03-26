@@ -349,6 +349,9 @@
                                                                         </label>
                                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cxT-HB-S1b">
                                                                             <rect key="frame" x="510" y="6" width="51" height="31"/>
+                                                                            <connections>
+                                                                                <action selector="switchChanged:" destination="8Uh-s7-6nl" eventType="valueChanged" id="r9u-dp-ZqX"/>
+                                                                            </connections>
                                                                         </switch>
                                                                     </subviews>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

@@ -148,6 +148,25 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 	ContactsListTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
 	[self configureCell:cell atIndexPath:indexPath];
+	cell.onSwitchChange=^(UITableViewCell *cellAffected){
+		Person *person = [self.fetchedResultsController objectAtIndexPath: indexPath];
+		NonMOPerson *nonMOPerson = [self.ceaselessContacts getNonMOPersonForCeaselessContact:person];
+
+		{
+		switch (self.selectedList){
+			case 0:
+				break;
+			case 1:
+				[nonMOPerson unfavorite];
+				break;
+			case 2:
+				[nonMOPerson enableForCeaseless];
+				break;
+			default:
+				break;
+		}
+		}
+	};
 	return cell;
 }
 
@@ -193,6 +212,7 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 		cell.rowSwitch.hidden = YES;
 	} else {
 		cell.rowSwitch.hidden = NO;
+		cell.rowSwitch.on = YES;
 	}
 	cell.backgroundColor = [UIColor clearColor];
 
