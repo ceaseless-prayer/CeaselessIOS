@@ -18,4 +18,7 @@
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
+- (void)setDynamicViewConstraintsToView: (UIView *) parentView forSubview: (UIView *) newSubview;
+
+
 @end

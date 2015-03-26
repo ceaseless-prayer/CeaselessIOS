@@ -7,11 +7,14 @@
 //
 
 #import "ContactsListsViewController.h"
+#import "ContactsListTableViewCell.h"
 #import "AppDelegate.h"
 #import "CeaselessLocalContacts.h"
 #import "NonMOPerson.h"
 #import "Person.h"
 #import "Name.h"
+#import "PersonViewController.h"
+#import "PersonView.h"
 
 typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 {
@@ -26,7 +29,8 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 @property (strong, nonatomic) NSFetchRequest *searchFetchRequest;
 @property (nonatomic, strong) UISearchController *searchController;
 @property (nonatomic, strong) NSString *selectedListPredicate;
-@property (nonatomic, strong) CeaselessLocalContacts *ceaselessContacts;
+@property (nonatomic, strong) PersonPicker *personPicker;
+@property ContactsListsSearchScope selectedList;
 
 @end
 
@@ -95,21 +99,28 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-//	if ([[segue identifier] isEqualToString:@"ShowNote"]) {
-//		Note *currentNote = nil;
-//
-//		if (self.searchController.isActive) {
-//			NSIndexPath *indexPath = [((UITableViewController *)self.searchController.searchResultsController).tableView indexPathForSelectedRow];
-//			currentNote = [self.filteredList objectAtIndex:indexPath.row];
-//		} else {
-//
-//			NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-//			currentNote = [self.fetchedResultsController objectAtIndexPath:indexPath];
-//		}
-//
-//		self.noteViewController = segue.destinationViewController;
-//		self.noteViewController.currentNote = currentNote;
-//	}
+	if ([[segue identifier] isEqualToString:@"ShowPerson"]) {
+		Person *person = nil;
+
+		if (self.searchController.isActive) {
+			NSIndexPath *indexPath = [((UITableViewController *)self.searchController.searchResultsController).tableView indexPathForSelectedRow];
+			person = [self.filteredList objectAtIndex:indexPath.row];
+		} else {
+
+			NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+			person = [self.fetchedResultsController objectAtIndexPath:indexPath];
+		}
+
+		PersonViewController *personViewController = [[PersonViewController alloc] init];
+		personViewController = segue.destinationViewController;
+		personViewController.dataObject = [self.ceaselessContacts getNonMOPersonForCeaselessContact:person];
+//		PersonView* personView = [[[NSBundle mainBundle] loadNibNamed:@"PersonView"
+//																owner:personViewController
+//															  options:nil] objectAtIndex:0];
+//		[personViewController.bigPersonView addSubview: personView];
+//		[personViewController setDynamicViewConstraintsToView: personViewController.bigPersonView forSubview: personView];
+
+	}
 }
 
 #pragma mark - Table View
@@ -134,15 +145,15 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
 	return 0;
 }
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (ContactsListTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-	UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+	ContactsListTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
 	[self configureCell:cell atIndexPath:indexPath];
 	return cell;
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)configureCell:(ContactsListTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 
 	Person *person = nil;
 	if (self.searchController.active) {
@@ -151,25 +162,40 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 		person = [self.fetchedResultsController objectAtIndexPath:indexPath];
 	}
 
+	NonMOPerson *nonMOPerson = [self.ceaselessContacts getNonMOPersonForCeaselessContact:person];
 
-	NonMOPerson *nonMOPerson = [_ceaselessContacts getNonMOPersonForCeaselessContact:person];
+		// deal with cases of no lastName or firstName
+		// We had an Akbar (null) name show up.
+	if([nonMOPerson.firstName length] == 0) {
+		nonMOPerson.firstName = @" "; // 1 character space for initials if needed
+	}
+	if([nonMOPerson.lastName length] == 0) {
+		nonMOPerson.lastName = @" "; // 1 character space for initials if needed
+	}
+
 	if (nonMOPerson.profileImage) {
-		cell.imageView.image = nonMOPerson.profileImage;
-		cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
+		cell.personImageView.image = nonMOPerson.profileImage;
+		cell.personImageView.contentMode = UIViewContentModeScaleAspectFit;
+		cell.placeholderLabel.hidden = YES;
+
 	} else {
-		cell.imageView.image = nil;
+		cell.personImageView.image = nil;
+
+		NSString *firstInitial = [nonMOPerson.firstName substringToIndex: 1];
+		NSString *lastInitial = [nonMOPerson.lastName substringToIndex: 1];
+		cell.placeholderLabel.text = [NSString stringWithFormat: @"%@%@", firstInitial, lastInitial];
+		cell.placeholderLabel.hidden = NO;
+
 	}
 
 	NSString *personName = [NSString stringWithFormat: @"%@ %@", nonMOPerson.firstName, nonMOPerson.lastName];
-	cell.textLabel.text = personName;
-	cell.detailTextLabel.text = nonMOPerson.phoneNumber;
+	cell.nameLabel.text = personName;
 
-//	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//	dateFormatter.timeStyle = NSDateFormatterNoStyle;
-//	dateFormatter.dateStyle = NSDateFormatterShortStyle;
-//	NSDate *date = nonMOPerson.person.prayerRecords.@max.createDate;
-//
-//	cell.date.text = [dateFormatter stringFromDate:date];
+	if (self.selectedList == searchScopeActive) {
+		cell.rowSwitch.hidden = YES;
+	} else {
+		cell.rowSwitch.hidden = NO;
+	}
 	cell.backgroundColor = [UIColor clearColor];
 
 }
@@ -236,7 +262,7 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 	[fetchRequest setFetchBatchSize:20];
 
 		// Edit the sort key as appropriate.
-//	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"prayerRecords.@max.createDate" ascending:YES];
+//	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"lastNames.name" ascending:YES];
 //
 //	NSArray *sortDescriptors = @[sortDescriptor];
 
@@ -276,8 +302,9 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 	[_searchFetchRequest setEntity:entity];
 
 		// Edit the sort key as appropriate.
-	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"prayerRecords.@max.createDate" ascending:YES];
-	NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
+//	((Name*) [personTagged.lastNames anyObject]).lastNameFor]
+//	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"prayerRecords.@max.createDate" ascending:YES];
+	NSArray *sortDescriptors = [NSArray arrayWithObjects: nil];
 	[_searchFetchRequest setSortDescriptors:sortDescriptors];
 
 	return _searchFetchRequest;
@@ -302,27 +329,35 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 	}
 }
 
-- (IBAction)contactsPicker:(id)sender {
+- (IBAction)contactsListSelector:(id)sender {
 	[self selectContactsPredicate];
-
+	[self.tableView reloadData];
 }
+
 - (void) selectContactsPredicate {
 	{
 	switch (self.segment.selectedSegmentIndex){
 		case 0:
 			self.selectedListPredicate = @"removedDate == nil";
+			_fetchedResultsController = nil;
+			self.selectedList = self.segment.selectedSegmentIndex;
 			break;
 
 		case 1:
 			self.selectedListPredicate = @"favoritedDate != nil";
+			_fetchedResultsController = nil;
+			self.selectedList = self.segment.selectedSegmentIndex;
 			break;
 
 		case 2:
 			self.selectedListPredicate = @"removedDate != nil";
+			_fetchedResultsController = nil;
+			self.selectedList = self.segment.selectedSegmentIndex;
 			break;
 		default:
 			break;
 	}
 	}
 }
+
 @end

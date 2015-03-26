@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import "CeaselessLocalContacts.h"
 
 #define UIColorFromRGBWithAlpha(rgbValue,a) [UIColor \
 colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
@@ -20,7 +21,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) CeaselessLocalContacts *ceaselessContacts;
 
-- (IBAction)contactsPicker:(id)sender;
+- (IBAction)contactsListSelector:(id)sender;
 
 @end
