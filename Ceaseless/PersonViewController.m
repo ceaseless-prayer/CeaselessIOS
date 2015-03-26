@@ -34,31 +34,35 @@ static NSString *kSMSMessage;
 
     [super viewDidLoad];
 
+	NSArray *subviewArray = [[NSBundle mainBundle] loadNibNamed:@"PersonView" owner:self options:nil];
+	self.personView = [subviewArray objectAtIndex:0];
+	[self.mainView addSubview: self.personView];
+
 	AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
 	self.managedObjectContext = appDelegate.managedObjectContext;
 	
-	NonMOPerson *person = self.dataObject;
+	self.nonMOPerson = self.dataObject;
     
     // deal with cases of no lastName or firstName
     // We had an Akbar (null) name show up.
-    if([person.firstName length] == 0) {
-        person.firstName = @" "; // 1 character space for initials if needed
+    if([self.nonMOPerson.firstName length] == 0) {
+        self.nonMOPerson.firstName = @" "; // 1 character space for initials if needed
     }
-    if([person.lastName length] == 0) {
-        person.lastName = @" "; // 1 character space for initials if needed
+    if([self.nonMOPerson.lastName length] == 0) {
+        self.nonMOPerson.lastName = @" "; // 1 character space for initials if needed
     }
     
-	self.personView.nameLabel.text = [NSString stringWithFormat: @"%@ %@", person.firstName, person.lastName];
-	if (person.profileImage) {
-		self.personView.personImageView.image = person.profileImage;
+	self.personView.nameLabel.text = [NSString stringWithFormat: @"%@ %@", self.nonMOPerson.firstName, self.nonMOPerson.lastName];
+	if (self.nonMOPerson.profileImage) {
+		self.personView.personImageView.image = self.nonMOPerson.profileImage;
 		self.personView.personImageView.hidden = NO;
 		self.personView.placeholderText.hidden = YES;
 
 		self.personView.personImageView.layer.cornerRadius = 6.0f;
 		[self.personView.personImageView setClipsToBounds:YES];
 	} else {
-		NSString *firstInitial = [person.firstName substringToIndex: 1];
-		NSString *lastInitial = [person.lastName substringToIndex: 1];
+		NSString *firstInitial = [self.nonMOPerson.firstName substringToIndex: 1];
+		NSString *lastInitial = [self.nonMOPerson.lastName substringToIndex: 1];
 		self.personView.personImageView.hidden = YES;
 		self.personView.placeholderText.hidden = NO;
 		self.personView.placeholderText.text = [NSString stringWithFormat: @"%@%@", firstInitial, lastInitial];
@@ -68,7 +72,7 @@ static NSString *kSMSMessage;
 								   action:@selector(presentActionSheet:)forControlEvents:UIControlEventTouchUpInside];
 	UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 	self.personNotesViewController = [sb instantiateViewControllerWithIdentifier:@"PersonNotesViewController"];
-	self.personNotesViewController.person = person.person;
+	self.personNotesViewController.person = self.nonMOPerson.person;
 	[self.personView.notesView addSubview: self.personNotesViewController.tableView];
 	self.personNotesViewController.tableView.delegate = self;
 	[self setDynamicViewConstraintsToView: self.personView.notesView forSubview: self.personNotesViewController.tableView ];
@@ -232,7 +236,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     // TODO this should toggle between adding or removing from favorites.
     // for now only show it if it isn't already favorited
-    if (((Person*)((NonMOPerson*)self.dataObject).person).favoritedDate == nil) {
+    if (self.nonMOPerson.person.favoritedDate == nil) {
         [alertController addAction: addToFavoritesAction];
     } else {
         [alertController addAction: unfavoriteAction];
@@ -251,32 +255,37 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)removePersonFromCeaseless {
-    [((NonMOPerson*)self.dataObject) removeFromCeaseless];
-    UIPageViewController *pageViewController =(UIPageViewController*)self.parentViewController;
-    ModelController *mc = pageViewController.dataSource;
-    [mc removeControllerAtIndex:self.index];
-    DataViewController *startingViewController; // card to transition to.
-    // if there is a card after us, transition there.
-    if([mc modelCount] > self.index) {
-        // self.index is now pointing to the next card
-        startingViewController = [mc viewControllerAtIndex:self.index storyboard:self.storyboard];
-        startingViewController.index = self.index;
-        [pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+    [self.nonMOPerson removeFromCeaseless];
+		//if the card is in a pageController then its in the card deck, if its not then it was called by the contacts list
+	if ([self.parentViewController isKindOfClass: [UIPageViewController class]]) {
+		UIPageViewController *pageViewController =(UIPageViewController*)self.parentViewController;
+		ModelController *mc = pageViewController.dataSource;
+		[mc removeControllerAtIndex:self.index];
+		DataViewController *startingViewController; // card to transition to.
+		// if there is a card after us, transition there.
+		if([mc modelCount] > self.index) {
+			// self.index is now pointing to the next card
+			startingViewController = [mc viewControllerAtIndex:self.index storyboard:self.storyboard];
+			startingViewController.index = self.index;
+			[pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
 
-    } else if(self.index > 0) {
-        // otherwise, if there is a card before us, transition there.
-        --self.index;
-        startingViewController.index = self.index;
-        startingViewController = [mc viewControllerAtIndex:self.index storyboard:self.storyboard];
-        [pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
+		} else if(self.index > 0) {
+			// otherwise, if there is a card before us, transition there.
+			--self.index;
+			startingViewController.index = self.index;
+			startingViewController = [mc viewControllerAtIndex:self.index storyboard:self.storyboard];
+			[pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
 
-    } else {
-        // by default go to the first card in the array
-        startingViewController.index = 0;
-        startingViewController = [mc viewControllerAtIndex:0 storyboard:self.storyboard];
-        [pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+		} else {
+			// by default go to the first card in the array
+			startingViewController.index = 0;
+			startingViewController = [mc viewControllerAtIndex:0 storyboard:self.storyboard];
+			[pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
 
-    }
+		}
+	} else {
+		[self performSegueWithIdentifier:@"UnwindToContactsListsSegue" sender: self];
+	}
 
 }
 
@@ -288,12 +297,12 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)addPersonToFavorites {
-    [((NonMOPerson*)self.dataObject) favorite];    
+    [self.nonMOPerson favorite];
     // TODO animate?
 }
 
 - (void)removePersonFromFavorites {
-    [((NonMOPerson*)self.dataObject) unfavorite];
+    [self.nonMOPerson unfavorite];
     // TODO animate?
 }
 
@@ -309,8 +318,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         [warningAlert show];
         return;
     }
-    NonMOPerson *person = self.dataObject;
-    NSArray *recipents = [NSArray arrayWithObjects: person.phoneNumber, nil];
+    NSArray *recipents = [NSArray arrayWithObjects:self.nonMOPerson.phoneNumber, nil];
     NSString *message = [NSString stringWithFormat: @"%@", file];
     
     MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];

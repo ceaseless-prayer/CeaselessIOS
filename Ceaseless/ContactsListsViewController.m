@@ -111,18 +111,16 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 			person = [self.fetchedResultsController objectAtIndexPath:indexPath];
 		}
 
-		PersonViewController *personViewController = [[PersonViewController alloc] init];
+		PersonViewController *personViewController = [PersonViewController alloc];
 		personViewController = segue.destinationViewController;
 		personViewController.dataObject = [self.ceaselessContacts getNonMOPersonForCeaselessContact:person];
-//		PersonView* personView = [[[NSBundle mainBundle] loadNibNamed:@"PersonView"
-//																owner:personViewController
-//															  options:nil] objectAtIndex:0];
-//		[personViewController.bigPersonView addSubview: personView];
-//		[personViewController setDynamicViewConstraintsToView: personViewController.bigPersonView forSubview: personView];
 
 	}
 }
-
+- (IBAction)unwindToContactsLists:(UIStoryboardSegue*)sender
+{
+		// Pull any data from the view controller which initiated the unwind segue.
+}
 #pragma mark - Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
