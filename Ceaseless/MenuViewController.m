@@ -52,6 +52,8 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 	cell.textLabel.text = [self.menuInfoArray objectAtIndex: indexPath.row];
+	cell.backgroundColor = [UIColor clearColor];
+
 
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
