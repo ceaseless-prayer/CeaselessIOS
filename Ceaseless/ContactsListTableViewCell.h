@@ -13,5 +13,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *placeholderLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *rowSwitch;
+@property (nonatomic,copy) void (^onSwitchChange)(UITableViewCell *cell);
+
+- (IBAction)switchChanged:(id)sender;
 
 @end
