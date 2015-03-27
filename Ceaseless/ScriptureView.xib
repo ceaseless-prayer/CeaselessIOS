@@ -108,6 +108,7 @@
                                 </visualEffectView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K9c-0F-rJa" userLabel="ShareButton">
                                     <rect key="frame" x="553" y="558" width="19" height="26"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <state key="normal" image="icon_share_ios"/>
                                     <connections>
                                         <action selector="share:" destination="-1" eventType="touchUpInside" id="96x-ko-lNn"/>
