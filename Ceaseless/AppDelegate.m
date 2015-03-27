@@ -14,7 +14,6 @@
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
 	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
@@ -47,13 +46,19 @@
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     NSCalendar *gregorian = [[NSCalendar alloc]
                              initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    
-    NSDateComponents *dateComponent = [gregorian components:NSCalendarUnitYear | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitWeekday | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour fromDate:[NSDate date]];
-    
-//    [dateComponent setHour:7]; // When we load from config.
 
-    dateComponent.second += 30; // for testing--a notification shows up 30 seconds after you close the app.
-    
+	NSDate *notificationDate;
+	if ([[NSUserDefaults standardUserDefaults] objectForKey:@"NotificationDate"]) {
+		notificationDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"NotificationDate"];
+	} else {
+		notificationDate = [NSDate date];
+	}
+//		notificationDate = [NSDate date]; //for testing uncomment this line and the dateComponent.second line below
+	
+    NSDateComponents *dateComponent = [gregorian components:NSCalendarUnitYear | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitWeekday | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour fromDate: notificationDate];
+
+//    dateComponent.second += 30; // for testing--a notification shows up 30 seconds after you close the app.
+
     NSDate *fireDate = [[NSCalendar currentCalendar] dateFromComponents:dateComponent];
     
     UILocalNotification *notification = [[UILocalNotification alloc]init];
@@ -75,6 +80,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
 #pragma mark - Core Data stack
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -136,7 +142,7 @@
 	if (!coordinator) {
 		return nil;
 	}
-	_managedObjectContext = [[NSManagedObjectContext alloc] init];
+	_managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType: NSMainQueueConcurrencyType];
 	[_managedObjectContext setPersistentStoreCoordinator:coordinator];
 	return _managedObjectContext;
 }

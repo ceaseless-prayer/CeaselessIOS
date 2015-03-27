@@ -7,11 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
+#import "Person.h"
 
-@interface PersonNotesViewController : UITableViewController <UITableViewDataSource>
+@interface PersonNotesViewController : UITableViewController <UITableViewDataSource, NSFetchedResultsControllerDelegate>
+
+
 @property (weak, nonatomic) IBOutlet UITableView *notesTableView;
+//@property (strong, nonatomic) NSArray *notesArray;
+@property (strong, nonatomic) Person *person;
+@property (nonatomic) BOOL notesAvailable;
 
-@property (strong, nonatomic) NSArray *notesArray;
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 
 @end

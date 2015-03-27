@@ -10,6 +10,8 @@
 #import "PersonNotesViewController.h"
 #import "NoteViewController.h"
 #import "NonMOPerson.h"
+#import "AppDelegate.h"
+#import "ModelController.h"
 #import <MessageUI/MessageUI.h>
 
 @interface PersonViewController () <MFMessageComposeViewControllerDelegate>
@@ -32,28 +34,21 @@ static NSString *kSMSMessage;
 
     [super viewDidLoad];
 
-	UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-	self.personNotesViewController = [sb instantiateViewControllerWithIdentifier:@"PersonNotesViewController"];
-	[self.personView.notesView addSubview: self.personNotesViewController.tableView];
-	self.personNotesViewController.tableView.delegate = self;
-	self.personNotesViewController.notesArray = [[NSArray alloc] initWithObjects: @"Add a new note", @"Note 2", @"Note 3", @"Note 4", @"Note 5", nil];
-	[self setDynamicViewConstraintsToView: self.personView.notesView forSubview: self.personNotesViewController.tableView ];
-
-    [self registerForNotifications];
-
-	[self formatCardView: self.personView.cardView withShadowView: self.personView.shadowView];
-
-    // fallback if user disables transparency/blur effect
-    if(UIAccessibilityIsReduceTransparencyEnabled()) {
-        ((UIView *) self.personView.blurEffect.subviews[0]).backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:0.5f];
+	AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
+	self.managedObjectContext = appDelegate.managedObjectContext;
+	
+	NonMOPerson *person = self.dataObject;
+    
+    // deal with cases of no lastName or firstName
+    // We had an Akbar (null) name show up.
+    if([person.firstName length] == 0) {
+        person.firstName = @" "; // 1 character space for initials if needed
     }
-
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    NonMOPerson *person = self.dataObject;
-    self.personView.nameLabel.text = [NSString stringWithFormat: @"%@ %@", person.firstName, person.lastName];
+    if([person.lastName length] == 0) {
+        person.lastName = @" "; // 1 character space for initials if needed
+    }
+    
+	self.personView.nameLabel.text = [NSString stringWithFormat: @"%@ %@", person.firstName, person.lastName];
 	if (person.profileImage) {
 		self.personView.personImageView.image = person.profileImage;
 		self.personView.personImageView.hidden = NO;
@@ -69,9 +64,29 @@ static NSString *kSMSMessage;
 		self.personView.placeholderText.text = [NSString stringWithFormat: @"%@%@", firstInitial, lastInitial];
 	}
 
-        
-    [self.personView.moreButton addTarget:self
-                                   action:@selector(presentActionSheet:)forControlEvents:UIControlEventTouchUpInside];
+	[self.personView.moreButton addTarget:self
+								   action:@selector(presentActionSheet:)forControlEvents:UIControlEventTouchUpInside];
+	UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+	self.personNotesViewController = [sb instantiateViewControllerWithIdentifier:@"PersonNotesViewController"];
+	self.personNotesViewController.person = person.person;
+	[self.personView.notesView addSubview: self.personNotesViewController.tableView];
+	self.personNotesViewController.tableView.delegate = self;
+	[self setDynamicViewConstraintsToView: self.personView.notesView forSubview: self.personNotesViewController.tableView ];
+
+    [self registerForNotifications];
+
+	[self formatCardView: self.personView.cardView withShadowView: self.personView.shadowView];
+
+    // fallback if user disables transparency/blur effect
+    if(UIAccessibilityIsReduceTransparencyEnabled()) {
+        ((UIView *) self.personView.blurEffect.subviews[0]).backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:0.5f];
+    }
+
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
 
 }
 - (void)setDynamicViewConstraintsToView: (UIView *) parentView forSubview: (UIView *) newSubview {
@@ -114,12 +129,13 @@ static NSString *kSMSMessage;
 
 - (void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
-	NoteViewController *noteViewController = [self.mainStoryboard instantiateViewControllerWithIdentifier:@"NoteViewController"];
+	NoteViewController *noteViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"NoteViewController"];
 	noteViewController.delegate = self;
-	if (indexPath.row != 0) {
-			//uncomment this when there are real notes to pass
-//		noteViewController.currentNote = self.personNotesViewController.notesArray[indexPath.row];
+
+	if (self.personNotesViewController.notesAvailable == YES) {
+		noteViewController.currentNote = [self.personNotesViewController.fetchedResultsController objectAtIndexPath:indexPath];
+	} else {
+		noteViewController.personForNewNote = self.personNotesViewController.person;
 	}
 
 	[self presentViewController:noteViewController animated:YES completion:NULL];
@@ -172,18 +188,55 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                             NSLog(@"Send Message");
                                         }];
     
-    //	UIAlertAction *createNoteAction = [UIAlertAction
-    //									actionWithTitle:NSLocalizedString(@"Create Note", @"Create Note")
-    //									   style:UIAlertActionStyleDefault
-    //									   handler:^(UIAlertAction *action)
-    //									   {
-    //									   NSLog(@"Create Note");
-    //									   }];
+    UIAlertAction *removeFromCeaselessAction = [UIAlertAction
+                                        actionWithTitle:NSLocalizedString(@"Remove from Ceaseless", @"Remove from Ceaseless")
+                                        style:UIAlertActionStyleDefault
+                                        handler:^(UIAlertAction *action)
+                                        {
+                                            [self removePersonFromCeaseless];
+                                            NSLog(@"Remove from Ceaseless");
+                                        }];
+    
+    UIAlertAction *addToFavoritesAction = [UIAlertAction
+                                        actionWithTitle:NSLocalizedString(@"Add to Favorites", @"Add to Favorites")
+                                        style:UIAlertActionStyleDefault
+                                        handler:^(UIAlertAction *action)
+                                        {
+                                            [self addPersonToFavorites];
+                                            NSLog(@"Add to Favorites");
+                                        }];
+    
+    UIAlertAction *unfavoriteAction = [UIAlertAction
+                                           actionWithTitle:NSLocalizedString(@"Remove from Favorites", @"Remove from Favorites")
+                                           style:UIAlertActionStyleDefault
+                                           handler:^(UIAlertAction *action)
+                                           {
+                                               [self removePersonFromFavorites];
+                                               NSLog(@"Remove from Favorites");
+                                           }];
+    
+    UIAlertAction *addNote = [UIAlertAction
+                                       actionWithTitle:NSLocalizedString(@"Add note", @"Add note")
+                                       style:UIAlertActionStyleDefault
+                                       handler:^(UIAlertAction *action)
+                                       {
+                                           [self addNote];
+                                           NSLog(@"Add note");
+                                       }];
     
     [alertController addAction:cancelAction];
+    [alertController addAction: removeFromCeaselessAction];
     [alertController addAction:inviteAction];
     [alertController addAction:sendMessageAction];
-    //	[alertController addAction:createNoteAction];
+    [alertController addAction:addNote];
+    
+    // TODO this should toggle between adding or removing from favorites.
+    // for now only show it if it isn't already favorited
+    if (((Person*)((NonMOPerson*)self.dataObject).person).favoritedDate == nil) {
+        [alertController addAction: addToFavoritesAction];
+    } else {
+        [alertController addAction: unfavoriteAction];
+    }
     
     //this prevents crash on iPad in iOS 8 - known Apple bug
     UIPopoverPresentationController *popover = alertController.popoverPresentationController;
@@ -195,6 +248,53 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     
     [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)removePersonFromCeaseless {
+    [((NonMOPerson*)self.dataObject) removeFromCeaseless];
+    UIPageViewController *pageViewController =(UIPageViewController*)self.parentViewController;
+    ModelController *mc = pageViewController.dataSource;
+    [mc removeControllerAtIndex:self.index];
+    DataViewController *startingViewController; // card to transition to.
+    // if there is a card after us, transition there.
+    if([mc modelCount] > self.index) {
+        // self.index is now pointing to the next card
+        startingViewController = [mc viewControllerAtIndex:self.index storyboard:self.storyboard];
+        startingViewController.index = self.index;
+        [pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+
+    } else if(self.index > 0) {
+        // otherwise, if there is a card before us, transition there.
+        --self.index;
+        startingViewController.index = self.index;
+        startingViewController = [mc viewControllerAtIndex:self.index storyboard:self.storyboard];
+        [pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
+
+    } else {
+        // by default go to the first card in the array
+        startingViewController.index = 0;
+        startingViewController = [mc viewControllerAtIndex:0 storyboard:self.storyboard];
+        [pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+
+    }
+
+}
+
+- (void)addNote {
+    NoteViewController *noteViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"NoteViewController"];
+    noteViewController.delegate = self;
+    noteViewController.personForNewNote = self.personNotesViewController.person;
+    [self presentViewController:noteViewController animated:YES completion:nil];
+}
+
+- (void)addPersonToFavorites {
+    [((NonMOPerson*)self.dataObject) favorite];    
+    // TODO animate?
+}
+
+- (void)removePersonFromFavorites {
+    [((NonMOPerson*)self.dataObject) unfavorite];
+    // TODO animate?
 }
 
 - (void)showSMS:(NSString*)file {

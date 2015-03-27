@@ -15,9 +15,14 @@
 
 @property (strong, nonatomic) PersonPicker *personPicker;
 @property (strong, nonatomic)  UIStoryboard *mainStoryboard;
+FOUNDATION_EXPORT NSString *const kModelRefreshNotification;
 
 - (DataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard;
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController;
+- (void) removeControllerAtIndex: (NSUInteger) index;
+- (NSInteger) modelCount;
+- (void) runIfNewDay;
+- (NSInteger) daysWithinEraFromDate:(NSDate *) startDate toDate:(NSDate *) endDate;
 
 @end
 

@@ -9,14 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import "Person.h"
+#import "NonMOPerson.h"
 
 @interface PersonPicker : NSObject
 
-- (void)loadContacts;
-- (void) refreshCeaselessContactsFromAddressBook: (ABAddressBookRef)addressBook;
-- (Person *) getCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
-- (void) updateCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
-- (Person *) createCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
-- (NSArray *) getAllCeaselessContacts;
+- (NSArray *) queuedPeople;
+- (void) emptyQueue;
+- (void) pickPeople;
     
 @end

@@ -7,6 +7,9 @@
 //
 
 #import "PersonNotesViewController.h"
+#import "AppDelegate.h"
+#import "PersonNotesTableViewCell.h"
+#import "Note.h"
 
 @interface PersonNotesViewController ()
 
@@ -16,7 +19,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
+	self.managedObjectContext = appDelegate.managedObjectContext;
 
+	self.tableView.estimatedRowHeight = 130.0;
+	self.tableView.rowHeight = UITableViewAutomaticDimension;
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -30,62 +37,116 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
+#pragma mark - Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-		// Return the number of sections.
-	return 1;
+	return [[self.fetchedResultsController sections] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-		// Return the number of rows in the section.
-	return [self.notesArray count];
+	id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+	if ([sectionInfo numberOfObjects] == 0) {
+		self.notesAvailable = NO;
+		return 1;
+	} else {
+		self.notesAvailable = YES;
+		return [sectionInfo numberOfObjects];
+	}
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
- UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-
-	cell.textLabel.text = [self.notesArray objectAtIndex: indexPath.row];
-	cell.textLabel.textColor = [UIColor whiteColor];
-	cell.detailTextLabel.textColor = [UIColor whiteColor];
-    cell.backgroundColor = [UIColor clearColor];
-	NSLog (@"cell text %@", cell.textLabel.text);
- return cell;
+	PersonNotesTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+	[self configureCell:cell atIndexPath:indexPath];
+	return cell;
 }
 
-//- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//	return 44;
-//}
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
+- (void)configureCell:(PersonNotesTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor clearColor];
+	if (self.notesAvailable) {
+		Note *note = [self.fetchedResultsController objectAtIndexPath:indexPath];
+			//not using this yet
+			//		cell.imageView.image = [UIImage imageNamed: @"icon_ceaseless_comment"];
 
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- } else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
+		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+		dateFormatter.timeStyle = NSDateFormatterNoStyle;
+		dateFormatter.dateStyle = NSDateFormatterShortStyle;
+		NSDate *date = note.lastUpdatedDate;
 
-/*
- #pragma mark - Navigation
+		cell.date.text = [dateFormatter stringFromDate:date];
+		cell.text.text = note.text;
+	} else {
+		cell.date.text = @"";
+		cell.text.text = @"Add new note";
+	}
+	NSLog (@"detail cell text %@", cell.text.text);
+	
+}
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+		// Return NO if you do not want the specified item to be editable.
+	return NO;
+}
 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (editingStyle == UITableViewCellEditingStyleDelete) {
+		NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+		[context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+
+		NSError *error = nil;
+		if (![context save:&error]) {
+				// Replace this implementation with code to handle the error appropriately.
+				// abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			abort();
+		}
+	}
+}
+
+
+#pragma mark - Fetched results controller
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+		// In the simplest, most efficient, case, reload the table view.
+ [self.tableView reloadData];
+}
+- (NSFetchedResultsController *)fetchedResultsController
+{
+	if (_fetchedResultsController != nil) {
+		return _fetchedResultsController;
+	}
+
+	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+		// Edit the entity name as appropriate.
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
+	[fetchRequest setEntity:entity];
+
+		// Set the batch size to a suitable number.
+	[fetchRequest setFetchBatchSize:20];
+
+		// Edit the sort key as appropriate.
+	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastUpdatedDate" ascending:NO];
+	NSArray *sortDescriptors = @[sortDescriptor];
+
+	[fetchRequest setSortDescriptors:sortDescriptors];
+
+	NSPredicate *ceaselessIdInNotes = [NSPredicate predicateWithFormat:@"%@ IN peopleTagged", self.person];
+
+	[fetchRequest setPredicate: ceaselessIdInNotes];
+		// Edit the section name key path and cache name if appropriate.
+		// nil for section name key path means "no sections".
+	NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+	aFetchedResultsController.delegate = self;
+	self.fetchedResultsController = aFetchedResultsController;
+
+	NSError *error = nil;
+	if (![self.fetchedResultsController performFetch:&error]) {
+			// Replace this implementation with code to handle the error appropriately.
+			// abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		abort();
+	}
+
+	return _fetchedResultsController;
+}
 
 
 @end

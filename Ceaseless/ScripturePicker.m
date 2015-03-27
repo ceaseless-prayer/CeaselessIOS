@@ -18,6 +18,7 @@
 @implementation ScripturePicker
 NSString *const kDefaultScripture = @"\"And whatever you ask in prayer, you will receive, if you have faith.\"";
 NSString *const kDefaultCitation = @"(Matthew 21:22,ESV)";
+NSString *const kDefaultShareLink = @"http://www.bible.is/ENGESV/Matt/21#22";
 NSString *const kVerseOfTheDayURL = @"http://test.ceaselessprayer.com/api/votd";
 NSString *const kGetScriptureURL = @"http://test.ceaselessprayer.com/api/getScripture";
 int const kDefaultQueueMaxSize = 5;
@@ -40,14 +41,16 @@ int const kDefaultQueueMinSize = 1;
 	}
 	return self;
 }
-- (void) verseOfTheDay {
 
-
-	// if it is a new day, remove the top of the queue
-
-
-
+- (instancetype) initWith: (NSManagedObjectContext*) managedObjectContext {
+    self = [super init];
+    if (self) {
+        self.managedObjectContext = managedObjectContext;
+    }
+    return self;
 }
+
+// This method refreshes the Scripture queue.
 - (void) manageScriptureQueue {
 
 	NSInteger totalCount = [self countObjectsInCoreData];
@@ -72,8 +75,21 @@ int const kDefaultQueueMinSize = 1;
 	}
 }
 
-- (ScriptureQueue *)popScriptureQueue
-{
+// gets the most recently presented scripture from the queue
+- (ScriptureQueue *) peekScriptureQueue {
+    NSArray *scriptureArray = [[NSArray alloc] init];
+    NSSortDescriptor *scripturePresentedDateSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"lastPresentedDate" ascending:NO];
+    scriptureArray = [[self getScriptureWithPredicate:@"TRUEPREDICATE"]sortedArrayUsingDescriptors:[NSArray arrayWithObject:scripturePresentedDateSortDescriptor]];
+    if([scriptureArray count] > 0) {
+        return [scriptureArray objectAtIndex:0];
+    } else {
+        // TODO should this do the initialization logic too?
+        return nil;
+    }
+}
+
+// returns the last scripture from the queue and marks it as presented.
+- (ScriptureQueue *)popScriptureQueue {
 	NSArray *scriptureArray = [[NSArray alloc] init];
 		//get unused scripture
 	scriptureArray = [self getScriptureWithPredicate: @"lastPresentedDate == nil"];
@@ -96,7 +112,7 @@ int const kDefaultQueueMinSize = 1;
 		if (![self.managedObjectContext save: &error]) {
 			NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
 		}
-			//return the selected scripture object
+        //return the selected scripture object
 		return [scriptureArray objectAtIndex:0];
 
 	} else {
@@ -143,16 +159,15 @@ int const kDefaultQueueMinSize = 1;
 
 	[request setHTTPMethod:@"POST"];
 
-	if (!dailyVerseData)
-		{
-			//default scripture if there was not a reference
+	if (!dailyVerseData) {
+        //default scripture if there was not a reference
 		dailyVerseData = [[NSDictionary alloc] initWithObjectsAndKeys:
 						  @"22", @"verse_start",
 						  @"21", @"chapter",
 						  @"Matt", @"book",
 						  @"22", @"verse_end",
 						  nil];
-		}
+    }
 	NSDictionary *jsonData = dailyVerseData;
 	NSError *error;
 	NSData *postData = [NSJSONSerialization dataWithJSONObject:jsonData options:0 error:&error];
@@ -175,6 +190,11 @@ int const kDefaultQueueMinSize = 1;
 				  NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"ScriptureQueue" inManagedObjectContext:self.managedObjectContext];
 				  [newManagedObject setValue: [verseDictionary objectForKey:@"text"]forKey: @"verse"];
 				  [newManagedObject setValue: [verseDictionary objectForKey:@"citation"] forKey: @"citation"];
+                  
+                  // TODO configure the right bible for the local language
+                  NSString *shareLink = [NSString stringWithFormat:@"%@/%@/%@#%@", @"http://www.bible.is/ENGESV", jsonData[@"book"], jsonData[@"chapter"], jsonData[@"verse_start"]];
+                  
+                  [newManagedObject setValue: shareLink forKey: @"shareLink"];
 				  if (![self.managedObjectContext save: &error]) {
 					  NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
 				  }
@@ -208,6 +228,7 @@ int const kDefaultQueueMinSize = 1;
 	NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"ScriptureQueue" inManagedObjectContext:self.managedObjectContext];
 	[newManagedObject setValue: kDefaultScripture forKey: @"verse"];
 	[newManagedObject setValue: kDefaultCitation forKey: @"citation"];
+    	[newManagedObject setValue: kDefaultShareLink forKey: @"shareLink"];
 	if (![self.managedObjectContext save: &error]) {
 		NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
 	}
