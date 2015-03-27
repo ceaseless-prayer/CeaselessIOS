@@ -80,6 +80,11 @@ NSString *const kDeveloperMode = @"developerMode";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSDate *lastRefreshDate = [defaults objectForKey:kLocalLastRefreshDate];
     NSDate *now = [NSDate date];
+    CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
+    if (lastRefreshDate == nil) {
+        [ceaselessContacts initializeFirstContacts:5];
+    }
+    
     BOOL developerMode = [defaults boolForKey:kDeveloperMode];
     developerMode = YES;
     
@@ -91,9 +96,11 @@ NSString *const kDeveloperMode = @"developerMode";
         if(developerMode) {
             NSLog(@"Debug Mode enabled: refreshing application every time it is newly opened.");
         }
-
-        CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
-        [ceaselessContacts ensureCeaselessContactsSynced];
+        
+        // Update the last refresh date
+        [defaults setObject:now forKey:kLocalLastRefreshDate];
+        [defaults synchronize];
+        NSLog(@"It's a new day!");
         
         ScripturePicker *scripturePicker = [[ScripturePicker alloc] init];
         [scripturePicker manageScriptureQueue];
@@ -105,16 +112,14 @@ NSString *const kDeveloperMode = @"developerMode";
         
         [self prepareCardArray];
         
-        // reinitialize everything
         [[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];
-        NSLog(@"It's a new day!");
+        
+        
+        [ceaselessContacts ensureCeaselessContactsSynced];
+        
+        NSLog(@"Ceaseless has been refreshed");
     }
-    
-    // Update the last refresh date
-    [defaults setObject:now forKey:kLocalLastRefreshDate];
-    [defaults synchronize];
-    
-    NSLog(@"Ceaseless has been refreshed");
+
 }
 
 // https://developer.apple.com/library/prerelease/ios//documentation/Cocoa/Conceptual/DatesAndTimes/Articles/dtCalendricalCalculations.html#//apple_ref/doc/uid/TP40007836-SW1

@@ -19,9 +19,6 @@
 #import "Name.h"
 
 @interface CeaselessLocalContacts : NSObject
-@property (strong, nonatomic) NSMutableArray *contacts;
-@property (strong, nonatomic) NSMutableArray *names;
-@property (strong, nonatomic) NSMutableArray *addressBookIds;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic) ABAddressBookRef addressBook;
 

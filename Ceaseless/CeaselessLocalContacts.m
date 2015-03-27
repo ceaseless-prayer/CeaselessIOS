@@ -35,15 +35,8 @@
         self.addressBook = addressBook;
         self.managedObjectContext = context;
         _managedObjectContext = context;
-        [self reloadIndices];
     }
     return self;
-}
-
-- (void) reloadIndices {
-    _contacts = [[NSMutableArray alloc] initWithArray:[self getAllCeaselessContacts]];
-    _names = [[NSMutableArray alloc] initWithArray:[self getAllNames]];
-    _addressBookIds = [[NSMutableArray alloc] initWithArray:[self getAllAddressBookIds]];
 }
 
 - (NSArray *) filterResults: (NSArray*) results byEmails:(NSSet*) emails orPhoneNumbers: (NSSet*) phoneNumbers {
@@ -69,12 +62,14 @@
     NSMutableArray *results = [[NSMutableArray alloc]init];
     NSPredicate *getFirstNameObj = [NSPredicate predicateWithFormat:@"name = %@", firstName];
     NSPredicate *getLastNameObj = [NSPredicate predicateWithFormat:@"name = %@", lastName];
-    NSArray* firstNameObj = [_names filteredArrayUsingPredicate:getFirstNameObj];
-    NSArray* lastNameObj = [_names filteredArrayUsingPredicate:getLastNameObj];
+    
+    NSArray* firstNameObj = [self fetchEntityForName:@"Name" withPredicate: getFirstNameObj];
+    NSArray* lastNameObj = [self fetchEntityForName:@"Name" withPredicate: getLastNameObj];
+    NSArray* contacts = [self getAllCeaselessContacts];
     
     if([firstNameObj count] > 0 && [lastNameObj count] > 0) {
         NSPredicate *namePredicate = [NSPredicate predicateWithFormat: @"%@ IN firstNames AND %@ IN lastNames", firstNameObj[0], lastNameObj[0]];
-        results = [[NSMutableArray alloc]initWithArray:[_contacts filteredArrayUsingPredicate: namePredicate]];
+        results = [[NSMutableArray alloc]initWithArray:[contacts filteredArrayUsingPredicate: namePredicate]];
     }
     
     return results;
@@ -87,11 +82,13 @@
     
     NSPredicate *getAddressBookIdObj = [NSPredicate predicateWithFormat:
                                         @"recordId = %@ AND deviceId = %@", addressBookId, deviceId];
-    NSArray *addressBookIdObj = [_addressBookIds filteredArrayUsingPredicate:getAddressBookIdObj];
+    NSArray *addressBookIds = [self getAllAddressBookIds];
+    NSArray *contacts = [self getAllCeaselessContacts];
+    NSArray *addressBookIdObj = [addressBookIds filteredArrayUsingPredicate:getAddressBookIdObj];
     
     if([addressBookIdObj count] > 0) {
         NSPredicate *idPredicate = [NSPredicate predicateWithFormat: @"%@ IN addressBookIds", addressBookIdObj[0]];
-        results = [[NSMutableArray alloc]initWithArray:[_contacts filteredArrayUsingPredicate: idPredicate]];
+        results = [[NSMutableArray alloc]initWithArray:[contacts filteredArrayUsingPredicate: idPredicate]];
     }
     
     return results;
@@ -108,32 +105,32 @@
             NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
             [managedObjectContext setParentContext:self.managedObjectContext];
             
-            // initialize a new persoupdatenpicker
             CeaselessLocalContacts *clc = [[CeaselessLocalContacts alloc] initWithManagedObjectContext:managedObjectContext andAddressBook: addressBook2];
             [clc.managedObjectContext performBlockAndWait: ^{
                 [clc refreshCeaselessContacts];
             }];
-            
             if (addressBook2) CFRelease(addressBook2);
+
         });
     }
 }
 
 - (void) refreshCeaselessContacts {
-    NSArray * allAddressBookContacts = [self getUnifiedAddressBookRecords:_addressBook];
+    NSArray * allAddressBookContacts;
+    NSArray *allCeaselessContacts;
+    allAddressBookContacts = [self getUnifiedAddressBookRecords:_addressBook];
     for (NSSet *unifiedRecord in allAddressBookContacts) {
         [self updateCeaselessContactFromABRecord:(__bridge ABRecordRef)[unifiedRecord anyObject]];
     }
     
-    NSArray *allCeaselessContacts = [self getAllCeaselessContacts];
+    allCeaselessContacts = [self getAllCeaselessContacts];
     for (Person *person in allCeaselessContacts) {
         [self updateCeaselessContactLocalIds: person];
     }
     
-    [self reloadIndices];
-    
     NSLog(@"Total address book records: %lu", (unsigned long) [allAddressBookContacts count]);
-    NSLog(@"Total Ceaseless contacts: %lu", (unsigned long)[_contacts count]);
+    NSLog(@"Total Ceaseless contacts: %lu", (unsigned long)[allCeaselessContacts count]);
+    
 }
 
 - (void) initializeFirstContacts: (NSInteger) n {
@@ -221,45 +218,38 @@
 }
 
 - (NSArray *) getAllCeaselessContacts {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Person"
-                                              inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    NSError * error = nil;
-    NSArray *persons = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    
-    if(persons == nil) {
-        NSLog(@"Fetch error: %@", error);
-    }
-    return persons;
+    return [self fetchEntityForName:@"Person"];
 }
 
 - (NSArray *) getAllNames {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Name"
-                                              inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    NSError * error = nil;
-    NSArray *names = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    
-    if(names == nil) {
-        NSLog(@"Fetch error: %@", error);
-    }
-    return names;
+    return [self fetchEntityForName:@"Name"];
 }
 
 - (NSArray *) getAllAddressBookIds {
+    return [self fetchEntityForName:@"AddressBookId"];
+}
+
+- (NSArray *) fetchEntityForName: (NSString*) name withPredicate: (NSPredicate*) predicate {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"AddressBookId"
+    NSEntityDescription *entity = [NSEntityDescription entityForName:name
                                               inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
+    if (predicate != nil) {
+        [fetchRequest setPredicate:predicate];
+    }
+
     NSError * error = nil;
-    NSArray *ids = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    NSArray *results = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
     
-    if(ids == nil) {
+    if(results == nil) {
         NSLog(@"Fetch error: %@", error);
     }
-    return ids;
+    
+    return results;
+}
+
+- (NSArray *) fetchEntityForName: (NSString*) name {
+    return [self fetchEntityForName:name withPredicate:nil];
 }
 
 - (NSMutableSet *) convertABMultiValueStringRefToSet: (ABMultiValueRef) multiValue {
@@ -398,7 +388,6 @@
         NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
     }
 
-    [_contacts addObject:newCeaselessPerson];
     return newCeaselessPerson;
 }
 
@@ -557,13 +546,6 @@
     NSArray *existingResults = [context executeFetchRequest:request error:&errorFetch];
     if([existingResults count] < 1) {
         result = [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:self.managedObjectContext];
-        // HACK I don't want to have to check just for name specifically here.
-        // for now we need to add it to the cached array of names if it is new.
-        if([entityName isEqual: @"Name"]) {
-            [self.names addObject: result];
-        } else if([entityName isEqual: @"AddressBookId"]) {
-            [self.addressBookIds addObject: result];
-        }
     } else {
         result = existingResults[0];
     }
