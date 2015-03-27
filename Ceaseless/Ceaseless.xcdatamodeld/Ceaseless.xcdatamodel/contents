@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C1510" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C1514" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="AddressBookId" representedClassName="AddressBookId" syncable="YES">
         <attribute name="deviceId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="recordId" optional="YES" attributeType="String" syncable="YES"/>
@@ -21,7 +21,7 @@
         <relationship name="peopleTagged" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="notes" inverseEntity="Person" syncable="YES"/>
     </entity>
     <entity name="PeopleQueue" representedClassName="PeopleQueue" syncable="YES">
-        <relationship name="person" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Person" inverseName="queued" inverseEntity="Person" syncable="YES"/>
+        <relationship name="person" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="queued" inverseEntity="Person" syncable="YES"/>
     </entity>
     <entity name="Person" representedClassName="Person" syncable="YES">
         <attribute name="addressBookId" optional="YES" attributeType="String" syncable="YES"/>
@@ -58,8 +58,8 @@
         <element name="Name" positionX="-369" positionY="-27" width="128" height="88"/>
         <element name="Note" positionX="-200" positionY="-54" width="128" height="103"/>
         <element name="PeopleQueue" positionX="-387" positionY="-180" width="128" height="58"/>
-        <element name="Person" positionX="-396" positionY="-73" width="128" height="225"/>
-        <element name="PhoneNumber" positionX="-45" positionY="-1" width="128" height="73"/>
+        <element name="Person" positionX="-396" positionY="-73" width="128" height="223"/>
+        <element name="PhoneNumber" positionX="-45" positionY="-1" width="128" height="75"/>
         <element name="PrayerRecord" positionX="-173" positionY="81" width="128" height="88"/>
         <element name="ScriptureQueue" positionX="-576" positionY="-180" width="128" height="105"/>
     </elements>

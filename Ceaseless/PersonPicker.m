@@ -180,7 +180,7 @@
     return personHasBeenPicked;
 }
 
-- (void) queuePerson: (Person*) person {
+- (PeopleQueue*) queuePerson: (Person*) person {
     [_ceaselessContacts createPrayerRecordForPerson: person];
     PeopleQueue *pq = [NSEntityDescription insertNewObjectForEntityForName:@"PeopleQueue" inManagedObjectContext:self.managedObjectContext];
     pq.person = person;
@@ -189,6 +189,7 @@
     if (![self.managedObjectContext save:&error]) {
         NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
     }
+    return pq;
 }
 
 - (NSArray *) queuedPeople {
