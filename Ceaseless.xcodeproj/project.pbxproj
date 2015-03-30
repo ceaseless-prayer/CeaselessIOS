@@ -37,7 +37,6 @@
 		704D5CEE1AAFA96200BD48B3 /* Email.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CED1AAFA96200BD48B3 /* Email.m */; };
 		704D5CF11AAFA96200BD48B3 /* ScriptureQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CF01AAFA96200BD48B3 /* ScriptureQueue.m */; };
 		704D5CF41AAFA96200BD48B3 /* PrayerRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CF31AAFA96200BD48B3 /* PrayerRecord.m */; };
-		707510081AC5AF10006500A9 /* UIView+SubviewConstaints.m in Sources */ = {isa = PBXBuildFile; fileRef = 707510071AC5AF10006500A9 /* UIView+SubviewConstaints.m */; };
 		707BE2E61AAA1B1A0020FF29 /* Screen Shot 2015-02-17 at 9.05.16 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = 707BE2E51AAA1B1A0020FF29 /* Screen Shot 2015-02-17 at 9.05.16 PM.png */; };
 		707BE2E81AAA1D1C0020FF29 /* Screen Shot 2015-02-18 at 8.22.42 AM.png in Resources */ = {isa = PBXBuildFile; fileRef = 707BE2E71AAA1D1C0020FF29 /* Screen Shot 2015-02-18 at 8.22.42 AM.png */; };
 		709D83391AA598A600C3486E /* Screen Shot 2015-02-18 at 8.25.51 AM.png in Resources */ = {isa = PBXBuildFile; fileRef = 709D83381AA598A600C3486E /* Screen Shot 2015-02-18 at 8.25.51 AM.png */; };
@@ -132,8 +131,6 @@
 		704D5CF01AAFA96200BD48B3 /* ScriptureQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptureQueue.m; sourceTree = "<group>"; };
 		704D5CF21AAFA96200BD48B3 /* PrayerRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrayerRecord.h; sourceTree = "<group>"; };
 		704D5CF31AAFA96200BD48B3 /* PrayerRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrayerRecord.m; sourceTree = "<group>"; };
-		707510061AC5AF10006500A9 /* UIView+SubviewConstaints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SubviewConstaints.h"; sourceTree = "<group>"; };
-		707510071AC5AF10006500A9 /* UIView+SubviewConstaints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SubviewConstaints.m"; sourceTree = "<group>"; };
 		707BE2E51AAA1B1A0020FF29 /* Screen Shot 2015-02-17 at 9.05.16 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screen Shot 2015-02-17 at 9.05.16 PM.png"; sourceTree = "<group>"; };
 		707BE2E71AAA1D1C0020FF29 /* Screen Shot 2015-02-18 at 8.22.42 AM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screen Shot 2015-02-18 at 8.22.42 AM.png"; sourceTree = "<group>"; };
 		709D83381AA598A600C3486E /* Screen Shot 2015-02-18 at 8.25.51 AM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screen Shot 2015-02-18 at 8.25.51 AM.png"; sourceTree = "<group>"; };
@@ -246,8 +243,6 @@
 		42F3AE1B1AA4DD7F003A88F5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				707510061AC5AF10006500A9 /* UIView+SubviewConstaints.h */,
-				707510071AC5AF10006500A9 /* UIView+SubviewConstaints.m */,
 				42199AB41AAF8DC400797224 /* background-3.jpg */,
 				707BE2E71AAA1D1C0020FF29 /* Screen Shot 2015-02-18 at 8.22.42 AM.png */,
 				707BE2E51AAA1B1A0020FF29 /* Screen Shot 2015-02-17 at 9.05.16 PM.png */,
@@ -535,7 +530,6 @@
 				70D51C0B1AA6222700FA7CDC /* PersonPicker.m in Sources */,
 				70F12B871AB2082B0090F47A /* NoteViewController.m in Sources */,
 				70BCCC211ABB768F00386D51 /* PersonNotesTableViewCell.m in Sources */,
-				707510081AC5AF10006500A9 /* UIView+SubviewConstaints.m in Sources */,
 				70BFCB021AC070C50014C4BC /* ContactsListsViewController.m in Sources */,
 				42F3AE1E1AA4DD7F003A88F5 /* main.m in Sources */,
 				42F3AE241AA4DD7F003A88F5 /* RootViewController.m in Sources */,
