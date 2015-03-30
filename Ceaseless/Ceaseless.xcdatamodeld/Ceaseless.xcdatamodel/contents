@@ -24,7 +24,6 @@
         <relationship name="person" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="queued" inverseEntity="Person" syncable="YES"/>
     </entity>
     <entity name="Person" representedClassName="Person" syncable="YES">
-        <attribute name="addressBookId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="ceaselessId" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="favoritedDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="removedDate" optional="YES" attributeType="Date" syncable="YES"/>
@@ -58,7 +57,7 @@
         <element name="Name" positionX="-369" positionY="-27" width="128" height="88"/>
         <element name="Note" positionX="-200" positionY="-54" width="128" height="103"/>
         <element name="PeopleQueue" positionX="-387" positionY="-180" width="128" height="58"/>
-        <element name="Person" positionX="-396" positionY="-73" width="128" height="223"/>
+        <element name="Person" positionX="-396" positionY="-73" width="128" height="210"/>
         <element name="PhoneNumber" positionX="-45" positionY="-1" width="128" height="75"/>
         <element name="PrayerRecord" positionX="-173" positionY="81" width="128" height="88"/>
         <element name="ScriptureQueue" positionX="-576" positionY="-180" width="128" height="105"/>

@@ -12,6 +12,7 @@
 #import "NonMOPerson.h"
 #import "Person.h"
 #import "PersonPicker.h"
+#import "AppConstants.h"
 
 @interface SettingsViewController ()
 
@@ -41,9 +42,9 @@
 		self.placeholderText.layer.cornerRadius = 6.0f;
 	}
 
-	if ([[NSUserDefaults standardUserDefaults] doubleForKey:@"DailyPersonCount"]) {
-		self.peopleCount.text = [NSString stringWithFormat:@"%.f",[[NSUserDefaults standardUserDefaults] doubleForKey:@"DailyPersonCount"]];
-		self.stepper.value = [[NSUserDefaults standardUserDefaults] doubleForKey:@"DailyPersonCount"];
+	if ([[NSUserDefaults standardUserDefaults] doubleForKey:kDailyPersonCount]) {
+		self.peopleCount.text = [NSString stringWithFormat:@"%.f",[[NSUserDefaults standardUserDefaults] doubleForKey:kDailyPersonCount]];
+		self.stepper.value = [[NSUserDefaults standardUserDefaults] doubleForKey:kDailyPersonCount];
 	} else {
 		self.peopleCount.text = @"3";
 		self.stepper.value = 3;
@@ -166,10 +167,10 @@
 	double value = [sender value];
 
 	[self.peopleCount setText:[NSString stringWithFormat:@"%d", (int)value]];
-	[[NSUserDefaults standardUserDefaults] setDouble: value forKey:@"DailyPersonCount"];
+	[[NSUserDefaults standardUserDefaults] setDouble: value forKey:kDailyPersonCount];
 
 
-	NSLog (@"what is saved in dailyPersonCount %li", (long)[[NSUserDefaults standardUserDefaults] integerForKey:@"DailyPersonCount"]);
+	NSLog (@"what is saved in dailyPersonCount %li", (long)[[NSUserDefaults standardUserDefaults] integerForKey:kDailyPersonCount]);
 }
 
 @end

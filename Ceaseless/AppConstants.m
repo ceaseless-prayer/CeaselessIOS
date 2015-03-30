@@ -10,4 +10,5 @@
 
 @implementation AppConstants
     NSString *const kDeveloperMode = @"developerMode";
+    NSString *const kDailyPersonCount = @"DailyPersonCount";
 @end
