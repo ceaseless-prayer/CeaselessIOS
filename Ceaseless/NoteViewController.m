@@ -9,29 +9,22 @@
 #import <AddressBook/AddressBook.h>
 #import "AppDelegate.h"
 #import "Person.h"
+#import "PersonPicker.h"
 #import "CeaselessLocalContacts.h"
 #import "Name.h"
 
-@interface NoteViewController () <UISearchBarDelegate, UISearchResultsUpdating>
+@interface NoteViewController ()
 
 @property (nonatomic, strong) NSMutableArray *namesArray;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) UINavigationItem *item;
 @property (strong, nonatomic) NSMutableSet *mutablePeopleSet;
-@property (nonatomic, strong) UISearchController *searchController;
-@property (nonatomic, strong) NSMutableArray *filteredPeople;
 @property (nonatomic, strong) NSMutableOrderedSet *group;
-@property (nonatomic, strong) NSArray *people;
-@property (nonatomic, strong) UIButton *selectedButton;
-
-
-
+@property (strong, nonatomic) UITapGestureRecognizer *singleTapGestureRecognizer;
 
 @end
 
 @implementation NoteViewController
-
-static CGFloat const kPadding = 5.0;
 
 NSString *const kPlaceHolderText = @"Enter note";
 
@@ -44,6 +37,14 @@ NSString *const kPlaceHolderText = @"Enter note";
 	self.mutablePeopleSet = [[NSMutableSet alloc] initWithCapacity: 1];
 
 	self.notesTextView.delegate = self;
+
+		// Add a tap gesture recognizer to our scrollView
+	self.singleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewTapped:)];
+	self.singleTapGestureRecognizer.numberOfTapsRequired = 1;
+	self.singleTapGestureRecognizer.enabled = YES;
+	self.singleTapGestureRecognizer.cancelsTouchesInView = YES;
+	self.singleTapGestureRecognizer.delegate = self;
+	[self.personsTaggedView addGestureRecognizer:self.singleTapGestureRecognizer];
 
 		//create navigation bar if there is no navigation controller
 	if (!self.navigationController) {
@@ -75,17 +76,30 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 		self.notesTextView.text = [self.currentNote valueForKey: @"text"];
 		NSSet *peopleTagged = [self.currentNote valueForKey: @"peopleTagged"];
-		NSMutableSet *namesSet = [[NSMutableSet alloc] initWithCapacity: [peopleTagged count]];
+
+		self.group = [NSMutableOrderedSet orderedSet];
+
 		for (Person *personTagged in peopleTagged) {
-			NSString *personName = [NSString stringWithFormat: @"%@ %@", ((Name*)[personTagged.firstNames anyObject]).name, ((Name*) [personTagged.lastNames anyObject]).name];
-			[namesSet addObject: personName];
-			[self.namesArray addObject:personName];
+			ABRecordID abRecordID = [personTagged.addressBookId intValue];
+			NSNumber *number = [NSNumber numberWithInt:abRecordID];
+			[self.group addObject:number];
 		}
-		NSString *allNamesString = [[namesSet allObjects] componentsJoinedByString:@", "];
-		self.personsTaggedView.text = allNamesString;
-		self.personsTaggedView.editable = NO;
+
+		NSOrderedSet *abRecordIDs = [NSOrderedSet orderedSetWithOrderedSet:self.group];
+
+		if (abRecordIDs.count > 0) {
+			self.tagFriendsPlaceholderText.hidden = YES;
+			TaggedPersonPicker *taggedPersonPicker = [[TaggedPersonPicker alloc] init];
+			[taggedPersonPicker layoutScrollView: self.personsTaggedView forGroup: abRecordIDs];
+			[self updatePersonInfo:abRecordIDs];
+
+		} else  {
+			self.tagFriendsPlaceholderText.hidden = NO;
+		}
+
 		self.notesTextView.editable = NO;
-//		self.tagFriendsButton.enabled = NO;
+		self.singleTapGestureRecognizer.enabled = NO;
+
 
 		UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editMode:)];
 
@@ -113,159 +127,17 @@ NSString *const kPlaceHolderText = @"Enter note";
 		if (self.personForNewNote) {
 			[self.mutablePeopleSet addObject: self.personForNewNote];
 			NSString *personName = [NSString stringWithFormat: @"%@ %@", ((Name*)[self.personForNewNote.firstNames anyObject]).name, ((Name*) [self.personForNewNote.lastNames anyObject]).name];
-			self.personsTaggedView.text = personName;
+//			self.personsTaggedView.text = personName;
 			[self.namesArray addObject:personName];
 
 		}
+		self.tagFriendsPlaceholderText.hidden = NO;
 		self.notesTextView.text = kPlaceHolderText;
 		self.notesTextView.textColor = [UIColor lightGrayColor];
-         // if this is a new note, the first thing we want to do is take the note.
-        [self.notesTextView becomeFirstResponder];
+		self.singleTapGestureRecognizer.enabled = YES;
+
 	}
-	//searchController for tagging people cannot be set up in IB, so set it up here
-	self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-	self.searchController.searchResultsUpdater = self;
-	self.searchController.dimsBackgroundDuringPresentation = NO;
-	self.searchController.searchBar.barTintColor = UIColorFromRGBWithAlpha(0x24292f , 0.4);
-	self.searchController.searchBar.tintColor = [UIColor whiteColor];
-	self.searchController.searchBar.delegate = self;
-
-	self.searchView = self.searchController.searchBar;
-	self.definesPresentationContext = YES;
-
-		// Add a tap gesture recognizer to our scrollView
-	UITapGestureRecognizer *singleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(personsTaggedViewTapped:)];
-	singleTapGestureRecognizer.numberOfTapsRequired = 1;
-	singleTapGestureRecognizer.enabled = YES;
-	singleTapGestureRecognizer.cancelsTouchesInView = YES;
-	singleTapGestureRecognizer.delegate = self;
-	[self.personsTaggedView addGestureRecognizer:singleTapGestureRecognizer];
-
-	if (self.addressBook == NULL)
-		{
-		self.addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
-		}
-
-		// Check whether we are authorized to access the user's address book data
-	[self checkAddressBookAccess];
-}
-
-#pragma mark - Address Book access
-
-	// Check the authorization status of our application for Address Book
-- (void)checkAddressBookAccess
-{
-	switch (ABAddressBookGetAuthorizationStatus())
-	{
-			// Update our UI if the user has granted access to their Contacts
-		case kABAuthorizationStatusAuthorized:
-		[self accessGrantedForAddressBook];
-		break;
-			// Prompt the user for access to Contacts if there is no definitive answer
-		case kABAuthorizationStatusNotDetermined :
-		[self requestAddressBookAccess];
-		break;
-			// Display a message if the user has denied or restricted access to Contacts
-		case kABAuthorizationStatusDenied:
-		case kABAuthorizationStatusRestricted:
-		{
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Privacy Warning", @"Privacy Warning")
-														message:NSLocalizedString(@"Permission was not granted for Contacts.", @"Permission was not granted for Contacts.")
-													   delegate:nil
-											  cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
-											  otherButtonTitles:nil];
-		[alert show];
-		}
-		break;
-		default:
-		break;
-	}
-}
-
-	// Prompt the user for access to their Address Book data
-- (void)requestAddressBookAccess
-{
-	NoteViewController* __weak weakSelf = self;
-
-	ABAddressBookRequestAccessWithCompletion(self.addressBook, ^(bool granted, CFErrorRef error)
-											 {
-											 if (granted)
-												 {
-												 dispatch_async(dispatch_get_main_queue(), ^{
-													 [weakSelf accessGrantedForAddressBook];
-
-												 });
-												 }
-											 });
-}
-
-	// This method is called when the user has granted access to their address book data.
-- (void)accessGrantedForAddressBook
-{
-	_people = (__bridge_transfer NSArray *)ABAddressBookCopyArrayOfAllPeople(self.addressBook);
-
-	self.group = [NSMutableOrderedSet orderedSet];
-
-		// Create a filtered list that will contain people for the search results table.
-	self.filteredPeople = [NSMutableArray array];
-}
-#pragma mark - Target-action methods
-
-	// Action receiver for the selecting of name button
-- (void)buttonSelected:(id)sender
-{
-	self.selectedButton = (UIButton *)sender;
-
-		// Clear other button states
-	for (UIView *subview in self.personsTaggedView.subviews)
-		{
-		if ([subview isKindOfClass:[UIButton class]] && subview != self.selectedButton)
-			{
-			((UIButton *)subview).backgroundColor = self.tokenColor;
-			}
-		}
-
-	if (self.selectedButton.backgroundColor == self.selectedTokenColor)
-		{
-		self.selectedButton.backgroundColor = self.tokenColor;
-		}
-	else
-		{
-		self.selectedButton.backgroundColor = self.selectedTokenColor;
-		}
-
-	[self becomeFirstResponder];
-}
-
-	// Action receiver when scrollView is tapped
-- (void)personsTaggedViewTapped:(UITapGestureRecognizer *)gestureRecognizer
-{
-		// Clear button states
-	for (UIView *subview in self.personsTaggedView.subviews)
-		{
-		if ([subview isKindOfClass:[UIButton class]])
-			{
-			((UIButton *)subview).backgroundColor = self.tokenColor;
-			}
-		}
-}
-
-#pragma mark - UIKeyInput protocol conformance
-
-- (BOOL)hasText
-{
-	return NO;
-}
-
-- (void)insertText:(NSString *)text {}
-
-- (void)deleteBackward
-{
-		// Cast tag value to ABRecordID type
-	ABRecordID abRecordID = (ABRecordID)self.selectedButton.tag;
-	ABRecordRef abPerson = ABAddressBookGetPersonWithRecordID(self.addressBook, abRecordID);
-
-	[self removePersonFromGroup:abPerson];
+    // Do any additional setup after loading the view.
 }
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
@@ -284,59 +156,12 @@ NSString *const kPlaceHolderText = @"Enter note";
 		self.navigationItem.title = @"Add Note";
 		self.navigationItem.rightBarButtonItem = saveButton;
 	}
-	self.personsTaggedView.editable = YES;
 	self.notesTextView.editable = YES;
-//	self.tagFriendsButton.enabled = YES;
+	self.tagFriendsPlaceholderText.hidden = NO;
 		//bring up keyboard and move cursor to text view
-	[self.notesTextView becomeFirstResponder];
+//	[self.notesTextView becomeFirstResponder];
 
 }
-
-#pragma mark -
-#pragma mark === UISearchResultsUpdating ===
-#pragma mark -
-
-- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
-{
-	NSString *searchString = searchController.searchBar.text;
-	[self searchForText:searchString];
-	[self.tableView reloadData];
-}
-
-- (void)searchForText:(NSString *)searchText
-{
-		// First clear the filtered array.
-	[self.filteredPeople removeAllObjects];
-
-		// beginswith[cd] predicate
-	NSPredicate *beginsPredicate = [NSPredicate predicateWithFormat:@"(SELF beginswith[cd] %@)", searchText];
-
-	/*
-	 Search the main list for people whose name OR organization matches searchText;
-	 add items that match to the filtered array.
-	 */
-
-	for (id record in self.people)
-		{
-		ABRecordRef person = (__bridge ABRecordRef)record;
-
-		NSString *compositeName = (__bridge_transfer NSString *)ABRecordCopyCompositeName(person);
-		NSString *firstName = (__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
-		NSString *lastName = (__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);
-		NSString *organization = (__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonOrganizationProperty);
-
-			// Match by name or organization
-		if ([beginsPredicate evaluateWithObject:compositeName] ||
-			[beginsPredicate evaluateWithObject:firstName] ||
-			[beginsPredicate evaluateWithObject:lastName] ||
-			[beginsPredicate evaluateWithObject:organization])
-			{
-				// Add the matching person to filteredPeople
-			[self.filteredPeople addObject:(__bridge id)person];
-			}
-		}
-}
-
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
 	if ([[textView text] isEqualToString:kPlaceHolderText]) {
@@ -355,158 +180,45 @@ NSString *const kPlaceHolderText = @"Enter note";
 	}
 	return YES;
 }
-
-#pragma mark - UITableViewDataSource protocol conformance
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-		// do we have search text? if yes, are there search results? if yes, return number of results, otherwise, return 1 (add email row)
-		// if there are no search results, the table is empty, so return 0
-	return self.searchController.searchBar.text.length > 0 ? MAX( 1, self.filteredPeople.count ) : 0 ;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-
-	cell.accessoryType = UITableViewCellAccessoryNone;
-
-		// If this is the last row in filteredPeople, take special action
-	if (self.filteredPeople.count == indexPath.row)
-		{
-		cell.textLabel.text	= @"Add new contact";
-		cell.detailTextLabel.text = nil;
-		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-		}
-	else
-		{
-		ABRecordRef abPerson = (__bridge ABRecordRef)([self.filteredPeople objectAtIndex:indexPath.row]);
-
-		cell.textLabel.text = (__bridge_transfer NSString *)ABRecordCopyCompositeName(abPerson);
-		cell.detailTextLabel.text = (__bridge_transfer NSString *)ABRecordCopyValue(abPerson, kABPersonOrganizationProperty);
-		}
-
-	return cell;
-}
-
-#pragma mark - UITableViewDelegate protocol conformance
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	[tableView setHidden:YES];
-
-	ABRecordRef abRecordRef = (__bridge ABRecordRef)([self.filteredPeople objectAtIndex:indexPath.row]);
-
-	[self addPersonToGroup:abRecordRef];
-
-	self.searchController.searchBar.text = nil;
-}
-
-#pragma mark - Add and remove a person to/from the group
-
-- (void)addPersonToGroup:(ABRecordRef)abRecordRef
-{
-	ABRecordID abRecordID = ABRecordGetRecordID(abRecordRef);
-	NSNumber *number = [NSNumber numberWithInt:abRecordID];
-
-	[self.group addObject:number];
-	[self layoutPersonsTaggedView];
-}
-
-- (void)removePersonFromGroup:(ABRecordRef)abRecordRef
-{
-	ABRecordID abRecordID = ABRecordGetRecordID(abRecordRef);
-	NSNumber *number = [NSNumber numberWithInt:abRecordID];
-
-	[self.group removeObject:number];
-	[self layoutPersonsTaggedView];
-}
-
-#pragma mark - Update Person info
-
-- (void) layoutPersonsTaggedView
-{
-		// Remove existing buttons
-	for (UIView *subview in self.personsTaggedView.subviews)
-		{
-		if ([subview isKindOfClass:[UIButton class]])
-			{
-			[subview removeFromSuperview];
-			}
-		}
-
-	CGFloat maxWidth = self.personsTaggedView.frame.size.width - kPadding;
-	CGFloat xPosition = kPadding;
-	CGFloat yPosition = kPadding;
-
-	for (NSNumber *number in self.group)
-		{
-		ABRecordID abRecordID = [number intValue];
-		ABRecordRef abPerson = ABAddressBookGetPersonWithRecordID(self.addressBook, abRecordID);
-
-			// Copy the name associated with this person record
-		NSString *name = (__bridge_transfer NSString *)ABRecordCopyCompositeName(abPerson);
-
-		UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-
-			// Create the button
-		UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-		[button setTitle:name forState:UIControlStateNormal];
-		[button.titleLabel setFont:font];
-		[button setBackgroundColor:self.tokenColor];
-		[button.layer setCornerRadius:4.0];
-		[button setTag:abRecordID];
-		[button addTarget:self action:@selector(buttonSelected:) forControlEvents:UIControlEventTouchUpInside];
-
-			// Get the width and height of the name string given a font size
-		CGSize nameSize = [name sizeWithAttributes:@{NSFontAttributeName:font}];
-
-		if ((xPosition + nameSize.width + kPadding) > maxWidth)
-			{
-				// Reset horizontal position to left edge of superview's frame
-			xPosition = kPadding;
-
-				// Set vertical position to a new 'line'
-			yPosition += nameSize.height + kPadding;
-			}
-
-			// Create the button's frame
-		CGRect buttonFrame = CGRectMake(xPosition, yPosition, nameSize.width + (kPadding * 2), nameSize.height);
-		[button setFrame:buttonFrame];
-
-			// Add the button to its superview
-		[self.personsTaggedView addSubview:button];
-
-			// Calculate xPosition for the next button in the loop
-		xPosition += button.frame.size.width + kPadding;
-		}
-
-//	if (self.group.count > 0)
-//		{
-//		[self.doneButton setEnabled:YES];
+//- (IBAction)doneButtonPressed:(id)sender {
+//
+//		//sender is UIBarButtonItem
+//
+//	if ([self.personsTaggedView isFirstResponder]) {  //comments entered, Done pressed
+//		[self.personsTaggedView resignFirstResponder];
+//
+//	} else {
+//		if ([self.notesTextView isFirstResponder]) { //location was entered, Done was pressed
+//			[self.notesTextView resignFirstResponder];
 //		}
-//	else
-//		{
-//		[self.doneButton setEnabled:NO];
-//		}
+//	}
+//}
+/*
+#pragma mark - Navigation
 
-		// Set the content size so it can be scrollable
-	CGFloat height = yPosition + 30.0;
-	[self.personsTaggedView setContentSize:CGSizeMake([self.personsTaggedView bounds].size.width, height)];
-
-	[self.searchController.searchBar becomeFirstResponder];
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
 }
+*/
+
+
 #pragma mark - View lifecycle
 
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-//{
-//		// Check the segue identifier
-//	if ([[segue identifier] isEqualToString:@"ShowTaggedPersonPicker"]) {
-//		UINavigationController *navController = segue.destinationViewController;
-//		TaggedPersonPicker *picker = (TaggedPersonPicker *)navController.topViewController;
-//		picker.delegate = self;
-//    }
-//}
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+		// Check the segue identifier
+	if ([[segue identifier] isEqualToString:@"ShowTaggedPersonPicker"])
+		{
+		UINavigationController *navController = segue.destinationViewController;
+		TaggedPersonPicker *picker = (TaggedPersonPicker *)navController.topViewController;
+		picker.title = @"Select contact to tag";
+		picker.maxCount = 999;
+//		picker.group = [[NSMutableOrderedSet alloc initWith
+		picker.delegate = self;
+		}
+}
 
 #pragma mark - Update Person info
 
@@ -514,7 +226,8 @@ NSString *const kPlaceHolderText = @"Enter note";
 {
 	ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
 
-	for (NSNumber *number in abRecordIDs) {
+	for (NSNumber *number in abRecordIDs)
+		{
 		ABRecordID abRecordID = [number intValue];
 
 		ABRecordRef abPerson = ABAddressBookGetPersonWithRecordID(addressBook, abRecordID);
@@ -524,60 +237,73 @@ NSString *const kPlaceHolderText = @"Enter note";
 		Person *person = [ceaselessContacts getCeaselessContactFromABRecord: abPerson];
         [self.mutablePeopleSet addObject: person];
 
-		NSString *name = (__bridge_transfer NSString *)ABRecordCopyCompositeName(abPerson);
-
-        [self.namesArray addObject:name];
-    }
+//		NSString *name = (__bridge_transfer NSString *)ABRecordCopyCompositeName(abPerson);
+//
+//		[self.namesArray addObject:name];
+		}
 
 	CFRelease(addressBook);
 
-	NSString *namesString = [self.namesArray componentsJoinedByString:@", "];
+//	NSString *namesString = [self.namesArray componentsJoinedByString:@", "];
 
-	self.personsTaggedView.text = namesString;
+//	self.personsTaggedView.text = namesString;
 }
 
-//#pragma mark - TaggedPersonPickerDelegate protocol conformance
-//
-//- (void)taggedPersonPickerDidFinish:(TaggedPersonPicker *)taggedPersonPicker
-//					withABRecordIDs:(NSOrderedSet *)abRecordIDs {
-//	[self updatePersonInfo:abRecordIDs];
-//
-//	[taggedPersonPicker dismissViewControllerAnimated:YES completion:NULL];
-//}
-//
-//- (void)taggedPersonPickerDidCancel:(TaggedPersonPicker *)taggedPersonPicker {
-//	[taggedPersonPicker dismissViewControllerAnimated:YES completion:NULL];
-//}
+#pragma mark - TaggedPersonPickerDelegate protocol conformance
+
+- (void)taggedPersonPickerDidFinish:(TaggedPersonPicker *)taggedPersonPicker
+					withABRecordIDs:(NSOrderedSet *)abRecordIDs
+{
+	[self updatePersonInfo: abRecordIDs];
+	if (abRecordIDs.count > 0) {
+		self.tagFriendsPlaceholderText.hidden = YES;
+		[taggedPersonPicker layoutScrollView: self.personsTaggedView forGroup: abRecordIDs];
+		[self updatePersonInfo:abRecordIDs];
+
+	} else  {
+		self.tagFriendsPlaceholderText.hidden = NO;
+	}
+
+	[taggedPersonPicker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)taggedPersonPickerDidCancel:(TaggedPersonPicker *)taggedPersonPicker
+{
+	[taggedPersonPicker dismissViewControllerAnimated:YES completion:NULL];
+}
 
 - (IBAction)saveButtonPressed:(id)sender {
 
 
 	NSError *error = nil;
 
-	NSOrderedSet *abRecordIDs = [NSOrderedSet orderedSetWithOrderedSet:self.group];
-	[self updatePersonInfo:abRecordIDs];
-
-
-    // TODO should we create a key for the note besides the date?
-    // Date is sufficient for now since the same person cannot simultaneously
-    // create two notes, but could this result in two notes with the same "id"?
 	Note *note = [self containsItem:[self.currentNote valueForKey: @"createDate"]];
 	if (note) {
-        //if the object is found, update its fields
+			//if the object is found, update its fields
 //		[note setValue: self.notesTextView.text forKey: @"text"];
 //		[note setValue: [NSDate date] forKey: @"lastUpdatedDate"];
 		note.text = self.notesTextView.text;
 		note.lastUpdatedDate = [NSDate date];
 		[note addPeopleTagged: self.mutablePeopleSet];
+//		for (Person *person in self.mutablePeopleSet) {
+//			NSMutableSet *mutableNoteSet = [[NSMutableSet alloc] initWithSet: person.notes];
+//			[mutableNoteSet addObject: note];
+//			person.notes = [[NSSet alloc] initWithSet: mutableNoteSet];
+//		}
 
 
 	} else {
-        Note *newNote = [NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
+	Note *newNote = [NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
 		[newNote setValue: [NSDate date] forKey: @"createDate"];
 		[newNote setValue: self.notesTextView.text forKey: @"text"];
 		[newNote setValue: [NSDate date] forKey: @"lastUpdatedDate"];
 		[newNote addPeopleTagged: self.mutablePeopleSet];
-    }
+//		for (Person *person in self.mutablePeopleSet) {
+//			NSMutableSet *mutableNoteSet = [[NSMutableSet alloc] initWithSet: person.notes];
+//			[mutableNoteSet addObject: newManagedObject];
+//			person.notes = [[NSSet alloc] initWithSet: mutableNoteSet];
+//		}
+		}
 	if (![self.managedObjectContext save: &error]) {
 		NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
 	}
@@ -625,24 +351,29 @@ NSString *const kPlaceHolderText = @"Enter note";
 }
 #pragma mark - Target-action methods
 
-	// Action receiver for the clicking of Done button
-- (IBAction)doneClick:(id)sender
-{
-
-	[self.delegate noteViewControllerDidFinish:self];
-}
+//	// Action receiver for the clicking of Done button
+//- (IBAction)doneClick:(id)sender
+//{
+//
+//	[self.delegate noteViewControllerDidFinish:self];
+//}
 
 	// Action receiver for the clicking of Cancel button
 - (IBAction)cancelClick:(id)sender
 {
-	[self.group removeAllObjects];
-
 	if (self.delegate) {
 		[self.delegate noteViewControllerDidCancel:self];
 	} else {
 		[self performSegueWithIdentifier:@"UnwindAddNoteSegue" sender: self];
 	}
 }
+
+	// Action receiver for the clicking on personsTaggedView
+- (IBAction)scrollViewTapped:(id)sender
+{
+		[self performSegueWithIdentifier:@"ShowTaggedPersonPicker" sender: self];
+}
+
 - (void) listAll {
 		// Test listing all tagData from the store
 

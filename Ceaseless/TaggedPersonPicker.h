@@ -40,6 +40,11 @@
 // Color of selected token. Default is blackColor.
 @property (nonatomic, strong) UIColor *selectedTokenColor;
 
+@property int maxCount;
+@property (nonatomic, strong) NSOrderedSet *abRecordIDs;
+
+- (void) layoutScrollView: (UIScrollView *) scrollView forGroup: (NSOrderedSet *) abRecordIDs;
+
 @end
 
 @protocol TaggedPersonPickerDelegate <NSObject>

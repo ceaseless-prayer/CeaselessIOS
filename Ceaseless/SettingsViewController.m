@@ -95,6 +95,8 @@
 	if ([[segue identifier] isEqualToString:@"ShowSelectContact"]) {
 		UINavigationController *navController = segue.destinationViewController;
 		TaggedPersonPicker *picker = (TaggedPersonPicker *)navController.topViewController;
+		picker.title = @"Select yourself";
+		picker.maxCount = 1;
 		picker.delegate = self;
 	}
 }

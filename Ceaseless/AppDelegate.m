@@ -66,6 +66,7 @@
     [notification setFireDate:fireDate];
     notification.repeatInterval = NSCalendarUnitWeekday;
     [notification setTimeZone:[NSTimeZone defaultTimeZone]];
+	[notification setSoundName: UILocalNotificationDefaultSoundName];
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 }
 
