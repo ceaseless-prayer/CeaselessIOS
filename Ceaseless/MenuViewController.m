@@ -7,6 +7,7 @@
 //
 
 #import "MenuViewController.h"
+#import "AppConstants.h"
 
 @interface MenuViewController ()
 
@@ -19,7 +20,7 @@
     // Do any additional setup after loading the view.
 	self.tableView.delegate = self;
 	self.tableView.dataSource = self;
-	self.menuInfoArray = [[NSArray alloc] initWithObjects: @"Contact Lists", @"Settings", nil];
+	self.menuInfoArray = [[NSArray alloc] initWithObjects: @"People", @"Settings", @"Developer", nil];
 
 }
 
@@ -59,15 +60,19 @@
 	return NO;
 }
 
-- (void)tableView:(UITableView *)tableView
-didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (indexPath.row == 0) {
 		[self performSegueWithIdentifier:@"ShowContactsLists" sender: self];
 	}
 	if (indexPath.row == 1) {
 		[self performSegueWithIdentifier:@"ShowSettings" sender: self];
 	}
-	
+    if (indexPath.row == 2) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        BOOL developerMode = [defaults boolForKey:kDeveloperMode];
+        [defaults setBool:!developerMode forKey:kDeveloperMode]; // toggle developer mode
+        [defaults synchronize];
+    }
 }
 /*
 #pragma mark - Navigation

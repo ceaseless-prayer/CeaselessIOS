@@ -18,6 +18,7 @@
 #import "PersonViewController.h"
 #import "WebCardViewController.h"
 #import "CeaselessLocalContacts.h"
+#import "AppConstants.h"
 
 /*
  A controller object that manages a simple model -- a collection of month names.
@@ -41,7 +42,6 @@
 @implementation ModelController
 NSString *const kModelRefreshNotification = @"ceaselessModelRefreshed";
 NSString *const kLocalLastRefreshDate = @"localLastRefreshDate";
-NSString *const kDeveloperMode = @"developerMode";
 NSString *const kAnnouncementsUrl = @"http://www.ceaselessprayer.com/announcements/feed";
 NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
 
@@ -88,7 +88,6 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
     }
     
     BOOL developerMode = [defaults boolForKey:kDeveloperMode];
-    developerMode = YES; // TODO turn off this hard wiring
     
     // we consider it a new day if:
     // developer mode is enabled (that way the application refreshes each time it is newly opened)
@@ -161,7 +160,6 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
                                       [[announcements[0] objectForKey:@"date"] doubleValue]];
     
     BOOL developerMode = [defaults boolForKey:kDeveloperMode];
-    developerMode = YES;
     if(developerMode || latestAnnouncementDate > lastAnnouncementDate) {
         NSLog(@"Latest %@ Last %@", latestAnnouncementDate, lastAnnouncementDate);
         result = announcements[0][@"content"];
