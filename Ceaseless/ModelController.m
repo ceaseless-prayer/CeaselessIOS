@@ -42,7 +42,7 @@
 NSString *const kModelRefreshNotification = @"ceaselessModelRefreshed";
 NSString *const kLocalLastRefreshDate = @"localLastRefreshDate";
 NSString *const kDeveloperMode = @"developerMode";
-NSString *const kAnnouncementsUrl = @"http://www.ceaselessprayer.com/announcements/feed.php";
+NSString *const kAnnouncementsUrl = @"http://www.ceaselessprayer.com/announcements/feed";
 NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
 
 // this method sets up the card array for display
@@ -72,7 +72,7 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
     // TODO check the server if new content needs to be shown.
     NSString *announcement = [self getAnnouncements];
     if (announcement) {
-        [_cardArray insertObject: announcement atIndex: 0];
+        [_cardArray addObject: announcement];
     }
 }
 
@@ -144,12 +144,13 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
     
     NSURLResponse *response;
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                                       timeoutInterval:60.0];
+                                                       timeoutInterval:5.0];
     
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setHTTPMethod:@"GET"];
     NSError *error;
+    // TODO make this async for a better user experience?
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
     NSArray *announcements = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     
