@@ -32,6 +32,7 @@
 - (instancetype) initWithManagedObjectContext: (NSManagedObjectContext *) context andAddressBook:(ABAddressBookRef)addressBook {
     self = [super init];
     if (self) {
+        self.syncing = NO;
         self.addressBook = addressBook;
         self.managedObjectContext = context;
         _managedObjectContext = context;
@@ -96,7 +97,8 @@
 
 #pragma mark - Keeping Ceaseless and the address book in sync
 - (void) ensureCeaselessContactsSynced {
-    if(ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
+    if(!_syncing && ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
+        _syncing = YES;
         // refresh address book in the background
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             CFErrorRef error = NULL;
@@ -110,7 +112,7 @@
                 [clc refreshCeaselessContacts];
             }];
             if (addressBook2) CFRelease(addressBook2);
-
+            _syncing = NO;
         });
     }
 }
@@ -275,6 +277,7 @@
             }
         }
         
+        nonMOPerson.addressBookId = abId.recordId;
         nonMOPerson.firstName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonFirstNameProperty));
         nonMOPerson.lastName  = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonLastNameProperty));
         
