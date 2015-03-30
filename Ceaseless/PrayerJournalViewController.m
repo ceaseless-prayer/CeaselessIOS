@@ -154,23 +154,49 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	NSArray *peopleArray = [note.peopleTagged allObjects];
 
 	if ([peopleArray count] > 0) {
-        NonMOPerson *p = [_ceaselessContacts getNonMOPersonForCeaselessContact:[peopleArray firstObject]];
-		cell.topImageView.image = p.profileImage;
-		cell.topImageView.contentMode = UIViewContentModeScaleAspectFit;
+        NonMOPerson *nonMOPerson = [self.ceaselessContacts getNonMOPersonForCeaselessContact:[peopleArray firstObject]];
+		if (nonMOPerson.profileImage) {
+			cell.topImageView.image = nonMOPerson.profileImage;
+			cell.topImageView.contentMode = UIViewContentModeScaleAspectFit;
+			cell.topPlaceholderLabel.hidden = YES;
+			cell.topPlaceholderLabel = nil;
+		} else {
+			cell.topPlaceholderLabel.text = [self initialsForPerson: nonMOPerson];
+			cell.topPlaceholderLabel.hidden = NO;
+			cell.topImageView.image = nil;
+		}
 	} else {
+			//TODO  should this be a picture of self?  nobody was tagged, but there is a note
 		cell.topImageView.image = nil;
+		cell.topImageView.hidden = YES;
+		cell.topPlaceholderLabel = nil;
+		cell.topPlaceholderLabel.hidden = YES;
+
 	}
-    
+
 	if ([peopleArray count] > 1) {
-        NonMOPerson *p = [_ceaselessContacts getNonMOPersonForCeaselessContact:[peopleArray lastObject]];
-		cell.bottomImageView.image = p.profileImage;
-		cell.bottomImageView.contentMode = UIViewContentModeScaleAspectFit;
+		NonMOPerson *nonMOPerson = [self.ceaselessContacts getNonMOPersonForCeaselessContact:[peopleArray lastObject]];
+		if (nonMOPerson.profileImage) {
+			cell.bottomImageView.image = nonMOPerson.profileImage;
+			cell.bottomImageView.contentMode = UIViewContentModeScaleAspectFit;
+			cell.bottomPlaceholderLabel.hidden = YES;
+			cell.bottomPlaceholderLabel = nil;
+		} else {
+			cell.bottomPlaceholderLabel.text = [self initialsForPerson: nonMOPerson];
+			cell.bottomPlaceholderLabel.hidden = NO;
+			cell.bottomImageView.image = nil;
+		}
 	} else {
 		cell.bottomImageView.image = nil;
+		cell.bottomImageView.hidden = YES;
+		cell.bottomPlaceholderLabel = nil;
+		cell.bottomPlaceholderLabel.hidden = YES;
 	}
+
 	NSMutableSet *namesSet = [[NSMutableSet alloc] initWithCapacity: [note.peopleTagged count]];
 	for (Person *personTagged in note.peopleTagged) {
-		NSString *personName = [NSString stringWithFormat: @"%@ %@", ((Name*)[personTagged.firstNames anyObject]).name, ((Name*) [personTagged.lastNames anyObject]).name];
+		NonMOPerson *nonMOPerson = [self.ceaselessContacts getNonMOPersonForCeaselessContact:personTagged];
+		NSString *personName = [NSString stringWithFormat: @"%@ %@", nonMOPerson.firstName, nonMOPerson.lastName];
 		[namesSet addObject: personName];
 	}
 	NSString *allNamesString = [[namesSet allObjects] componentsJoinedByString:@", "];
@@ -184,6 +210,21 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	cell.text.text = [[note valueForKey:@"text"] description];
     cell.backgroundColor = [UIColor clearColor];
 	
+}
+
+- (NSString*) initialsForPerson: (NonMOPerson *) nonMOPerson {
+		// deal with cases of no lastName or firstName
+		// We had an Akbar (null) name show up.
+	if([nonMOPerson.firstName length] == 0) {
+		nonMOPerson.firstName = @" "; // 1 character space for initials if needed
+	}
+	if([nonMOPerson.lastName length] == 0) {
+		nonMOPerson.lastName = @" "; // 1 character space for initials if needed
+	}
+
+	NSString *firstInitial = [nonMOPerson.firstName substringToIndex: 1];
+	NSString *lastInitial = [nonMOPerson.lastName substringToIndex: 1];
+	return [NSString stringWithFormat: @"%@%@", firstInitial, lastInitial];
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
 		// Return NO if you do not want the specified item to be editable.

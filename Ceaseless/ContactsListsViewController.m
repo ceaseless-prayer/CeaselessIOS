@@ -111,18 +111,16 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 			person = [self.fetchedResultsController objectAtIndexPath:indexPath];
 		}
 
-		PersonViewController *personViewController = [[PersonViewController alloc] init];
+		PersonViewController *personViewController = [PersonViewController alloc];
 		personViewController = segue.destinationViewController;
 		personViewController.dataObject = [self.ceaselessContacts getNonMOPersonForCeaselessContact:person];
-//		PersonView* personView = [[[NSBundle mainBundle] loadNibNamed:@"PersonView"
-//																owner:personViewController
-//															  options:nil] objectAtIndex:0];
-//		[personViewController.bigPersonView addSubview: personView];
-//		[personViewController setDynamicViewConstraintsToView: personViewController.bigPersonView forSubview: personView];
 
 	}
 }
-
+- (IBAction)unwindToContactsLists:(UIStoryboardSegue*)sender
+{
+		// Pull any data from the view controller which initiated the unwind segue.
+}
 #pragma mark - Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -150,6 +148,25 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 	ContactsListTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
 	[self configureCell:cell atIndexPath:indexPath];
+	cell.onSwitchChange=^(UITableViewCell *cellAffected){
+		Person *person = [self.fetchedResultsController objectAtIndexPath: indexPath];
+		NonMOPerson *nonMOPerson = [self.ceaselessContacts getNonMOPersonForCeaselessContact:person];
+
+		{
+		switch (self.selectedList){
+			case 0:
+				break;
+			case 1:
+				[nonMOPerson unfavorite];
+				break;
+			case 2:
+				[nonMOPerson enableForCeaseless];
+				break;
+			default:
+				break;
+		}
+		}
+	};
 	return cell;
 }
 
@@ -195,6 +212,7 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 		cell.rowSwitch.hidden = YES;
 	} else {
 		cell.rowSwitch.hidden = NO;
+		cell.rowSwitch.on = YES;
 	}
 	cell.backgroundColor = [UIColor clearColor];
 

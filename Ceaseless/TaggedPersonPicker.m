@@ -33,7 +33,16 @@
 static CGFloat const kPadding = 5.0;
 
 #pragma mark - View lifecycle methods
+- (TaggedPersonPicker *) init {
+	if (self.addressBook == NULL)
+		{
+		self.addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+		}
 
+		// Check whether we are authorized to access the user's address book data
+	[self checkAddressBookAccess];
+	return self;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -41,15 +50,15 @@ static CGFloat const kPadding = 5.0;
     if (!self.tokenColor)
     {
         self.tokenColor = self.view.tintColor;
-	self.tokenColor = [UIColor grayColor];
+	self.tokenColor = [UIColor darkGrayColor];
 
     }
 
     if (!self.selectedTokenColor)
     {
-        self.selectedTokenColor = [UIColor blackColor];
+        self.selectedTokenColor = [UIColor lightGrayColor];
     }
-    
+	
     // Add a tap gesture recognizer to our scrollView
     UITapGestureRecognizer *singleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewTapped:)];
     singleTapGestureRecognizer.numberOfTapsRequired = 1;
@@ -57,14 +66,15 @@ static CGFloat const kPadding = 5.0;
     singleTapGestureRecognizer.cancelsTouchesInView = YES;
     singleTapGestureRecognizer.delegate = self;
     [self.scrollView addGestureRecognizer:singleTapGestureRecognizer];
-    
-    if (self.addressBook == NULL)
-    {
-        self.addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
-    }
 
-    // Check whether we are authorized to access the user's address book data
-    [self checkAddressBookAccess];
+		// Check whether we are authorized to access the user's address book data
+	if (self.addressBook == NULL)
+		{
+		self.addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+		}
+	[self checkAddressBookAccess];
+	[self layoutScrollView:self.scrollView forGroup:self.abRecordIDs];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -136,7 +146,7 @@ static CGFloat const kPadding = 5.0;
 {
 	_people = (__bridge_transfer NSArray *)ABAddressBookCopyArrayOfAllPeople(self.addressBook);
     
-    self.group = [NSMutableOrderedSet orderedSet];
+    self.group = [[NSMutableOrderedSet alloc] initWithOrderedSet:self.abRecordIDs];
 	
 	// Create a filtered list that will contain people for the search results table.
 	self.filteredPeople = [NSMutableArray array];
@@ -147,15 +157,25 @@ static CGFloat const kPadding = 5.0;
 // Action receiver for the clicking of Done button
 - (IBAction)doneClick:(id)sender
 {
-    NSOrderedSet *abRecordIDs = [NSOrderedSet orderedSetWithOrderedSet:self.group];
-    
-	[self.delegate taggedPersonPickerDidFinish:self withABRecordIDs:abRecordIDs];
+	if ([self.group count] > self.maxCount) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
+														message:NSLocalizedString(@"Please select only one name.", @"Please select only one name.")
+													   delegate:nil
+											  cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+											  otherButtonTitles:nil];
+		[alert show];
+	} else {
+		NSOrderedSet *abRecordIDs = [NSOrderedSet orderedSetWithOrderedSet:self.group];
+		[self.delegate taggedPersonPickerDidFinish:self withABRecordIDs:abRecordIDs];
+
+	}
+
 }
 
 // Action receiver for the clicking of Cancel button
 - (IBAction)cancelClick:(id)sender
 {
-	[self.group removeAllObjects];
+//	[self.group removeAllObjects];
 	[self.delegate taggedPersonPickerDidCancel:self];
 }
 
@@ -360,7 +380,10 @@ static CGFloat const kPadding = 5.0;
     NSNumber *number = [NSNumber numberWithInt:abRecordID];
 
     [self.group addObject:number];
-    [self layoutScrollView];
+	self.abRecordIDs = [NSOrderedSet orderedSetWithOrderedSet:self.group];
+	[self layoutScrollView: self.scrollView forGroup: self.abRecordIDs];
+	[self.searchField becomeFirstResponder];
+
 }
 
 - (void)removePersonFromGroup:(ABRecordRef)abRecordRef
@@ -369,15 +392,17 @@ static CGFloat const kPadding = 5.0;
     NSNumber *number = [NSNumber numberWithInt:abRecordID];
     
 	[self.group removeObject:number];
-	[self layoutScrollView];
+	self.abRecordIDs = [NSOrderedSet orderedSetWithOrderedSet:self.group];
+	[self layoutScrollView: self.scrollView forGroup: self.abRecordIDs];
+	[self.searchField becomeFirstResponder];
+
 }
 
 #pragma mark - Update Person info
-
-- (void)layoutScrollView
+- (void) layoutScrollView: (UIScrollView *) scrollView forGroup: (NSOrderedSet *) abRecordIDs
 {
 	// Remove existing buttons
-	for (UIView *subview in self.scrollView.subviews)
+	for (UIView *subview in scrollView.subviews)
     {
 		if ([subview isKindOfClass:[UIButton class]])
         {
@@ -385,11 +410,11 @@ static CGFloat const kPadding = 5.0;
 		}
 	}
     
-	CGFloat maxWidth = self.scrollView.frame.size.width - kPadding;
+	CGFloat maxWidth = [[UIScreen mainScreen] bounds].size.width - 16 - kPadding;
 	CGFloat xPosition = kPadding;
 	CGFloat yPosition = kPadding;
 
-	for (NSNumber *number in self.group)
+	for (NSNumber *number in abRecordIDs)
     {
         ABRecordID abRecordID = [number intValue];
         ABRecordRef abPerson = ABAddressBookGetPersonWithRecordID(self.addressBook, abRecordID);
@@ -397,7 +422,7 @@ static CGFloat const kPadding = 5.0;
         // Copy the name associated with this person record
 		NSString *name = (__bridge_transfer NSString *)ABRecordCopyCompositeName(abPerson);
         
-        UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+        UIFont *font = [UIFont fontWithName:@"AvenirNext-Medium" size:14.0f];
 
 		// Create the button
 		UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -425,13 +450,13 @@ static CGFloat const kPadding = 5.0;
 		[button setFrame:buttonFrame];
         
         // Add the button to its superview
-		[self.scrollView addSubview:button];
+		[scrollView addSubview:button];
 		
 		// Calculate xPosition for the next button in the loop
 		xPosition += button.frame.size.width + kPadding;
 	}
     
-    if (self.group.count > 0)
+    if (abRecordIDs.count > 0)
     {
         [self.doneButton setEnabled:YES];
     }
@@ -442,9 +467,8 @@ static CGFloat const kPadding = 5.0;
 
 	// Set the content size so it can be scrollable
     CGFloat height = yPosition + 30.0;
-	[self.scrollView setContentSize:CGSizeMake([self.scrollView bounds].size.width, height)];
+	[scrollView setContentSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width - 16, height)];
 
-	[self.searchField becomeFirstResponder];
 }
 
 #pragma mark - ABPeoplePickerNavigationControllerDelegate protocol conformance

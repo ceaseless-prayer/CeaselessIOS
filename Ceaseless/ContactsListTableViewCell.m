@@ -24,4 +24,7 @@
 
 }
 
+- (IBAction)switchChanged:(id)sender {
+	self.onSwitchChange(self);
+}
 @end

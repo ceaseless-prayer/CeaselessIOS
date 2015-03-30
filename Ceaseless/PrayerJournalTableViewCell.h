@@ -12,6 +12,8 @@
 @property (weak, nonatomic) IBOutlet UIView *notesContentView;
 @property (weak, nonatomic) IBOutlet UIView *cellBackground;
 @property (weak, nonatomic) IBOutlet UIImageView *topImageView;
+@property (weak, nonatomic) IBOutlet UILabel *topPlaceholderLabel;
+@property (weak, nonatomic) IBOutlet UILabel *bottomPlaceholderLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *bottomImageView;
 @property (weak, nonatomic) IBOutlet UILabel *peopleTagged;
 @property (weak, nonatomic) IBOutlet UILabel *date;

@@ -17,6 +17,10 @@
 	[self.topImageView setClipsToBounds:YES];
 	self.bottomImageView.layer.cornerRadius = 6.0f;
 	[self.bottomImageView setClipsToBounds:YES];
+	self.topPlaceholderLabel.layer.cornerRadius = 6.0f;
+	[self.topPlaceholderLabel setClipsToBounds:YES];
+	self.bottomPlaceholderLabel.layer.cornerRadius = 6.0f;
+	[self.bottomPlaceholderLabel setClipsToBounds:YES];
 
 }
 
