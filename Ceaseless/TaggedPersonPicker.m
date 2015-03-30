@@ -33,7 +33,16 @@
 static CGFloat const kPadding = 5.0;
 
 #pragma mark - View lifecycle methods
+- (TaggedPersonPicker *) init {
+	if (self.addressBook == NULL)
+		{
+		self.addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+		}
 
+		// Check whether we are authorized to access the user's address book data
+	[self checkAddressBookAccess];
+	return self;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -57,14 +66,15 @@ static CGFloat const kPadding = 5.0;
     singleTapGestureRecognizer.cancelsTouchesInView = YES;
     singleTapGestureRecognizer.delegate = self;
     [self.scrollView addGestureRecognizer:singleTapGestureRecognizer];
-    
-    if (self.addressBook == NULL)
-    {
-        self.addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
-    }
 
-    // Check whether we are authorized to access the user's address book data
-    [self checkAddressBookAccess];
+		// Check whether we are authorized to access the user's address book data
+	if (self.addressBook == NULL)
+		{
+		self.addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+		}
+	[self checkAddressBookAccess];
+	[self layoutScrollView:self.scrollView forGroup:self.abRecordIDs];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -136,7 +146,7 @@ static CGFloat const kPadding = 5.0;
 {
 	_people = (__bridge_transfer NSArray *)ABAddressBookCopyArrayOfAllPeople(self.addressBook);
     
-    self.group = [NSMutableOrderedSet orderedSet];
+    self.group = [[NSMutableOrderedSet alloc] initWithOrderedSet:self.abRecordIDs];
 	
 	// Create a filtered list that will contain people for the search results table.
 	self.filteredPeople = [NSMutableArray array];
@@ -400,7 +410,7 @@ static CGFloat const kPadding = 5.0;
 		}
 	}
     
-	CGFloat maxWidth = scrollView.frame.size.width - kPadding;
+	CGFloat maxWidth = [[UIScreen mainScreen] bounds].size.width - 16 - kPadding;
 	CGFloat xPosition = kPadding;
 	CGFloat yPosition = kPadding;
 
@@ -412,7 +422,7 @@ static CGFloat const kPadding = 5.0;
         // Copy the name associated with this person record
 		NSString *name = (__bridge_transfer NSString *)ABRecordCopyCompositeName(abPerson);
         
-        UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+        UIFont *font = [UIFont fontWithName:@"AvenirNext-Medium" size:14.0f];
 
 		// Create the button
 		UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -457,7 +467,7 @@ static CGFloat const kPadding = 5.0;
 
 	// Set the content size so it can be scrollable
     CGFloat height = yPosition + 30.0;
-	[scrollView setContentSize:CGSizeMake([scrollView bounds].size.width, height)];
+	[scrollView setContentSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width - 16, height)];
 
 }
 

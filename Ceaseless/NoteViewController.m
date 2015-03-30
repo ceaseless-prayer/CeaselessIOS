@@ -19,7 +19,7 @@
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) UINavigationItem *item;
 @property (strong, nonatomic) NSMutableSet *mutablePeopleSet;
-@property (nonatomic, strong) NSMutableOrderedSet *group;
+@property (nonatomic, strong) NSOrderedSet *abRecordIDs;
 @property (strong, nonatomic) UITapGestureRecognizer *singleTapGestureRecognizer;
 
 @end
@@ -66,7 +66,14 @@ NSString *const kPlaceHolderText = @"Enter note";
 		[self.view addSubview:navBar];
 
 	}
-		//if there is a note, just display it and set the right bar button to "Edit"
+
+	UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveButtonPressed:)];
+
+	if (!self.navigationController) {
+		self.item.rightBarButtonItem = saveButton;
+	} else {
+		self.navigationItem.rightBarButtonItem = saveButton;
+	}
 //	[self listAll];
 	if (self.currentNote) {
 		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -77,64 +84,49 @@ NSString *const kPlaceHolderText = @"Enter note";
 		self.notesTextView.text = [self.currentNote valueForKey: @"text"];
 		NSSet *peopleTagged = [self.currentNote valueForKey: @"peopleTagged"];
 
-		self.group = [NSMutableOrderedSet orderedSet];
+		NSMutableOrderedSet *group = [NSMutableOrderedSet orderedSet];
 
 		for (Person *personTagged in peopleTagged) {
-			ABRecordID abRecordID = [personTagged.addressBookId intValue];
+			CeaselessLocalContacts *ceaselessLocalContacts = [[CeaselessLocalContacts alloc] init];
+			NonMOPerson *nonMOPerson = [ceaselessLocalContacts getNonMOPersonForCeaselessContact: personTagged];
+
+			ABRecordID abRecordID = [nonMOPerson.addressBookId intValue];
 			NSNumber *number = [NSNumber numberWithInt:abRecordID];
-			[self.group addObject:number];
+			[group addObject:number];
 		}
 
-		NSOrderedSet *abRecordIDs = [NSOrderedSet orderedSetWithOrderedSet:self.group];
+		self.abRecordIDs = [NSOrderedSet orderedSetWithOrderedSet: group];
 
-		if (abRecordIDs.count > 0) {
+		if (self.abRecordIDs.count > 0) {
 			self.tagFriendsPlaceholderText.hidden = YES;
 			TaggedPersonPicker *taggedPersonPicker = [[TaggedPersonPicker alloc] init];
-			[taggedPersonPicker layoutScrollView: self.personsTaggedView forGroup: abRecordIDs];
-			[self updatePersonInfo:abRecordIDs];
+			[taggedPersonPicker layoutScrollView: self.personsTaggedView forGroup: self.abRecordIDs];
+			[self updatePersonInfo:self.abRecordIDs];
 
 		} else  {
 			self.tagFriendsPlaceholderText.hidden = NO;
 		}
 
-		self.notesTextView.editable = NO;
-		self.singleTapGestureRecognizer.enabled = NO;
-
-
-		UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editMode:)];
-
-		if (!self.navigationController) {
-			self.item.title = [dateFormatter stringFromDate:date];
-			self.item.rightBarButtonItem = editButton;
-		} else {
-			self.navigationItem.title = [dateFormatter stringFromDate:date];
-			self.navigationItem.rightBarButtonItem = editButton;
-		}
+		self.notesTextView.editable = YES;
 
 	} else {
-			//no note passed in, so add a new note, set right bar button to "Save"
-
-		UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveButtonPressed:)];
+			//no note passed in, so add a new note
 
 		if (!self.navigationController) {
 			self.item.title = @"Add Note";
-			self.item.rightBarButtonItem = saveButton;
 		} else {
 			self.navigationItem.title = @"Add Note";
-			self.navigationItem.rightBarButtonItem = saveButton;
 		}
 
 		if (self.personForNewNote) {
 			[self.mutablePeopleSet addObject: self.personForNewNote];
 			NSString *personName = [NSString stringWithFormat: @"%@ %@", ((Name*)[self.personForNewNote.firstNames anyObject]).name, ((Name*) [self.personForNewNote.lastNames anyObject]).name];
-//			self.personsTaggedView.text = personName;
 			[self.namesArray addObject:personName];
 
 		}
 		self.tagFriendsPlaceholderText.hidden = NO;
 		self.notesTextView.text = kPlaceHolderText;
 		self.notesTextView.textColor = [UIColor lightGrayColor];
-		self.singleTapGestureRecognizer.enabled = YES;
 
 	}
     // Do any additional setup after loading the view.
@@ -147,21 +139,7 @@ NSString *const kPlaceHolderText = @"Enter note";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void) editMode: (id) sender {
-	UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveButtonPressed:)];
-	if (!self.navigationController) {
-		self.item.title = @"Add Note";
-		self.item.rightBarButtonItem = saveButton;
-	} else {
-		self.navigationItem.title = @"Add Note";
-		self.navigationItem.rightBarButtonItem = saveButton;
-	}
-	self.notesTextView.editable = YES;
-	self.tagFriendsPlaceholderText.hidden = NO;
-		//bring up keyboard and move cursor to text view
-//	[self.notesTextView becomeFirstResponder];
 
-}
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
 	if ([[textView text] isEqualToString:kPlaceHolderText]) {
@@ -180,29 +158,6 @@ NSString *const kPlaceHolderText = @"Enter note";
 	}
 	return YES;
 }
-//- (IBAction)doneButtonPressed:(id)sender {
-//
-//		//sender is UIBarButtonItem
-//
-//	if ([self.personsTaggedView isFirstResponder]) {  //comments entered, Done pressed
-//		[self.personsTaggedView resignFirstResponder];
-//
-//	} else {
-//		if ([self.notesTextView isFirstResponder]) { //location was entered, Done was pressed
-//			[self.notesTextView resignFirstResponder];
-//		}
-//	}
-//}
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 
 #pragma mark - View lifecycle
 
@@ -215,7 +170,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 		TaggedPersonPicker *picker = (TaggedPersonPicker *)navController.topViewController;
 		picker.title = @"Select contact to tag";
 		picker.maxCount = 999;
-//		picker.group = [[NSMutableOrderedSet alloc initWith
+		picker.abRecordIDs = self.abRecordIDs;
 		picker.delegate = self;
 		}
 }
@@ -236,17 +191,10 @@ NSString *const kPlaceHolderText = @"Enter note";
 		[ceaselessContacts updateCeaselessContactFromABRecord: abPerson];
 		Person *person = [ceaselessContacts getCeaselessContactFromABRecord: abPerson];
         [self.mutablePeopleSet addObject: person];
-
-//		NSString *name = (__bridge_transfer NSString *)ABRecordCopyCompositeName(abPerson);
-//
-//		[self.namesArray addObject:name];
 		}
 
 	CFRelease(addressBook);
 
-//	NSString *namesString = [self.namesArray componentsJoinedByString:@", "];
-
-//	self.personsTaggedView.text = namesString;
 }
 
 #pragma mark - TaggedPersonPickerDelegate protocol conformance
@@ -280,17 +228,9 @@ NSString *const kPlaceHolderText = @"Enter note";
 	Note *note = [self containsItem:[self.currentNote valueForKey: @"createDate"]];
 	if (note) {
 			//if the object is found, update its fields
-//		[note setValue: self.notesTextView.text forKey: @"text"];
-//		[note setValue: [NSDate date] forKey: @"lastUpdatedDate"];
 		note.text = self.notesTextView.text;
 		note.lastUpdatedDate = [NSDate date];
 		[note addPeopleTagged: self.mutablePeopleSet];
-//		for (Person *person in self.mutablePeopleSet) {
-//			NSMutableSet *mutableNoteSet = [[NSMutableSet alloc] initWithSet: person.notes];
-//			[mutableNoteSet addObject: note];
-//			person.notes = [[NSSet alloc] initWithSet: mutableNoteSet];
-//		}
-
 
 	} else {
 	Note *newNote = [NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
@@ -298,11 +238,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 		[newNote setValue: self.notesTextView.text forKey: @"text"];
 		[newNote setValue: [NSDate date] forKey: @"lastUpdatedDate"];
 		[newNote addPeopleTagged: self.mutablePeopleSet];
-//		for (Person *person in self.mutablePeopleSet) {
-//			NSMutableSet *mutableNoteSet = [[NSMutableSet alloc] initWithSet: person.notes];
-//			[mutableNoteSet addObject: newManagedObject];
-//			person.notes = [[NSSet alloc] initWithSet: mutableNoteSet];
-//		}
+
 		}
 	if (![self.managedObjectContext save: &error]) {
 		NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
@@ -351,13 +287,6 @@ NSString *const kPlaceHolderText = @"Enter note";
 }
 #pragma mark - Target-action methods
 
-//	// Action receiver for the clicking of Done button
-//- (IBAction)doneClick:(id)sender
-//{
-//
-//	[self.delegate noteViewControllerDidFinish:self];
-//}
-
 	// Action receiver for the clicking of Cancel button
 - (IBAction)cancelClick:(id)sender
 {
@@ -371,7 +300,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 	// Action receiver for the clicking on personsTaggedView
 - (IBAction)scrollViewTapped:(id)sender
 {
-		[self performSegueWithIdentifier:@"ShowTaggedPersonPicker" sender: self];
+	[self performSegueWithIdentifier:@"ShowTaggedPersonPicker" sender: self];
 }
 
 - (void) listAll {
