@@ -2,11 +2,7 @@
 //  Person.h
 //  Ceaseless
 //
-//  This class stores information about person necessary for identification and holds relationships
-//  With user and system generated content about that person. It defers to local address books to fill
-//  in contact information details rather than storing everything itself.
-//
-//  Created by Christopher Lim on 3/18/15.
+//  Created by Christopher Lim on 3/30/15.
 //  Copyright (c) 2015 Christopher Lim. All rights reserved.
 //
 
@@ -17,7 +13,6 @@
 
 @interface Person : NSManagedObject
 
-@property (nonatomic, retain) NSString * addressBookId;
 @property (nonatomic, retain) NSString * ceaselessId;
 @property (nonatomic, retain) NSDate * favoritedDate;
 @property (nonatomic, retain) NSDate * removedDate;

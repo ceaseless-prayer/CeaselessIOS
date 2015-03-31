@@ -2,7 +2,7 @@
 //  Person.m
 //  Ceaseless
 //
-//  Created by Christopher Lim on 3/18/15.
+//  Created by Christopher Lim on 3/30/15.
 //  Copyright (c) 2015 Christopher Lim. All rights reserved.
 //
 
@@ -18,7 +18,6 @@
 
 @implementation Person
 
-@dynamic addressBookId;
 @dynamic ceaselessId;
 @dynamic favoritedDate;
 @dynamic removedDate;

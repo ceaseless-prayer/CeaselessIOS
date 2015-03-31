@@ -10,4 +10,5 @@
 
 @interface AppConstants : NSObject
     FOUNDATION_EXPORT NSString *const kDeveloperMode;
+    FOUNDATION_EXPORT NSString *const kDailyPersonCount;
 @end

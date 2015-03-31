@@ -12,6 +12,7 @@
 #import "CeaselessLocalContacts.h"
 #import "PrayerRecord.h"
 #import "PeopleQueue.h"
+#import "AppConstants.h"
 
 @interface PersonPicker ()
 
@@ -29,8 +30,8 @@
     if (self) {
         AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
         int dailyPersonCount;
-        if ([[NSUserDefaults standardUserDefaults] doubleForKey:@"DailyPersonCount"]) {
-            dailyPersonCount= [[NSUserDefaults standardUserDefaults] doubleForKey:@"DailyPersonCount"];
+        if ([[NSUserDefaults standardUserDefaults] doubleForKey:kDailyPersonCount]) {
+            dailyPersonCount= [[NSUserDefaults standardUserDefaults] doubleForKey:kDailyPersonCount];
         } else {
             dailyPersonCount = 5;
         }
