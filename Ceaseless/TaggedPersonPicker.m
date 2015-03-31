@@ -33,16 +33,6 @@
 static CGFloat const kPadding = 5.0;
 
 #pragma mark - View lifecycle methods
-- (TaggedPersonPicker *) init {
-	if (self.addressBook == NULL)
-		{
-		self.addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
-		}
-
-		// Check whether we are authorized to access the user's address book data
-	[self checkAddressBookAccess];
-	return self;
-}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -50,13 +40,13 @@ static CGFloat const kPadding = 5.0;
     if (!self.tokenColor)
     {
         self.tokenColor = self.view.tintColor;
-	self.tokenColor = [UIColor darkGrayColor];
+	self.tokenColor = [UIColor lightGrayColor];
 
     }
 
     if (!self.selectedTokenColor)
     {
-        self.selectedTokenColor = [UIColor lightGrayColor];
+        self.selectedTokenColor = [UIColor darkGrayColor];
     }
 	
     // Add a tap gesture recognizer to our scrollView
@@ -82,6 +72,7 @@ static CGFloat const kPadding = 5.0;
     [super viewWillAppear:animated];
 
     // Keep the keyboard up
+	self.searchField.hidden = YES;
     [self.searchField becomeFirstResponder];
 }
 
