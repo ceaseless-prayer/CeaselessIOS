@@ -11,6 +11,8 @@
 @interface ScriptureView : UIView
 @property (weak, nonatomic) IBOutlet UIView *cardView;
 @property (weak, nonatomic) IBOutlet UIView *shadowView;
+@property (weak, nonatomic) IBOutlet UIImageView *scriptureImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *reflectedScriptureImageView;
 @property (weak, nonatomic) IBOutlet UITextView *scriptureTextView;
 @property (weak, nonatomic) IBOutlet UILabel *scriptureReferenceLabel;
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;

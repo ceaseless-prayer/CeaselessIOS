@@ -43,6 +43,7 @@
 NSString *const kModelRefreshNotification = @"ceaselessModelRefreshed";
 NSString *const kLocalLastRefreshDate = @"localLastRefreshDate";
 NSString *const kAnnouncementsUrl = @"http://www.ceaselessprayer.com/announcements/feed";
+NSString *const kScriptureImagesUrl = @"http://test.ceaselessprayer.com/api/getAScriptureImage";
 NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
 
 // this method sets up the card array for display
@@ -115,9 +116,8 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];
         
-        
         [ceaselessContacts ensureCeaselessContactsSynced];
-        
+        [self getNewBackgroundImage];
         NSLog(@"Ceaseless has been refreshed");
     }
 
@@ -169,6 +169,40 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
     }
 
     return result;
+}
+
+- (void) getNewBackgroundImage {
+    // get a background image url
+    // fetch the image
+    // store it in a local file (overwrite the existing one)
+    // save the url to the file in defaults
+    // the app will use that background image next time it loads
+    NSURL *url = [NSURL URLWithString: kScriptureImagesUrl];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:5.0];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setHTTPMethod:@"GET"];
+    
+    // TODO make this async for a better user experience?
+    // put it on a non-main queue
+    [NSURLConnection sendAsynchronousRequest:request queue: [NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        NSError *error;
+        NSDictionary *imageUrl = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        NSLog(@"%@", imageUrl);
+        [request setURL: [NSURL URLWithString: [imageUrl objectForKey:@"imageUrl"]]];
+        NSData *imageData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentDirectory = [paths objectAtIndex:0];
+        NSString *imagePath = [documentDirectory stringByAppendingPathComponent:kDynamicBackgroundImage];
+        
+        if (![imageData writeToFile:imagePath atomically:YES]) {
+            NSLog(@"Failed to cache image data to disk %@", imagePath);
+        } else {
+            NSLog(@"the cachedImagedPath is %@", imagePath);
+        }
+    }];
 }
 
 #pragma mark - RootViewController/PageViewController methods

@@ -9,6 +9,7 @@
 #import "ScriptureViewController.h"
 #import "ScriptureQueue.h"
 #import "AppDelegate.h"
+#import "AppConstants.h"
 
 @interface ScriptureViewController ()
 
@@ -22,10 +23,23 @@
 	[super viewDidLoad];
     AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
     self.managedObjectContext = appDelegate.managedObjectContext;
+    
     // Do any additional setup after loading the view, typically from a nib.
 	[self formatCardView: self.scriptureView.cardView withShadowView:self.scriptureView.shadowView];
     self.scriptureView.scriptureReferenceLabel.text = [self.dataObject valueForKey: @"citation" ];
     self.scriptureView.scriptureTextView.text = [self.dataObject valueForKey: @"verse"];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [paths objectAtIndex:0];
+    NSString *imagePath = [documentDirectory stringByAppendingPathComponent:kDynamicBackgroundImage];
+    UIImage *scriptureImage = [UIImage imageWithContentsOfFile:imagePath];
+    if(scriptureImage != nil) {
+        self.scriptureView.scriptureImageView.image = scriptureImage;
+        self.scriptureView.reflectedScriptureImageView.transform = CGAffineTransformMake(1, 0, 0, -1, 0, 0);
+        self.scriptureView.reflectedScriptureImageView.image = scriptureImage;
+    }
+
+    
     //scroll text to top of view
     [self.scriptureView.scriptureTextView scrollRangeToVisible: (NSMakeRange(0, 0))];
 }
