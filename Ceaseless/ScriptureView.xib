@@ -22,8 +22,16 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ayC-9B-Mxc" userLabel="CardView">
                             <rect key="frame" x="8" y="2" width="584" height="596"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Screen Shot 2015-02-18 at 8.22.42 AM.png" translatesAutoresizingMaskIntoConstraints="NO" id="mnf-Gd-yPc">
-                                    <rect key="frame" x="0.0" y="0.0" width="584" height="596"/>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Screen Shot 2015-02-18 at 8.22.42 AM.png" translatesAutoresizingMaskIntoConstraints="NO" id="mnf-Gd-yPc" userLabel="ScriptureImage">
+                                    <rect key="frame" x="0.0" y="0.0" width="584" height="168"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="100" id="a36-58-Uf6"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="a36-58-Uf6"/>
+                                        </mask>
+                                    </variation>
                                 </imageView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DL6-Do-MjI" userLabel="ClearTopView">
                                     <rect key="frame" x="0.0" y="0.0" width="584" height="168"/>
@@ -43,6 +51,9 @@
                                         </mask>
                                     </variation>
                                 </view>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Screen Shot 2015-02-18 at 8.22.42 AM.png" translatesAutoresizingMaskIntoConstraints="NO" id="xeq-iM-Snz" userLabel="ScriptureImageReflection">
+                                    <rect key="frame" x="0.0" y="168" width="584" height="428"/>
+                                </imageView>
                                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h1U-rN-1q2">
                                     <rect key="frame" x="0.0" y="168" width="584" height="428"/>
                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="MVu-Vi-9iM">
@@ -123,24 +134,34 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="h1U-rN-1q2" secondAttribute="bottom" id="52w-vh-65A"/>
+                                <constraint firstItem="h1U-rN-1q2" firstAttribute="top" secondItem="mnf-Gd-yPc" secondAttribute="bottom" id="CJm-bW-m75"/>
                                 <constraint firstAttribute="trailing" secondItem="K9c-0F-rJa" secondAttribute="trailing" constant="12" id="DAt-WM-D6a"/>
                                 <constraint firstAttribute="trailing" secondItem="DL6-Do-MjI" secondAttribute="trailing" id="DrH-bw-CfI"/>
                                 <constraint firstItem="h1U-rN-1q2" firstAttribute="top" secondItem="K9c-0F-rJa" secondAttribute="bottom" constant="12" id="Gt0-wp-l8J"/>
                                 <constraint firstAttribute="trailing" secondItem="h1U-rN-1q2" secondAttribute="trailing" id="HR7-jC-B51"/>
+                                <constraint firstAttribute="trailing" secondItem="xeq-iM-Snz" secondAttribute="trailing" id="L3r-Vt-5kF"/>
                                 <constraint firstAttribute="bottom" secondItem="K9c-0F-rJa" secondAttribute="bottom" constant="12" id="NS0-fB-bdT"/>
                                 <constraint firstItem="DL6-Do-MjI" firstAttribute="top" secondItem="ayC-9B-Mxc" secondAttribute="top" id="POi-To-WBF"/>
                                 <constraint firstItem="h1U-rN-1q2" firstAttribute="leading" secondItem="ayC-9B-Mxc" secondAttribute="leading" id="S6q-Qh-pMF"/>
+                                <constraint firstItem="xeq-iM-Snz" firstAttribute="top" secondItem="DL6-Do-MjI" secondAttribute="bottom" id="a22-IT-iGM"/>
                                 <constraint firstItem="DL6-Do-MjI" firstAttribute="width" secondItem="h1U-rN-1q2" secondAttribute="height" multiplier="600:440" id="dNk-ET-sHa"/>
                                 <constraint firstItem="mnf-Gd-yPc" firstAttribute="leading" secondItem="ayC-9B-Mxc" secondAttribute="leading" id="eVf-2B-Jb7"/>
                                 <constraint firstItem="h1U-rN-1q2" firstAttribute="top" secondItem="DL6-Do-MjI" secondAttribute="bottom" id="flQ-fe-MDC"/>
+                                <constraint firstItem="xeq-iM-Snz" firstAttribute="leading" secondItem="ayC-9B-Mxc" secondAttribute="leading" id="g49-9B-utC"/>
                                 <constraint firstAttribute="bottom" secondItem="mnf-Gd-yPc" secondAttribute="bottom" id="hlK-pn-f7H"/>
+                                <constraint firstAttribute="bottom" secondItem="xeq-iM-Snz" secondAttribute="bottom" id="ki6-P7-gYL"/>
                                 <constraint firstAttribute="trailing" secondItem="mnf-Gd-yPc" secondAttribute="trailing" id="nO6-9t-hUN"/>
+                                <constraint firstAttribute="bottom" secondItem="mnf-Gd-yPc" secondAttribute="bottom" id="ri9-i7-luV"/>
                                 <constraint firstItem="mnf-Gd-yPc" firstAttribute="top" secondItem="ayC-9B-Mxc" secondAttribute="top" id="utP-Iw-Ylz"/>
                                 <constraint firstItem="DL6-Do-MjI" firstAttribute="leading" secondItem="ayC-9B-Mxc" secondAttribute="leading" id="xao-gw-oHY"/>
+                                <constraint firstItem="K9c-0F-rJa" firstAttribute="top" secondItem="mnf-Gd-yPc" secondAttribute="bottom" id="ycL-I6-kL6"/>
                             </constraints>
                             <variation key="default">
                                 <mask key="constraints">
+                                    <exclude reference="hlK-pn-f7H"/>
+                                    <exclude reference="ri9-i7-luV"/>
                                     <exclude reference="Gt0-wp-l8J"/>
+                                    <exclude reference="ycL-I6-kL6"/>
                                 </mask>
                             </variation>
                         </view>
@@ -182,6 +203,8 @@
             </constraints>
             <connections>
                 <outlet property="cardView" destination="ayC-9B-Mxc" id="fEF-dD-I25"/>
+                <outlet property="reflectedScriptureImageView" destination="xeq-iM-Snz" id="UVf-LK-hxq"/>
+                <outlet property="scriptureImageView" destination="mnf-Gd-yPc" id="scz-Jb-DWH"/>
                 <outlet property="scriptureReferenceLabel" destination="240-mT-dOI" id="Awp-ck-Jpp"/>
                 <outlet property="scriptureTextView" destination="8Wq-k1-EVN" id="gbt-5G-T8C"/>
                 <outlet property="shadowView" destination="RjN-8D-eYh" id="cUL-Ym-EGX"/>
