@@ -12,6 +12,7 @@
 #import "PersonPicker.h"
 #import "CeaselessLocalContacts.h"
 #import "Name.h"
+#import "AppUtils.h"
 
 @interface NoteViewController ()
 
@@ -37,7 +38,13 @@ static CGFloat const kPadding = 5.0;
 NSString *const kPlaceHolderText = @"Enter note";
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+	[super viewDidLoad];
+
+	UIImage *backgroundImage = [AppUtils getDynamicBackgroundImage];
+	if(backgroundImage != nil) {
+		self.backgroundImageView.image = backgroundImage;
+	}
+	
 	if (!self.tokenColor) {
 		self.tokenColor = self.view.tintColor;
 		self.tokenColor = [UIColor lightGrayColor];
@@ -512,6 +519,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 	// Action receiver for the clicking on personsTaggedView
 - (IBAction)scrollViewTapped:(id)sender
 {
+	self.tagFriendsPlaceholderText.hidden = YES;
 	[self.searchField becomeFirstResponder];
 	self.searchField.hidden = NO;
 

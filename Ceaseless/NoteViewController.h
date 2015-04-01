@@ -22,6 +22,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 
 @property (nonatomic, weak) id<NoteViewControllerDelegate> delegate;
 
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @property (weak, nonatomic) IBOutlet UIScrollView *personsTaggedView;
 @property (weak, nonatomic) IBOutlet UITableView *contactsTableView;
 @property (weak, nonatomic) IBOutlet UILabel *tagFriendsPlaceholderText;
