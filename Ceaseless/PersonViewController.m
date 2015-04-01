@@ -12,6 +12,7 @@
 #import "NonMOPerson.h"
 #import "AppDelegate.h"
 #import "ModelController.h"
+#import "AppUtils.h"
 #import <MessageUI/MessageUI.h>
 
 @interface PersonViewController () <MFMessageComposeViewControllerDelegate>
@@ -67,6 +68,11 @@ static NSString *kSMSMessage;
 		self.personView.placeholderText.hidden = NO;
 		self.personView.placeholderText.text = [NSString stringWithFormat: @"%@%@", firstInitial, lastInitial];
 	}
+    
+    UIImage *backgroundImage = [AppUtils getDynamicBackgroundImage];
+    if(backgroundImage != nil) {
+        self.personView.personCardBackground.image = backgroundImage;
+    }
 
 	[self.personView.moreButton addTarget:self
 								   action:@selector(presentActionSheet:)forControlEvents:UIControlEventTouchUpInside];

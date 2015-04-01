@@ -18,17 +18,26 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 
 @protocol NoteViewControllerDelegate;
 
-@interface NoteViewController : UIViewController <TaggedPersonPickerDelegate, UITextViewDelegate, UIGestureRecognizerDelegate>
+@interface NoteViewController : UIViewController < UITextViewDelegate, UIGestureRecognizerDelegate, UISearchBarDelegate, UIKeyInput, UITableViewDataSource, UITableViewDelegate, ABNewPersonViewControllerDelegate, ABPeoplePickerNavigationControllerDelegate>
 
 @property (nonatomic, weak) id<NoteViewControllerDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *personsTaggedView;
+@property (weak, nonatomic) IBOutlet UITableView *contactsTableView;
 @property (weak, nonatomic) IBOutlet UILabel *tagFriendsPlaceholderText;
 @property (weak, nonatomic) IBOutlet UITextView *notesTextView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceTopToView;
 
 @property (strong, nonatomic) Note *currentNote;
 @property (strong, nonatomic) Person *personForNewNote;
+	// Color of tokens. Default is the global tintColor
+@property (nonatomic, strong) UIColor *tokenColor;
+
+	// Color of selected token. Default is blackColor.
+@property (nonatomic, strong) UIColor *selectedTokenColor;
+	// The Address Book to browse. All contacts returned will be from that ABAddressBook instance.
+	// If not set, a new ABAddressBookRef will be created the first time the property is accessed.
+@property (nonatomic, readwrite) ABAddressBookRef addressBook;
 
 - (IBAction)saveButtonPressed:(id)sender;
 

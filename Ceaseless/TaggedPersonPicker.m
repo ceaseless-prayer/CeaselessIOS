@@ -33,16 +33,6 @@
 static CGFloat const kPadding = 5.0;
 
 #pragma mark - View lifecycle methods
-- (TaggedPersonPicker *) init {
-	if (self.addressBook == NULL)
-		{
-		self.addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
-		}
-
-		// Check whether we are authorized to access the user's address book data
-	[self checkAddressBookAccess];
-	return self;
-}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -50,15 +40,22 @@ static CGFloat const kPadding = 5.0;
     if (!self.tokenColor)
     {
         self.tokenColor = self.view.tintColor;
-	self.tokenColor = [UIColor darkGrayColor];
+	self.tokenColor = [UIColor lightGrayColor];
 
     }
 
     if (!self.selectedTokenColor)
     {
-        self.selectedTokenColor = [UIColor lightGrayColor];
+        self.selectedTokenColor = [UIColor darkGrayColor];
     }
-	
+
+		//Customized the searchBar
+	self.searchField.searchBarStyle = UISearchBarStyleMinimal;
+
+	self.searchField.backgroundColor = self.tokenColor;
+	self.searchField.barTintColor = self.selectedTokenColor;
+	self.searchField.tintColor = [UIColor whiteColor];
+	[self.searchField.layer setCornerRadius:4.0];
     // Add a tap gesture recognizer to our scrollView
     UITapGestureRecognizer *singleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewTapped:)];
     singleTapGestureRecognizer.numberOfTapsRequired = 1;
@@ -82,6 +79,7 @@ static CGFloat const kPadding = 5.0;
     [super viewWillAppear:animated];
 
     // Keep the keyboard up
+//	self.searchField.hidden = YES;
     [self.searchField becomeFirstResponder];
 }
 
@@ -250,6 +248,8 @@ static CGFloat const kPadding = 5.0;
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
    
     cell.accessoryType = UITableViewCellAccessoryNone;
+	cell.backgroundColor = [UIColor clearColor];
+
 		
 	// If this is the last row in filteredPeople, take special action
 	if (self.filteredPeople.count == indexPath.row)

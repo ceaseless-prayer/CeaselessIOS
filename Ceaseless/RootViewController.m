@@ -10,6 +10,7 @@
 #import "ModelController.h"
 #import "DataViewController.h"
 #import "UIImageEffects.h"
+#import "AppUtils.h"
 
 @interface RootViewController ()
 
@@ -139,6 +140,11 @@
 		//!         by this mask.  This must be an image mask or it must meet the
 		//!         requirements of the mask parameter of CGContextClipToMask.
 
+    UIImage *backgroundImage = [AppUtils getDynamicBackgroundImage];
+    if(backgroundImage != nil) {
+        self.backgroundImageView.image = backgroundImage;
+    }
+    
 	UIImage *blurredImage = [UIImageEffects imageByApplyingBlurToImage:self.backgroundImageView.image withRadius: 10 tintColor: UIColorFromRGBWithAlpha(0x00012f, 0.6) saturationDeltaFactor:1 maskImage:self.backgroundImageView.image];
 	self.backgroundImageView.image = blurredImage;
 }

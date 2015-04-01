@@ -43,7 +43,7 @@
 NSString *const kModelRefreshNotification = @"ceaselessModelRefreshed";
 NSString *const kLocalLastRefreshDate = @"localLastRefreshDate";
 NSString *const kAnnouncementsUrl = @"http://www.ceaselessprayer.com/announcements/feed";
-NSString *const kScriptureImagesUrl = @"http://test.ceaselessprayer.com/api/getAScriptureImage";
+NSString *const kScriptureImagesUrl = @"http://api.ceaselessprayer.com/v1/getAScriptureImage";
 NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
 
 // this method sets up the card array for display

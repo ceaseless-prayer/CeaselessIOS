@@ -11,6 +11,7 @@
 @interface PersonView : UIView
 @property (weak, nonatomic) IBOutlet UIView *cardView;
 @property (weak, nonatomic) IBOutlet UIView *shadowView;
+@property (weak, nonatomic) IBOutlet UIImageView *personCardBackground;
 @property (weak, nonatomic) IBOutlet UIImageView *personImageView;
 @property (weak, nonatomic) IBOutlet UITextField *placeholderText;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;

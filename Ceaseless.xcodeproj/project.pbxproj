@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		42199AB51AAF8DC400797224 /* background-3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 42199AB41AAF8DC400797224 /* background-3.jpg */; };
+		422DDD391ACBBD3400409001 /* AppUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 422DDD381ACBBD3400409001 /* AppUtils.m */; };
 		425271A81AB1FA9A005098F6 /* ScripturePickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271A71AB1FA9A005098F6 /* ScripturePickerTests.m */; };
 		425271AA1AB1FF1C005098F6 /* PersonPickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271A91AB1FF1C005098F6 /* PersonPickerTests.m */; };
 		425271AD1AB37CE8005098F6 /* Name.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271AC1AB37CE8005098F6 /* Name.m */; };
@@ -79,6 +80,8 @@
 
 /* Begin PBXFileReference section */
 		42199AB41AAF8DC400797224 /* background-3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "background-3.jpg"; sourceTree = "<group>"; };
+		422DDD371ACBBD3400409001 /* AppUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppUtils.h; sourceTree = "<group>"; };
+		422DDD381ACBBD3400409001 /* AppUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppUtils.m; sourceTree = "<group>"; };
 		425271A71AB1FA9A005098F6 /* ScripturePickerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScripturePickerTests.m; sourceTree = "<group>"; };
 		425271A91AB1FF1C005098F6 /* PersonPickerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonPickerTests.m; sourceTree = "<group>"; };
 		425271AB1AB37CE8005098F6 /* Name.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Name.h; sourceTree = "<group>"; };
@@ -134,6 +137,8 @@
 		704D5CF01AAFA96200BD48B3 /* ScriptureQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptureQueue.m; sourceTree = "<group>"; };
 		704D5CF21AAFA96200BD48B3 /* PrayerRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrayerRecord.h; sourceTree = "<group>"; };
 		704D5CF31AAFA96200BD48B3 /* PrayerRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrayerRecord.m; sourceTree = "<group>"; };
+		7075100D1ACB2B13006500A9 /* AppConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstants.h; sourceTree = "<group>"; };
+		7075100E1ACB2B13006500A9 /* AppConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConstants.m; sourceTree = "<group>"; };
 		707BE2E51AAA1B1A0020FF29 /* Screen Shot 2015-02-17 at 9.05.16 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screen Shot 2015-02-17 at 9.05.16 PM.png"; sourceTree = "<group>"; };
 		707BE2E71AAA1D1C0020FF29 /* Screen Shot 2015-02-18 at 8.22.42 AM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screen Shot 2015-02-18 at 8.22.42 AM.png"; sourceTree = "<group>"; };
 		709D83381AA598A600C3486E /* Screen Shot 2015-02-18 at 8.25.51 AM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screen Shot 2015-02-18 at 8.25.51 AM.png"; sourceTree = "<group>"; };
@@ -229,6 +234,8 @@
 				70D51C091AA6222700FA7CDC /* PersonPicker.h */,
 				70D51C0A1AA6222700FA7CDC /* PersonPicker.m */,
 				70F663FC1AA7E30F0073801E /* UIImageEffects.h */,
+				422DDD371ACBBD3400409001 /* AppUtils.h */,
+				422DDD381ACBBD3400409001 /* AppUtils.m */,
 				70F663FD1AA7E30F0073801E /* UIImageEffects.m */,
 				70F664071AA7EAB20073801E /* Controllers */,
 				70F664061AA7EA990073801E /* Model */,
@@ -248,6 +255,8 @@
 		42F3AE1B1AA4DD7F003A88F5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7075100D1ACB2B13006500A9 /* AppConstants.h */,
+				7075100E1ACB2B13006500A9 /* AppConstants.m */,
 				42199AB41AAF8DC400797224 /* background-3.jpg */,
 				707BE2E71AAA1D1C0020FF29 /* Screen Shot 2015-02-18 at 8.22.42 AM.png */,
 				707BE2E51AAA1B1A0020FF29 /* Screen Shot 2015-02-17 at 9.05.16 PM.png */,
@@ -508,6 +517,7 @@
 				42C13BB41ABCC285000D5C08 /* WebCardView.m in Sources */,
 				42F3AE271AA4DD7F003A88F5 /* DataViewController.m in Sources */,
 				42869B0C1ACA008200E612F7 /* Person.m in Sources */,
+				422DDD391ACBBD3400409001 /* AppUtils.m in Sources */,
 				42A5AF881AB9497F00F209B8 /* PrayerRecordConstants.m in Sources */,
 				704D5CE21AAFA96100BD48B3 /* Note.m in Sources */,
 				70BBEDC31ABC768400D446AF /* SettingsViewController.m in Sources */,

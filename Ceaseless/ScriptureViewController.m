@@ -9,7 +9,7 @@
 #import "ScriptureViewController.h"
 #import "ScriptureQueue.h"
 #import "AppDelegate.h"
-#import "AppConstants.h"
+#import "AppUtils.h"
 
 @interface ScriptureViewController ()
 
@@ -29,10 +29,7 @@
     self.scriptureView.scriptureReferenceLabel.text = [self.dataObject valueForKey: @"citation" ];
     self.scriptureView.scriptureTextView.text = [self.dataObject valueForKey: @"verse"];
     
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectory = [paths objectAtIndex:0];
-    NSString *imagePath = [documentDirectory stringByAppendingPathComponent:kDynamicBackgroundImage];
-    UIImage *scriptureImage = [UIImage imageWithContentsOfFile:imagePath];
+    UIImage *scriptureImage = [AppUtils getDynamicBackgroundImage];
     if(scriptureImage != nil) {
         self.scriptureView.scriptureImageView.image = scriptureImage;
         self.scriptureView.reflectedScriptureImageView.transform = CGAffineTransformMake(1, 0, 0, -1, 0, 0);

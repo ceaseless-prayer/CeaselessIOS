@@ -22,7 +22,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CVR-nv-9Et" userLabel="CardView">
                             <rect key="frame" x="8" y="2" width="584" height="596"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Screen Shot 2015-02-18 at 8.22.42 AM.png" translatesAutoresizingMaskIntoConstraints="NO" id="ofI-30-Sup">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Screen Shot 2015-02-18 at 8.22.42 AM.png" translatesAutoresizingMaskIntoConstraints="NO" id="ofI-30-Sup" userLabel="PersonCardBackground">
                                     <rect key="frame" x="0.0" y="0.0" width="584" height="596"/>
                                 </imageView>
                                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1uu-zD-zYL">
@@ -343,6 +343,7 @@
                 <outlet property="moreButton" destination="qaX-ht-K8v" id="Le3-KC-TG5"/>
                 <outlet property="nameLabel" destination="29f-oR-vIq" id="2Sr-5j-cHx"/>
                 <outlet property="notesView" destination="yRE-GT-fO6" id="4kv-2F-xMc"/>
+                <outlet property="personCardBackground" destination="ofI-30-Sup" id="ZBM-7h-mDo"/>
                 <outlet property="personImageView" destination="vRz-LA-Wxx" id="qEU-mH-kAb"/>
                 <outlet property="placeholderText" destination="eF7-HN-urH" id="Qeq-K7-9Su"/>
                 <outlet property="shadowView" destination="dQd-fX-c2a" id="Y9q-jL-OwW"/>

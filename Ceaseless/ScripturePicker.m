@@ -19,8 +19,8 @@
 NSString *const kDefaultScripture = @"\"And whatever you ask in prayer, you will receive, if you have faith.\"";
 NSString *const kDefaultCitation = @"(Matthew 21:22,ESV)";
 NSString *const kDefaultShareLink = @"http://www.bible.is/ENGESV/Matt/21#22";
-NSString *const kVerseOfTheDayURL = @"http://test.ceaselessprayer.com/api/votd";
-NSString *const kGetScriptureURL = @"http://test.ceaselessprayer.com/api/getScripture";
+NSString *const kVerseOfTheDayURL = @"http://api.ceaselessprayer.com/v1/votd";
+NSString *const kGetScriptureURL = @"http://api.ceaselessprayer.com/v1/getScripture";
 int const kDefaultQueueMaxSize = 5;
 int const kDefaultQueueMinSize = 1;
 	// verseOfTheDay

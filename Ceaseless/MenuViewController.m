@@ -8,6 +8,7 @@
 
 #import "MenuViewController.h"
 #import "AppConstants.h"
+#import "AppUtils.h"
 
 @interface MenuViewController ()
 
@@ -21,7 +22,10 @@
 	self.tableView.delegate = self;
 	self.tableView.dataSource = self;
 	self.menuInfoArray = [[NSArray alloc] initWithObjects: @"People", @"Settings", @"Developer", nil];
-
+    UIImage *background = [AppUtils getDynamicBackgroundImage];
+    if(background != nil) {
+        self.menuBackground.image = background;
+    }
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
