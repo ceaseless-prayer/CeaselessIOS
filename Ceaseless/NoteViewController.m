@@ -611,12 +611,12 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 		// If this is the last row in filteredPeople, take special action
 	if (indexPath.row == self.filteredPeople.count) {
-//		ABNewPersonViewController *newPersonViewController = [[ABNewPersonViewController alloc] init];
-//		newPersonViewController.newPersonViewDelegate = self;
-//
-//		UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:newPersonViewController];
-//
-//		[self presentViewController:navController animated:YES completion:NULL];
+		ABNewPersonViewController *newPersonViewController = [[ABNewPersonViewController alloc] init];
+		newPersonViewController.newPersonViewDelegate = self;
+
+		UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:newPersonViewController];
+
+		[self presentViewController:navController animated:YES completion:NULL];
 	} else {
 		ABRecordRef abRecordRef = (__bridge ABRecordRef)([self.filteredPeople objectAtIndex:indexPath.row]);
 
@@ -678,6 +678,17 @@ NSString *const kPlaceHolderText = @"Enter note";
 		}
 }
 
+#pragma mark - ABNewPersonViewControllerDelegate protocol conformance
+
+- (void)newPersonViewController:(ABNewPersonViewController *)newPersonView didCompleteWithNewPerson:(ABRecordRef)person
+{
+	if (person != NULL)
+		{
+		[self addPersonToGroup:person];
+		}
+
+	[newPersonView dismissViewControllerAnimated:YES completion:NULL];
+}
 
 #pragma mark - listAll
 

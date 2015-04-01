@@ -18,7 +18,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 
 @protocol NoteViewControllerDelegate;
 
-@interface NoteViewController : UIViewController < UITextViewDelegate, UIGestureRecognizerDelegate, UISearchBarDelegate, UIKeyInput, UITableViewDataSource, UITableViewDelegate>
+@interface NoteViewController : UIViewController < UITextViewDelegate, UIGestureRecognizerDelegate, UISearchBarDelegate, UIKeyInput, UITableViewDataSource, UITableViewDelegate, ABNewPersonViewControllerDelegate, ABPeoplePickerNavigationControllerDelegate>
 
 @property (nonatomic, weak) id<NoteViewControllerDelegate> delegate;
 

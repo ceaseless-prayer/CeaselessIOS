@@ -110,6 +110,7 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 - (IBAction)unwindToPrayerJournal:(UIStoryboardSegue*)sender
 {
 		// Pull any data from the view controller which initiated the unwind segue.
+	[self.tableView reloadData];
 }
 #pragma mark - Table View
 
@@ -156,20 +157,22 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	if ([peopleArray count] > 0) {
         NonMOPerson *nonMOPerson = [self.ceaselessContacts getNonMOPersonForCeaselessContact:[peopleArray firstObject]];
 		if (nonMOPerson.profileImage) {
+			cell.topImageView.hidden = NO;
 			cell.topImageView.image = nonMOPerson.profileImage;
 			cell.topImageView.contentMode = UIViewContentModeScaleAspectFit;
 			cell.topPlaceholderLabel.hidden = YES;
-			cell.topPlaceholderLabel = nil;
+			cell.topPlaceholderLabel.text = nil;
 		} else {
-			cell.topPlaceholderLabel.text = [self initialsForPerson: nonMOPerson];
 			cell.topPlaceholderLabel.hidden = NO;
+			cell.topPlaceholderLabel.text = [self initialsForPerson: nonMOPerson];
 			cell.topImageView.image = nil;
+			cell.topImageView.hidden = YES;
 		}
 	} else {
 			//TODO  should this be a picture of self?  nobody was tagged, but there is a note
 		cell.topImageView.image = nil;
 		cell.topImageView.hidden = YES;
-		cell.topPlaceholderLabel = nil;
+		cell.topPlaceholderLabel.text = nil;
 		cell.topPlaceholderLabel.hidden = YES;
 
 	}
@@ -177,19 +180,21 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	if ([peopleArray count] > 1) {
 		NonMOPerson *nonMOPerson = [self.ceaselessContacts getNonMOPersonForCeaselessContact:[peopleArray lastObject]];
 		if (nonMOPerson.profileImage) {
+			cell.bottomImageView.hidden = NO;
 			cell.bottomImageView.image = nonMOPerson.profileImage;
 			cell.bottomImageView.contentMode = UIViewContentModeScaleAspectFit;
 			cell.bottomPlaceholderLabel.hidden = YES;
-			cell.bottomPlaceholderLabel = nil;
+			cell.bottomPlaceholderLabel.text = nil;
 		} else {
-			cell.bottomPlaceholderLabel.text = [self initialsForPerson: nonMOPerson];
 			cell.bottomPlaceholderLabel.hidden = NO;
+			cell.bottomPlaceholderLabel.text = [self initialsForPerson: nonMOPerson];
 			cell.bottomImageView.image = nil;
+			cell.bottomImageView.hidden = YES;
 		}
 	} else {
 		cell.bottomImageView.image = nil;
 		cell.bottomImageView.hidden = YES;
-		cell.bottomPlaceholderLabel = nil;
+		cell.bottomPlaceholderLabel.text = nil;
 		cell.bottomPlaceholderLabel.hidden = YES;
 	}
 
