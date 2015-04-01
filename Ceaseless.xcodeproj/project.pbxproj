@@ -38,7 +38,6 @@
 		704D5CEE1AAFA96200BD48B3 /* Email.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CED1AAFA96200BD48B3 /* Email.m */; };
 		704D5CF11AAFA96200BD48B3 /* ScriptureQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CF01AAFA96200BD48B3 /* ScriptureQueue.m */; };
 		704D5CF41AAFA96200BD48B3 /* PrayerRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CF31AAFA96200BD48B3 /* PrayerRecord.m */; };
-		7075100F1ACB2B13006500A9 /* AppConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7075100E1ACB2B13006500A9 /* AppConstants.m */; };
 		707BE2E61AAA1B1A0020FF29 /* Screen Shot 2015-02-17 at 9.05.16 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = 707BE2E51AAA1B1A0020FF29 /* Screen Shot 2015-02-17 at 9.05.16 PM.png */; };
 		707BE2E81AAA1D1C0020FF29 /* Screen Shot 2015-02-18 at 8.22.42 AM.png in Resources */ = {isa = PBXBuildFile; fileRef = 707BE2E71AAA1D1C0020FF29 /* Screen Shot 2015-02-18 at 8.22.42 AM.png */; };
 		709D83391AA598A600C3486E /* Screen Shot 2015-02-18 at 8.25.51 AM.png in Resources */ = {isa = PBXBuildFile; fileRef = 709D83381AA598A600C3486E /* Screen Shot 2015-02-18 at 8.25.51 AM.png */; };
@@ -436,7 +435,7 @@
 					};
 					42F3AE361AA4DD80003A88F5 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 28DYBASY7W;
+						DevelopmentTeam = 98FUBN4YVB;
 						TestTargetID = 42F3AE171AA4DD7F003A88F5;
 					};
 				};
@@ -541,7 +540,7 @@
 				70F12B871AB2082B0090F47A /* NoteViewController.m in Sources */,
 				70BCCC211ABB768F00386D51 /* PersonNotesTableViewCell.m in Sources */,
 				70BFCB021AC070C50014C4BC /* ContactsListsViewController.m in Sources */,
-				7075100F1ACB2B13006500A9 /* AppConstants.m in Sources */,
+				42869B091AC9FC5100E612F7 /* AppConstants.m in Sources */,
 				42F3AE1E1AA4DD7F003A88F5 /* main.m in Sources */,
 				42F3AE241AA4DD7F003A88F5 /* RootViewController.m in Sources */,
 				425271BF1AB3A664005098F6 /* AddressBookId.m in Sources */,

@@ -26,6 +26,7 @@
 @property (nonatomic, strong) NSArray *people;
 @property (nonatomic, strong) NSMutableArray *filteredPeople;
 @property (nonatomic, strong) UISearchBar *searchField;
+@property (nonatomic, strong) UIColor *appColor;
 
 @end
 
@@ -60,18 +61,22 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 	self.notesTextView.delegate = self;
 	self.contactsTableView.delegate = self;
+	self.appColor = UIColorFromRGBWithAlpha(0x24292f , 0.4);
+
 
 		//Add a searchBar, it will get positioned in the scrollview just past the last name
 	self.searchField  = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
 	self.searchField.searchBarStyle = UISearchBarStyleMinimal;
 	[self.searchField setImage: [UIImage imageNamed: @"noImage"] forSearchBarIcon: UISearchBarIconSearch state:UIControlStateNormal];
-	[[UISearchBar appearance] setPositionAdjustment:UIOffsetMake(-10, 0) forSearchBarIcon:UISearchBarIconSearch];
+	[[UISearchBar appearance] setPositionAdjustment:UIOffsetMake(-15, 0) forSearchBarIcon:UISearchBarIconSearch];
 
 
 	self.searchField.delegate = self;
-	self.searchField.backgroundColor = [UIColor clearColor];
-	self.searchField.barTintColor = [UIColor clearColor];
-	self.searchField.tintColor = [UIColor clearColor];
+	self.searchField.backgroundColor = self.tokenColor;
+	self.searchField.barTintColor = self.tokenColor;
+	self.searchField.tintColor = [UIColor whiteColor];
+	[self.searchField.layer setCornerRadius:4.0];
+
 
 		// Add a tap gesture recognizer to our scrollView
 	self.singleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewTapped:)];
@@ -84,7 +89,8 @@ NSString *const kPlaceHolderText = @"Enter note";
 		//create navigation bar if there is no navigation controller
 	if (!self.navigationController) {
 		UINavigationBar *navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
-		navBar.barTintColor = UIColorFromRGBWithAlpha(0x24292f , 0.4);
+		navBar.barTintColor = self.appColor;
+
 		NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
 												   [UIColor whiteColor], NSForegroundColorAttributeName,
 												   [UIFont fontWithName:@"AvenirNext-Medium" size:16.0f],NSFontAttributeName,
@@ -307,7 +313,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 		// Create the textfield at the end of the buttons
 
 		// Get the width and height of the name string given a font size
-	NSString *placeholderName = @"Add Name";
+	NSString *placeholderName = @"Average Size";
 	CGSize nameSize = [placeholderName sizeWithAttributes:@{NSFontAttributeName:font}];
 
 	if ((xPosition + nameSize.width + kPadding) > maxWidth)
