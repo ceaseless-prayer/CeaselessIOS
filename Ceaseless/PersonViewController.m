@@ -12,6 +12,7 @@
 #import "NonMOPerson.h"
 #import "AppDelegate.h"
 #import "ModelController.h"
+#import "AppConstants.h"
 #import <MessageUI/MessageUI.h>
 
 @interface PersonViewController () <MFMessageComposeViewControllerDelegate>
@@ -67,6 +68,14 @@ static NSString *kSMSMessage;
 		self.personView.placeholderText.hidden = NO;
 		self.personView.placeholderText.text = [NSString stringWithFormat: @"%@%@", firstInitial, lastInitial];
 	}
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [paths objectAtIndex:0];
+    NSString *imagePath = [documentDirectory stringByAppendingPathComponent:kDynamicBackgroundImage];
+    UIImage *backgroundImage = [UIImage imageWithContentsOfFile:imagePath];
+    if(backgroundImage != nil) {
+        self.personView.personCardBackground.image = backgroundImage;
+    }
 
 	[self.personView.moreButton addTarget:self
 								   action:@selector(presentActionSheet:)forControlEvents:UIControlEventTouchUpInside];
