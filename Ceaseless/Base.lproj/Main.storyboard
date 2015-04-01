@@ -40,7 +40,12 @@
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="04V-wD-iLr">
                         <barButtonItem key="backBarButtonItem" title=" " id="1f5-gl-AKp"/>
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="h2B-cB-23D">
+                        <barButtonItem key="leftBarButtonItem" title="Menu" id="Guc-Qf-Mt0">
+                            <connections>
+                                <segue destination="JcK-uc-3mv" kind="show" identifier="ShowMenu" id="0vD-Hn-8XD"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="h2B-cB-23D">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="9oX-f1-08t">
                                 <rect key="frame" x="16" y="7" width="24" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -51,11 +56,6 @@
                                     <segue destination="2Un-Bl-RqA" kind="show" identifier="ShowPrayerJournal" id="EnZ-Gk-3HD"/>
                                 </connections>
                             </button>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Menu" id="9Qd-PM-W3O">
-                            <connections>
-                                <segue destination="JcK-uc-3mv" kind="show" identifier="ShowMenu" id="s48-Y3-mXD"/>
-                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
