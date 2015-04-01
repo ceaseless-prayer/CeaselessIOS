@@ -582,6 +582,8 @@ NSString *const kPlaceHolderText = @"Enter note";
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
 
 	cell.accessoryType = UITableViewCellAccessoryNone;
+	cell.backgroundColor = [UIColor clearColor];
+
 
 		// If this is the last row in filteredPeople, take special action
 	if (self.filteredPeople.count == indexPath.row)
