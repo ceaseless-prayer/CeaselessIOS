@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		42199AB51AAF8DC400797224 /* background-3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 42199AB41AAF8DC400797224 /* background-3.jpg */; };
+		422DDD391ACBBD3400409001 /* AppUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 422DDD381ACBBD3400409001 /* AppUtils.m */; };
 		425271A81AB1FA9A005098F6 /* ScripturePickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271A71AB1FA9A005098F6 /* ScripturePickerTests.m */; };
 		425271AA1AB1FF1C005098F6 /* PersonPickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271A91AB1FF1C005098F6 /* PersonPickerTests.m */; };
 		425271AD1AB37CE8005098F6 /* Name.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271AC1AB37CE8005098F6 /* Name.m */; };
@@ -79,6 +80,8 @@
 
 /* Begin PBXFileReference section */
 		42199AB41AAF8DC400797224 /* background-3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "background-3.jpg"; sourceTree = "<group>"; };
+		422DDD371ACBBD3400409001 /* AppUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppUtils.h; sourceTree = "<group>"; };
+		422DDD381ACBBD3400409001 /* AppUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppUtils.m; sourceTree = "<group>"; };
 		425271A71AB1FA9A005098F6 /* ScripturePickerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScripturePickerTests.m; sourceTree = "<group>"; };
 		425271A91AB1FF1C005098F6 /* PersonPickerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonPickerTests.m; sourceTree = "<group>"; };
 		425271AB1AB37CE8005098F6 /* Name.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Name.h; sourceTree = "<group>"; };
@@ -231,6 +234,8 @@
 				70D51C091AA6222700FA7CDC /* PersonPicker.h */,
 				70D51C0A1AA6222700FA7CDC /* PersonPicker.m */,
 				70F663FC1AA7E30F0073801E /* UIImageEffects.h */,
+				422DDD371ACBBD3400409001 /* AppUtils.h */,
+				422DDD381ACBBD3400409001 /* AppUtils.m */,
 				70F663FD1AA7E30F0073801E /* UIImageEffects.m */,
 				70F664071AA7EAB20073801E /* Controllers */,
 				70F664061AA7EA990073801E /* Model */,
@@ -512,6 +517,7 @@
 				42C13BB41ABCC285000D5C08 /* WebCardView.m in Sources */,
 				42F3AE271AA4DD7F003A88F5 /* DataViewController.m in Sources */,
 				42869B0C1ACA008200E612F7 /* Person.m in Sources */,
+				422DDD391ACBBD3400409001 /* AppUtils.m in Sources */,
 				42A5AF881AB9497F00F209B8 /* PrayerRecordConstants.m in Sources */,
 				704D5CE21AAFA96100BD48B3 /* Note.m in Sources */,
 				70BBEDC31ABC768400D446AF /* SettingsViewController.m in Sources */,

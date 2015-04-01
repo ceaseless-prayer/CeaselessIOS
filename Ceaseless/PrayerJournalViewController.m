@@ -14,6 +14,7 @@
 #import "NonMOPerson.h"
 #import "Person.h"
 #import "Name.h"
+#import "AppUtils.h"
 
 typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 {
@@ -43,10 +44,14 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 - (void)viewDidLoad {
 	[super viewDidLoad];
 		// Do any additional setup after loading the view, typically from a nib.
-
-	UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.tableView.frame];
-	imageView.image = [UIImage imageNamed:@"Screen Shot 2015-02-18 at 8.22.42 AM.png"];
-	imageView.contentMode = UIViewContentModeScaleAspectFill;
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.tableView.frame];
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
+    UIImage *backgroundImage = [AppUtils getDynamicBackgroundImage];
+    if(backgroundImage != nil) {
+        imageView.image = backgroundImage;
+    } else {
+        imageView.image = [UIImage imageNamed:@"Screen Shot 2015-02-18 at 8.22.42 AM.png"];
+    }
 	
 	self.tableView.backgroundView = imageView;
 

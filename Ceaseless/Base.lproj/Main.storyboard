@@ -1192,7 +1192,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Screen Shot 2015-02-18 at 8.22.42 AM.png" translatesAutoresizingMaskIntoConstraints="NO" id="n8a-bI-8uK">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Screen Shot 2015-02-18 at 8.22.42 AM.png" translatesAutoresizingMaskIntoConstraints="NO" id="n8a-bI-8uK" userLabel="MenuBackground">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eOV-jB-yn7">
@@ -1281,6 +1281,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="menuBackground" destination="n8a-bI-8uK" id="YrU-qI-DBQ"/>
                         <outlet property="tableView" destination="VdX-zO-Pwc" id="Qo2-ty-QfB"/>
                         <segue destination="r5P-yf-vRE" kind="show" identifier="ShowSettings" id="Hax-Pn-LtX"/>
                         <segue destination="Trs-Fq-LiS" kind="show" identifier="ShowContactsLists" id="Vyk-ld-jP5"/>
