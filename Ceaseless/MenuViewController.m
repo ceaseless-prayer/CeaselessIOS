@@ -21,7 +21,7 @@
     // Do any additional setup after loading the view.
 	self.tableView.delegate = self;
 	self.tableView.dataSource = self;
-	self.menuInfoArray = [[NSArray alloc] initWithObjects: @"People", @"Settings", @"Developer", nil];
+	self.menuInfoArray = [[NSArray alloc] initWithObjects: @"People", @"Settings", @"Developer", @"Help", @"Feedback", nil];
     UIImage *background = [AppUtils getDynamicBackgroundImage];
     if(background != nil) {
         self.menuBackground.image = background;

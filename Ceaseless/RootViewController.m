@@ -82,6 +82,7 @@
 }
 
 - (void) refreshPageView {
+    [self setBlurredBackground];
     DataViewController *startingViewController = [self.modelController viewControllerAtIndex:0 storyboard:self.storyboard];
     [self.pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
 }
