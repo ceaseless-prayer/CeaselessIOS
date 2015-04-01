@@ -48,7 +48,14 @@ static CGFloat const kPadding = 5.0;
     {
         self.selectedTokenColor = [UIColor darkGrayColor];
     }
-	
+
+		//Customized the searchBar
+	self.searchField.searchBarStyle = UISearchBarStyleMinimal;
+
+	self.searchField.backgroundColor = self.tokenColor;
+	self.searchField.barTintColor = self.selectedTokenColor;
+	self.searchField.tintColor = [UIColor whiteColor];
+	[self.searchField.layer setCornerRadius:4.0];
     // Add a tap gesture recognizer to our scrollView
     UITapGestureRecognizer *singleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewTapped:)];
     singleTapGestureRecognizer.numberOfTapsRequired = 1;
@@ -72,7 +79,7 @@ static CGFloat const kPadding = 5.0;
     [super viewWillAppear:animated];
 
     // Keep the keyboard up
-	self.searchField.hidden = YES;
+//	self.searchField.hidden = YES;
     [self.searchField becomeFirstResponder];
 }
 
