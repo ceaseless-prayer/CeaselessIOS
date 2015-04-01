@@ -547,7 +547,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="diK-xK-oxu">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IMG_0023.JPG" translatesAutoresizingMaskIntoConstraints="NO" id="diK-xK-oxu" userLabel="SettingsBackground">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MRf-DN-NBq">
@@ -573,7 +573,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="30" translatesAutoresizingMaskIntoConstraints="NO" id="5B7-R2-A0H">
-                                                    <rect key="frame" x="0.0" y="46" width="584" height="180"/>
+                                                    <rect key="frame" x="0.0" y="55" width="584" height="162"/>
                                                     <date key="date" timeIntervalSinceReferenceDate="451279916.93028498">
                                                         <!--2015-04-21 03:31:56 +0000-->
                                                     </date>
@@ -582,18 +582,25 @@
                                             <color key="backgroundColor" red="0.0" green="0.0039215686269999999" blue="0.031372549020000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="5B7-R2-A0H" secondAttribute="bottom" id="46m-po-eVA"/>
+                                                <constraint firstItem="5B7-R2-A0H" firstAttribute="top" secondItem="OMp-Bh-HQ6" secondAttribute="bottom" id="Bfy-4N-KJa"/>
                                                 <constraint firstAttribute="centerY" secondItem="OMp-Bh-HQ6" secondAttribute="centerY" id="Hht-iy-TVT"/>
                                                 <constraint firstAttribute="height" constant="110" id="IrE-HV-3WQ"/>
+                                                <constraint firstItem="5B7-R2-A0H" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Q4p-O7-h4F" secondAttribute="top" constant="54" id="J9r-5P-nXE"/>
                                                 <constraint firstAttribute="trailing" secondItem="5B7-R2-A0H" secondAttribute="trailing" id="Thp-TP-1AG"/>
                                                 <constraint firstAttribute="centerX" secondItem="OMp-Bh-HQ6" secondAttribute="centerX" id="WgR-a6-qjV"/>
                                                 <constraint firstItem="5B7-R2-A0H" firstAttribute="top" secondItem="Q4p-O7-h4F" secondAttribute="top" constant="30" id="Z64-Qc-8Uj"/>
                                                 <constraint firstItem="5B7-R2-A0H" firstAttribute="leading" secondItem="Q4p-O7-h4F" secondAttribute="leading" id="dcq-d1-g5V"/>
                                                 <constraint firstItem="OMp-Bh-HQ6" firstAttribute="leading" secondItem="Q4p-O7-h4F" secondAttribute="leading" id="iBL-Kd-kRX"/>
+                                                <constraint firstItem="5B7-R2-A0H" firstAttribute="top" secondItem="Q4p-O7-h4F" secondAttribute="top" constant="46" id="og1-0v-FuZ"/>
                                                 <constraint firstItem="OMp-Bh-HQ6" firstAttribute="top" secondItem="Q4p-O7-h4F" secondAttribute="top" id="roO-Wu-HgC"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
                                                     <exclude reference="IrE-HV-3WQ"/>
+                                                    <exclude reference="46m-po-eVA"/>
+                                                    <exclude reference="J9r-5P-nXE"/>
+                                                    <exclude reference="Z64-Qc-8Uj"/>
+                                                    <exclude reference="og1-0v-FuZ"/>
                                                     <exclude reference="Hht-iy-TVT"/>
                                                     <exclude reference="iBL-Kd-kRX"/>
                                                 </mask>
@@ -808,7 +815,7 @@
                                     </variation>
                                 </view>
                                 <color key="backgroundColor" red="0.0" green="0.0039215686269999999" blue="0.031372549020000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-                                <blurEffect style="dark"/>
+                                <blurEffect style="light"/>
                             </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -969,10 +976,10 @@
                                             <exclude reference="QUg-w6-TrG"/>
                                             <exclude reference="eq9-VV-fqX"/>
                                             <exclude reference="wUK-P9-ITS"/>
+                                            <exclude reference="nup-oG-eme"/>
                                             <exclude reference="1NT-i5-OtW"/>
                                             <exclude reference="bHe-6F-8OA"/>
                                             <exclude reference="efY-AE-XEd"/>
-                                            <exclude reference="nup-oG-eme"/>
                                         </mask>
                                     </variation>
                                 </view>
@@ -1389,12 +1396,13 @@
         </scene>
     </scenes>
     <resources>
+        <image name="IMG_0023.JPG" width="1936" height="2592"/>
         <image name="Screen Shot 2015-02-18 at 8.22.42 AM.png" width="466" height="312"/>
         <image name="icon_notes" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="YVa-RG-XWl"/>
         <segue reference="tHB-F0-kAC"/>
+        <segue reference="Mj7-w1-x79"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>
