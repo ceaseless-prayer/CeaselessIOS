@@ -93,6 +93,13 @@
 	[defaults synchronize];
 	NSLog( @"The switch is %@", switchControl.on ? @"YES" : @"NO" );
 }
+
+	// Action receiver for the clicking of Cancel button
+- (IBAction)menuDoneClicked:(id)sender
+{
+	[self performSegueWithIdentifier:@"UnwindToRootView" sender: self];
+}
+
 /*
 #pragma mark - Navigation
 
