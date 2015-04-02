@@ -401,6 +401,7 @@ NSString *const kPlaceHolderText = @"Enter note";
         CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
 		[ceaselessContacts updateCeaselessContactFromABRecord: abPerson];
 		Person *person = [ceaselessContacts getCeaselessContactFromABRecord: abPerson];
+			//TODO crash here when no first name or last name (business) - got here when selected a business to tag, should not happen when selecting from Ceaseless Persons instead of ABRecords
         [self.mutablePeopleSet addObject: person];
 		}
 
@@ -450,14 +451,18 @@ NSString *const kPlaceHolderText = @"Enter note";
 		note.text = self.notesTextView.text;
 		note.lastUpdatedDate = [NSDate date];
 		note.peopleTagged = nil; 
-		[note addPeopleTagged: self.mutablePeopleSet];
+//		[note addPeopleTagged: self.mutablePeopleSet];
+		note.peopleTagged = [[NSOrderedSet alloc] initWithSet:[self.mutablePeopleSet set]];
+
 
 	} else {
 	Note *newNote = [NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
 		[newNote setValue: [NSDate date] forKey: @"createDate"];
 		[newNote setValue: self.notesTextView.text forKey: @"text"];
 		[newNote setValue: [NSDate date] forKey: @"lastUpdatedDate"];
-		[newNote addPeopleTagged: self.mutablePeopleSet];
+//		[newNote addPeopleTagged: self.mutablePeopleSet];
+		newNote.peopleTagged = [[NSOrderedSet alloc] initWithSet:[self.mutablePeopleSet set]];
+
 
 		}
 	if (![self.managedObjectContext save: &error]) {
