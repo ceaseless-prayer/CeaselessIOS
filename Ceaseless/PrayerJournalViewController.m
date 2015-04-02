@@ -157,7 +157,7 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	}
 
 
-	NSArray *peopleArray = [note.peopleTagged allObjects];
+	NSArray *peopleArray = [note.peopleTagged array];
 
 	if ([peopleArray count] > 0) {
         NonMOPerson *nonMOPerson = [self.ceaselessContacts getNonMOPersonForCeaselessContact:[peopleArray firstObject]];

@@ -19,7 +19,7 @@
 @property (nonatomic, strong) NSMutableArray *namesArray;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) UINavigationItem *item;
-@property (strong, nonatomic) NSMutableSet *mutablePeopleSet;
+@property (strong, nonatomic) NSMutableOrderedSet *mutablePeopleSet;
 @property (nonatomic, strong) NSOrderedSet *abRecordIDs;
 @property (strong, nonatomic) UITapGestureRecognizer *singleTapGestureRecognizer;
 @property (nonatomic, strong) UIButton *selectedButton;
@@ -64,7 +64,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 	[self checkAddressBookAccess];
 
 	self.namesArray = [NSMutableArray arrayWithCapacity: 1];
-	self.mutablePeopleSet = [[NSMutableSet alloc] initWithCapacity: 1];
+	self.mutablePeopleSet = [[NSMutableOrderedSet alloc] initWithCapacity: 1];
 
 	self.notesTextView.delegate = self;
 	self.contactsTableView.delegate = self;
@@ -126,7 +126,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 		//initialize
 	self.group = [NSMutableOrderedSet orderedSet];
-	NSSet *peopleTagged = [[NSSet alloc] init];
+	NSOrderedSet *peopleTagged = [[NSOrderedSet alloc] init];
 
 
 		//if there is a curent note display it
@@ -159,7 +159,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 		}
 
 		if (self.personForNewNote) {
-			peopleTagged = [[NSSet alloc] initWithObjects: self.personForNewNote, nil];
+			peopleTagged = [[NSOrderedSet alloc] initWithObjects: self.personForNewNote, nil];
 
 		}
 		self.notesTextView.text = kPlaceHolderText;
@@ -390,7 +390,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 	ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
 
 		//reset mutablePeople set with no objects
-	self.mutablePeopleSet = [[NSMutableSet alloc] initWithCapacity: 1];
+	self.mutablePeopleSet = [[NSMutableOrderedSet alloc] initWithCapacity: 1];
 
 	for (NSNumber *number in abRecordIDs)
 		{
@@ -717,7 +717,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 		NSLog(@"create date: %@", [managedObject valueForKey: @"createDate"]);
 		NSLog(@"text: %@", [managedObject valueForKey: @"text"]);
 		NSLog(@"last update date: %@", [managedObject valueForKey: @"lastUpdatedDate"]);
-		NSSet *peopleTagged = [managedObject valueForKey: @"peopleTagged"];
+		NSOrderedSet *peopleTagged = [managedObject valueForKey: @"peopleTagged"];
 		for (Person *person in peopleTagged) {
 			NSSet *firstNames = [person valueForKey: @"firstNames"];
 			NSSet *lastNames = [person valueForKey: @"lastNames"];
