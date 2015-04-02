@@ -42,7 +42,7 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="1f5-gl-AKp"/>
                         <barButtonItem key="leftBarButtonItem" title="Menu" id="Guc-Qf-Mt0">
                             <connections>
-                                <segue destination="JcK-uc-3mv" kind="show" identifier="ShowMenu" id="0vD-Hn-8XD"/>
+                                <segue destination="JcK-uc-3mv" kind="custom" identifier="ShowMenu" customClass="SegueToLeft" id="0vD-Hn-8XD"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Item" id="h2B-cB-23D">
