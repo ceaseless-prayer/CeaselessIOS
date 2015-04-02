@@ -117,6 +117,9 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
         [[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];
         [ceaselessContacts ensureCeaselessContactsSynced];
         NSLog(@"Ceaseless has been refreshed");
+    } else if([_cardArray count] == 0) {
+        [self prepareCardArray]; // initial card array prep when app starts
+        [[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];
     }
 
 }
