@@ -42,7 +42,7 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="1f5-gl-AKp"/>
                         <barButtonItem key="leftBarButtonItem" title="Menu" id="Guc-Qf-Mt0">
                             <connections>
-                                <segue destination="JcK-uc-3mv" kind="custom" identifier="ShowMenu" customClass="SegueToLeft" id="0vD-Hn-8XD"/>
+                                <segue destination="JcK-uc-3mv" kind="show" identifier="ShowMenu" id="0vD-Hn-8XD"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Item" id="h2B-cB-23D">
@@ -301,10 +301,10 @@
             </objects>
             <point key="canvasLocation" x="1370" y="-1033"/>
         </scene>
-        <!--Contacts-->
+        <!--People-->
         <scene sceneID="jmr-8c-WYn">
             <objects>
-                <viewController title="Contacts" id="Trs-Fq-LiS" customClass="ContactsListsViewController" sceneMemberID="viewController">
+                <viewController title="People" id="Trs-Fq-LiS" customClass="ContactsListsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="KlX-hV-Of8"/>
                         <viewControllerLayoutGuide type="bottom" id="cn3-n2-eBd"/>
@@ -313,7 +313,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Screen Shot 2015-02-18 at 8.22.42 AM.png" translatesAutoresizingMaskIntoConstraints="NO" id="bc9-FP-2O0">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bc9-FP-2O0">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                             <visualEffectView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xej-DT-Gs2">
@@ -472,13 +472,17 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Xej-DT-Gs2" firstAttribute="leading" secondItem="jbz-sN-c37" secondAttribute="leading" id="3tS-oH-OvN"/>
+                            <constraint firstItem="Xej-DT-Gs2" firstAttribute="top" secondItem="KlX-hV-Of8" secondAttribute="bottom" id="4RW-WY-T1C"/>
                             <constraint firstItem="cn3-n2-eBd" firstAttribute="top" secondItem="Xej-DT-Gs2" secondAttribute="bottom" id="Bzu-Do-64r"/>
                             <constraint firstItem="Xej-DT-Gs2" firstAttribute="top" secondItem="KlX-hV-Of8" secondAttribute="bottom" id="DtV-Pa-u3m"/>
+                            <constraint firstItem="cn3-n2-eBd" firstAttribute="top" secondItem="Xej-DT-Gs2" secondAttribute="bottom" id="G6C-Uq-5ao"/>
                             <constraint firstAttribute="trailing" secondItem="Xej-DT-Gs2" secondAttribute="trailing" id="UYl-rH-O9f"/>
+                            <constraint firstItem="Xej-DT-Gs2" firstAttribute="leading" secondItem="jbz-sN-c37" secondAttribute="leading" id="X84-oh-7w1"/>
                             <constraint firstAttribute="trailing" secondItem="bc9-FP-2O0" secondAttribute="trailing" id="m5X-D5-Hgz"/>
                             <constraint firstItem="bc9-FP-2O0" firstAttribute="leading" secondItem="jbz-sN-c37" secondAttribute="leading" id="mMV-Wz-ln6"/>
                             <constraint firstItem="bc9-FP-2O0" firstAttribute="top" secondItem="jbz-sN-c37" secondAttribute="top" id="q6A-2c-3Po"/>
                             <constraint firstItem="cn3-n2-eBd" firstAttribute="top" secondItem="bc9-FP-2O0" secondAttribute="bottom" id="u1h-uJ-TKY"/>
+                            <constraint firstAttribute="trailing" secondItem="Xej-DT-Gs2" secondAttribute="trailing" id="uKk-Py-ga9"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1201,7 +1205,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Screen Shot 2015-02-18 at 8.22.42 AM.png" translatesAutoresizingMaskIntoConstraints="NO" id="n8a-bI-8uK" userLabel="MenuBackground">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="n8a-bI-8uK">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eOV-jB-yn7">
@@ -1277,15 +1281,27 @@
                         <constraints>
                             <constraint firstItem="eOV-jB-yn7" firstAttribute="top" secondItem="h2U-Vm-z5v" secondAttribute="bottom" id="361-hx-kE5"/>
                             <constraint firstItem="eOV-jB-yn7" firstAttribute="leading" secondItem="eDD-PB-ZkO" secondAttribute="leading" id="8sb-Ux-BOA"/>
+                            <constraint firstAttribute="bottom" secondItem="eOV-jB-yn7" secondAttribute="bottom" id="9vX-7Y-nQo"/>
+                            <constraint firstItem="SIn-sd-emM" firstAttribute="top" secondItem="n8a-bI-8uK" secondAttribute="bottom" id="CeN-UA-Eo9"/>
                             <constraint firstItem="SIn-sd-emM" firstAttribute="top" secondItem="eOV-jB-yn7" secondAttribute="bottom" id="JBH-iU-9rv"/>
+                            <constraint firstAttribute="trailing" secondItem="n8a-bI-8uK" secondAttribute="trailing" id="M7K-Xk-0Sw"/>
                             <constraint firstItem="eOV-jB-yn7" firstAttribute="leading" secondItem="eDD-PB-ZkO" secondAttribute="leadingMargin" id="Otz-EH-reL"/>
                             <constraint firstAttribute="trailing" secondItem="eOV-jB-yn7" secondAttribute="trailing" id="PLM-4V-pJh"/>
+                            <constraint firstItem="eOV-jB-yn7" firstAttribute="top" secondItem="eDD-PB-ZkO" secondAttribute="top" constant="64" id="Sjk-e1-4QM"/>
+                            <constraint firstItem="n8a-bI-8uK" firstAttribute="leading" secondItem="eDD-PB-ZkO" secondAttribute="leading" id="aPb-D7-T86"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eOV-jB-yn7" secondAttribute="trailing" id="ebO-ia-kOJ"/>
+                            <constraint firstItem="eOV-jB-yn7" firstAttribute="leading" secondItem="eDD-PB-ZkO" secondAttribute="leading" id="fvl-zD-NwD"/>
+                            <constraint firstAttribute="trailing" secondItem="eOV-jB-yn7" secondAttribute="trailing" id="gGS-ht-Krb"/>
+                            <constraint firstItem="n8a-bI-8uK" firstAttribute="top" secondItem="eDD-PB-ZkO" secondAttribute="top" id="q31-s6-qWM"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="9vX-7Y-nQo"/>
                                 <exclude reference="Otz-EH-reL"/>
+                                <exclude reference="Sjk-e1-4QM"/>
                                 <exclude reference="ebO-ia-kOJ"/>
+                                <exclude reference="fvl-zD-NwD"/>
+                                <exclude reference="gGS-ht-Krb"/>
                             </mask>
                         </variation>
                     </view>
