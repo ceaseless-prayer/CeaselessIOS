@@ -37,6 +37,7 @@
 - (PersonIdentifier *) createCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
 - (NSArray *) getAllCeaselessContacts;
 - (NonMOPerson *) getNonMOPersonForCeaselessContact: (PersonIdentifier*) person;
+- (UIImage *) getImageForPersonIdentifier: (PersonIdentifier *) person;
 - (void) initializeFirstContacts: (NSInteger) n;
 - (void) refreshCeaselessContacts;
 - (void) ensureCeaselessContactsSynced;

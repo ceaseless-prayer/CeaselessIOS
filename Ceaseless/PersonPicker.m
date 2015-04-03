@@ -7,7 +7,6 @@
 //
 
 #import "PersonPicker.h"
-#import "NonMOPerson.h"
 #import "AppDelegate.h"
 #import "CeaselessLocalContacts.h"
 #import "PrayerRecord.h"

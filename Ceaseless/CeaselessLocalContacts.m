@@ -329,30 +329,34 @@
     }
     return nonMOPerson;
 }
+- (UIImage *) getImageForPersonIdentifier: (PersonIdentifier *) person {
+    ABRecordRef rawPerson;
+    for(AddressBookId *abId in person.addressBookIds) {
+        rawPerson = ABAddressBookGetPersonWithRecordID(_addressBook, (ABRecordID) [abId.recordId intValue]);
+        // Check for contact picture
+        if (rawPerson != nil && ABPersonHasImageData(rawPerson)) {
+            if ( &ABPersonCopyImageDataWithFormat != nil ) {
+                return [UIImage imageWithData:(__bridge NSData *)ABPersonCopyImageDataWithFormat(rawPerson, kABPersonImageFormatOriginalSize)];
+            }
+        }
+    }
+    
+    //default return nothing.
+    return nil;
+}
 
 - (void) createPersonInfoForCeaselessContact: (PersonIdentifier*) person {
     PersonInfo *newCeaselessPersonInfo = [NSEntityDescription insertNewObjectForEntityForName:@"PersonInfo" inManagedObjectContext:self.managedObjectContext];
     newCeaselessPersonInfo.identifier = person;
-    
     ABRecordRef rawPerson;
     AddressBookId *abId = person.addressBookIds[0];
     rawPerson = ABAddressBookGetPersonWithRecordID(_addressBook, (ABRecordID) [abId.recordId intValue]);
-    // Check for contact picture
-    //        if (rawPerson != nil && ABPersonHasImageData(rawPerson)) {
-    //            if ( &ABPersonCopyImageDataWithFormat != nil ) {
-    //                nonMOPerson.profileImage = [UIImage imageWithData:(__bridge NSData *)ABPersonCopyImageDataWithFormat(rawPerson, kABPersonImageFormatOriginalSize)];
-    //            }
-    //        }
-    
     newCeaselessPersonInfo.primaryAddressBookId = abId;
-    
     NSString *primaryFirstName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonFirstNameProperty));
     NSString *primaryLastName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonLastNameProperty));
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                              @"name = %@", primaryFirstName];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"name = %@", primaryFirstName];
     newCeaselessPersonInfo.primaryFirstName = (Name*)[self getOrCreateManagedObject:@"Name" withPredicate:predicate];
-    predicate = [NSPredicate predicateWithFormat:
-                 @"name = %@", primaryLastName];
+    predicate = [NSPredicate predicateWithFormat: @"name = %@", primaryLastName];
     newCeaselessPersonInfo.primaryLastName = (Name*)[self getOrCreateManagedObject:@"Name" withPredicate:predicate];
     
     // TODO:  this needs to be mobile or iphone first the other because it is used for texting from the device

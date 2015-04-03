@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import "PersonIdentifier.h"
-#import "NonMOPerson.h"
 
 @interface PersonPicker : NSObject
 
