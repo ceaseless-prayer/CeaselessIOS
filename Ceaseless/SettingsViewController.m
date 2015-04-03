@@ -158,8 +158,8 @@
 	self.profileImage.layer.cornerRadius = 6.0f;
 	[self.profileImage setClipsToBounds:YES];
 
-	self.backgroundImage.image = self.profileImage.image;
-	self.backgroundImage.contentMode = UIViewContentModeScaleAspectFill;
+	self.backgroundImageView.image = self.profileImage.image;
+	self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
 
 	NSString *fullName = [NSString stringWithFormat: @"%@ %@", person.firstName, person.lastName];
 	if (fullName) {
