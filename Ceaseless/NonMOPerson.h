@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <CommonCrypto/CommonDigest.h>
-#import "Person.h"
+#import "PersonIdentifier.h"
 
 @interface NonMOPerson : NSObject
 
@@ -20,7 +20,7 @@
 @property (strong, nonatomic) UIImage *profileImage;
 @property (strong, nonatomic) NSArray *emails;
 @property (strong, nonatomic) NSArray *phoneNumbers;
-@property (strong, nonatomic) Person *person;
+@property (strong, nonatomic) PersonIdentifier *person;
 
 - (void) favorite;
 - (void) unfavorite;

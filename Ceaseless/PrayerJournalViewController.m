@@ -12,7 +12,7 @@
 #import "PrayerJournalTableViewCell.h"
 #import "CeaselessLocalContacts.h"
 #import "NonMOPerson.h"
-#import "Person.h"
+#import "PersonIdentifier.h"
 #import "Name.h"
 #import "AppUtils.h"
 
@@ -204,7 +204,7 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	}
 
 	NSMutableArray *namesArray = [[NSMutableArray alloc] initWithCapacity: [note.peopleTagged count]];
-	for (Person *personTagged in note.peopleTagged) {
+	for (PersonIdentifier *personTagged in note.peopleTagged) {
 		NonMOPerson *nonMOPerson = [self.ceaselessContacts getNonMOPersonForCeaselessContact:personTagged];
 		NSString *personName = [NSString stringWithFormat: @"%@ %@", nonMOPerson.firstName, nonMOPerson.lastName];
 		[namesArray addObject: personName];

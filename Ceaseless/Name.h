@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Person;
+@class PersonIdentifier;
 
 @interface Name : NSManagedObject
 
@@ -20,13 +20,13 @@
 
 @interface Name (CoreDataGeneratedAccessors)
 
-- (void)addFirstNameForObject:(Person *)value;
-- (void)removeFirstNameForObject:(Person *)value;
+- (void)addFirstNameForObject:(PersonIdentifier *)value;
+- (void)removeFirstNameForObject:(PersonIdentifier *)value;
 - (void)addFirstNameFor:(NSSet *)values;
 - (void)removeFirstNameFor:(NSSet *)values;
 
-- (void)addLastNameForObject:(Person *)value;
-- (void)removeLastNameForObject:(Person *)value;
+- (void)addLastNameForObject:(PersonIdentifier *)value;
+- (void)removeLastNameForObject:(PersonIdentifier *)value;
 - (void)addLastNameFor:(NSSet *)values;
 - (void)removeLastNameFor:(NSSet *)values;
 

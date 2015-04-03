@@ -10,12 +10,12 @@
 #import <CoreData/CoreData.h>
 #import "PrayerRecordConstants.h"
 
-@class Person;
+@class PersonIdentifier;
 
 @interface PrayerRecord : NSManagedObject
 
 @property (nonatomic, retain) NSDate * createDate;
 @property (nonatomic, retain) NSString * type;
-@property (nonatomic, retain) Person *person;
+@property (nonatomic, retain) PersonIdentifier *person;
 
 @end

@@ -46,7 +46,7 @@
     NSPredicate *getEmailObj = [NSPredicate predicateWithFormat:@"address IN %@", emails];
     NSPredicate *getPhoneNumberObj = [NSPredicate predicateWithFormat:@"number IN %@", phoneNumbers];
     
-    for (Person *contact in results) {
+    for (PersonIdentifier *contact in results) {
         
         NSSet *matchingEmails = [contact.emails filteredSetUsingPredicate: getEmailObj];
         NSSet *matchingPhoneNumbers = [contact.phoneNumbers filteredSetUsingPredicate: getPhoneNumberObj];
@@ -126,7 +126,7 @@
     }
     
     allCeaselessContacts = [self getAllCeaselessContacts];
-    for (Person *person in allCeaselessContacts) {
+    for (PersonIdentifier *person in allCeaselessContacts) {
         [self updateCeaselessContactLocalIds: person];
     }
     
@@ -145,13 +145,13 @@
     }
 }
 
-- (void) updateCeaselessContactLocalIds: (Person *) person {
+- (void) updateCeaselessContactLocalIds: (PersonIdentifier *) person {
     ABRecordRef rawPerson = NULL;
     for (AddressBookId *abId in person.addressBookIds) {
         rawPerson = ABAddressBookGetPersonWithRecordID(_addressBook, (ABRecordID) [abId.recordId intValue]);
         if (rawPerson != NULL) { // we got one that points to a record
             // check if the record matches our original person contact, since it could be something else entirely
-            Person *validatedPerson = [self getCeaselessContactFromABRecord:rawPerson];
+            PersonIdentifier *validatedPerson = [self getCeaselessContactFromABRecord:rawPerson];
             if(validatedPerson != person) {
                 // we are pointing to a record that is not pointing back to us
                 // prune it from our list of local ids.
@@ -220,7 +220,7 @@
 }
 
 - (NSArray *) getAllCeaselessContacts {
-    return [self fetchEntityForName:@"Person"];
+    return [self fetchEntityForName:@"PersonIdentifier"];
 }
 
 - (NSArray *) getAllNames {
@@ -264,7 +264,7 @@
     return result;
 }
 
-- (NonMOPerson *) getNonMOPersonForCeaselessContact: (Person*) person {
+- (NonMOPerson *) getNonMOPersonForCeaselessContact: (PersonIdentifier*) person {
     NonMOPerson *nonMOPerson = [[NonMOPerson alloc] init];
     nonMOPerson.person = person;
     ABRecordRef rawPerson;
@@ -296,7 +296,7 @@
     return nonMOPerson;
 }
 
-- (Person *) getCeaselessContactFromABRecord: (ABRecordRef) rawPerson {
+- (PersonIdentifier *) getCeaselessContactFromABRecord: (ABRecordRef) rawPerson {
     
     // first look up by id
     NSString *addressBookId = @(ABRecordGetRecordID(rawPerson)).stringValue;
@@ -363,10 +363,10 @@
     return nil;
 }
 
-- (Person *) getCeaselessContactFromCeaselessId: (NSString *) ceaselessId {
+- (PersonIdentifier *) getCeaselessContactFromCeaselessId: (NSString *) ceaselessId {
     NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Person" inManagedObjectContext:context];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PersonIdentifier" inManagedObjectContext:context];
     [request setEntity:entity];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:
                               @"ceaselessId = %@", ceaselessId];
@@ -380,8 +380,8 @@
     }
 }
 
-- (Person *) createCeaselessContactFromABRecord: (ABRecordRef) rawPerson {
-    Person *newCeaselessPerson = [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:self.managedObjectContext];
+- (PersonIdentifier *) createCeaselessContactFromABRecord: (ABRecordRef) rawPerson {
+    PersonIdentifier *newCeaselessPerson = [NSEntityDescription insertNewObjectForEntityForName:@"PersonIdentifier" inManagedObjectContext:self.managedObjectContext];
     [self buildCeaselessContact:newCeaselessPerson fromABRecord:rawPerson];
     NSUUID  *UUID = [NSUUID UUID];
     newCeaselessPerson.ceaselessId = [UUID UUIDString];
@@ -394,7 +394,7 @@
     return newCeaselessPerson;
 }
 
-- (PrayerRecord *) createPrayerRecordForPerson: (Person*) person {
+- (PrayerRecord *) createPrayerRecordForPerson: (PersonIdentifier*) person {
     PrayerRecord *prayerRecord = [NSEntityDescription insertNewObjectForEntityForName:@"PrayerRecord" inManagedObjectContext:self.managedObjectContext];
     prayerRecord.person = person;
     prayerRecord.createDate = [NSDate date];
@@ -418,7 +418,7 @@
         if (firstName != nil) {
             hasFirstName = YES;
         }
-        Person *ceaselessContact = [self getCeaselessContactFromABRecord:personData];
+        PersonIdentifier *ceaselessContact = [self getCeaselessContactFromABRecord:personData];
         if(ceaselessContact != nil) {
             [matchingCeaselessContacts addObject: ceaselessContact];
         }
@@ -427,14 +427,14 @@
     
     if (hasFirstName) { // only operate on records with a first name
         if (resultSize == 1) {
-            Person *ceaselessContact = [matchingCeaselessContacts anyObject];
+            PersonIdentifier *ceaselessContact = [matchingCeaselessContacts anyObject];
             [self buildCeaselessContact:ceaselessContact fromABRecord:rawPerson];
         } else if(resultSize > 1) {
             // when we get multiple, keep the first
-            Person *personToKeep = [matchingCeaselessContacts anyObject];
+            PersonIdentifier *personToKeep = [matchingCeaselessContacts anyObject];
             [matchingCeaselessContacts removeObject: personToKeep];
             // remove the rest
-            for(Person *personToRemove in matchingCeaselessContacts) {
+            for(PersonIdentifier *personToRemove in matchingCeaselessContacts) {
                 [self copyDataFromCeaselessContact: personToRemove toContact: personToKeep];
                 [self.managedObjectContext deleteObject: personToRemove];
             }
@@ -451,7 +451,7 @@
     }
 }
 
-- (void) buildCeaselessContact:(Person*) ceaselessContact fromABRecord: (ABRecordRef) rawPerson {
+- (void) buildCeaselessContact:(PersonIdentifier*) ceaselessContact fromABRecord: (ABRecordRef) rawPerson {
     NSSet *unifiedRecord = [self getUnifiedAddressBookRecordFor:rawPerson];
     ceaselessContact.firstNames = [self buildFirstNames:unifiedRecord];
     ceaselessContact.lastNames = [self buildLastNames:unifiedRecord];
@@ -555,7 +555,7 @@
     return result;
 }
 
-- (void) copyDataFromCeaselessContact: (Person *) src toContact: (Person *) dst {
+- (void) copyDataFromCeaselessContact: (PersonIdentifier *) src toContact: (PersonIdentifier *) dst {
     // for each relationship, change the id of the relationship to point to the id of the one we want to keep
     [src addFirstNames:dst.firstNames];
     [src addLastNames:dst.lastNames];

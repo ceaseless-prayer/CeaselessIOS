@@ -10,7 +10,7 @@
 #import "TaggedPersonPicker.h"
 #import "CeaselessLocalContacts.h"
 #import "NonMOPerson.h"
-#import "Person.h"
+#import "PersonIdentifier.h"
 #import "PersonPicker.h"
 #import "AppConstants.h"
 
@@ -30,7 +30,7 @@
 
 	if ([[NSUserDefaults standardUserDefaults] stringForKey: @"CeaselessId"]) {
 			//get the image and name from the Person
-		Person *person = [_ceaselessContacts getCeaselessContactFromCeaselessId:[[NSUserDefaults standardUserDefaults] stringForKey: @"CeaselessId"]];
+		PersonIdentifier *person = [_ceaselessContacts getCeaselessContactFromCeaselessId:[[NSUserDefaults standardUserDefaults] stringForKey: @"CeaselessId"]];
 		NonMOPerson *nonMOPerson = [_ceaselessContacts getNonMOPersonForCeaselessContact: person];
 		[self formatProfileForPerson: nonMOPerson];
 	} else {
@@ -138,7 +138,7 @@
 
 
 	[_ceaselessContacts updateCeaselessContactFromABRecord: abPerson];
-	Person *person = [_ceaselessContacts getCeaselessContactFromABRecord: abPerson];
+	PersonIdentifier *person = [_ceaselessContacts getCeaselessContactFromABRecord: abPerson];
 
 	CFRelease(addressBook);
 

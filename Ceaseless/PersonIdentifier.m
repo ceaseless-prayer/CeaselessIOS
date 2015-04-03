@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Christopher Lim. All rights reserved.
 //
 
-#import "Person.h"
+#import "PersonIdentifier.h"
 #import "AddressBookId.h"
 #import "Email.h"
 #import "Name.h"
@@ -16,7 +16,7 @@
 #import "PrayerRecord.h"
 
 
-@implementation Person
+@implementation PersonIdentifier
 
 @dynamic ceaselessId;
 @dynamic favoritedDate;

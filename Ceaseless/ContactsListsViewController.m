@@ -11,7 +11,7 @@
 #import "AppDelegate.h"
 #import "CeaselessLocalContacts.h"
 #import "NonMOPerson.h"
-#import "Person.h"
+#import "PersonIdentifier.h"
 #import "Name.h"
 #import "PersonViewController.h"
 #import "PersonView.h"
@@ -100,7 +100,7 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
 	if ([[segue identifier] isEqualToString:@"ShowPerson"]) {
-		Person *person = nil;
+		PersonIdentifier *person = nil;
 
 		if (self.searchController.isActive) {
 			NSIndexPath *indexPath = [((UITableViewController *)self.searchController.searchResultsController).tableView indexPathForSelectedRow];
@@ -149,7 +149,7 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 
 	[self configureCell:cell atIndexPath:indexPath];
 	cell.onSwitchChange=^(UITableViewCell *cellAffected){
-		Person *person = [self.fetchedResultsController objectAtIndexPath: indexPath];
+		PersonIdentifier *person = [self.fetchedResultsController objectAtIndexPath: indexPath];
 		NonMOPerson *nonMOPerson = [self.ceaselessContacts getNonMOPersonForCeaselessContact:person];
 
 		{
@@ -172,7 +172,7 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 
 - (void)configureCell:(ContactsListTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 
-	Person *person = nil;
+	PersonIdentifier *person = nil;
 	if (self.searchController.active) {
 		person = [self.filteredList objectAtIndex:indexPath.row];
 	} else {
@@ -273,7 +273,7 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
 		// Edit the entity name as appropriate.
-	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Person" inManagedObjectContext:self.managedObjectContext];
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"PersonIdentifier" inManagedObjectContext:self.managedObjectContext];
 	[fetchRequest setEntity:entity];
 
 		// Set the batch size to a suitable number.
@@ -316,7 +316,7 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
   }
 
 	_searchFetchRequest = [[NSFetchRequest alloc] init];
-	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Person" inManagedObjectContext:self.managedObjectContext];
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"PersonIdentifier" inManagedObjectContext:self.managedObjectContext];
 	[_searchFetchRequest setEntity:entity];
 
 		// Edit the sort key as appropriate.
@@ -334,13 +334,13 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 	NSError * error = nil;
 
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Person"
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"PersonIdentifier"
 											  inManagedObjectContext:self.managedObjectContext];
 	[fetchRequest setEntity:entity];
 
 
 	NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-	for (Person *person in fetchedObjects) {
+	for (PersonIdentifier *person in fetchedObjects) {
 		NonMOPerson *nonMOPerson = [_ceaselessContacts getNonMOPersonForCeaselessContact: person];
 		NSLog(@"name: %@ %@", nonMOPerson.firstName, nonMOPerson.lastName);
 

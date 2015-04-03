@@ -7,7 +7,7 @@
 //
 
 #import "AddressBookId.h"
-#import "Person.h"
+#import "PersonIdentifier.h"
 
 
 @implementation AddressBookId

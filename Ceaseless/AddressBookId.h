@@ -9,12 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Person;
+@class PersonIdentifier;
 
 @interface AddressBookId : NSManagedObject
 
 @property (nonatomic, retain) NSString * deviceId;
 @property (nonatomic, retain) NSString * recordId;
-@property (nonatomic, retain) Person *ceaselessContact;
+@property (nonatomic, retain) PersonIdentifier *ceaselessContact;
 
 @end

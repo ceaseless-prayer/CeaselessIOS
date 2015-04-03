@@ -7,7 +7,7 @@
 //
 
 #import "Email.h"
-#import "Person.h"
+#import "PersonIdentifier.h"
 
 
 @implementation Email

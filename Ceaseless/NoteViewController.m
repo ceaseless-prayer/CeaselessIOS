@@ -8,7 +8,7 @@
 #import "NoteViewController.h"
 #import <AddressBook/AddressBook.h>
 #import "AppDelegate.h"
-#import "Person.h"
+#import "PersonIdentifier.h"
 #import "PersonPicker.h"
 #import "CeaselessLocalContacts.h"
 #import "Name.h"
@@ -167,7 +167,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 	}
 
-	for (Person *personTagged in peopleTagged) {
+	for (PersonIdentifier *personTagged in peopleTagged) {
 		CeaselessLocalContacts *ceaselessLocalContacts = [[CeaselessLocalContacts alloc] init];
 		NonMOPerson *nonMOPerson = [ceaselessLocalContacts getNonMOPersonForCeaselessContact: personTagged];
 
@@ -400,7 +400,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 
         CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
 		[ceaselessContacts updateCeaselessContactFromABRecord: abPerson];
-		Person *person = [ceaselessContacts getCeaselessContactFromABRecord: abPerson];
+		PersonIdentifier *person = [ceaselessContacts getCeaselessContactFromABRecord: abPerson];
 			//TODO crash here when no first name or last name (business) - got here when selected a business to tag, should not happen when selecting from Ceaseless Persons instead of ABRecords
         [self.mutablePeopleSet addObject: person];
 		}
@@ -723,7 +723,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 		NSLog(@"text: %@", [managedObject valueForKey: @"text"]);
 		NSLog(@"last update date: %@", [managedObject valueForKey: @"lastUpdatedDate"]);
 		NSOrderedSet *peopleTagged = [managedObject valueForKey: @"peopleTagged"];
-		for (Person *person in peopleTagged) {
+		for (PersonIdentifier *person in peopleTagged) {
 			NSSet *firstNames = [person valueForKey: @"firstNames"];
 			NSSet *lastNames = [person valueForKey: @"lastNames"];
 			NSString *firstName = ((Name*)[firstNames anyObject]).name;

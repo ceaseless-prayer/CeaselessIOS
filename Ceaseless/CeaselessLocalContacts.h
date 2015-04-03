@@ -12,7 +12,7 @@
 #import "AppDelegate.h"
 #import "PrayerRecord.h"
 #import "NonMOPerson.h"
-#import "Person.h"
+#import "PersonIdentifier.h"
 #import "AddressBookId.h"
 #import "Email.h"
 #import "PhoneNumber.h"
@@ -29,13 +29,13 @@
 - (NSArray *) filterResults: (NSArray*) results byEmails:(NSSet*) emails orPhoneNumbers: (NSSet*) phoneNumber;
 - (NSArray *) lookupContactsByFirstName:(NSString*) firstName andLastName: (NSString*) lastName;
 - (NSArray *) lookupContactsByAddressBookId:(NSString*) addressBookId;
-- (Person *) getCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
-- (Person *) getCeaselessContactFromCeaselessId: (NSString *) ceaselessId;
+- (PersonIdentifier *) getCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
+- (PersonIdentifier *) getCeaselessContactFromCeaselessId: (NSString *) ceaselessId;
 - (void) updateCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
-- (PrayerRecord *) createPrayerRecordForPerson: (Person *) person;
-- (Person *) createCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
+- (PrayerRecord *) createPrayerRecordForPerson: (PersonIdentifier *) person;
+- (PersonIdentifier *) createCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
 - (NSArray *) getAllCeaselessContacts;
-- (NonMOPerson *) getNonMOPersonForCeaselessContact: (Person*) person;
+- (NonMOPerson *) getNonMOPersonForCeaselessContact: (PersonIdentifier*) person;
 - (void) initializeFirstContacts: (NSInteger) n;
 - (void) refreshCeaselessContacts;
 - (void) ensureCeaselessContactsSynced;

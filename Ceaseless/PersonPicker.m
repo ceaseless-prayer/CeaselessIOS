@@ -138,7 +138,7 @@
     }
     
     for (NSInteger i = 0; i< numberOfPeople; i++) {
-        Person *personToShow = ceaselessPeople[i];
+        PersonIdentifier *personToShow = ceaselessPeople[i];
         BOOL personPicked = [self pickPersonIfPossible:personToShow];
         
         if(!personPicked) {
@@ -151,7 +151,7 @@
     }
 }
 
-- (BOOL) pickPersonIfPossible: (Person *) personToPick {
+- (BOOL) pickPersonIfPossible: (PersonIdentifier *) personToPick {
     // you can't pick a person who has already been picked.
     NSArray *queuedPeople = [self queuedPeople];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:
@@ -167,7 +167,7 @@
         rawPerson = ABAddressBookGetPersonWithRecordID(_addressBook, (ABRecordID) [abId.recordId intValue]);
         if (rawPerson != NULL) { // we got one that points to a record
             // check if the record matches our original person contact, since it could be something else entirely
-            Person *validatedPerson = [_ceaselessContacts getCeaselessContactFromABRecord:rawPerson];
+            PersonIdentifier *validatedPerson = [_ceaselessContacts getCeaselessContactFromABRecord:rawPerson];
             if(validatedPerson == personToPick) {
                 // since it matches, we can pick this person
                 [self queuePerson:personToPick];
@@ -181,7 +181,7 @@
     return personHasBeenPicked;
 }
 
-- (PeopleQueue*) queuePerson: (Person*) person {
+- (PeopleQueue*) queuePerson: (PersonIdentifier*) person {
     [_ceaselessContacts createPrayerRecordForPerson: person];
     PeopleQueue *pq = [NSEntityDescription insertNewObjectForEntityForName:@"PeopleQueue" inManagedObjectContext:self.managedObjectContext];
     pq.person = person;

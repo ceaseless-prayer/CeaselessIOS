@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Person;
+@class PersonIdentifier;
 
 @interface Email : NSManagedObject
 
@@ -19,8 +19,8 @@
 
 @interface Email (CoreDataGeneratedAccessors)
 
-- (void)addPersonObject:(Person *)value;
-- (void)removePersonObject:(Person *)value;
+- (void)addPersonObject:(PersonIdentifier *)value;
+- (void)removePersonObject:(PersonIdentifier *)value;
 - (void)addPerson:(NSSet *)values;
 - (void)removePerson:(NSSet *)values;
 

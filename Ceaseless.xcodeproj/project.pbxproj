@@ -15,7 +15,7 @@
 		425271B01AB37F29005098F6 /* CeaselessLocalContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271AF1AB37F29005098F6 /* CeaselessLocalContacts.m */; };
 		425271BF1AB3A664005098F6 /* AddressBookId.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271BE1AB3A664005098F6 /* AddressBookId.m */; };
 		42869B091AC9FC5100E612F7 /* AppConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 42869B081AC9FC5100E612F7 /* AppConstants.m */; };
-		42869B0C1ACA008200E612F7 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 42869B0B1ACA008200E612F7 /* Person.m */; };
+		42869B0C1ACA008200E612F7 /* PersonIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 42869B0B1ACA008200E612F7 /* PersonIdentifier.m */; };
 		429E60891AAA5FD8003F37BF /* ScriptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E60881AAA5FD7003F37BF /* ScriptureViewController.m */; };
 		429E608C1AAA61B1003F37BF /* PersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E608B1AAA61B1003F37BF /* PersonViewController.m */; };
 		42A5AF881AB9497F00F209B8 /* PrayerRecordConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A5AF871AB9497F00F209B8 /* PrayerRecordConstants.m */; };
@@ -92,8 +92,8 @@
 		425271BE1AB3A664005098F6 /* AddressBookId.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressBookId.m; sourceTree = "<group>"; };
 		42869B071AC9FC5100E612F7 /* AppConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstants.h; sourceTree = "<group>"; };
 		42869B081AC9FC5100E612F7 /* AppConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConstants.m; sourceTree = "<group>"; };
-		42869B0A1ACA008200E612F7 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
-		42869B0B1ACA008200E612F7 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		42869B0A1ACA008200E612F7 /* PersonIdentifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonIdentifier.h; sourceTree = "<group>"; };
+		42869B0B1ACA008200E612F7 /* PersonIdentifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonIdentifier.m; sourceTree = "<group>"; };
 		429E60871AAA5FD7003F37BF /* ScriptureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptureViewController.h; sourceTree = "<group>"; };
 		429E60881AAA5FD7003F37BF /* ScriptureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptureViewController.m; sourceTree = "<group>"; };
 		429E608A1AAA61B1003F37BF /* PersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonViewController.h; sourceTree = "<group>"; };
@@ -329,8 +329,8 @@
 			children = (
 				42AA9BF61ACCBF6300C4896B /* Note.h */,
 				42AA9BF71ACCBF6300C4896B /* Note.m */,
-				42869B0A1ACA008200E612F7 /* Person.h */,
-				42869B0B1ACA008200E612F7 /* Person.m */,
+				42869B0A1ACA008200E612F7 /* PersonIdentifier.h */,
+				42869B0B1ACA008200E612F7 /* PersonIdentifier.m */,
 				425271BD1AB3A664005098F6 /* AddressBookId.h */,
 				425271BE1AB3A664005098F6 /* AddressBookId.m */,
 				70D51C0C1AA627DF00FA7CDC /* NonMOPerson.h */,
@@ -440,7 +440,7 @@
 					};
 					42F3AE361AA4DD80003A88F5 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 98FUBN4YVB;
+						DevelopmentTeam = 28DYBASY7W;
 						TestTargetID = 42F3AE171AA4DD7F003A88F5;
 					};
 				};
@@ -517,7 +517,7 @@
 				42AA9BF81ACCBF6300C4896B /* Note.m in Sources */,
 				42C13BB41ABCC285000D5C08 /* WebCardView.m in Sources */,
 				42F3AE271AA4DD7F003A88F5 /* DataViewController.m in Sources */,
-				42869B0C1ACA008200E612F7 /* Person.m in Sources */,
+				42869B0C1ACA008200E612F7 /* PersonIdentifier.m in Sources */,
 				422DDD391ACBBD3400409001 /* AppUtils.m in Sources */,
 				42A5AF881AB9497F00F209B8 /* PrayerRecordConstants.m in Sources */,
 				70BBEDC31ABC768400D446AF /* SettingsViewController.m in Sources */,

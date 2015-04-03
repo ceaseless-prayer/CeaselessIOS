@@ -7,7 +7,7 @@
 //
 
 #import "Name.h"
-#import "Person.h"
+#import "PersonIdentifier.h"
 
 
 @implementation Name

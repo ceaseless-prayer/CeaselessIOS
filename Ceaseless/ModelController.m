@@ -61,7 +61,7 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
     // convert selected people into form the view can use
     NSMutableArray *nonMOPeople = [[NSMutableArray alloc]init];
     for(PeopleQueue *pq in _people) {
-        [nonMOPeople addObject: [ceaselessContacts getNonMOPersonForCeaselessContact:(Person*)pq.person]];
+        [nonMOPeople addObject: [ceaselessContacts getNonMOPersonForCeaselessContact:(PersonIdentifier*)pq.person]];
     }
     
     _cardArray = [[NSMutableArray alloc] initWithArray: nonMOPeople];

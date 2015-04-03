@@ -11,7 +11,7 @@
 
 @class AddressBookId, Email, Name, Note, PeopleQueue, PhoneNumber, PrayerRecord;
 
-@interface Person : NSManagedObject
+@interface PersonIdentifier : NSManagedObject
 
 @property (nonatomic, retain) NSString * ceaselessId;
 @property (nonatomic, retain) NSDate * favoritedDate;
@@ -26,7 +26,7 @@
 @property (nonatomic, retain) PeopleQueue *queued;
 @end
 
-@interface Person (CoreDataGeneratedAccessors)
+@interface PersonIdentifier (CoreDataGeneratedAccessors)
 
 - (void)addAddressBookIdsObject:(AddressBookId *)value;
 - (void)removeAddressBookIdsObject:(AddressBookId *)value;
