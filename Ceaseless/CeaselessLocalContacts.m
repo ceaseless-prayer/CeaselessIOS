@@ -155,14 +155,14 @@
             if(validatedPerson != person) {
                 // we are pointing to a record that is not pointing back to us
                 // prune it from our list of local ids.
-                NSMutableSet *addressBookIds = [[NSMutableSet alloc] initWithSet:person.addressBookIds];
+                NSMutableOrderedSet *addressBookIds = [[NSMutableOrderedSet alloc] initWithOrderedSet:person.addressBookIds];
                 [addressBookIds removeObject:abId];
                 person.addressBookIds = addressBookIds;
             }
         } else {
             // we are pointing to a record that is not pointing back to us
             // prune it from our list of local ids.
-            NSMutableSet *addressBookIds = [[NSMutableSet alloc] initWithSet:person.addressBookIds];
+            NSMutableOrderedSet *addressBookIds = [[NSMutableOrderedSet alloc] initWithOrderedSet:person.addressBookIds];
             [addressBookIds removeObject:abId];
             person.addressBookIds = addressBookIds;
             // TODO if addressBookIds reaches count 0,
@@ -294,6 +294,57 @@
         CFRelease(phoneNumbers);
     }
     return nonMOPerson;
+}
+
+- (PersonInfo *) createPersonInfoForCeaselessContact: (PersonIdentifier*) person {
+    PersonInfo *newCeaselessPersonInfo = [NSEntityDescription insertNewObjectForEntityForName:@"PersonInfo" inManagedObjectContext:self.managedObjectContext];
+    newCeaselessPersonInfo.identifier = person;
+    
+    ABRecordRef rawPerson;
+    AddressBookId *abId = [person.addressBookIds objectAtIndexedSubscript: 0];
+    rawPerson = ABAddressBookGetPersonWithRecordID(_addressBook, (ABRecordID) [abId.recordId intValue]);
+    // Check for contact picture
+    //        if (rawPerson != nil && ABPersonHasImageData(rawPerson)) {
+    //            if ( &ABPersonCopyImageDataWithFormat != nil ) {
+    //                nonMOPerson.profileImage = [UIImage imageWithData:(__bridge NSData *)ABPersonCopyImageDataWithFormat(rawPerson, kABPersonImageFormatOriginalSize)];
+    //            }
+    //        }
+    
+    newCeaselessPersonInfo.primaryAddressBookId = abId;
+    newCeaselessPersonInfo.primaryFirstName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonFirstNameProperty));
+    newCeaselessPersonInfo.primaryLastName  = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonLastNameProperty));
+    
+    // TODO:  this needs to be mobile or iphone first the other because it is used for texting from the device
+    ABMultiValueRef phoneNumbers = ABRecordCopyValue(rawPerson, kABPersonPhoneProperty);
+    CFIndex numberOfPhoneNumbers = ABMultiValueGetCount(phoneNumbers);
+    for (CFIndex i = 0; i < numberOfPhoneNumbers; i++) {
+        NSString *phoneNumber = CFBridgingRelease(ABMultiValueCopyValueAtIndex(phoneNumbers, i));
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                                  @"number = %@", phoneNumber];
+        PhoneNumber *phoneNumberObject = (PhoneNumber *) [self getOrCreateManagedObject: @"PhoneNumber" withPredicate:predicate];
+        phoneNumberObject.number = phoneNumber;
+        newCeaselessPersonInfo.primaryPhoneNumber = phoneNumberObject;
+    }
+    CFRelease(phoneNumbers);
+    
+    ABMultiValueRef emails = ABRecordCopyValue(rawPerson, kABPersonEmailProperty);
+    CFIndex numberOfEmails = ABMultiValueGetCount(emails);
+    for (CFIndex i = 0; i < numberOfEmails; i++) {
+        NSString *email = CFBridgingRelease(ABMultiValueCopyValueAtIndex(emails, i));
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                                  @"address = %@", email];
+        Email *emailObject = (Email *) [self getOrCreateManagedObject: @"Email" withPredicate:predicate];
+        emailObject.address = email;
+        newCeaselessPersonInfo.primaryEmail = emailObject;
+    }
+    CFRelease(emails);
+    
+    // save our changes
+    NSError *error;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
+    }
+    return newCeaselessPersonInfo;
 }
 
 - (PersonIdentifier *) getCeaselessContactFromABRecord: (ABRecordRef) rawPerson {
@@ -493,11 +544,11 @@
     return lastNames;
 }
 
-- (NSMutableSet*)buildAddressBookIds:(NSSet *)unifiedRecord {
+- (NSMutableOrderedSet*)buildAddressBookIds:(NSSet *)unifiedRecord {
     
     NSUUID *oNSUUID = [[UIDevice currentDevice] identifierForVendor];
     NSString *deviceId = [oNSUUID UUIDString];
-    NSMutableSet *addressBookIds = [[NSMutableSet alloc]init];
+    NSMutableOrderedSet *addressBookIds = [[NSMutableOrderedSet alloc]init];
     
     for (id record in unifiedRecord) {
         ABRecordRef personData = (__bridge ABRecordRef) record;

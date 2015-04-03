@@ -13,6 +13,7 @@
 #import "PrayerRecord.h"
 #import "NonMOPerson.h"
 #import "PersonIdentifier.h"
+#import "PersonInfo.h"
 #import "AddressBookId.h"
 #import "Email.h"
 #import "PhoneNumber.h"

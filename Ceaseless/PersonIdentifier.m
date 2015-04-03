@@ -1,8 +1,8 @@
 //
-//  Person.m
+//  PersonIdentifier.m
 //  Ceaseless
 //
-//  Created by Christopher Lim on 3/30/15.
+//  Created by Christopher Lim on 4/3/15.
 //  Copyright (c) 2015 Christopher Lim. All rights reserved.
 //
 
@@ -12,6 +12,7 @@
 #import "Name.h"
 #import "Note.h"
 #import "PeopleQueue.h"
+#import "PersonInfo.h"
 #import "PhoneNumber.h"
 #import "PrayerRecord.h"
 
@@ -29,5 +30,6 @@
 @dynamic phoneNumbers;
 @dynamic prayerRecords;
 @dynamic queued;
+@dynamic representativePerson;
 
 @end
