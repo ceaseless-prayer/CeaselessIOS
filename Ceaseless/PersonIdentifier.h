@@ -24,7 +24,7 @@
 @property (nonatomic, retain) NSSet *phoneNumbers;
 @property (nonatomic, retain) NSSet *prayerRecords;
 @property (nonatomic, retain) PeopleQueue *queued;
-@property (nonatomic, retain) PersonInfo *representativePerson;
+@property (nonatomic, retain) PersonInfo *representativeInfo;
 @end
 
 @interface PersonIdentifier (CoreDataGeneratedAccessors)

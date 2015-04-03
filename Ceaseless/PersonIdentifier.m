@@ -30,6 +30,6 @@
 @dynamic phoneNumbers;
 @dynamic prayerRecords;
 @dynamic queued;
-@dynamic representativePerson;
+@dynamic representativeInfo;
 
 @end

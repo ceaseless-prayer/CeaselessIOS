@@ -9,6 +9,7 @@
 #import <AddressBook/AddressBook.h>
 #import "AppDelegate.h"
 #import "PersonIdentifier.h"
+#import "PersonInfo.h"
 #import "PersonPicker.h"
 #import "CeaselessLocalContacts.h"
 #import "Name.h"
@@ -168,13 +169,12 @@ NSString *const kPlaceHolderText = @"Enter note";
 	}
 
 	for (PersonIdentifier *personTagged in peopleTagged) {
-		CeaselessLocalContacts *ceaselessLocalContacts = [[CeaselessLocalContacts alloc] init];
-		NonMOPerson *nonMOPerson = [ceaselessLocalContacts getNonMOPersonForCeaselessContact: personTagged];
-
-		ABRecordID abRecordID = [nonMOPerson.addressBookId intValue];
+        PersonInfo *info = personTagged.representativeInfo;
+		ABRecordID abRecordID = [info.primaryAddressBookId.recordId intValue];
 		NSNumber *number = [NSNumber numberWithInt:abRecordID];
 		[self.group addObject:number];
 	}
+    
 	self.abRecordIDs = [NSOrderedSet orderedSetWithOrderedSet: self.group];
 	if (self.abRecordIDs.count > 0) {
 		self.tagFriendsPlaceholderText.hidden = YES;

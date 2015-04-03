@@ -16,13 +16,11 @@
 
 @implementation PersonInfo
 
-@dynamic favoritedDate;
-@dynamic removedDate;
 @dynamic identifier;
-@dynamic primaryPhoneNumber;
-@dynamic primaryEmail;
 @dynamic primaryAddressBookId;
+@dynamic primaryEmail;
 @dynamic primaryFirstName;
 @dynamic primaryLastName;
+@dynamic primaryPhoneNumber;
 
 @end

@@ -39,12 +39,10 @@
         <relationship name="phoneNumbers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PhoneNumber" inverseName="person" inverseEntity="PhoneNumber" syncable="YES"/>
         <relationship name="prayerRecords" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PrayerRecord" inverseName="person" inverseEntity="PrayerRecord" syncable="YES"/>
         <relationship name="queued" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="PeopleQueue" inverseName="person" inverseEntity="PeopleQueue" syncable="YES"/>
-        <relationship name="representativePerson" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PersonInfo" inverseName="identifier" inverseEntity="PersonInfo" syncable="YES"/>
+        <relationship name="representativeInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PersonInfo" inverseName="identifier" inverseEntity="PersonInfo" syncable="YES"/>
     </entity>
     <entity name="PersonInfo" representedClassName="PersonInfo" syncable="YES">
-        <attribute name="favoritedDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="removedDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <relationship name="identifier" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PersonIdentifier" inverseName="representativePerson" inverseEntity="PersonIdentifier" syncable="YES"/>
+        <relationship name="identifier" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PersonIdentifier" inverseName="representativeInfo" inverseEntity="PersonIdentifier" syncable="YES"/>
         <relationship name="primaryAddressBookId" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AddressBookId" inverseName="primaryIdFor" inverseEntity="AddressBookId" syncable="YES"/>
         <relationship name="primaryEmail" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Email" inverseName="primaryFor" inverseEntity="Email" syncable="YES"/>
         <relationship name="primaryFirstName" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Name" inverseName="primaryFirstNameFor" inverseEntity="Name" syncable="YES"/>
@@ -73,10 +71,10 @@
         <element name="Name" positionX="0" positionY="0" width="128" height="120"/>
         <element name="Note" positionX="0" positionY="0" width="128" height="105"/>
         <element name="PeopleQueue" positionX="0" positionY="0" width="128" height="60"/>
-        <element name="PersonIdentifier" positionX="0" positionY="0" width="128" height="223"/>
+        <element name="PersonIdentifier" positionX="0" positionY="0" width="128" height="225"/>
+        <element name="PersonInfo" positionX="9" positionY="90" width="128" height="133"/>
         <element name="PhoneNumber" positionX="0" positionY="0" width="128" height="90"/>
         <element name="PrayerRecord" positionX="0" positionY="0" width="128" height="90"/>
         <element name="ScriptureQueue" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="PersonInfo" positionX="9" positionY="90" width="128" height="163"/>
     </elements>
 </model>
