@@ -50,7 +50,6 @@
 		70BFCB021AC070C50014C4BC /* ContactsListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70BFCB011AC070C50014C4BC /* ContactsListsViewController.m */; };
 		70D155D61AC1BC1700FB9486 /* ContactsListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D155D51AC1BC1700FB9486 /* ContactsListTableViewCell.m */; };
 		70D51C0B1AA6222700FA7CDC /* PersonPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D51C0A1AA6222700FA7CDC /* PersonPicker.m */; };
-		70D51C0E1AA627DF00FA7CDC /* NonMOPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D51C0D1AA627DF00FA7CDC /* NonMOPerson.m */; };
 		70D51C111AA6694400FA7CDC /* ScriptureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70D51C101AA6694400FA7CDC /* ScriptureView.xib */; };
 		70D51C131AA66F5100FA7CDC /* PersonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70D51C121AA66F5100FA7CDC /* PersonView.xib */; };
 		70D51C161AA6800D00FA7CDC /* PersonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D51C151AA6800D00FA7CDC /* PersonView.m */; };
@@ -158,8 +157,6 @@
 		70D155D51AC1BC1700FB9486 /* ContactsListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsListTableViewCell.m; sourceTree = "<group>"; };
 		70D51C091AA6222700FA7CDC /* PersonPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonPicker.h; sourceTree = "<group>"; };
 		70D51C0A1AA6222700FA7CDC /* PersonPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonPicker.m; sourceTree = "<group>"; };
-		70D51C0C1AA627DF00FA7CDC /* NonMOPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NonMOPerson.h; sourceTree = "<group>"; };
-		70D51C0D1AA627DF00FA7CDC /* NonMOPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NonMOPerson.m; sourceTree = "<group>"; };
 		70D51C101AA6694400FA7CDC /* ScriptureView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScriptureView.xib; sourceTree = "<group>"; };
 		70D51C121AA66F5100FA7CDC /* PersonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonView.xib; sourceTree = "<group>"; };
 		70D51C141AA6800D00FA7CDC /* PersonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonView.h; sourceTree = "<group>"; };
@@ -344,8 +341,6 @@
 				42458BE91ACF1FEB00C48830 /* Email.m */,
 				42AA9BF61ACCBF6300C4896B /* Note.h */,
 				42AA9BF71ACCBF6300C4896B /* Note.m */,
-				70D51C0C1AA627DF00FA7CDC /* NonMOPerson.h */,
-				70D51C0D1AA627DF00FA7CDC /* NonMOPerson.m */,
 				704D5CA51AAF90A200BD48B3 /* Ceaseless.xcdatamodeld */,
 				704D5CF21AAFA96200BD48B3 /* PrayerRecord.h */,
 				704D5CF31AAFA96200BD48B3 /* PrayerRecord.m */,
@@ -535,7 +530,6 @@
 				704D5CF41AAFA96200BD48B3 /* PrayerRecord.m in Sources */,
 				70F6640C1AA83CC60073801E /* ScriptureView.m in Sources */,
 				42F3AE211AA4DD7F003A88F5 /* AppDelegate.m in Sources */,
-				70D51C0E1AA627DF00FA7CDC /* NonMOPerson.m in Sources */,
 				42458BEA1ACF1FEB00C48830 /* Email.m in Sources */,
 				42458C021ACF32FD00C48830 /* PersonInfo.m in Sources */,
 				704D5CA11AAF6D5200BD48B3 /* PersonNotesViewController.m in Sources */,
