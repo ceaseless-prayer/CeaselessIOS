@@ -10,7 +10,6 @@
 #import "ContactsListTableViewCell.h"
 #import "AppDelegate.h"
 #import "CeaselessLocalContacts.h"
-#import "NonMOPerson.h"
 #import "PersonIdentifier.h"
 #import "Name.h"
 #import "PersonViewController.h"
@@ -95,6 +94,15 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 
 }
 
+#pragma mark - Saving context for changes to PersonIdentifier
+- (void) save {
+    // save
+    NSError *error;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
+    }
+}
+
 #pragma mark - Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -113,7 +121,7 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 
 		PersonViewController *personViewController = [PersonViewController alloc];
 		personViewController = segue.destinationViewController;
-		personViewController.dataObject = [self.ceaselessContacts getNonMOPersonForCeaselessContact:person];
+		personViewController.dataObject = person;
 
 	}
 }
@@ -145,29 +153,30 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 }
 - (ContactsListTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-	ContactsListTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-
-	[self configureCell:cell atIndexPath:indexPath];
-	cell.onSwitchChange=^(UITableViewCell *cellAffected){
-		PersonIdentifier *person = [self.fetchedResultsController objectAtIndexPath: indexPath];
-		NonMOPerson *nonMOPerson = [self.ceaselessContacts getNonMOPersonForCeaselessContact:person];
-
-		{
-		switch (self.selectedList){
-			case 0:
-				break;
-			case 1:
-				[nonMOPerson unfavorite];
-				break;
-			case 2:
-				[nonMOPerson enableForCeaseless];
-				break;
-			default:
-				break;
-		}
-		}
-	};
-	return cell;
+    ContactsListTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    
+    [self configureCell:cell atIndexPath:indexPath];
+    cell.onSwitchChange=^(UITableViewCell *cellAffected){
+        PersonIdentifier *person = [self.fetchedResultsController objectAtIndexPath: indexPath];
+        
+        {
+            switch (self.selectedList){
+                case 0:
+                    break;
+                case 1:
+                    person.favoritedDate = nil;
+                    [self save];
+                    break;
+                case 2:
+                    person.removedDate = nil;
+                    [self save];
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+    return cell;
 }
 
 - (void)configureCell:(ContactsListTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -179,33 +188,20 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 		person = [self.fetchedResultsController objectAtIndexPath:indexPath];
 	}
 
-	NonMOPerson *nonMOPerson = [self.ceaselessContacts getNonMOPersonForCeaselessContact:person];
-
-		// deal with cases of no lastName or firstName
-		// We had an Akbar (null) name show up.
-	if([nonMOPerson.firstName length] == 0) {
-		nonMOPerson.firstName = @" "; // 1 character space for initials if needed
-	}
-	if([nonMOPerson.lastName length] == 0) {
-		nonMOPerson.lastName = @" "; // 1 character space for initials if needed
-	}
-
-	if (nonMOPerson.profileImage) {
-		cell.personImageView.image = nonMOPerson.profileImage;
+    UIImage *profileImage = [_ceaselessContacts getImageForPersonIdentifier:person];
+	if (profileImage) {
+		cell.personImageView.image = profileImage;
 		cell.personImageView.contentMode = UIViewContentModeScaleAspectFit;
 		cell.placeholderLabel.hidden = YES;
 
 	} else {
 		cell.personImageView.image = nil;
-
-		NSString *firstInitial = [nonMOPerson.firstName substringToIndex: 1];
-		NSString *lastInitial = [nonMOPerson.lastName substringToIndex: 1];
-		cell.placeholderLabel.text = [NSString stringWithFormat: @"%@%@", firstInitial, lastInitial];
+		cell.placeholderLabel.text = [_ceaselessContacts initialsForPerson:person];
 		cell.placeholderLabel.hidden = NO;
 
 	}
 
-	NSString *personName = [NSString stringWithFormat: @"%@ %@", nonMOPerson.firstName, nonMOPerson.lastName];
+	NSString *personName = [_ceaselessContacts compositeNameForPerson:person];
 	cell.nameLabel.text = personName;
 
 	if (self.selectedList == searchScopeActive) {
@@ -247,7 +243,6 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 - (void)searchForText:(NSString *)searchText scope:(ContactsListsSearchScope)scopeOption
 {
 		//TODO  this isn't right
-//	NonMOPerson *nonMOPerson = [self.personPicker getNonMOPersonForCeaselessContact: person];
 
 	NSString *predicateFormat = @"firstName contains[cd] %@ || lastName contains[cd] %@";
 
@@ -341,8 +336,7 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 
 	NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
 	for (PersonIdentifier *person in fetchedObjects) {
-		NonMOPerson *nonMOPerson = [_ceaselessContacts getNonMOPersonForCeaselessContact: person];
-		NSLog(@"name: %@ %@", nonMOPerson.firstName, nonMOPerson.lastName);
+		NSLog(@"name: %@", [_ceaselessContacts compositeNameForPerson:person]);
 
 	}
 }

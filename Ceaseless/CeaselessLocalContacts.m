@@ -345,6 +345,38 @@
     return nil;
 }
 
+- (NSString*) initialsForPerson: (PersonIdentifier *) person {
+    PersonInfo *info = person.representativeInfo;
+    // deal with cases of no lastName or firstName
+    // We had an Akbar (null) name show up.
+    NSString *firstInitial = @" "; // 1 character space for initials if needed
+    NSString *lastInitial = @" "; // 1 character space for initials if needed
+    
+    if([info.primaryFirstName.name length] > 0) {
+        firstInitial = [info.primaryFirstName.name substringToIndex: 1];
+    }
+    if([info.primaryLastName.name length] > 0) {
+        lastInitial = [info.primaryLastName.name substringToIndex: 1];
+    }
+    
+    return [NSString stringWithFormat: @"%@%@", firstInitial, lastInitial];
+}
+
+- (NSString*) compositeNameForPerson: (PersonIdentifier *) person {
+    NSString *firstName = @" ";
+    NSString *lastName = @" ";
+    
+    PersonInfo *info = person.representativeInfo;
+    if([info.primaryFirstName.name length] > 0) {
+        firstName = info.primaryFirstName.name;
+    }
+    if([info.primaryLastName.name length] > 0) {
+        lastName = info.primaryLastName.name;
+    }
+    
+    return [NSString stringWithFormat: @"%@ %@", firstName, lastName];
+}
+
 - (void) createPersonInfoForCeaselessContact: (PersonIdentifier*) person {
     PersonInfo *newCeaselessPersonInfo = [NSEntityDescription insertNewObjectForEntityForName:@"PersonInfo" inManagedObjectContext:self.managedObjectContext];
     newCeaselessPersonInfo.identifier = person;

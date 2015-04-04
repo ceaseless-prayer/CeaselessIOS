@@ -169,7 +169,7 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 			cell.topPlaceholderLabel.text = nil;
 		} else {
 			cell.topPlaceholderLabel.hidden = NO;
-			cell.topPlaceholderLabel.text = [self initialsForPerson: person];
+			cell.topPlaceholderLabel.text = [_ceaselessContacts initialsForPerson: person];
 			cell.topImageView.image = nil;
 			cell.topImageView.hidden = YES;
 		}
@@ -193,7 +193,7 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 			cell.bottomPlaceholderLabel.text = nil;
 		} else {
 			cell.bottomPlaceholderLabel.hidden = NO;
-			cell.bottomPlaceholderLabel.text = [self initialsForPerson: person];
+			cell.bottomPlaceholderLabel.text = [_ceaselessContacts initialsForPerson: person];
 			cell.bottomImageView.image = nil;
 			cell.bottomImageView.hidden = YES;
 		}
@@ -206,8 +206,7 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 
 	NSMutableArray *namesArray = [[NSMutableArray alloc] initWithCapacity: [note.peopleTagged count]];
 	for (PersonIdentifier *personTagged in note.peopleTagged) {
-        PersonInfo *info = personTagged.representativeInfo;
-		NSString *personName = [NSString stringWithFormat: @"%@ %@", info.primaryFirstName.name, info.primaryLastName.name];
+		NSString *personName = [_ceaselessContacts compositeNameForPerson:personTagged];
 		[namesArray addObject: personName];
 	}
     
@@ -222,23 +221,6 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	cell.text.text = [[note valueForKey:@"text"] description];
     cell.backgroundColor = [UIColor clearColor];
 	
-}
-
-- (NSString*) initialsForPerson: (PersonIdentifier *) person {
-    PersonInfo *info = person.representativeInfo;
-    // deal with cases of no lastName or firstName
-    // We had an Akbar (null) name show up.
-    NSString *firstInitial = @" "; // 1 character space for initials if needed
-    NSString *lastInitial = @" "; // 1 character space for initials if needed
-
-	if([info.primaryFirstName.name length] > 0) {
-        firstInitial = [info.primaryFirstName.name substringToIndex: 1];
-	}
-	if([info.primaryLastName.name length] > 0) {
-        lastInitial = [info.primaryLastName.name substringToIndex: 1];
-	}
-	
-	return [NSString stringWithFormat: @"%@%@", firstInitial, lastInitial];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

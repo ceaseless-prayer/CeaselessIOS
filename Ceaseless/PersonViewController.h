@@ -10,7 +10,8 @@
 #import "PersonView.h"
 #import "PersonNotesViewController.h"
 #import "NoteViewController.h"
-#import "NonMOPerson.h"
+#import "PersonIdentifier.h"
+#import "PersonInfo.h"
 
 @interface PersonViewController : DataViewController <UITableViewDelegate, NoteViewControllerDelegate>
 
@@ -19,7 +20,7 @@
 @property (strong, nonatomic) PersonNotesViewController *personNotesViewController;
 @property (strong, nonatomic) UIStoryboard *mainStoryboard;
 
-@property (strong, nonatomic) NonMOPerson *nonMOPerson;
+@property (strong, nonatomic) PersonIdentifier *person;
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 

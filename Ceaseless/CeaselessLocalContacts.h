@@ -38,6 +38,8 @@
 - (NSArray *) getAllCeaselessContacts;
 - (NonMOPerson *) getNonMOPersonForCeaselessContact: (PersonIdentifier*) person;
 - (UIImage *) getImageForPersonIdentifier: (PersonIdentifier *) person;
+- (NSString*) initialsForPerson: (PersonIdentifier *) person;
+- (NSString*) compositeNameForPerson: (PersonIdentifier *) person;
 - (void) initializeFirstContacts: (NSInteger) n;
 - (void) refreshCeaselessContacts;
 - (void) ensureCeaselessContactsSynced;
