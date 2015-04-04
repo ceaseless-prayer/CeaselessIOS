@@ -11,7 +11,6 @@
 #import <AddressBookUI/AddressBookUI.h>
 #import "AppDelegate.h"
 #import "PrayerRecord.h"
-#import "NonMOPerson.h"
 #import "PersonIdentifier.h"
 #import "PersonInfo.h"
 #import "AddressBookId.h"
@@ -36,7 +35,6 @@
 - (PrayerRecord *) createPrayerRecordForPerson: (PersonIdentifier *) person;
 - (PersonIdentifier *) createCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
 - (NSArray *) getAllCeaselessContacts;
-- (NonMOPerson *) getNonMOPersonForCeaselessContact: (PersonIdentifier*) person;
 - (UIImage *) getImageForPersonIdentifier: (PersonIdentifier *) person;
 - (NSString*) initialsForPerson: (PersonIdentifier *) person;
 - (NSString*) compositeNameForPerson: (PersonIdentifier *) person;
