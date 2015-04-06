@@ -31,7 +31,7 @@
 	if ([[NSUserDefaults standardUserDefaults] stringForKey: @"CeaselessId"]) {
 			//get the image and name from the Person
 		PersonIdentifier *person = [_ceaselessContacts getCeaselessContactFromCeaselessId:[[NSUserDefaults standardUserDefaults] stringForKey: @"CeaselessId"]];
-		[self formatProfileForPersonInfo: person.representativeInfo];
+		[self formatProfileForPerson: person];
 	} else {
 		self.placeholderText.hidden = NO;
 		self.nameLabel.hidden = YES;
@@ -141,7 +141,7 @@
 
 	CFRelease(addressBook);
 
-	[self formatProfileForPersonInfo: person.representativeInfo];
+	[self formatProfileForPerson: person];
 
 	[[NSUserDefaults standardUserDefaults] setObject: person.ceaselessId forKey: @"CeaselessId"];
 
@@ -149,8 +149,8 @@
 
 }
 
-- (void) formatProfileForPersonInfo: (PersonInfo *) personInfo {
-    UIImage *personImage = [_ceaselessContacts getImageForPersonIdentifier:personInfo.identifier];
+- (void) formatProfileForPerson: (PersonIdentifier *) person {
+    UIImage *personImage = [_ceaselessContacts getImageForPersonIdentifier:person];
     self.profileImage.image = personImage;
     self.profileImage.contentMode = UIViewContentModeScaleAspectFit;
     self.profileImage.layer.cornerRadius = 6.0f;
@@ -159,7 +159,7 @@
     self.backgroundImageView.image = self.profileImage.image;
     self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
     
-    NSString *fullName = [NSString stringWithFormat: @"%@ %@", personInfo.primaryFirstName.name, personInfo.primaryLastName.name];
+    NSString *fullName = [_ceaselessContacts compositeNameForPerson:person];
     if (fullName) {
         self.nameLabel.text = fullName;
         self.nameLabel.hidden = NO;
