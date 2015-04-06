@@ -21,6 +21,7 @@
 @interface CeaselessLocalContacts : NSObject
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic) ABAddressBookRef addressBook;
+@property (nonatomic) UIBackgroundTaskIdentifier backgroundTask;
 @property (atomic) BOOL syncing;
 
 + (id) sharedCeaselessLocalContacts;

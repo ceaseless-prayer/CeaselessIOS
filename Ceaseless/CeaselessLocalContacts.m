@@ -33,6 +33,7 @@
     self = [super init];
     if (self) {
         self.syncing = NO;
+        self.backgroundTask = UIBackgroundTaskInvalid;
         self.addressBook = addressBook;
         self.managedObjectContext = context;
         _managedObjectContext = context;
@@ -98,6 +99,13 @@
 #pragma mark - Keeping Ceaseless and the address book in sync
 - (void) ensureCeaselessContactsSynced {
     if(!_syncing && ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
+        
+        self.backgroundTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+            NSLog(@"Background handler called. Not running background tasks anymore.");
+            [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
+            self.backgroundTask = UIBackgroundTaskInvalid;
+        }];
+        
         _syncing = YES;
         // refresh address book in the background
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -112,6 +120,8 @@
                 [clc refreshCeaselessContacts];
             }];
             if (addressBook2) CFRelease(addressBook2);
+            [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
+            self.backgroundTask = UIBackgroundTaskInvalid;
             _syncing = NO;
         });
     }
