@@ -157,7 +157,7 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	}
 
 
-	NSArray *peopleArray = [note.peopleTagged allObjects];
+	NSArray *peopleArray = [note.peopleTagged array];
 
 	if ([peopleArray count] > 0) {
         NonMOPerson *nonMOPerson = [self.ceaselessContacts getNonMOPersonForCeaselessContact:[peopleArray firstObject]];
@@ -183,7 +183,7 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	}
 
 	if ([peopleArray count] > 1) {
-		NonMOPerson *nonMOPerson = [self.ceaselessContacts getNonMOPersonForCeaselessContact:[peopleArray lastObject]];
+		NonMOPerson *nonMOPerson = [self.ceaselessContacts getNonMOPersonForCeaselessContact: peopleArray [1]];
 		if (nonMOPerson.profileImage) {
 			cell.bottomImageView.hidden = NO;
 			cell.bottomImageView.image = nonMOPerson.profileImage;
@@ -203,13 +203,13 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 		cell.bottomPlaceholderLabel.hidden = YES;
 	}
 
-	NSMutableSet *namesSet = [[NSMutableSet alloc] initWithCapacity: [note.peopleTagged count]];
+	NSMutableArray *namesArray = [[NSMutableArray alloc] initWithCapacity: [note.peopleTagged count]];
 	for (Person *personTagged in note.peopleTagged) {
 		NonMOPerson *nonMOPerson = [self.ceaselessContacts getNonMOPersonForCeaselessContact:personTagged];
 		NSString *personName = [NSString stringWithFormat: @"%@ %@", nonMOPerson.firstName, nonMOPerson.lastName];
-		[namesSet addObject: personName];
+		[namesArray addObject: personName];
 	}
-	NSString *allNamesString = [[namesSet allObjects] componentsJoinedByString:@", "];
+	NSString *allNamesString = [namesArray componentsJoinedByString:@", "];
 	cell.peopleTagged.text = allNamesString;
 	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 	dateFormatter.timeStyle = NSDateFormatterNoStyle;

@@ -2,18 +2,19 @@
 //  Note.m
 //  Ceaseless
 //
-//  Created by Lori Hill on 3/10/15.
+//  Created by Christopher Lim on 4/1/15.
 //  Copyright (c) 2015 Christopher Lim. All rights reserved.
 //
 
 #import "Note.h"
+#import "Person.h"
 
 
 @implementation Note
 
 @dynamic createDate;
-@dynamic text;
 @dynamic lastUpdatedDate;
+@dynamic text;
 @dynamic peopleTagged;
 
 @end

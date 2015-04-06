@@ -18,7 +18,7 @@
         <attribute name="createDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="lastUpdatedDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="peopleTagged" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="notes" inverseEntity="Person" syncable="YES"/>
+        <relationship name="peopleTagged" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Person" inverseName="notes" inverseEntity="Person" syncable="YES"/>
     </entity>
     <entity name="PeopleQueue" representedClassName="PeopleQueue" syncable="YES">
         <relationship name="person" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="queued" inverseEntity="Person" syncable="YES"/>
@@ -55,7 +55,7 @@
         <element name="AddressBookId" positionX="-360" positionY="-18" width="128" height="88"/>
         <element name="Email" positionX="-216" positionY="-144" width="128" height="73"/>
         <element name="Name" positionX="-369" positionY="-27" width="128" height="88"/>
-        <element name="Note" positionX="-200" positionY="-54" width="128" height="103"/>
+        <element name="Note" positionX="-200" positionY="-54" width="128" height="105"/>
         <element name="PeopleQueue" positionX="-387" positionY="-180" width="128" height="58"/>
         <element name="Person" positionX="-396" positionY="-73" width="128" height="210"/>
         <element name="PhoneNumber" positionX="-45" positionY="-1" width="128" height="75"/>

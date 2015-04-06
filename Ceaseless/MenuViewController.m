@@ -21,7 +21,7 @@
     // Do any additional setup after loading the view.
 	self.tableView.delegate = self;
 	self.tableView.dataSource = self;
-	self.menuInfoArray = [[NSArray alloc] initWithObjects: @"People", @"Settings", @"Developer", nil];
+	self.menuInfoArray = [[NSArray alloc] initWithObjects: @"People", @"Settings", @"Developer", @"Help", @"Feedback", nil];
     UIImage *background = [AppUtils getDynamicBackgroundImage];
     if(background != nil) {
         self.menuBackground.image = background;
@@ -59,6 +59,16 @@
 	cell.textLabel.text = [self.menuInfoArray objectAtIndex: indexPath.row];
 	cell.backgroundColor = [UIColor clearColor];
 
+	if (indexPath.row == 2) {
+		cell.selectionStyle = UITableViewCellSelectionStyleNone;
+		UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
+		cell.accessoryView = switchView;
+
+		BOOL developerMode = [[NSUserDefaults standardUserDefaults] boolForKey: kDeveloperMode];
+		[switchView setOn: developerMode animated:NO];
+		[switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
+	}
+
 
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -73,13 +83,23 @@
 	if (indexPath.row == 1) {
 		[self performSegueWithIdentifier:@"ShowSettings" sender: self];
 	}
-    if (indexPath.row == 2) {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        BOOL developerMode = [defaults boolForKey:kDeveloperMode];
-        [defaults setBool:!developerMode forKey:kDeveloperMode]; // toggle developer mode
-        [defaults synchronize];
-    }
 }
+
+- (void) switchChanged:(id)sender {
+	UISwitch* switchControl = sender;
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	BOOL developerMode = switchControl.on ? YES : NO;
+	[defaults setBool: developerMode forKey:kDeveloperMode];
+	[defaults synchronize];
+	NSLog( @"The switch is %@", switchControl.on ? @"YES" : @"NO" );
+}
+
+	// Action receiver for the clicking of Cancel button
+- (IBAction)menuDoneClicked:(id)sender
+{
+	[self performSegueWithIdentifier:@"UnwindToRootView" sender: self];
+}
+
 /*
 #pragma mark - Navigation
 

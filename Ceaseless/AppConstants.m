@@ -12,4 +12,5 @@
     NSString *const kDeveloperMode = @"developerMode";
     NSString *const kDailyPersonCount = @"DailyPersonCount";
     NSString *const kDynamicBackgroundImage = @"dynamicBackgroundImage";
+    NSString *const kNextDynamicBackgroundImage = @"nextDynamicBackgroundImage";
 @end

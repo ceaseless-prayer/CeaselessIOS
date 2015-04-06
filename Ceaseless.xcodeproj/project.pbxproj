@@ -19,6 +19,7 @@
 		429E60891AAA5FD8003F37BF /* ScriptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E60881AAA5FD7003F37BF /* ScriptureViewController.m */; };
 		429E608C1AAA61B1003F37BF /* PersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E608B1AAA61B1003F37BF /* PersonViewController.m */; };
 		42A5AF881AB9497F00F209B8 /* PrayerRecordConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A5AF871AB9497F00F209B8 /* PrayerRecordConstants.m */; };
+		42AA9BF81ACCBF6300C4896B /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 42AA9BF71ACCBF6300C4896B /* Note.m */; };
 		42C13BB11ABCC074000D5C08 /* WebCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C13BB01ABCC074000D5C08 /* WebCardViewController.m */; };
 		42C13BB41ABCC285000D5C08 /* WebCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C13BB31ABCC285000D5C08 /* WebCardView.m */; };
 		42CBFBAE1ABBC9BA00F9FB1D /* WebCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42CBFBAD1ABBC9BA00F9FB1D /* WebCardView.xib */; };
@@ -33,7 +34,6 @@
 		42F3AE3E1AA4DD80003A88F5 /* CeaselessTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F3AE3D1AA4DD80003A88F5 /* CeaselessTests.m */; };
 		704D5CA11AAF6D5200BD48B3 /* PersonNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5C9F1AAF6D5200BD48B3 /* PersonNotesViewController.m */; };
 		704D5CA71AAF90A200BD48B3 /* Ceaseless.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CA51AAF90A200BD48B3 /* Ceaseless.xcdatamodeld */; };
-		704D5CE21AAFA96100BD48B3 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CE11AAFA96100BD48B3 /* Note.m */; };
 		704D5CE51AAFA96200BD48B3 /* PeopleQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CE41AAFA96200BD48B3 /* PeopleQueue.m */; };
 		704D5CE81AAFA96200BD48B3 /* PhoneNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CE71AAFA96200BD48B3 /* PhoneNumber.m */; };
 		704D5CEE1AAFA96200BD48B3 /* Email.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CED1AAFA96200BD48B3 /* Email.m */; };
@@ -100,6 +100,8 @@
 		429E608B1AAA61B1003F37BF /* PersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonViewController.m; sourceTree = "<group>"; };
 		42A5AF861AB9497F00F209B8 /* PrayerRecordConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrayerRecordConstants.h; sourceTree = "<group>"; };
 		42A5AF871AB9497F00F209B8 /* PrayerRecordConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrayerRecordConstants.m; sourceTree = "<group>"; };
+		42AA9BF61ACCBF6300C4896B /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
+		42AA9BF71ACCBF6300C4896B /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
 		42C13BAF1ABCC074000D5C08 /* WebCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebCardViewController.h; sourceTree = "<group>"; };
 		42C13BB01ABCC074000D5C08 /* WebCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebCardViewController.m; sourceTree = "<group>"; };
 		42C13BB21ABCC285000D5C08 /* WebCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebCardView.h; sourceTree = "<group>"; };
@@ -125,8 +127,6 @@
 		704D5C9E1AAF6D5200BD48B3 /* PersonNotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonNotesViewController.h; sourceTree = "<group>"; };
 		704D5C9F1AAF6D5200BD48B3 /* PersonNotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonNotesViewController.m; sourceTree = "<group>"; };
 		704D5CA61AAF90A200BD48B3 /* Ceaseless.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Ceaseless.xcdatamodel; sourceTree = "<group>"; };
-		704D5CE01AAFA96100BD48B3 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
-		704D5CE11AAFA96100BD48B3 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
 		704D5CE31AAFA96200BD48B3 /* PeopleQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleQueue.h; sourceTree = "<group>"; };
 		704D5CE41AAFA96200BD48B3 /* PeopleQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleQueue.m; sourceTree = "<group>"; };
 		704D5CE61AAFA96200BD48B3 /* PhoneNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneNumber.h; sourceTree = "<group>"; };
@@ -227,16 +227,16 @@
 		42F3AE1A1AA4DD7F003A88F5 /* Ceaseless */ = {
 			isa = PBXGroup;
 			children = (
-				70F664161AA8B9260073801E /* ScripturePicker.h */,
-				70F664171AA8B9260073801E /* ScripturePicker.m */,
 				42F3AE1F1AA4DD7F003A88F5 /* AppDelegate.h */,
 				42F3AE201AA4DD7F003A88F5 /* AppDelegate.m */,
+				70F664161AA8B9260073801E /* ScripturePicker.h */,
+				70F664171AA8B9260073801E /* ScripturePicker.m */,
 				70D51C091AA6222700FA7CDC /* PersonPicker.h */,
 				70D51C0A1AA6222700FA7CDC /* PersonPicker.m */,
 				70F663FC1AA7E30F0073801E /* UIImageEffects.h */,
+				70F663FD1AA7E30F0073801E /* UIImageEffects.m */,
 				422DDD371ACBBD3400409001 /* AppUtils.h */,
 				422DDD381ACBBD3400409001 /* AppUtils.m */,
-				70F663FD1AA7E30F0073801E /* UIImageEffects.m */,
 				70F664071AA7EAB20073801E /* Controllers */,
 				70F664061AA7EA990073801E /* Model */,
 				70D51C0F1AA668AA00FA7CDC /* View */,
@@ -327,6 +327,8 @@
 		70F664061AA7EA990073801E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				42AA9BF61ACCBF6300C4896B /* Note.h */,
+				42AA9BF71ACCBF6300C4896B /* Note.m */,
 				42869B0A1ACA008200E612F7 /* Person.h */,
 				42869B0B1ACA008200E612F7 /* Person.m */,
 				425271BD1AB3A664005098F6 /* AddressBookId.h */,
@@ -348,8 +350,6 @@
 				704D5CE71AAFA96200BD48B3 /* PhoneNumber.m */,
 				704D5CE31AAFA96200BD48B3 /* PeopleQueue.h */,
 				704D5CE41AAFA96200BD48B3 /* PeopleQueue.m */,
-				704D5CE01AAFA96100BD48B3 /* Note.h */,
-				704D5CE11AAFA96100BD48B3 /* Note.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -514,12 +514,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42AA9BF81ACCBF6300C4896B /* Note.m in Sources */,
 				42C13BB41ABCC285000D5C08 /* WebCardView.m in Sources */,
 				42F3AE271AA4DD7F003A88F5 /* DataViewController.m in Sources */,
 				42869B0C1ACA008200E612F7 /* Person.m in Sources */,
 				422DDD391ACBBD3400409001 /* AppUtils.m in Sources */,
 				42A5AF881AB9497F00F209B8 /* PrayerRecordConstants.m in Sources */,
-				704D5CE21AAFA96100BD48B3 /* Note.m in Sources */,
 				70BBEDC31ABC768400D446AF /* SettingsViewController.m in Sources */,
 				70D51C161AA6800D00FA7CDC /* PersonView.m in Sources */,
 				429E60891AAA5FD8003F37BF /* ScriptureViewController.m in Sources */,

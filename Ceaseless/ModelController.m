@@ -113,12 +113,13 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
         [personPicker pickPeople];
         
         [self prepareCardArray];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];
-        
-        [ceaselessContacts ensureCeaselessContactsSynced];
         [self getNewBackgroundImage];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];
+        [ceaselessContacts ensureCeaselessContactsSynced];
         NSLog(@"Ceaseless has been refreshed");
+    } else if([_cardArray count] == 0) {
+        [self prepareCardArray]; // initial card array prep when app starts
+        [[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];
     }
 
 }
@@ -172,11 +173,21 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
 }
 
 - (void) getNewBackgroundImage {
-    // get a background image url
-    // fetch the image
-    // store it in a local file (overwrite the existing one)
-    // save the url to the file in defaults
-    // the app will use that background image next time it loads
+    // synchronously copy over the background image
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [paths objectAtIndex:0];
+    NSString *nextImagePath = [documentDirectory stringByAppendingPathComponent:kNextDynamicBackgroundImage];
+    NSString *currentImagePath = [documentDirectory stringByAppendingPathComponent:kDynamicBackgroundImage];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error;
+    if ([fileManager fileExistsAtPath:nextImagePath] == YES) {
+        if ([fileManager fileExistsAtPath:currentImagePath] == YES) {
+            [fileManager removeItemAtPath:currentImagePath error:&error];
+        }
+        [fileManager copyItemAtPath:nextImagePath toPath:currentImagePath error:&error];
+    }
+    
+    // fetch the next background image for caching purposes.
     NSURL *url = [NSURL URLWithString: kScriptureImagesUrl];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                        timeoutInterval:5.0];
@@ -192,16 +203,18 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
         NSDictionary *imageUrl = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
         NSLog(@"%@", imageUrl);
         [request setURL: [NSURL URLWithString: [imageUrl objectForKey:@"imageUrl"]]];
-        NSData *imageData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentDirectory = [paths objectAtIndex:0];
-        NSString *imagePath = [documentDirectory stringByAppendingPathComponent:kDynamicBackgroundImage];
-        
-        if (![imageData writeToFile:imagePath atomically:YES]) {
-            NSLog(@"Failed to cache image data to disk %@", imagePath);
-        } else {
-            NSLog(@"the cachedImagedPath is %@", imagePath);
-        }
+        // TODO handle error cases like no connection
+        [NSURLConnection sendAsynchronousRequest:request queue: [NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *imageData, NSError *connectionError) {
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *documentDirectory = [paths objectAtIndex:0];
+            NSString *imagePath = [documentDirectory stringByAppendingPathComponent:kNextDynamicBackgroundImage];
+            
+            if (![imageData writeToFile:imagePath atomically:YES]) {
+                NSLog(@"Failed to cache image data to disk %@", imagePath);
+            } else {
+                NSLog(@"the cachedImagedPath is %@", imagePath);
+            }
+        }];
     }];
 }
 

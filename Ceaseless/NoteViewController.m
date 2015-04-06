@@ -19,7 +19,7 @@
 @property (nonatomic, strong) NSMutableArray *namesArray;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) UINavigationItem *item;
-@property (strong, nonatomic) NSMutableSet *mutablePeopleSet;
+@property (strong, nonatomic) NSMutableOrderedSet *mutablePeopleSet;
 @property (nonatomic, strong) NSOrderedSet *abRecordIDs;
 @property (strong, nonatomic) UITapGestureRecognizer *singleTapGestureRecognizer;
 @property (nonatomic, strong) UIButton *selectedButton;
@@ -64,7 +64,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 	[self checkAddressBookAccess];
 
 	self.namesArray = [NSMutableArray arrayWithCapacity: 1];
-	self.mutablePeopleSet = [[NSMutableSet alloc] initWithCapacity: 1];
+	self.mutablePeopleSet = [[NSMutableOrderedSet alloc] initWithCapacity: 1];
 
 	self.notesTextView.delegate = self;
 	self.contactsTableView.delegate = self;
@@ -126,7 +126,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 		//initialize
 	self.group = [NSMutableOrderedSet orderedSet];
-	NSSet *peopleTagged = [[NSSet alloc] init];
+	NSOrderedSet *peopleTagged = [[NSOrderedSet alloc] init];
 
 
 		//if there is a curent note display it
@@ -159,7 +159,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 		}
 
 		if (self.personForNewNote) {
-			peopleTagged = [[NSSet alloc] initWithObjects: self.personForNewNote, nil];
+			peopleTagged = [[NSOrderedSet alloc] initWithObjects: self.personForNewNote, nil];
 
 		}
 		self.notesTextView.text = kPlaceHolderText;
@@ -390,7 +390,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 	ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
 
 		//reset mutablePeople set with no objects
-	self.mutablePeopleSet = [[NSMutableSet alloc] initWithCapacity: 1];
+	self.mutablePeopleSet = [[NSMutableOrderedSet alloc] initWithCapacity: 1];
 
 	for (NSNumber *number in abRecordIDs)
 		{
@@ -401,6 +401,7 @@ NSString *const kPlaceHolderText = @"Enter note";
         CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
 		[ceaselessContacts updateCeaselessContactFromABRecord: abPerson];
 		Person *person = [ceaselessContacts getCeaselessContactFromABRecord: abPerson];
+			//TODO crash here when no first name or last name (business) - got here when selected a business to tag, should not happen when selecting from Ceaseless Persons instead of ABRecords
         [self.mutablePeopleSet addObject: person];
 		}
 
@@ -450,14 +451,18 @@ NSString *const kPlaceHolderText = @"Enter note";
 		note.text = self.notesTextView.text;
 		note.lastUpdatedDate = [NSDate date];
 		note.peopleTagged = nil; 
-		[note addPeopleTagged: self.mutablePeopleSet];
+//		[note addPeopleTagged: self.mutablePeopleSet];
+		note.peopleTagged = [[NSOrderedSet alloc] initWithSet:[self.mutablePeopleSet set]];
+
 
 	} else {
 	Note *newNote = [NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
 		[newNote setValue: [NSDate date] forKey: @"createDate"];
 		[newNote setValue: self.notesTextView.text forKey: @"text"];
 		[newNote setValue: [NSDate date] forKey: @"lastUpdatedDate"];
-		[newNote addPeopleTagged: self.mutablePeopleSet];
+//		[newNote addPeopleTagged: self.mutablePeopleSet];
+		newNote.peopleTagged = [[NSOrderedSet alloc] initWithSet:[self.mutablePeopleSet set]];
+
 
 		}
 	if (![self.managedObjectContext save: &error]) {
@@ -717,7 +722,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 		NSLog(@"create date: %@", [managedObject valueForKey: @"createDate"]);
 		NSLog(@"text: %@", [managedObject valueForKey: @"text"]);
 		NSLog(@"last update date: %@", [managedObject valueForKey: @"lastUpdatedDate"]);
-		NSSet *peopleTagged = [managedObject valueForKey: @"peopleTagged"];
+		NSOrderedSet *peopleTagged = [managedObject valueForKey: @"peopleTagged"];
 		for (Person *person in peopleTagged) {
 			NSSet *firstNames = [person valueForKey: @"firstNames"];
 			NSSet *lastNames = [person valueForKey: @"lastNames"];

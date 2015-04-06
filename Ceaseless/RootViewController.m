@@ -82,6 +82,7 @@
 }
 
 - (void) refreshPageView {
+    [self setBlurredBackground];
     DataViewController *startingViewController = [self.modelController viewControllerAtIndex:0 storyboard:self.storyboard];
     [self.pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
 }
@@ -148,8 +149,9 @@
 	UIImage *blurredImage = [UIImageEffects imageByApplyingBlurToImage:self.backgroundImageView.image withRadius: 10 tintColor: UIColorFromRGBWithAlpha(0x00012f, 0.6) saturationDeltaFactor:1 maskImage:self.backgroundImageView.image];
 	self.backgroundImageView.image = blurredImage;
 }
+- (IBAction)unwindToRootViewController:(UIStoryboardSegue*)sender
+{
+		// Pull any data from the view controller which initiated the unwind segue.
 
-- (IBAction)settingsButtonPressed:(id)sender {
-	NSLog (@"settings button pressed");
 }
 @end

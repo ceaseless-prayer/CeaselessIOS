@@ -22,6 +22,7 @@ FOUNDATION_EXPORT NSString *const kModelRefreshNotification;
 - (void) removeControllerAtIndex: (NSUInteger) index;
 - (NSInteger) modelCount;
 - (void) runIfNewDay;
+- (void) prepareCardArray;
 - (NSInteger) daysWithinEraFromDate:(NSDate *) startDate toDate:(NSDate *) endDate;
 
 @end
