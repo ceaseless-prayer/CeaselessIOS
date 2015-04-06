@@ -10,6 +10,14 @@
 #import <UIKit/UIKit.h>
 #import "AppConstants.h"
 
+#define UIColorFromRGBWithAlpha(rgbValue,a) [UIColor \
+colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
+green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
+blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
+
 @interface AppUtils : NSObject
++ (UIImageView *)setBlurredBackgroundForFrame: (CGRect) frame;
 + (UIImage *) getDynamicBackgroundImage;
+
+
 @end

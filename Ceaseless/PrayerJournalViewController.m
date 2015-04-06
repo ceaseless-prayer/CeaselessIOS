@@ -15,6 +15,7 @@
 #import "Person.h"
 #import "Name.h"
 #import "AppUtils.h"
+#import "UIImageEffects.h"
 
 typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 {
@@ -44,17 +45,16 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 - (void)viewDidLoad {
 	[super viewDidLoad];
 		// Do any additional setup after loading the view, typically from a nib.
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.tableView.frame];
-    imageView.contentMode = UIViewContentModeScaleAspectFill;
-    UIImage *backgroundImage = [AppUtils getDynamicBackgroundImage];
-    if(backgroundImage != nil) {
-        imageView.image = backgroundImage;
-    } else {
-        imageView.image = [UIImage imageNamed:@"Screen Shot 2015-02-18 at 8.22.42 AM.png"];
-    }
-	
-	self.tableView.backgroundView = imageView;
+	UIImageView *imageView = [[UIImageView alloc] initWithFrame: self.view.frame];
+	imageView.contentMode = UIViewContentModeScaleAspectFill;
+	UIImage *backgroundImage = [AppUtils getDynamicBackgroundImage];
+	if(backgroundImage != nil) {
+		imageView.image = backgroundImage;
+	}
+	self.backgroundImageView = imageView;
+//	self.backgroundImageView = [AppUtils setBlurredBackgroundForFrame: self.view.frame];
 
+	
 	self.tableView.estimatedRowHeight = 130.0;
 	self.tableView.rowHeight = UITableViewAutomaticDimension;
 
@@ -76,6 +76,53 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	self.definesPresentationContext = YES;
 
 }
+
+//- (UIImageView *)setBlurredBackgroundForFrame: (CGRect) frame {
+//		//| ----------------------------------------------------------------------------
+//		//! Applies a blur, tint color, and saturation adjustment to @a inputImage,
+//		//! optionally within the area specified by @a maskImage.
+//		//!
+//		//! @param  inputImage
+//		//!         The source image.  A modified copy of this image will be returned.
+//		//! @param  blurRadius
+//		//!         The radius of the blur in points.
+//		//! @param  tintColor
+//		//!         An optional UIColor object that is uniformly blended with the
+//		//!         result of the blur and saturation operations.  The alpha channel
+//		//!         of this color determines how strong the tint is.
+//		//! @param  saturationDeltaFactor
+//		//!         A value of 1.0 produces no change in the resulting image.  Values
+//		//!         less than 1.0 will desaturation the resulting image while values
+//		//!         greater than 1.0 will have the opposite effect.
+//		//! @param  maskImage
+//		//!         If specified, @a inputImage is only modified in the area(s) defined
+//		//!         by this mask.  This must be an image mask or it must meet the
+//		//!         requirements of the mask parameter of CGContextClipToMask.
+//
+//	UIImageView *imageView = [[UIImageView alloc] initWithFrame: frame];
+//	imageView.contentMode = UIViewContentModeScaleAspectFill;
+//	UIImage *backgroundImage = [AppUtils getDynamicBackgroundImage];
+//	if(backgroundImage != nil) {
+//		imageView.image = backgroundImage;
+//	} else {
+//		imageView.image = [UIImage imageNamed:@"Screen Shot 2015-02-18 at 8.22.42 AM.png"];
+//	}
+//
+//		// Blur effect
+//	UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+//	UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+//	[blurEffectView setFrame: frame];
+//	[imageView addSubview:blurEffectView];
+//
+//	imageView.image = [imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+//	imageView.tintColor = UIColorFromRGBWithAlpha(0x00012f, 0.4);
+//
+//
+////	UIImage *blurredImage = [UIImageEffects imageByApplyingBlurToImage:imageView.image withRadius: 0 tintColor: UIColorFromRGBWithAlpha(0x00012f, 0.6) saturationDeltaFactor:1.0 maskImage:imageView.image];
+////	imageView.image = blurredImage;
+//	return imageView;
+//
+//}
 - (void) viewDidAppear:(BOOL)animated {
 	[super viewDidAppear: animated];
 
