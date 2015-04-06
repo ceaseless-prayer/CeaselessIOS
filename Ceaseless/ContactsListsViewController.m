@@ -14,6 +14,7 @@
 #import "Name.h"
 #import "PersonViewController.h"
 #import "PersonView.h"
+#import "AppUtils.h"
 
 typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 {
@@ -51,11 +52,14 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 	self.tableView.dataSource = self;
 	self.tableView.delegate = self;
 
-//	UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.tableView.frame];
-//	imageView.image = [UIImage imageNamed:@"Screen Shot 2015-02-18 at 8.22.42 AM.png"];
-//	imageView.contentMode = UIViewContentModeScaleAspectFill;
-//
-//	self.tableView.backgroundView = imageView;
+	UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.tableView.frame];
+	imageView.contentMode = UIViewContentModeScaleAspectFill;
+	UIImage *backgroundImage = [AppUtils getDynamicBackgroundImage];
+	if(backgroundImage != nil) {
+		imageView.image = backgroundImage;
+	}
+
+	self.backgroundView = imageView;
 
 	self.tableView.estimatedRowHeight = 130.0;
 	self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -242,9 +246,7 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 
 - (void)searchForText:(NSString *)searchText scope:(ContactsListsSearchScope)scopeOption
 {
-		//TODO  this isn't right
-
-	NSString *predicateFormat = @"firstName contains[cd] %@ || lastName contains[cd] %@";
+	NSString *predicateFormat = @"representativeInfo.primaryFirstName.name contains[cd] %@ || representativeInfo.primaryLastName.name contains[cd] %@";
 
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, self.selectedListPredicate, searchText, searchText];
 
@@ -275,11 +277,9 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 	[fetchRequest setFetchBatchSize:20];
 
 		// Edit the sort key as appropriate.
-//	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"lastNames.name" ascending:YES];
-//
-//	NSArray *sortDescriptors = @[sortDescriptor];
+	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryLastName.name" ascending:YES];
 
-	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects: nil];
+	NSArray *sortDescriptors = @[sortDescriptor];
 
 	[fetchRequest setSortDescriptors:sortDescriptors];
 
@@ -315,9 +315,8 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 	[_searchFetchRequest setEntity:entity];
 
 		// Edit the sort key as appropriate.
-//	((Name*) [personTagged.lastNames anyObject]).lastNameFor]
-//	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"prayerRecords.@max.createDate" ascending:YES];
-	NSArray *sortDescriptors = [NSArray arrayWithObjects: nil];
+	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryLastName.name" ascending:YES];
+	NSArray *sortDescriptors = @[sortDescriptor];
 	[_searchFetchRequest setSortDescriptors:sortDescriptors];
 
 	return _searchFetchRequest;
