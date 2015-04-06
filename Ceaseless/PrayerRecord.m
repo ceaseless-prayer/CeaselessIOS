@@ -7,7 +7,7 @@
 //
 
 #import "PrayerRecord.h"
-#import "Person.h"
+#import "PersonIdentifier.h"
 
 
 @implementation PrayerRecord

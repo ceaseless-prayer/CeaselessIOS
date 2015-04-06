@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "AppConstants.h"
+#import "PersonIdentifier.h"
+#import "PersonInfo.h"
+#import "Name.h"
 
 #define UIColorFromRGBWithAlpha(rgbValue,a) [UIColor \
 colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \

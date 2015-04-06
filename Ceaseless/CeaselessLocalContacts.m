@@ -46,7 +46,7 @@
     NSPredicate *getEmailObj = [NSPredicate predicateWithFormat:@"address IN %@", emails];
     NSPredicate *getPhoneNumberObj = [NSPredicate predicateWithFormat:@"number IN %@", phoneNumbers];
     
-    for (Person *contact in results) {
+    for (PersonIdentifier *contact in results) {
         
         NSSet *matchingEmails = [contact.emails filteredSetUsingPredicate: getEmailObj];
         NSSet *matchingPhoneNumbers = [contact.phoneNumbers filteredSetUsingPredicate: getPhoneNumberObj];
@@ -126,13 +126,38 @@
     }
     
     allCeaselessContacts = [self getAllCeaselessContacts];
-    for (Person *person in allCeaselessContacts) {
+    for (PersonIdentifier *person in allCeaselessContacts) {
         [self updateCeaselessContactLocalIds: person];
     }
     
+    [self cleanupOrphanedPersonInfoRecords];
+    
+    NSLog(@"Total person info records: %lu", (unsigned long) [self.getAllCeaselessPersonInfo count]);
     NSLog(@"Total address book records: %lu", (unsigned long) [allAddressBookContacts count]);
     NSLog(@"Total Ceaseless contacts: %lu", (unsigned long)[allCeaselessContacts count]);
+}
+
+- (void) cleanupOrphanedPersonInfoRecords {
+    // clean up orphaned PersonInfo objects (they are no longer valid)
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PersonInfo"
+                                              inManagedObjectContext:self.managedObjectContext];
     
+    [fetchRequest setEntity:entity];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"identifier = nil"];
+    [fetchRequest setPredicate:predicate];
+    
+    NSError * error = nil;
+    NSArray *results = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    for (PersonInfo *orphanedInfo in results) {
+        [self.managedObjectContext deleteObject: orphanedInfo];
+    }
+    
+    // save
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
+    }
 }
 
 - (void) initializeFirstContacts: (NSInteger) n {
@@ -145,30 +170,35 @@
     }
 }
 
-- (void) updateCeaselessContactLocalIds: (Person *) person {
+- (void) updateCeaselessContactLocalIds: (PersonIdentifier *) person {
     ABRecordRef rawPerson = NULL;
     for (AddressBookId *abId in person.addressBookIds) {
         rawPerson = ABAddressBookGetPersonWithRecordID(_addressBook, (ABRecordID) [abId.recordId intValue]);
         if (rawPerson != NULL) { // we got one that points to a record
             // check if the record matches our original person contact, since it could be something else entirely
-            Person *validatedPerson = [self getCeaselessContactFromABRecord:rawPerson];
+            PersonIdentifier *validatedPerson = [self getCeaselessContactFromABRecord:rawPerson];
             if(validatedPerson != person) {
                 // we are pointing to a record that is not pointing back to us
                 // prune it from our list of local ids.
-                NSMutableSet *addressBookIds = [[NSMutableSet alloc] initWithSet:person.addressBookIds];
+                NSMutableOrderedSet *addressBookIds = [[NSMutableOrderedSet alloc] initWithOrderedSet:person.addressBookIds];
                 [addressBookIds removeObject:abId];
                 person.addressBookIds = addressBookIds;
             }
         } else {
             // we are pointing to a record that is not pointing back to us
             // prune it from our list of local ids.
-            NSMutableSet *addressBookIds = [[NSMutableSet alloc] initWithSet:person.addressBookIds];
+            NSMutableOrderedSet *addressBookIds = [[NSMutableOrderedSet alloc] initWithOrderedSet:person.addressBookIds];
             [addressBookIds removeObject:abId];
             person.addressBookIds = addressBookIds;
             // TODO if addressBookIds reaches count 0,
             // should we consider the Ceaseless Contact deleted from the address book?
             // should there be a separate clean up process for that?
         }
+    }
+    
+    // replace the primary record if the old one is no longer valid.
+    if (![person.addressBookIds containsObject: person.representativeInfo.primaryAddressBookId]) {
+        person.representativeInfo.primaryAddressBookId = person.addressBookIds[0];
     }
     
     // save
@@ -220,7 +250,11 @@
 }
 
 - (NSArray *) getAllCeaselessContacts {
-    return [self fetchEntityForName:@"Person"];
+    return [self fetchEntityForName:@"PersonIdentifier"];
+}
+
+- (NSArray *) getAllCeaselessPersonInfo {
+    return [self fetchEntityForName:@"PersonInfo"];
 }
 
 - (NSArray *) getAllNames {
@@ -264,40 +298,101 @@
     return result;
 }
 
-- (NonMOPerson *) getNonMOPersonForCeaselessContact: (Person*) person {
-    NonMOPerson *nonMOPerson = [[NonMOPerson alloc] init];
-    nonMOPerson.person = person;
+- (UIImage *) getImageForPersonIdentifier: (PersonIdentifier *) person {
     ABRecordRef rawPerson;
-    for (AddressBookId *abId in person.addressBookIds) {
+    for(AddressBookId *abId in person.addressBookIds) {
         rawPerson = ABAddressBookGetPersonWithRecordID(_addressBook, (ABRecordID) [abId.recordId intValue]);
         // Check for contact picture
         if (rawPerson != nil && ABPersonHasImageData(rawPerson)) {
             if ( &ABPersonCopyImageDataWithFormat != nil ) {
-                nonMOPerson.profileImage = [UIImage imageWithData:(__bridge NSData *)ABPersonCopyImageDataWithFormat(rawPerson, kABPersonImageFormatOriginalSize)];
+                return [UIImage imageWithData:(__bridge NSData *)ABPersonCopyImageDataWithFormat(rawPerson, kABPersonImageFormatOriginalSize)];
             }
         }
-        
-        nonMOPerson.addressBookId = abId.recordId;
-        nonMOPerson.firstName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonFirstNameProperty));
-        nonMOPerson.lastName  = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonLastNameProperty));
-        
-        // TODO:  this needs to be mobile or iphone first the other because it is used for texting from the device
-        
-        ABMultiValueRef phoneNumbers = ABRecordCopyValue(rawPerson, kABPersonPhoneProperty);
-        
-        CFIndex numberOfPhoneNumbers = ABMultiValueGetCount(phoneNumbers);
-        for (CFIndex i = 0; i < numberOfPhoneNumbers; i++) {
-            NSString *phoneNumber = CFBridgingRelease(ABMultiValueCopyValueAtIndex(phoneNumbers, i));
-            nonMOPerson.phoneNumber = phoneNumber;
-        }
-        
-        CFRelease(phoneNumbers);
     }
-    return nonMOPerson;
+    
+    //default return nothing.
+    return nil;
 }
 
-- (Person *) getCeaselessContactFromABRecord: (ABRecordRef) rawPerson {
+- (NSString*) initialsForPerson: (PersonIdentifier *) person {
+    PersonInfo *info = person.representativeInfo;
+    // deal with cases of no lastName or firstName
+    // We had an Akbar (null) name show up.
+    NSString *firstInitial = @" "; // 1 character space for initials if needed
+    NSString *lastInitial = @" "; // 1 character space for initials if needed
     
+    if([info.primaryFirstName.name length] > 0) {
+        firstInitial = [info.primaryFirstName.name substringToIndex: 1];
+    }
+    if([info.primaryLastName.name length] > 0) {
+        lastInitial = [info.primaryLastName.name substringToIndex: 1];
+    }
+    
+    return [NSString stringWithFormat: @"%@%@", firstInitial, lastInitial];
+}
+
+- (NSString*) compositeNameForPerson: (PersonIdentifier *) person {
+    NSString *firstName = @" ";
+    NSString *lastName = @" ";
+    
+    PersonInfo *info = person.representativeInfo;
+    if([info.primaryFirstName.name length] > 0) {
+        firstName = info.primaryFirstName.name;
+    }
+    if([info.primaryLastName.name length] > 0) {
+        lastName = info.primaryLastName.name;
+    }
+    
+    return [NSString stringWithFormat: @"%@ %@", firstName, lastName];
+}
+
+- (void) createPersonInfoForCeaselessContact: (PersonIdentifier*) person {
+    PersonInfo *newCeaselessPersonInfo = [NSEntityDescription insertNewObjectForEntityForName:@"PersonInfo" inManagedObjectContext:self.managedObjectContext];
+    newCeaselessPersonInfo.identifier = person;
+    ABRecordRef rawPerson;
+    AddressBookId *abId = person.addressBookIds[0];
+    rawPerson = ABAddressBookGetPersonWithRecordID(_addressBook, (ABRecordID) [abId.recordId intValue]);
+    newCeaselessPersonInfo.primaryAddressBookId = abId;
+    NSString *primaryFirstName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonFirstNameProperty));
+    NSString *primaryLastName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonLastNameProperty));
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"name = %@", primaryFirstName];
+    newCeaselessPersonInfo.primaryFirstName = (Name*)[self getOrCreateManagedObject:@"Name" withPredicate:predicate];
+    predicate = [NSPredicate predicateWithFormat: @"name = %@", primaryLastName];
+    newCeaselessPersonInfo.primaryLastName = (Name*)[self getOrCreateManagedObject:@"Name" withPredicate:predicate];
+    
+    // TODO:  this needs to be mobile or iphone first the other because it is used for texting from the device
+    ABMultiValueRef phoneNumbers = ABRecordCopyValue(rawPerson, kABPersonPhoneProperty);
+    CFIndex numberOfPhoneNumbers = ABMultiValueGetCount(phoneNumbers);
+    for (CFIndex i = 0; i < numberOfPhoneNumbers; i++) {
+        NSString *phoneNumber = CFBridgingRelease(ABMultiValueCopyValueAtIndex(phoneNumbers, i));
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                                  @"number = %@", phoneNumber];
+        PhoneNumber *phoneNumberObject = (PhoneNumber *) [self getOrCreateManagedObject: @"PhoneNumber" withPredicate:predicate];
+        phoneNumberObject.number = phoneNumber;
+        newCeaselessPersonInfo.primaryPhoneNumber = phoneNumberObject;
+    }
+    CFRelease(phoneNumbers);
+    
+    ABMultiValueRef emails = ABRecordCopyValue(rawPerson, kABPersonEmailProperty);
+    CFIndex numberOfEmails = ABMultiValueGetCount(emails);
+    for (CFIndex i = 0; i < numberOfEmails; i++) {
+        NSString *email = CFBridgingRelease(ABMultiValueCopyValueAtIndex(emails, i));
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                                  @"address = %@", email];
+        Email *emailObject = (Email *) [self getOrCreateManagedObject: @"Email" withPredicate:predicate];
+        emailObject.address = email;
+        newCeaselessPersonInfo.primaryEmail = emailObject;
+    }
+    CFRelease(emails);
+    
+    // save our changes
+    NSError *error;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
+    }
+}
+
+- (PersonIdentifier *) getCeaselessContactFromABRecord: (ABRecordRef) rawPerson {
     // first look up by id
     NSString *addressBookId = @(ABRecordGetRecordID(rawPerson)).stringValue;
     NSArray *resultsByDeviceAndAddressBookId = [self lookupContactsByAddressBookId: addressBookId];
@@ -363,10 +458,10 @@
     return nil;
 }
 
-- (Person *) getCeaselessContactFromCeaselessId: (NSString *) ceaselessId {
+- (PersonIdentifier *) getCeaselessContactFromCeaselessId: (NSString *) ceaselessId {
     NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Person" inManagedObjectContext:context];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PersonIdentifier" inManagedObjectContext:context];
     [request setEntity:entity];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:
                               @"ceaselessId = %@", ceaselessId];
@@ -380,8 +475,8 @@
     }
 }
 
-- (Person *) createCeaselessContactFromABRecord: (ABRecordRef) rawPerson {
-    Person *newCeaselessPerson = [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:self.managedObjectContext];
+- (PersonIdentifier *) createCeaselessContactFromABRecord: (ABRecordRef) rawPerson {
+    PersonIdentifier *newCeaselessPerson = [NSEntityDescription insertNewObjectForEntityForName:@"PersonIdentifier" inManagedObjectContext:self.managedObjectContext];
     [self buildCeaselessContact:newCeaselessPerson fromABRecord:rawPerson];
     NSUUID  *UUID = [NSUUID UUID];
     newCeaselessPerson.ceaselessId = [UUID UUIDString];
@@ -391,10 +486,11 @@
         NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
     }
 
+    [self createPersonInfoForCeaselessContact:newCeaselessPerson];
     return newCeaselessPerson;
 }
 
-- (PrayerRecord *) createPrayerRecordForPerson: (Person*) person {
+- (PrayerRecord *) createPrayerRecordForPerson: (PersonIdentifier*) person {
     PrayerRecord *prayerRecord = [NSEntityDescription insertNewObjectForEntityForName:@"PrayerRecord" inManagedObjectContext:self.managedObjectContext];
     prayerRecord.person = person;
     prayerRecord.createDate = [NSDate date];
@@ -418,7 +514,7 @@
         if (firstName != nil) {
             hasFirstName = YES;
         }
-        Person *ceaselessContact = [self getCeaselessContactFromABRecord:personData];
+        PersonIdentifier *ceaselessContact = [self getCeaselessContactFromABRecord:personData];
         if(ceaselessContact != nil) {
             [matchingCeaselessContacts addObject: ceaselessContact];
         }
@@ -427,14 +523,16 @@
     
     if (hasFirstName) { // only operate on records with a first name
         if (resultSize == 1) {
-            Person *ceaselessContact = [matchingCeaselessContacts anyObject];
+            PersonIdentifier *ceaselessContact = [matchingCeaselessContacts anyObject];
             [self buildCeaselessContact:ceaselessContact fromABRecord:rawPerson];
+            [self createPersonInfoForCeaselessContact:ceaselessContact];
         } else if(resultSize > 1) {
             // when we get multiple, keep the first
-            Person *personToKeep = [matchingCeaselessContacts anyObject];
+            PersonIdentifier *personToKeep = [matchingCeaselessContacts anyObject];
             [matchingCeaselessContacts removeObject: personToKeep];
+            [self createPersonInfoForCeaselessContact:personToKeep];
             // remove the rest
-            for(Person *personToRemove in matchingCeaselessContacts) {
+            for(PersonIdentifier *personToRemove in matchingCeaselessContacts) {
                 [self copyDataFromCeaselessContact: personToRemove toContact: personToKeep];
                 [self.managedObjectContext deleteObject: personToRemove];
             }
@@ -451,7 +549,7 @@
     }
 }
 
-- (void) buildCeaselessContact:(Person*) ceaselessContact fromABRecord: (ABRecordRef) rawPerson {
+- (void) buildCeaselessContact:(PersonIdentifier*) ceaselessContact fromABRecord: (ABRecordRef) rawPerson {
     NSSet *unifiedRecord = [self getUnifiedAddressBookRecordFor:rawPerson];
     ceaselessContact.firstNames = [self buildFirstNames:unifiedRecord];
     ceaselessContact.lastNames = [self buildLastNames:unifiedRecord];
@@ -493,11 +591,11 @@
     return lastNames;
 }
 
-- (NSMutableSet*)buildAddressBookIds:(NSSet *)unifiedRecord {
+- (NSMutableOrderedSet*)buildAddressBookIds:(NSSet *)unifiedRecord {
     
     NSUUID *oNSUUID = [[UIDevice currentDevice] identifierForVendor];
     NSString *deviceId = [oNSUUID UUIDString];
-    NSMutableSet *addressBookIds = [[NSMutableSet alloc]init];
+    NSMutableOrderedSet *addressBookIds = [[NSMutableOrderedSet alloc]init];
     
     for (id record in unifiedRecord) {
         ABRecordRef personData = (__bridge ABRecordRef) record;
@@ -555,7 +653,7 @@
     return result;
 }
 
-- (void) copyDataFromCeaselessContact: (Person *) src toContact: (Person *) dst {
+- (void) copyDataFromCeaselessContact: (PersonIdentifier *) src toContact: (PersonIdentifier *) dst {
     // for each relationship, change the id of the relationship to point to the id of the one we want to keep
     [src addFirstNames:dst.firstNames];
     [src addLastNames:dst.lastNames];

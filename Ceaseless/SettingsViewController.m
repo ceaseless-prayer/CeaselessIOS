@@ -9,8 +9,8 @@
 #import "SettingsViewController.h"
 #import "TaggedPersonPicker.h"
 #import "CeaselessLocalContacts.h"
-#import "NonMOPerson.h"
-#import "Person.h"
+#import "PersonIdentifier.h"
+#import "PersonInfo.h"
 #import "PersonPicker.h"
 #import "AppConstants.h"
 
@@ -30,9 +30,8 @@
 
 	if ([[NSUserDefaults standardUserDefaults] stringForKey: @"CeaselessId"]) {
 			//get the image and name from the Person
-		Person *person = [_ceaselessContacts getCeaselessContactFromCeaselessId:[[NSUserDefaults standardUserDefaults] stringForKey: @"CeaselessId"]];
-		NonMOPerson *nonMOPerson = [_ceaselessContacts getNonMOPersonForCeaselessContact: person];
-		[self formatProfileForPerson: nonMOPerson];
+		PersonIdentifier *person = [_ceaselessContacts getCeaselessContactFromCeaselessId:[[NSUserDefaults standardUserDefaults] stringForKey: @"CeaselessId"]];
+		[self formatProfileForPersonInfo: person.representativeInfo];
 	} else {
 		self.placeholderText.hidden = NO;
 		self.nameLabel.hidden = YES;
@@ -138,12 +137,11 @@
 
 
 	[_ceaselessContacts updateCeaselessContactFromABRecord: abPerson];
-	Person *person = [_ceaselessContacts getCeaselessContactFromABRecord: abPerson];
+	PersonIdentifier *person = [_ceaselessContacts getCeaselessContactFromABRecord: abPerson];
 
 	CFRelease(addressBook);
 
-	NonMOPerson *nonMOPerson = [_ceaselessContacts getNonMOPersonForCeaselessContact: person];
-	[self formatProfileForPerson: nonMOPerson];
+	[self formatProfileForPersonInfo: person.representativeInfo];
 
 	[[NSUserDefaults standardUserDefaults] setObject: person.ceaselessId forKey: @"CeaselessId"];
 
@@ -151,34 +149,33 @@
 
 }
 
-- (void) formatProfileForPerson: (NonMOPerson *) person  {
-
-	self.profileImage.image = person.profileImage;
-	self.profileImage.contentMode = UIViewContentModeScaleAspectFit;
-	self.profileImage.layer.cornerRadius = 6.0f;
-	[self.profileImage setClipsToBounds:YES];
-
-	self.backgroundImageView.image = self.profileImage.image;
-	self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
-
-	NSString *fullName = [NSString stringWithFormat: @"%@ %@", person.firstName, person.lastName];
-	if (fullName) {
-		self.nameLabel.text = fullName;
-		self.nameLabel.hidden = NO;
-		self.selectMeButton.hidden = YES;
-	}
-
-	if (self.profileImage.image) {
-		self.placeholderText.hidden = YES;
-		self.profileImage.hidden = NO;
-	} else {
-		self.placeholderText.hidden = NO;
-		self.profileImage.hidden = YES;
-		self.profileImage.contentMode = UIViewContentModeScaleAspectFill;
-		self.placeholderText.layer.cornerRadius = 6.0f;
-	}
+- (void) formatProfileForPersonInfo: (PersonInfo *) personInfo {
+    UIImage *personImage = [_ceaselessContacts getImageForPersonIdentifier:personInfo.identifier];
+    self.profileImage.image = personImage;
+    self.profileImage.contentMode = UIViewContentModeScaleAspectFit;
+    self.profileImage.layer.cornerRadius = 6.0f;
+    [self.profileImage setClipsToBounds:YES];
+    
+    self.backgroundImageView.image = self.profileImage.image;
+    self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
+    
+    NSString *fullName = [NSString stringWithFormat: @"%@ %@", personInfo.primaryFirstName.name, personInfo.primaryLastName.name];
+    if (fullName) {
+        self.nameLabel.text = fullName;
+        self.nameLabel.hidden = NO;
+        self.selectMeButton.hidden = YES;
+    }
+    
+    if (self.profileImage.image) {
+        self.placeholderText.hidden = YES;
+        self.profileImage.hidden = NO;
+    } else {
+        self.placeholderText.hidden = NO;
+        self.profileImage.hidden = YES;
+        self.profileImage.contentMode = UIViewContentModeScaleAspectFill;
+        self.placeholderText.layer.cornerRadius = 6.0f;
+    }
 }
-
 
 - (void)taggedPersonPickerDidCancel:(TaggedPersonPicker *)taggedPersonPicker {
 	[taggedPersonPicker dismissViewControllerAnimated:YES completion:NULL];

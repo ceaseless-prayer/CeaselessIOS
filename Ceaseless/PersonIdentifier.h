@@ -1,22 +1,22 @@
 //
-//  Person.h
+//  PersonIdentifier.h
 //  Ceaseless
 //
-//  Created by Christopher Lim on 3/30/15.
+//  Created by Christopher Lim on 4/3/15.
 //  Copyright (c) 2015 Christopher Lim. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class AddressBookId, Email, Name, Note, PeopleQueue, PhoneNumber, PrayerRecord;
+@class AddressBookId, Email, Name, Note, PeopleQueue, PersonInfo, PhoneNumber, PrayerRecord;
 
-@interface Person : NSManagedObject
+@interface PersonIdentifier : NSManagedObject
 
 @property (nonatomic, retain) NSString * ceaselessId;
 @property (nonatomic, retain) NSDate * favoritedDate;
 @property (nonatomic, retain) NSDate * removedDate;
-@property (nonatomic, retain) NSSet *addressBookIds;
+@property (nonatomic, retain) NSOrderedSet *addressBookIds;
 @property (nonatomic, retain) NSSet *emails;
 @property (nonatomic, retain) NSSet *firstNames;
 @property (nonatomic, retain) NSSet *lastNames;
@@ -24,15 +24,21 @@
 @property (nonatomic, retain) NSSet *phoneNumbers;
 @property (nonatomic, retain) NSSet *prayerRecords;
 @property (nonatomic, retain) PeopleQueue *queued;
+@property (nonatomic, retain) PersonInfo *representativeInfo;
 @end
 
-@interface Person (CoreDataGeneratedAccessors)
+@interface PersonIdentifier (CoreDataGeneratedAccessors)
 
+- (void)insertObject:(AddressBookId *)value inAddressBookIdsAtIndex:(NSUInteger)idx;
+- (void)removeObjectFromAddressBookIdsAtIndex:(NSUInteger)idx;
+- (void)insertAddressBookIds:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
+- (void)removeAddressBookIdsAtIndexes:(NSIndexSet *)indexes;
+- (void)replaceObjectInAddressBookIdsAtIndex:(NSUInteger)idx withObject:(AddressBookId *)value;
+- (void)replaceAddressBookIdsAtIndexes:(NSIndexSet *)indexes withAddressBookIds:(NSArray *)values;
 - (void)addAddressBookIdsObject:(AddressBookId *)value;
 - (void)removeAddressBookIdsObject:(AddressBookId *)value;
-- (void)addAddressBookIds:(NSSet *)values;
-- (void)removeAddressBookIds:(NSSet *)values;
-
+- (void)addAddressBookIds:(NSOrderedSet *)values;
+- (void)removeAddressBookIds:(NSOrderedSet *)values;
 - (void)addEmailsObject:(Email *)value;
 - (void)removeEmailsObject:(Email *)value;
 - (void)addEmails:(NSSet *)values;

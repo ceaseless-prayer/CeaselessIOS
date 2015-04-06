@@ -10,7 +10,6 @@
 #import "DataViewController.h"
 #import "PersonPicker.h"
 #import "PeopleQueue.h"
-#import "NonMOPerson.h"
 #import "AppDelegate.h"
 #import "ScripturePicker.h"
 #import "ScriptureQueue.h"
@@ -53,18 +52,17 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
     // set local members to point to app delegate
     ScripturePicker *scripturePicker = [[ScripturePicker alloc] init];
     PersonPicker *personPicker = [[PersonPicker alloc] init];
-    CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
     _index = 0;
     _scripture = [scripturePicker peekScriptureQueue];
     _people = [personPicker queuedPeople];
     
     // convert selected people into form the view can use
-    NSMutableArray *nonMOPeople = [[NSMutableArray alloc]init];
+    NSMutableArray *peopleObjects = [[NSMutableArray alloc]init];
     for(PeopleQueue *pq in _people) {
-        [nonMOPeople addObject: [ceaselessContacts getNonMOPersonForCeaselessContact:(Person*)pq.person]];
+        [peopleObjects addObject: pq.person];
     }
     
-    _cardArray = [[NSMutableArray alloc] initWithArray: nonMOPeople];
+    _cardArray = [[NSMutableArray alloc] initWithArray: peopleObjects];
     
     if (_scripture) {
         [_cardArray insertObject: _scripture atIndex: 0];
