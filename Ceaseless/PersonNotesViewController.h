@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-#import "Person.h"
+#import "PersonIdentifier.h"
 
 @interface PersonNotesViewController : UITableViewController <UITableViewDataSource, NSFetchedResultsControllerDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UITableView *notesTableView;
 //@property (strong, nonatomic) NSArray *notesArray;
-@property (strong, nonatomic) Person *person;
+@property (strong, nonatomic) PersonIdentifier *person;
 @property (nonatomic) BOOL notesAvailable;
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;

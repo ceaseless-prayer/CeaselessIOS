@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Person;
+@class PersonIdentifier;
 
 @interface Note : NSManagedObject
 
@@ -21,14 +21,14 @@
 
 @interface Note (CoreDataGeneratedAccessors)
 
-- (void)insertObject:(Person *)value inPeopleTaggedAtIndex:(NSUInteger)idx;
+- (void)insertObject:(PersonIdentifier *)value inPeopleTaggedAtIndex:(NSUInteger)idx;
 - (void)removeObjectFromPeopleTaggedAtIndex:(NSUInteger)idx;
 - (void)insertPeopleTagged:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
 - (void)removePeopleTaggedAtIndexes:(NSIndexSet *)indexes;
-- (void)replaceObjectInPeopleTaggedAtIndex:(NSUInteger)idx withObject:(Person *)value;
+- (void)replaceObjectInPeopleTaggedAtIndex:(NSUInteger)idx withObject:(PersonIdentifier *)value;
 - (void)replacePeopleTaggedAtIndexes:(NSIndexSet *)indexes withPeopleTagged:(NSArray *)values;
-- (void)addPeopleTaggedObject:(Person *)value;
-- (void)removePeopleTaggedObject:(Person *)value;
+- (void)addPeopleTaggedObject:(PersonIdentifier *)value;
+- (void)removePeopleTaggedObject:(PersonIdentifier *)value;
 - (void)addPeopleTagged:(NSOrderedSet *)values;
 - (void)removePeopleTagged:(NSOrderedSet *)values;
 @end

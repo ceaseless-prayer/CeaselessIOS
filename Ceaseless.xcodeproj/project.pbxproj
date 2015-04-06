@@ -9,13 +9,16 @@
 /* Begin PBXBuildFile section */
 		42199AB51AAF8DC400797224 /* background-3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 42199AB41AAF8DC400797224 /* background-3.jpg */; };
 		422DDD391ACBBD3400409001 /* AppUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 422DDD381ACBBD3400409001 /* AppUtils.m */; };
+		42458BEA1ACF1FEB00C48830 /* Email.m in Sources */ = {isa = PBXBuildFile; fileRef = 42458BE91ACF1FEB00C48830 /* Email.m */; };
+		42458BED1ACF1FEC00C48830 /* Name.m in Sources */ = {isa = PBXBuildFile; fileRef = 42458BEC1ACF1FEC00C48830 /* Name.m */; };
+		42458BF01ACF1FEC00C48830 /* PhoneNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 42458BEF1ACF1FEC00C48830 /* PhoneNumber.m */; };
+		42458BF61ACF1FEC00C48830 /* AddressBookId.m in Sources */ = {isa = PBXBuildFile; fileRef = 42458BF51ACF1FEC00C48830 /* AddressBookId.m */; };
+		42458BFF1ACF27A400C48830 /* PersonIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 42458BFE1ACF27A400C48830 /* PersonIdentifier.m */; };
+		42458C021ACF32FD00C48830 /* PersonInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 42458C011ACF32FD00C48830 /* PersonInfo.m */; };
 		425271A81AB1FA9A005098F6 /* ScripturePickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271A71AB1FA9A005098F6 /* ScripturePickerTests.m */; };
 		425271AA1AB1FF1C005098F6 /* PersonPickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271A91AB1FF1C005098F6 /* PersonPickerTests.m */; };
-		425271AD1AB37CE8005098F6 /* Name.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271AC1AB37CE8005098F6 /* Name.m */; };
 		425271B01AB37F29005098F6 /* CeaselessLocalContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271AF1AB37F29005098F6 /* CeaselessLocalContacts.m */; };
-		425271BF1AB3A664005098F6 /* AddressBookId.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271BE1AB3A664005098F6 /* AddressBookId.m */; };
 		42869B091AC9FC5100E612F7 /* AppConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 42869B081AC9FC5100E612F7 /* AppConstants.m */; };
-		42869B0C1ACA008200E612F7 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 42869B0B1ACA008200E612F7 /* Person.m */; };
 		429E60891AAA5FD8003F37BF /* ScriptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E60881AAA5FD7003F37BF /* ScriptureViewController.m */; };
 		429E608C1AAA61B1003F37BF /* PersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E608B1AAA61B1003F37BF /* PersonViewController.m */; };
 		42A5AF881AB9497F00F209B8 /* PrayerRecordConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A5AF871AB9497F00F209B8 /* PrayerRecordConstants.m */; };
@@ -35,8 +38,6 @@
 		704D5CA11AAF6D5200BD48B3 /* PersonNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5C9F1AAF6D5200BD48B3 /* PersonNotesViewController.m */; };
 		704D5CA71AAF90A200BD48B3 /* Ceaseless.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CA51AAF90A200BD48B3 /* Ceaseless.xcdatamodeld */; };
 		704D5CE51AAFA96200BD48B3 /* PeopleQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CE41AAFA96200BD48B3 /* PeopleQueue.m */; };
-		704D5CE81AAFA96200BD48B3 /* PhoneNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CE71AAFA96200BD48B3 /* PhoneNumber.m */; };
-		704D5CEE1AAFA96200BD48B3 /* Email.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CED1AAFA96200BD48B3 /* Email.m */; };
 		704D5CF11AAFA96200BD48B3 /* ScriptureQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CF01AAFA96200BD48B3 /* ScriptureQueue.m */; };
 		704D5CF41AAFA96200BD48B3 /* PrayerRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CF31AAFA96200BD48B3 /* PrayerRecord.m */; };
 		707BE2E61AAA1B1A0020FF29 /* Screen Shot 2015-02-17 at 9.05.16 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = 707BE2E51AAA1B1A0020FF29 /* Screen Shot 2015-02-17 at 9.05.16 PM.png */; };
@@ -49,7 +50,6 @@
 		70BFCB021AC070C50014C4BC /* ContactsListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70BFCB011AC070C50014C4BC /* ContactsListsViewController.m */; };
 		70D155D61AC1BC1700FB9486 /* ContactsListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D155D51AC1BC1700FB9486 /* ContactsListTableViewCell.m */; };
 		70D51C0B1AA6222700FA7CDC /* PersonPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D51C0A1AA6222700FA7CDC /* PersonPicker.m */; };
-		70D51C0E1AA627DF00FA7CDC /* NonMOPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D51C0D1AA627DF00FA7CDC /* NonMOPerson.m */; };
 		70D51C111AA6694400FA7CDC /* ScriptureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70D51C101AA6694400FA7CDC /* ScriptureView.xib */; };
 		70D51C131AA66F5100FA7CDC /* PersonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70D51C121AA66F5100FA7CDC /* PersonView.xib */; };
 		70D51C161AA6800D00FA7CDC /* PersonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D51C151AA6800D00FA7CDC /* PersonView.m */; };
@@ -82,18 +82,24 @@
 		42199AB41AAF8DC400797224 /* background-3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "background-3.jpg"; sourceTree = "<group>"; };
 		422DDD371ACBBD3400409001 /* AppUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppUtils.h; sourceTree = "<group>"; };
 		422DDD381ACBBD3400409001 /* AppUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppUtils.m; sourceTree = "<group>"; };
+		42458BE81ACF1FEB00C48830 /* Email.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Email.h; sourceTree = "<group>"; };
+		42458BE91ACF1FEB00C48830 /* Email.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Email.m; sourceTree = "<group>"; };
+		42458BEB1ACF1FEC00C48830 /* Name.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Name.h; sourceTree = "<group>"; };
+		42458BEC1ACF1FEC00C48830 /* Name.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Name.m; sourceTree = "<group>"; };
+		42458BEE1ACF1FEC00C48830 /* PhoneNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneNumber.h; sourceTree = "<group>"; };
+		42458BEF1ACF1FEC00C48830 /* PhoneNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneNumber.m; sourceTree = "<group>"; };
+		42458BF41ACF1FEC00C48830 /* AddressBookId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressBookId.h; sourceTree = "<group>"; };
+		42458BF51ACF1FEC00C48830 /* AddressBookId.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressBookId.m; sourceTree = "<group>"; };
+		42458BFD1ACF27A400C48830 /* PersonIdentifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonIdentifier.h; sourceTree = "<group>"; };
+		42458BFE1ACF27A400C48830 /* PersonIdentifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonIdentifier.m; sourceTree = "<group>"; };
+		42458C001ACF32FD00C48830 /* PersonInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonInfo.h; sourceTree = "<group>"; };
+		42458C011ACF32FD00C48830 /* PersonInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonInfo.m; sourceTree = "<group>"; };
 		425271A71AB1FA9A005098F6 /* ScripturePickerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScripturePickerTests.m; sourceTree = "<group>"; };
 		425271A91AB1FF1C005098F6 /* PersonPickerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonPickerTests.m; sourceTree = "<group>"; };
-		425271AB1AB37CE8005098F6 /* Name.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Name.h; sourceTree = "<group>"; };
-		425271AC1AB37CE8005098F6 /* Name.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Name.m; sourceTree = "<group>"; };
 		425271AE1AB37F29005098F6 /* CeaselessLocalContacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CeaselessLocalContacts.h; sourceTree = "<group>"; };
 		425271AF1AB37F29005098F6 /* CeaselessLocalContacts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CeaselessLocalContacts.m; sourceTree = "<group>"; };
-		425271BD1AB3A664005098F6 /* AddressBookId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressBookId.h; sourceTree = "<group>"; };
-		425271BE1AB3A664005098F6 /* AddressBookId.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressBookId.m; sourceTree = "<group>"; };
 		42869B071AC9FC5100E612F7 /* AppConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstants.h; sourceTree = "<group>"; };
 		42869B081AC9FC5100E612F7 /* AppConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConstants.m; sourceTree = "<group>"; };
-		42869B0A1ACA008200E612F7 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
-		42869B0B1ACA008200E612F7 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		429E60871AAA5FD7003F37BF /* ScriptureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptureViewController.h; sourceTree = "<group>"; };
 		429E60881AAA5FD7003F37BF /* ScriptureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptureViewController.m; sourceTree = "<group>"; };
 		429E608A1AAA61B1003F37BF /* PersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonViewController.h; sourceTree = "<group>"; };
@@ -129,10 +135,6 @@
 		704D5CA61AAF90A200BD48B3 /* Ceaseless.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Ceaseless.xcdatamodel; sourceTree = "<group>"; };
 		704D5CE31AAFA96200BD48B3 /* PeopleQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleQueue.h; sourceTree = "<group>"; };
 		704D5CE41AAFA96200BD48B3 /* PeopleQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleQueue.m; sourceTree = "<group>"; };
-		704D5CE61AAFA96200BD48B3 /* PhoneNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneNumber.h; sourceTree = "<group>"; };
-		704D5CE71AAFA96200BD48B3 /* PhoneNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneNumber.m; sourceTree = "<group>"; };
-		704D5CEC1AAFA96200BD48B3 /* Email.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Email.h; sourceTree = "<group>"; };
-		704D5CED1AAFA96200BD48B3 /* Email.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Email.m; sourceTree = "<group>"; };
 		704D5CEF1AAFA96200BD48B3 /* ScriptureQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptureQueue.h; sourceTree = "<group>"; };
 		704D5CF01AAFA96200BD48B3 /* ScriptureQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptureQueue.m; sourceTree = "<group>"; };
 		704D5CF21AAFA96200BD48B3 /* PrayerRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrayerRecord.h; sourceTree = "<group>"; };
@@ -155,8 +157,6 @@
 		70D155D51AC1BC1700FB9486 /* ContactsListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsListTableViewCell.m; sourceTree = "<group>"; };
 		70D51C091AA6222700FA7CDC /* PersonPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonPicker.h; sourceTree = "<group>"; };
 		70D51C0A1AA6222700FA7CDC /* PersonPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonPicker.m; sourceTree = "<group>"; };
-		70D51C0C1AA627DF00FA7CDC /* NonMOPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NonMOPerson.h; sourceTree = "<group>"; };
-		70D51C0D1AA627DF00FA7CDC /* NonMOPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NonMOPerson.m; sourceTree = "<group>"; };
 		70D51C101AA6694400FA7CDC /* ScriptureView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScriptureView.xib; sourceTree = "<group>"; };
 		70D51C121AA66F5100FA7CDC /* PersonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonView.xib; sourceTree = "<group>"; };
 		70D51C141AA6800D00FA7CDC /* PersonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonView.h; sourceTree = "<group>"; };
@@ -327,27 +327,27 @@
 		70F664061AA7EA990073801E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				42458C001ACF32FD00C48830 /* PersonInfo.h */,
+				42458C011ACF32FD00C48830 /* PersonInfo.m */,
+				42458BFD1ACF27A400C48830 /* PersonIdentifier.h */,
+				42458BFE1ACF27A400C48830 /* PersonIdentifier.m */,
+				42458BF41ACF1FEC00C48830 /* AddressBookId.h */,
+				42458BF51ACF1FEC00C48830 /* AddressBookId.m */,
+				42458BEE1ACF1FEC00C48830 /* PhoneNumber.h */,
+				42458BEF1ACF1FEC00C48830 /* PhoneNumber.m */,
+				42458BEB1ACF1FEC00C48830 /* Name.h */,
+				42458BEC1ACF1FEC00C48830 /* Name.m */,
+				42458BE81ACF1FEB00C48830 /* Email.h */,
+				42458BE91ACF1FEB00C48830 /* Email.m */,
 				42AA9BF61ACCBF6300C4896B /* Note.h */,
 				42AA9BF71ACCBF6300C4896B /* Note.m */,
-				42869B0A1ACA008200E612F7 /* Person.h */,
-				42869B0B1ACA008200E612F7 /* Person.m */,
-				425271BD1AB3A664005098F6 /* AddressBookId.h */,
-				425271BE1AB3A664005098F6 /* AddressBookId.m */,
-				70D51C0C1AA627DF00FA7CDC /* NonMOPerson.h */,
-				70D51C0D1AA627DF00FA7CDC /* NonMOPerson.m */,
 				704D5CA51AAF90A200BD48B3 /* Ceaseless.xcdatamodeld */,
-				425271AB1AB37CE8005098F6 /* Name.h */,
-				425271AC1AB37CE8005098F6 /* Name.m */,
 				704D5CF21AAFA96200BD48B3 /* PrayerRecord.h */,
 				704D5CF31AAFA96200BD48B3 /* PrayerRecord.m */,
 				42A5AF861AB9497F00F209B8 /* PrayerRecordConstants.h */,
 				42A5AF871AB9497F00F209B8 /* PrayerRecordConstants.m */,
 				704D5CEF1AAFA96200BD48B3 /* ScriptureQueue.h */,
 				704D5CF01AAFA96200BD48B3 /* ScriptureQueue.m */,
-				704D5CEC1AAFA96200BD48B3 /* Email.h */,
-				704D5CED1AAFA96200BD48B3 /* Email.m */,
-				704D5CE61AAFA96200BD48B3 /* PhoneNumber.h */,
-				704D5CE71AAFA96200BD48B3 /* PhoneNumber.m */,
 				704D5CE31AAFA96200BD48B3 /* PeopleQueue.h */,
 				704D5CE41AAFA96200BD48B3 /* PeopleQueue.m */,
 			);
@@ -440,7 +440,7 @@
 					};
 					42F3AE361AA4DD80003A88F5 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 98FUBN4YVB;
+						DevelopmentTeam = 28DYBASY7W;
 						TestTargetID = 42F3AE171AA4DD7F003A88F5;
 					};
 				};
@@ -517,7 +517,6 @@
 				42AA9BF81ACCBF6300C4896B /* Note.m in Sources */,
 				42C13BB41ABCC285000D5C08 /* WebCardView.m in Sources */,
 				42F3AE271AA4DD7F003A88F5 /* DataViewController.m in Sources */,
-				42869B0C1ACA008200E612F7 /* Person.m in Sources */,
 				422DDD391ACBBD3400409001 /* AppUtils.m in Sources */,
 				42A5AF881AB9497F00F209B8 /* PrayerRecordConstants.m in Sources */,
 				70BBEDC31ABC768400D446AF /* SettingsViewController.m in Sources */,
@@ -525,22 +524,22 @@
 				429E60891AAA5FD8003F37BF /* ScriptureViewController.m in Sources */,
 				425271B01AB37F29005098F6 /* CeaselessLocalContacts.m in Sources */,
 				704D5CE51AAFA96200BD48B3 /* PeopleQueue.m in Sources */,
+				42458BED1ACF1FEC00C48830 /* Name.m in Sources */,
 				70D155D61AC1BC1700FB9486 /* ContactsListTableViewCell.m in Sources */,
 				429E608C1AAA61B1003F37BF /* PersonViewController.m in Sources */,
 				704D5CF41AAFA96200BD48B3 /* PrayerRecord.m in Sources */,
-				704D5CE81AAFA96200BD48B3 /* PhoneNumber.m in Sources */,
 				70F6640C1AA83CC60073801E /* ScriptureView.m in Sources */,
-				704D5CEE1AAFA96200BD48B3 /* Email.m in Sources */,
 				42F3AE211AA4DD7F003A88F5 /* AppDelegate.m in Sources */,
-				70D51C0E1AA627DF00FA7CDC /* NonMOPerson.m in Sources */,
+				42458BEA1ACF1FEB00C48830 /* Email.m in Sources */,
+				42458C021ACF32FD00C48830 /* PersonInfo.m in Sources */,
 				704D5CA11AAF6D5200BD48B3 /* PersonNotesViewController.m in Sources */,
 				42C13BB11ABCC074000D5C08 /* WebCardViewController.m in Sources */,
 				42F3AE2A1AA4DD7F003A88F5 /* ModelController.m in Sources */,
-				425271AD1AB37CE8005098F6 /* Name.m in Sources */,
 				704D5CA71AAF90A200BD48B3 /* Ceaseless.xcdatamodeld in Sources */,
 				70F664181AA8B9260073801E /* ScripturePicker.m in Sources */,
 				704D5CF11AAFA96200BD48B3 /* ScriptureQueue.m in Sources */,
 				70F663FE1AA7E30F0073801E /* UIImageEffects.m in Sources */,
+				42458BF01ACF1FEC00C48830 /* PhoneNumber.m in Sources */,
 				70F12B901AB396590090F47A /* PrayerJournalTableViewCell.m in Sources */,
 				70D51C0B1AA6222700FA7CDC /* PersonPicker.m in Sources */,
 				70F12B871AB2082B0090F47A /* NoteViewController.m in Sources */,
@@ -548,11 +547,12 @@
 				70BFCB021AC070C50014C4BC /* ContactsListsViewController.m in Sources */,
 				42869B091AC9FC5100E612F7 /* AppConstants.m in Sources */,
 				42F3AE1E1AA4DD7F003A88F5 /* main.m in Sources */,
+				42458BF61ACF1FEC00C48830 /* AddressBookId.m in Sources */,
 				42F3AE241AA4DD7F003A88F5 /* RootViewController.m in Sources */,
-				425271BF1AB3A664005098F6 /* AddressBookId.m in Sources */,
 				70F12B841AB208000090F47A /* PrayerJournalViewController.m in Sources */,
 				70BFCAFF1ABCA78B0014C4BC /* MenuViewController.m in Sources */,
 				70F12B8A1AB231DF0090F47A /* TaggedPersonPicker.m in Sources */,
+				42458BFF1ACF27A400C48830 /* PersonIdentifier.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

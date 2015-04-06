@@ -8,11 +8,13 @@
 
 #import "PersonViewController.h"
 #import "PersonNotesViewController.h"
+#import "PersonInfo.h"
+#import "Name.h"
 #import "NoteViewController.h"
-#import "NonMOPerson.h"
 #import "AppDelegate.h"
 #import "ModelController.h"
 #import "AppUtils.h"
+#import "CeaselessLocalContacts.h"
 #import <MessageUI/MessageUI.h>
 
 @interface PersonViewController () <MFMessageComposeViewControllerDelegate>
@@ -24,6 +26,7 @@
 
 static NSString *kInviteMessage;
 static NSString *kSMSMessage;
+
 
 +(void)initialize
 {
@@ -41,32 +44,23 @@ static NSString *kSMSMessage;
 
 	AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
 	self.managedObjectContext = appDelegate.managedObjectContext;
-	
-	self.nonMOPerson = self.dataObject;
     
-    // deal with cases of no lastName or firstName
-    // We had an Akbar (null) name show up.
-    if([self.nonMOPerson.firstName length] == 0) {
-        self.nonMOPerson.firstName = @" "; // 1 character space for initials if needed
-    }
-    if([self.nonMOPerson.lastName length] == 0) {
-        self.nonMOPerson.lastName = @" "; // 1 character space for initials if needed
-    }
+    CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
+
+    self.person = self.dataObject;
     
-	self.personView.nameLabel.text = [NSString stringWithFormat: @"%@ %@", self.nonMOPerson.firstName, self.nonMOPerson.lastName];
-	if (self.nonMOPerson.profileImage) {
-		self.personView.personImageView.image = self.nonMOPerson.profileImage;
+	self.personView.nameLabel.text = [ceaselessContacts compositeNameForPerson:self.person];
+    UIImage *profileImage = [ceaselessContacts getImageForPersonIdentifier:self.person];
+	if (profileImage) {
+		self.personView.personImageView.image = profileImage;
 		self.personView.personImageView.hidden = NO;
 		self.personView.placeholderText.hidden = YES;
-
 		self.personView.personImageView.layer.cornerRadius = 6.0f;
 		[self.personView.personImageView setClipsToBounds:YES];
 	} else {
-		NSString *firstInitial = [self.nonMOPerson.firstName substringToIndex: 1];
-		NSString *lastInitial = [self.nonMOPerson.lastName substringToIndex: 1];
 		self.personView.personImageView.hidden = YES;
 		self.personView.placeholderText.hidden = NO;
-		self.personView.placeholderText.text = [NSString stringWithFormat: @"%@%@", firstInitial, lastInitial];
+		self.personView.placeholderText.text = [ceaselessContacts initialsForPerson:self.person];
 	}
     
     UIImage *backgroundImage = [AppUtils getDynamicBackgroundImage];
@@ -78,7 +72,7 @@ static NSString *kSMSMessage;
 								   action:@selector(presentActionSheet:)forControlEvents:UIControlEventTouchUpInside];
 	UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 	self.personNotesViewController = [sb instantiateViewControllerWithIdentifier:@"PersonNotesViewController"];
-	self.personNotesViewController.person = self.nonMOPerson.person;
+    self.personNotesViewController.person = self.person;
 	[self.personView.notesView addSubview: self.personNotesViewController.tableView];
 	self.personNotesViewController.tableView.delegate = self;
 	[self setDynamicViewConstraintsToView: self.personView.notesView forSubview: self.personNotesViewController.tableView ];
@@ -96,9 +90,8 @@ static NSString *kSMSMessage;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
-
 }
+
 - (void)setDynamicViewConstraintsToView: (UIView *) parentView forSubview: (UIView *) newSubview {
 	[newSubview setTranslatesAutoresizingMaskIntoConstraints:NO];
 
@@ -133,6 +126,15 @@ static NSString *kSMSMessage;
 															  attribute:NSLayoutAttributeTrailing
 															 multiplier:1.0
 															   constant:0.0]];
+}
+
+#pragma mark - Saving context for changes to PersonIdentifier
+- (void) save {
+    // save
+    NSError *error;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
+    }
 }
 
 #pragma mark - TableView Delegate
@@ -235,14 +237,14 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                        }];
     
     [alertController addAction:cancelAction];
-    [alertController addAction: removeFromCeaselessAction];
+    [alertController addAction:removeFromCeaselessAction];
     [alertController addAction:inviteAction];
     [alertController addAction:sendMessageAction];
     [alertController addAction:addNote];
     
     // TODO this should toggle between adding or removing from favorites.
     // for now only show it if it isn't already favorited
-    if (self.nonMOPerson.person.favoritedDate == nil) {
+    if (self.person.favoritedDate == nil) {
         [alertController addAction: addToFavoritesAction];
     } else {
         [alertController addAction: unfavoriteAction];
@@ -261,8 +263,10 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)removePersonFromCeaseless {
-    [self.nonMOPerson removeFromCeaseless];
-		//if the card is in a pageController then its in the card deck, if its not then it was called by the contacts list
+    self.person.removedDate = [NSDate date];
+    [self save];
+    
+    //if the card is in a pageController then its in the card deck, if its not then it was called by the contacts list
 	if ([self.parentViewController isKindOfClass: [UIPageViewController class]]) {
 		UIPageViewController *pageViewController =(UIPageViewController*)self.parentViewController;
 		ModelController *mc = pageViewController.dataSource;
@@ -295,6 +299,8 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 }
 
+// TODO enable for ceaseless as well when you reach this view not from the pageviewcontroller
+
 - (void)addNote {
     NoteViewController *noteViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"NoteViewController"];
     noteViewController.delegate = self;
@@ -303,12 +309,14 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)addPersonToFavorites {
-    [self.nonMOPerson favorite];
+    self.person.favoritedDate = [NSDate date];
+    [self save];
     // TODO animate?
 }
 
 - (void)removePersonFromFavorites {
-    [self.nonMOPerson unfavorite];
+    self.person.favoritedDate = nil;
+    [self save];
     // TODO animate?
 }
 
@@ -324,7 +332,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         [warningAlert show];
         return;
     }
-    NSArray *recipents = [NSArray arrayWithObjects:self.nonMOPerson.phoneNumber, nil];
+    NSArray *recipents = [NSArray arrayWithObjects:self.person.representativeInfo.primaryPhoneNumber.number, nil];
     NSString *message = [NSString stringWithFormat: @"%@", file];
     
     MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];

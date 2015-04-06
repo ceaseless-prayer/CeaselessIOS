@@ -3,31 +3,35 @@
     <entity name="AddressBookId" representedClassName="AddressBookId" syncable="YES">
         <attribute name="deviceId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="recordId" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="ceaselessContact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="addressBookIds" inverseEntity="Person" syncable="YES"/>
+        <relationship name="ceaselessContact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PersonIdentifier" inverseName="addressBookIds" inverseEntity="PersonIdentifier" syncable="YES"/>
+        <relationship name="primaryIdFor" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PersonInfo" inverseName="primaryAddressBookId" inverseEntity="PersonInfo" syncable="YES"/>
     </entity>
     <entity name="Email" representedClassName="Email" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="person" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="emails" inverseEntity="Person" syncable="YES"/>
+        <relationship name="person" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PersonIdentifier" inverseName="emails" inverseEntity="PersonIdentifier" syncable="YES"/>
+        <relationship name="primaryFor" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PersonInfo" inverseName="primaryEmail" inverseEntity="PersonInfo" syncable="YES"/>
     </entity>
     <entity name="Name" representedClassName="Name" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="firstNameFor" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="firstNames" inverseEntity="Person" syncable="YES"/>
-        <relationship name="lastNameFor" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="lastNames" inverseEntity="Person" syncable="YES"/>
+        <relationship name="firstNameFor" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PersonIdentifier" inverseName="firstNames" inverseEntity="PersonIdentifier" syncable="YES"/>
+        <relationship name="lastNameFor" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PersonIdentifier" inverseName="lastNames" inverseEntity="PersonIdentifier" syncable="YES"/>
+        <relationship name="primaryFirstNameFor" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PersonInfo" inverseName="primaryFirstName" inverseEntity="PersonInfo" syncable="YES"/>
+        <relationship name="primaryLastNameFor" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PersonInfo" inverseName="primaryLastName" inverseEntity="PersonInfo" syncable="YES"/>
     </entity>
     <entity name="Note" representedClassName="Note" syncable="YES">
         <attribute name="createDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="lastUpdatedDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="peopleTagged" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Person" inverseName="notes" inverseEntity="Person" syncable="YES"/>
+        <relationship name="peopleTagged" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="PersonIdentifier" inverseName="notes" inverseEntity="PersonIdentifier" syncable="YES"/>
     </entity>
     <entity name="PeopleQueue" representedClassName="PeopleQueue" syncable="YES">
-        <relationship name="person" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="queued" inverseEntity="Person" syncable="YES"/>
+        <relationship name="person" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PersonIdentifier" inverseName="queued" inverseEntity="PersonIdentifier" syncable="YES"/>
     </entity>
-    <entity name="Person" representedClassName="Person" syncable="YES">
+    <entity name="PersonIdentifier" representedClassName="PersonIdentifier" syncable="YES">
         <attribute name="ceaselessId" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="favoritedDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="removedDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <relationship name="addressBookIds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AddressBookId" inverseName="ceaselessContact" inverseEntity="AddressBookId" syncable="YES"/>
+        <relationship name="addressBookIds" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="AddressBookId" inverseName="ceaselessContact" inverseEntity="AddressBookId" syncable="YES"/>
         <relationship name="emails" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Email" inverseName="person" inverseEntity="Email" syncable="YES"/>
         <relationship name="firstNames" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Name" inverseName="firstNameFor" inverseEntity="Name" syncable="YES"/>
         <relationship name="lastNames" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Name" inverseName="lastNameFor" inverseEntity="Name" syncable="YES"/>
@@ -35,15 +39,25 @@
         <relationship name="phoneNumbers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PhoneNumber" inverseName="person" inverseEntity="PhoneNumber" syncable="YES"/>
         <relationship name="prayerRecords" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PrayerRecord" inverseName="person" inverseEntity="PrayerRecord" syncable="YES"/>
         <relationship name="queued" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="PeopleQueue" inverseName="person" inverseEntity="PeopleQueue" syncable="YES"/>
+        <relationship name="representativeInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PersonInfo" inverseName="identifier" inverseEntity="PersonInfo" syncable="YES"/>
+    </entity>
+    <entity name="PersonInfo" representedClassName="PersonInfo" syncable="YES">
+        <relationship name="identifier" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PersonIdentifier" inverseName="representativeInfo" inverseEntity="PersonIdentifier" syncable="YES"/>
+        <relationship name="primaryAddressBookId" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AddressBookId" inverseName="primaryIdFor" inverseEntity="AddressBookId" syncable="YES"/>
+        <relationship name="primaryEmail" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Email" inverseName="primaryFor" inverseEntity="Email" syncable="YES"/>
+        <relationship name="primaryFirstName" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Name" inverseName="primaryFirstNameFor" inverseEntity="Name" syncable="YES"/>
+        <relationship name="primaryLastName" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Name" inverseName="primaryLastNameFor" inverseEntity="Name" syncable="YES"/>
+        <relationship name="primaryPhoneNumber" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PhoneNumber" inverseName="primaryFor" inverseEntity="PhoneNumber" syncable="YES"/>
     </entity>
     <entity name="PhoneNumber" representedClassName="PhoneNumber" syncable="YES">
         <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="person" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="phoneNumbers" inverseEntity="Person" syncable="YES"/>
+        <relationship name="person" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PersonIdentifier" inverseName="phoneNumbers" inverseEntity="PersonIdentifier" syncable="YES"/>
+        <relationship name="primaryFor" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PersonInfo" inverseName="primaryPhoneNumber" inverseEntity="PersonInfo" syncable="YES"/>
     </entity>
     <entity name="PrayerRecord" representedClassName="PrayerRecord" syncable="YES">
         <attribute name="createDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="person" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="prayerRecords" inverseEntity="Person" syncable="YES"/>
+        <relationship name="person" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PersonIdentifier" inverseName="prayerRecords" inverseEntity="PersonIdentifier" syncable="YES"/>
     </entity>
     <entity name="ScriptureQueue" representedClassName="ScriptureQueue" syncable="YES">
         <attribute name="citation" optional="YES" attributeType="String" syncable="YES"/>
@@ -52,14 +66,15 @@
         <attribute name="verse" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="AddressBookId" positionX="-360" positionY="-18" width="128" height="88"/>
-        <element name="Email" positionX="-216" positionY="-144" width="128" height="73"/>
-        <element name="Name" positionX="-369" positionY="-27" width="128" height="88"/>
-        <element name="Note" positionX="-200" positionY="-54" width="128" height="105"/>
-        <element name="PeopleQueue" positionX="-387" positionY="-180" width="128" height="58"/>
-        <element name="Person" positionX="-396" positionY="-73" width="128" height="210"/>
-        <element name="PhoneNumber" positionX="-45" positionY="-1" width="128" height="75"/>
-        <element name="PrayerRecord" positionX="-173" positionY="81" width="128" height="88"/>
-        <element name="ScriptureQueue" positionX="-576" positionY="-180" width="128" height="105"/>
+        <element name="AddressBookId" positionX="0" positionY="0" width="128" height="105"/>
+        <element name="Email" positionX="0" positionY="0" width="128" height="88"/>
+        <element name="Name" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="Note" positionX="0" positionY="0" width="128" height="105"/>
+        <element name="PeopleQueue" positionX="0" positionY="0" width="128" height="60"/>
+        <element name="PersonIdentifier" positionX="0" positionY="0" width="128" height="225"/>
+        <element name="PersonInfo" positionX="9" positionY="90" width="128" height="133"/>
+        <element name="PhoneNumber" positionX="0" positionY="0" width="128" height="90"/>
+        <element name="PrayerRecord" positionX="0" positionY="0" width="128" height="90"/>
+        <element name="ScriptureQueue" positionX="0" positionY="0" width="128" height="105"/>
     </elements>
 </model>

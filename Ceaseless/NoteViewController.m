@@ -8,7 +8,8 @@
 #import "NoteViewController.h"
 #import <AddressBook/AddressBook.h>
 #import "AppDelegate.h"
-#import "Person.h"
+#import "PersonIdentifier.h"
+#import "PersonInfo.h"
 #import "PersonPicker.h"
 #import "CeaselessLocalContacts.h"
 #import "Name.h"
@@ -167,14 +168,13 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 	}
 
-	for (Person *personTagged in peopleTagged) {
-		CeaselessLocalContacts *ceaselessLocalContacts = [[CeaselessLocalContacts alloc] init];
-		NonMOPerson *nonMOPerson = [ceaselessLocalContacts getNonMOPersonForCeaselessContact: personTagged];
-
-		ABRecordID abRecordID = [nonMOPerson.addressBookId intValue];
+	for (PersonIdentifier *personTagged in peopleTagged) {
+        PersonInfo *info = personTagged.representativeInfo;
+		ABRecordID abRecordID = [info.primaryAddressBookId.recordId intValue];
 		NSNumber *number = [NSNumber numberWithInt:abRecordID];
 		[self.group addObject:number];
 	}
+    
 	self.abRecordIDs = [NSOrderedSet orderedSetWithOrderedSet: self.group];
 	if (self.abRecordIDs.count > 0) {
 		self.tagFriendsPlaceholderText.hidden = YES;
@@ -259,91 +259,90 @@ NSString *const kPlaceHolderText = @"Enter note";
 		// Create a filtered list that will contain people for the search results table.
 	self.filteredPeople = [NSMutableArray array];
 }
+
 #pragma mark - Update Person info
 - (void) layoutScrollView: (UIScrollView *) scrollView forGroup: (NSOrderedSet *) abRecordIDs
 {
-		// Remove existing buttons
-	for (UIView *subview in scrollView.subviews)
-		{
-		if ([subview isKindOfClass:[UIButton class]])
-			{
-			[subview removeFromSuperview];
-			}
-		}
-
-	CGFloat maxWidth = [[UIScreen mainScreen] bounds].size.width - 16 - kPadding;
-	CGFloat xPosition = kPadding;
-	CGFloat yPosition = kPadding;
-
-	for (NSNumber *number in abRecordIDs) {
-		ABRecordID abRecordID = [number intValue];
-		ABRecordRef abPerson = ABAddressBookGetPersonWithRecordID(self.addressBook, abRecordID);
-
-			// Copy the name associated with this person record
-		NSString *name = (__bridge_transfer NSString *)ABRecordCopyCompositeName(abPerson);
-
-		UIFont *font = [UIFont fontWithName:@"AvenirNext-Medium" size:14.0f];
-
-			// Create the button
-		UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-		[button setTitle:name forState:UIControlStateNormal];
-		[button.titleLabel setFont:font];
-		[button setBackgroundColor:self.tokenColor];
-		[button.layer setCornerRadius:4.0];
-		[button setTag:abRecordID];
-		[button addTarget:self action:@selector(buttonSelected:) forControlEvents:UIControlEventTouchUpInside];
-
-			// Get the width and height of the name string given a font size
-		CGSize nameSize = [name sizeWithAttributes:@{NSFontAttributeName:font}];
-
-		if ((xPosition + nameSize.width + kPadding) > maxWidth) {
-				// Reset horizontal position to left edge of superview's frame
-			xPosition = kPadding;
-
-				// Set vertical position to a new 'line'
-			yPosition += nameSize.height + kPadding;
-		}
-
-			// Create the button's frame
-		CGRect buttonFrame = CGRectMake(xPosition, yPosition, nameSize.width + (kPadding * 2), nameSize.height);
-		[button setFrame:buttonFrame];
-
-			// Add the button to its superview
-		[scrollView addSubview:button];
-
-			// Calculate xPosition for the next button in the loop
-		xPosition += button.frame.size.width + kPadding;
-	}
-
-	UIFont *font = [UIFont fontWithName:@"AvenirNext-Medium" size:14.0f];
-
-		// Create the textfield at the end of the buttons
-
-		// Get the width and height of the name string given a font size
-	NSString *placeholderName = @"Average Size";
-	CGSize nameSize = [placeholderName sizeWithAttributes:@{NSFontAttributeName:font}];
-
-	if ((xPosition + nameSize.width + kPadding) > maxWidth)
-		{
-			// Reset horizontal position to left edge of superview's frame
-		xPosition = kPadding;
-
-			// Set vertical position to a new 'line'
-		yPosition += nameSize.height + kPadding;
-		}
-
-		// Create the button's frame
-	CGRect searchFieldFrame = CGRectMake(xPosition, yPosition, nameSize.width + (kPadding * 2), nameSize.height);
-	self.searchField.frame = searchFieldFrame;
-	self.searchField.hidden = YES;
-
-
-		// Add the button to its superview
-	[scrollView addSubview:self.searchField];
-
-		// Set the content size so it can be scrollable
-	CGFloat height = yPosition + 30.0;
-	[scrollView setContentSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width - 16, height)];
+    // Remove existing buttons
+    for (UIView *subview in scrollView.subviews) {
+        if ([subview isKindOfClass:[UIButton class]]) {
+            [subview removeFromSuperview];
+        }
+    }
+    
+    CGFloat maxWidth = [[UIScreen mainScreen] bounds].size.width - 16 - kPadding;
+    CGFloat xPosition = kPadding;
+    CGFloat yPosition = kPadding;
+    
+    for (NSNumber *number in abRecordIDs) {
+        ABRecordID abRecordID = [number intValue];
+        ABRecordRef abPerson = ABAddressBookGetPersonWithRecordID(self.addressBook, abRecordID);
+        
+        // Copy the name associated with this person record
+        NSString *name = (__bridge_transfer NSString *)ABRecordCopyCompositeName(abPerson);
+        
+        UIFont *font = [UIFont fontWithName:@"AvenirNext-Medium" size:14.0f];
+        
+        // Create the button
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setTitle:name forState:UIControlStateNormal];
+        [button.titleLabel setFont:font];
+        [button setBackgroundColor:self.tokenColor];
+        [button.layer setCornerRadius:4.0];
+        [button setTag:abRecordID];
+        [button addTarget:self action:@selector(buttonSelected:) forControlEvents:UIControlEventTouchUpInside];
+        
+        // Get the width and height of the name string given a font size
+        CGSize nameSize = [name sizeWithAttributes:@{NSFontAttributeName:font}];
+        
+        if ((xPosition + nameSize.width + kPadding) > maxWidth) {
+            // Reset horizontal position to left edge of superview's frame
+            xPosition = kPadding;
+            
+            // Set vertical position to a new 'line'
+            yPosition += nameSize.height + kPadding;
+        }
+        
+        // Create the button's frame
+        CGRect buttonFrame = CGRectMake(xPosition, yPosition, nameSize.width + (kPadding * 2), nameSize.height);
+        [button setFrame:buttonFrame];
+        
+        // Add the button to its superview
+        [scrollView addSubview:button];
+        
+        // Calculate xPosition for the next button in the loop
+        xPosition += button.frame.size.width + kPadding;
+    }
+    
+    UIFont *font = [UIFont fontWithName:@"AvenirNext-Medium" size:14.0f];
+    
+    // Create the textfield at the end of the buttons
+    
+    // Get the width and height of the name string given a font size
+    NSString *placeholderName = @"Average Size";
+    CGSize nameSize = [placeholderName sizeWithAttributes:@{NSFontAttributeName:font}];
+    
+    if ((xPosition + nameSize.width + kPadding) > maxWidth)
+    {
+        // Reset horizontal position to left edge of superview's frame
+        xPosition = kPadding;
+        
+        // Set vertical position to a new 'line'
+        yPosition += nameSize.height + kPadding;
+    }
+    
+    // Create the button's frame
+    CGRect searchFieldFrame = CGRectMake(xPosition, yPosition, nameSize.width + (kPadding * 2), nameSize.height);
+    self.searchField.frame = searchFieldFrame;
+    self.searchField.hidden = YES;
+    
+    
+    // Add the button to its superview
+    [scrollView addSubview:self.searchField];
+    
+    // Set the content size so it can be scrollable
+    CGFloat height = yPosition + 30.0;
+    [scrollView setContentSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width - 16, height)];
 
 }
 
@@ -400,7 +399,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 
         CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
 		[ceaselessContacts updateCeaselessContactFromABRecord: abPerson];
-		Person *person = [ceaselessContacts getCeaselessContactFromABRecord: abPerson];
+		PersonIdentifier *person = [ceaselessContacts getCeaselessContactFromABRecord: abPerson];
 			//TODO crash here when no first name or last name (business) - got here when selected a business to tag, should not happen when selecting from Ceaseless Persons instead of ABRecords
         [self.mutablePeopleSet addObject: person];
 		}
@@ -453,8 +452,6 @@ NSString *const kPlaceHolderText = @"Enter note";
 		note.peopleTagged = nil; 
 //		[note addPeopleTagged: self.mutablePeopleSet];
 		note.peopleTagged = [[NSOrderedSet alloc] initWithSet:[self.mutablePeopleSet set]];
-
-
 	} else {
 	Note *newNote = [NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
 		[newNote setValue: [NSDate date] forKey: @"createDate"];
@@ -723,14 +720,12 @@ NSString *const kPlaceHolderText = @"Enter note";
 		NSLog(@"text: %@", [managedObject valueForKey: @"text"]);
 		NSLog(@"last update date: %@", [managedObject valueForKey: @"lastUpdatedDate"]);
 		NSOrderedSet *peopleTagged = [managedObject valueForKey: @"peopleTagged"];
-		for (Person *person in peopleTagged) {
-			NSSet *firstNames = [person valueForKey: @"firstNames"];
-			NSSet *lastNames = [person valueForKey: @"lastNames"];
-			NSString *firstName = ((Name*)[firstNames anyObject]).name;
+		for (PersonIdentifier *person in peopleTagged) {
+            PersonInfo *info = person.representativeInfo;
+			NSString *firstName = info.primaryFirstName.name;
 			NSLog (@"first Name is .......  %@", firstName);
-			NSString *lastName = ((Name*)[lastNames anyObject]).name;
+            NSString *lastName = info.primaryLastName.name;
 			NSLog (@"last Name is ......... %@", lastName);
-//			NSLog(@"personTagged: %@ %@", firstName, lastName);
 		}
 	}
 }
