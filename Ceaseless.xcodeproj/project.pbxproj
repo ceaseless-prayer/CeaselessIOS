@@ -13,11 +13,11 @@
 		42458BED1ACF1FEC00C48830 /* Name.m in Sources */ = {isa = PBXBuildFile; fileRef = 42458BEC1ACF1FEC00C48830 /* Name.m */; };
 		42458BF01ACF1FEC00C48830 /* PhoneNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 42458BEF1ACF1FEC00C48830 /* PhoneNumber.m */; };
 		42458BF61ACF1FEC00C48830 /* AddressBookId.m in Sources */ = {isa = PBXBuildFile; fileRef = 42458BF51ACF1FEC00C48830 /* AddressBookId.m */; };
-		42458BFF1ACF27A400C48830 /* PersonIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 42458BFE1ACF27A400C48830 /* PersonIdentifier.m */; };
 		42458C021ACF32FD00C48830 /* PersonInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 42458C011ACF32FD00C48830 /* PersonInfo.m */; };
 		425271A81AB1FA9A005098F6 /* ScripturePickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271A71AB1FA9A005098F6 /* ScripturePickerTests.m */; };
 		425271AA1AB1FF1C005098F6 /* PersonPickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271A91AB1FF1C005098F6 /* PersonPickerTests.m */; };
 		425271B01AB37F29005098F6 /* CeaselessLocalContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271AF1AB37F29005098F6 /* CeaselessLocalContacts.m */; };
+		42606F291AD3383F00D3BA91 /* PersonIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 42606F281AD3383F00D3BA91 /* PersonIdentifier.m */; };
 		42869B091AC9FC5100E612F7 /* AppConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 42869B081AC9FC5100E612F7 /* AppConstants.m */; };
 		429E60891AAA5FD8003F37BF /* ScriptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E60881AAA5FD7003F37BF /* ScriptureViewController.m */; };
 		429E608C1AAA61B1003F37BF /* PersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E608B1AAA61B1003F37BF /* PersonViewController.m */; };
@@ -90,14 +90,14 @@
 		42458BEF1ACF1FEC00C48830 /* PhoneNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneNumber.m; sourceTree = "<group>"; };
 		42458BF41ACF1FEC00C48830 /* AddressBookId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressBookId.h; sourceTree = "<group>"; };
 		42458BF51ACF1FEC00C48830 /* AddressBookId.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressBookId.m; sourceTree = "<group>"; };
-		42458BFD1ACF27A400C48830 /* PersonIdentifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonIdentifier.h; sourceTree = "<group>"; };
-		42458BFE1ACF27A400C48830 /* PersonIdentifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonIdentifier.m; sourceTree = "<group>"; };
 		42458C001ACF32FD00C48830 /* PersonInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonInfo.h; sourceTree = "<group>"; };
 		42458C011ACF32FD00C48830 /* PersonInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonInfo.m; sourceTree = "<group>"; };
 		425271A71AB1FA9A005098F6 /* ScripturePickerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScripturePickerTests.m; sourceTree = "<group>"; };
 		425271A91AB1FF1C005098F6 /* PersonPickerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonPickerTests.m; sourceTree = "<group>"; };
 		425271AE1AB37F29005098F6 /* CeaselessLocalContacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CeaselessLocalContacts.h; sourceTree = "<group>"; };
 		425271AF1AB37F29005098F6 /* CeaselessLocalContacts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CeaselessLocalContacts.m; sourceTree = "<group>"; };
+		42606F271AD3383F00D3BA91 /* PersonIdentifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonIdentifier.h; sourceTree = "<group>"; };
+		42606F281AD3383F00D3BA91 /* PersonIdentifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonIdentifier.m; sourceTree = "<group>"; };
 		42869B071AC9FC5100E612F7 /* AppConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstants.h; sourceTree = "<group>"; };
 		42869B081AC9FC5100E612F7 /* AppConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConstants.m; sourceTree = "<group>"; };
 		429E60871AAA5FD7003F37BF /* ScriptureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptureViewController.h; sourceTree = "<group>"; };
@@ -327,10 +327,10 @@
 		70F664061AA7EA990073801E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				42606F271AD3383F00D3BA91 /* PersonIdentifier.h */,
+				42606F281AD3383F00D3BA91 /* PersonIdentifier.m */,
 				42458C001ACF32FD00C48830 /* PersonInfo.h */,
 				42458C011ACF32FD00C48830 /* PersonInfo.m */,
-				42458BFD1ACF27A400C48830 /* PersonIdentifier.h */,
-				42458BFE1ACF27A400C48830 /* PersonIdentifier.m */,
 				42458BF41ACF1FEC00C48830 /* AddressBookId.h */,
 				42458BF51ACF1FEC00C48830 /* AddressBookId.m */,
 				42458BEE1ACF1FEC00C48830 /* PhoneNumber.h */,
@@ -527,6 +527,7 @@
 				42458BED1ACF1FEC00C48830 /* Name.m in Sources */,
 				70D155D61AC1BC1700FB9486 /* ContactsListTableViewCell.m in Sources */,
 				429E608C1AAA61B1003F37BF /* PersonViewController.m in Sources */,
+				42606F291AD3383F00D3BA91 /* PersonIdentifier.m in Sources */,
 				704D5CF41AAFA96200BD48B3 /* PrayerRecord.m in Sources */,
 				70F6640C1AA83CC60073801E /* ScriptureView.m in Sources */,
 				42F3AE211AA4DD7F003A88F5 /* AppDelegate.m in Sources */,
@@ -552,7 +553,6 @@
 				70F12B841AB208000090F47A /* PrayerJournalViewController.m in Sources */,
 				70BFCAFF1ABCA78B0014C4BC /* MenuViewController.m in Sources */,
 				70F12B8A1AB231DF0090F47A /* TaggedPersonPicker.m in Sources */,
-				42458BFF1ACF27A400C48830 /* PersonIdentifier.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

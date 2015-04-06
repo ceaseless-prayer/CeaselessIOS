@@ -200,14 +200,26 @@
             NSMutableOrderedSet *addressBookIds = [[NSMutableOrderedSet alloc] initWithOrderedSet:person.addressBookIds];
             [addressBookIds removeObject:abId];
             person.addressBookIds = addressBookIds;
-            // TODO if addressBookIds reaches count 0,
-            // should we consider the Ceaseless Contact deleted from the address book?
-            // should there be a separate clean up process for that?
+            if ([addressBookIds count] == 0) {
+                // the contact was removed from the system.
+                NSDate *now = [NSDate date];
+                person.removedDate = now;
+                person.systemRemovedDate = now;
+                // things to keep in mind:
+                // this contact will basically be frozen until an address book record matching it
+                // exists again
+                // the associated PersonInfo will not be updated.
+                // the indication that this was removed from the local system itself
+                // is that the systemRemovedDate is not nil and
+                // the addressBookIds set is empty.
+                // updateCeaselessContactFromABRecord and buildCeaselessContact
+                // are where this contact can be "un-frozen" and re-added to the system.
+            }
         }
     }
     
     // replace the primary record if the old one is no longer valid.
-    if (![person.addressBookIds containsObject: person.representativeInfo.primaryAddressBookId]) {
+    if ([person.addressBookIds count] > 0 && ![person.addressBookIds containsObject: person.representativeInfo.primaryAddressBookId]) {
         person.representativeInfo.primaryAddressBookId = person.addressBookIds[0];
     }
     
@@ -524,6 +536,7 @@
         if (firstName != nil) {
             hasFirstName = YES;
         }
+        
         PersonIdentifier *ceaselessContact = [self getCeaselessContactFromABRecord:personData];
         if(ceaselessContact != nil) {
             [matchingCeaselessContacts addObject: ceaselessContact];
@@ -566,7 +579,11 @@
     ceaselessContact.addressBookIds = [self buildAddressBookIds:unifiedRecord];
     ceaselessContact.phoneNumbers = [self buildPhoneNumbers:unifiedRecord];
     ceaselessContact.emails = [self buildEmails:unifiedRecord];
-    
+    if(ceaselessContact.systemRemovedDate != nil) {
+        // if we are rebuilding this contact from ABRecords it is no longer removed on the system.
+        ceaselessContact.systemRemovedDate = nil;
+        ceaselessContact.removedDate = nil;
+    }
 }
 
 - (NSMutableSet *)buildFirstNames:(NSSet *)unifiedRecord {
@@ -665,6 +682,7 @@
 
 - (void) copyDataFromCeaselessContact: (PersonIdentifier *) src toContact: (PersonIdentifier *) dst {
     // for each relationship, change the id of the relationship to point to the id of the one we want to keep
+    [src addAddressBookIds:dst.addressBookIds];
     [src addFirstNames:dst.firstNames];
     [src addLastNames:dst.lastNames];
     [src addPhoneNumbers:dst.phoneNumbers];
