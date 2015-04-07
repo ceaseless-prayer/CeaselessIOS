@@ -22,9 +22,8 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CVR-nv-9Et" userLabel="CardView">
                             <rect key="frame" x="8" y="2" width="584" height="596"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ofI-30-Sup" userLabel="PersonCardBackground">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Screen Shot 2015-02-18 at 8.22.42 AM.png" translatesAutoresizingMaskIntoConstraints="NO" id="ofI-30-Sup" userLabel="PersonCardBackground">
                                     <rect key="frame" x="0.0" y="0.0" width="584" height="596"/>
-                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </imageView>
                                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1uu-zD-zYL">
                                     <rect key="frame" x="0.0" y="0.0" width="584" height="596"/>
@@ -32,30 +31,10 @@
                                         <rect key="frame" x="0.0" y="0.0" width="584" height="596"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wQa-ow-jg9">
-                                                <rect key="frame" x="0.0" y="0.0" width="584" height="596"/>
-                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="GjR-dB-4no" userLabel="NotesView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="584" height="596"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                </view>
-                                                <color key="backgroundColor" red="0.0" green="0.0039215686269999999" blue="0.031372549020000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <vibrancyEffect>
-                                                    <blurEffect style="light"/>
-                                                </vibrancyEffect>
-                                            </visualEffectView>
+                                            <view opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f6F-mW-yA9" userLabel="NotesView">
+                                                <rect key="frame" x="0.0" y="0.0" width="584" height="425"/>
+                                            </view>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="wQa-ow-jg9" secondAttribute="bottom" id="82U-iI-k4p"/>
-                                            <constraint firstItem="wQa-ow-jg9" firstAttribute="top" secondItem="bQT-wg-FEd" secondAttribute="top" id="D6E-hk-udG"/>
-                                            <constraint firstItem="wQa-ow-jg9" firstAttribute="leading" secondItem="bQT-wg-FEd" secondAttribute="leading" id="H4h-qf-0Re"/>
-                                            <constraint firstAttribute="trailing" secondItem="wQa-ow-jg9" secondAttribute="trailing" id="k3S-0f-k9h"/>
-                                            <constraint firstItem="wQa-ow-jg9" firstAttribute="leading" secondItem="bQT-wg-FEd" secondAttribute="leading" constant="10" id="vDz-JY-c97"/>
-                                        </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="vDz-JY-c97"/>
-                                            </mask>
-                                        </variation>
                                     </view>
                                     <blurEffect style="light"/>
                                 </visualEffectView>
@@ -92,9 +71,9 @@
                                         <rect key="frame" x="0.0" y="0.0" width="584" height="44"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fUs-uE-zvf">
+                                            <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fUs-uE-zvf">
                                                 <rect key="frame" x="0.0" y="0.0" width="584" height="44"/>
-                                                <color key="backgroundColor" red="0.14117647058823529" green="0.16078431372549021" blue="0.18431372549019609" alpha="0.69000000000000006" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" red="0.0" green="0.0039215686274509803" blue="0.18431372549019609" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                             </imageView>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" text="Name Label" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="29f-oR-vIq">
                                                 <rect key="frame" x="8" y="0.0" width="117" height="44"/>
@@ -106,12 +85,10 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qaX-ht-K8v">
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qaX-ht-K8v">
                                                 <rect key="frame" x="548" y="0.0" width="28" height="44"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <state key="normal" image="icon_more">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
+                                                <state key="normal" image="icon_more"/>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -231,6 +208,7 @@
                                 <constraint firstAttribute="centerX" secondItem="vRz-LA-Wxx" secondAttribute="centerX" id="8w4-AB-gFB"/>
                                 <constraint firstItem="vUc-Xs-Ucw" firstAttribute="top" secondItem="eF7-HN-urH" secondAttribute="bottom" id="9Tp-QI-85w"/>
                                 <constraint firstAttribute="centerX" secondItem="vUc-Xs-Ucw" secondAttribute="centerX" id="9ns-VK-0z0"/>
+                                <constraint firstItem="1uu-zD-zYL" firstAttribute="top" secondItem="CVR-nv-9Et" secondAttribute="top" id="9zP-at-9b0"/>
                                 <constraint firstItem="vRz-LA-Wxx" firstAttribute="top" secondItem="CVR-nv-9Et" secondAttribute="top" id="Cia-MV-7a3"/>
                                 <constraint firstAttribute="centerY" secondItem="vRz-LA-Wxx" secondAttribute="centerY" id="Ewd-Om-5ad"/>
                                 <constraint firstItem="1uu-zD-zYL" firstAttribute="leading" secondItem="CVR-nv-9Et" secondAttribute="leading" id="Jus-aN-rDj"/>
@@ -239,6 +217,7 @@
                                 <constraint firstItem="ofI-30-Sup" firstAttribute="top" secondItem="CVR-nv-9Et" secondAttribute="top" id="Ndt-uo-ySn"/>
                                 <constraint firstItem="ofI-30-Sup" firstAttribute="leading" secondItem="CVR-nv-9Et" secondAttribute="leading" id="TLw-v6-zD7"/>
                                 <constraint firstAttribute="trailing" secondItem="zHl-KV-Ywy" secondAttribute="trailing" id="Tiq-ZA-xLj"/>
+                                <constraint firstItem="yRE-GT-fO6" firstAttribute="top" secondItem="1uu-zD-zYL" secondAttribute="top" id="Uw5-Yr-R7E"/>
                                 <constraint firstAttribute="trailing" secondItem="yRE-GT-fO6" secondAttribute="trailing" id="Y0I-Z5-dUS"/>
                                 <constraint firstAttribute="centerY" secondItem="vUc-Xs-Ucw" secondAttribute="centerY" id="aT4-Uu-frt"/>
                                 <constraint firstAttribute="bottom" secondItem="ofI-30-Sup" secondAttribute="bottom" id="brc-qZ-neh"/>
@@ -253,7 +232,7 @@
                                 <constraint firstItem="vRz-LA-Wxx" firstAttribute="top" secondItem="9Ne-Vd-rGt" secondAttribute="bottom" id="sG6-sj-HvV"/>
                                 <constraint firstItem="vRz-LA-Wxx" firstAttribute="leading" secondItem="CVR-nv-9Et" secondAttribute="leading" id="svj-ci-kpd"/>
                                 <constraint firstItem="zHl-KV-Ywy" firstAttribute="top" secondItem="CVR-nv-9Et" secondAttribute="top" id="tNo-bG-kXo"/>
-                                <constraint firstItem="1uu-zD-zYL" firstAttribute="top" secondItem="CVR-nv-9Et" secondAttribute="top" id="uLI-tE-GRM"/>
+                                <constraint firstItem="1uu-zD-zYL" firstAttribute="top" secondItem="CVR-nv-9Et" secondAttribute="top" constant="455" id="uLI-tE-GRM"/>
                                 <constraint firstAttribute="bottom" secondItem="yRE-GT-fO6" secondAttribute="bottom" id="vvR-Bk-N7j"/>
                                 <constraint firstAttribute="trailing" secondItem="1uu-zD-zYL" secondAttribute="trailing" id="wJJ-GR-wTY"/>
                                 <constraint firstItem="eF7-HN-urH" firstAttribute="width" secondItem="vRz-LA-Wxx" secondAttribute="width" id="wWA-9Z-FKw"/>
@@ -264,6 +243,8 @@
                             </constraints>
                             <variation key="default">
                                 <mask key="constraints">
+                                    <exclude reference="uLI-tE-GRM"/>
+                                    <exclude reference="Uw5-Yr-R7E"/>
                                     <exclude reference="0QA-04-Zlh"/>
                                     <exclude reference="8Pu-ka-uRD"/>
                                     <exclude reference="ddV-M7-HdD"/>
@@ -351,6 +332,7 @@
         </view>
     </objects>
     <resources>
+        <image name="Screen Shot 2015-02-18 at 8.22.42 AM.png" width="466" height="312"/>
         <image name="icon_more" width="28" height="8"/>
     </resources>
 </document>

@@ -25,7 +25,9 @@
     [super viewDidLoad];
 
     // Do any additional setup after loading the view, typically from a nib.
-	self.navigationItem.titleView = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"logo_main"]];
+	UIImage *ceaselessImage = [UIImage imageNamed: @"logo_main"];
+	ceaselessImage = [ceaselessImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+	self.navigationItem.titleView = [[UIImageView alloc] initWithImage: ceaselessImage];
 
 	[self setBlurredBackground];
 

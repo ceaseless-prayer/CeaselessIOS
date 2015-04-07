@@ -48,10 +48,8 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	imageView.contentMode = UIViewContentModeScaleAspectFill;
 	UIImage *backgroundImage = [AppUtils getDynamicBackgroundImage];
 	if(backgroundImage != nil) {
-		imageView.image = backgroundImage;
+		self.backgroundImageView.image = backgroundImage;
 	}
-	self.backgroundImageView = imageView;
-//	self.backgroundImageView = [AppUtils setBlurredBackgroundForFrame: self.view.frame];
 
 	
 	self.tableView.estimatedRowHeight = 130.0;
