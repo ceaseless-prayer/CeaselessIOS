@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -10,36 +10,99 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchImageBackground" translatesAutoresizingMaskIntoConstraints="NO" id="Po8-C0-gRB">
-                    <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="at_the_beach.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Po8-C0-gRB">
+                    <rect key="frame" x="0.0" y="64" width="480" height="416"/>
                     <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SVH-aI-rct">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="64"/>
+                    <color key="backgroundColor" red="0.0" green="0.0039215686269999999" blue="0.1843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="64" id="PzJ-Ne-SQr"/>
+                        <constraint firstAttribute="width" constant="480" id="iK0-TQ-k65"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="iK0-TQ-k65"/>
+                        </mask>
+                    </variation>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_big" translatesAutoresizingMaskIntoConstraints="NO" id="Qi0-kg-WJh">
+                    <rect key="frame" x="115" y="29" width="250" height="26"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="26" id="d4x-Gn-OCA"/>
+                        <constraint firstAttribute="height" constant="25" id="ddb-o9-OtD"/>
+                        <constraint firstAttribute="width" constant="183" id="i3N-uh-ADL"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="ddb-o9-OtD"/>
+                            <exclude reference="i3N-uh-ADL"/>
+                        </mask>
+                    </variation>
                 </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="SVH-aI-rct" secondAttribute="trailing" constant="70" id="6ET-K0-8YD"/>
                 <constraint firstAttribute="bottom" secondItem="Po8-C0-gRB" secondAttribute="bottom" id="8bc-fV-AEh"/>
+                <constraint firstAttribute="centerX" secondItem="Qi0-kg-WJh" secondAttribute="centerX" id="Aog-SP-im6"/>
+                <constraint firstItem="SVH-aI-rct" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="CTJ-2U-wyw"/>
                 <constraint firstAttribute="trailing" secondItem="Po8-C0-gRB" secondAttribute="trailing" id="HZu-dW-Oc8"/>
+                <constraint firstAttribute="bottom" secondItem="Qi0-kg-WJh" secondAttribute="bottom" constant="2" id="MM7-LJ-rIr"/>
+                <constraint firstItem="Qi0-kg-WJh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="29" id="MjN-22-X9i"/>
+                <constraint firstItem="SVH-aI-rct" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="-80" id="O9A-ZQ-iqs"/>
+                <constraint firstAttribute="bottom" secondItem="Po8-C0-gRB" secondAttribute="bottom" id="PFM-A9-fQ8"/>
+                <constraint firstAttribute="trailing" secondItem="SVH-aI-rct" secondAttribute="trailing" id="Rmo-2A-41M"/>
+                <constraint firstItem="Qi0-kg-WJh" firstAttribute="centerY" secondItem="Po8-C0-gRB" secondAttribute="centerY" constant="-219.5" id="RoK-PO-Ppa"/>
+                <constraint firstItem="Qi0-kg-WJh" firstAttribute="top" secondItem="SVH-aI-rct" secondAttribute="bottom" constant="31" id="Sgq-mc-cNc"/>
                 <constraint firstItem="Po8-C0-gRB" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Wh9-uz-cRu"/>
+                <constraint firstItem="Qi0-kg-WJh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Yfl-dl-1LJ"/>
+                <constraint firstItem="SVH-aI-rct" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="-70" id="bSr-ML-4l7"/>
+                <constraint firstAttribute="trailing" secondItem="Qi0-kg-WJh" secondAttribute="trailing" id="cri-gS-UfH"/>
                 <constraint firstAttribute="bottom" secondItem="Po8-C0-gRB" secondAttribute="bottom" id="eby-ex-wxV"/>
+                <constraint firstItem="SVH-aI-rct" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="-70" id="g5X-aD-Y35"/>
                 <constraint firstItem="Po8-C0-gRB" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="jtt-2w-edE"/>
-                <constraint firstItem="Po8-C0-gRB" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="k9O-Uh-K4j"/>
+                <constraint firstItem="Po8-C0-gRB" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="64" id="k9O-Uh-K4j"/>
+                <constraint firstItem="Qi0-kg-WJh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="2" id="kgI-lx-fK8"/>
+                <constraint firstItem="Qi0-kg-WJh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="133" id="kyq-sc-Aeh"/>
+                <constraint firstItem="Qi0-kg-WJh" firstAttribute="leading" secondItem="Po8-C0-gRB" secondAttribute="leading" id="nqr-aZ-jov"/>
+                <constraint firstItem="SVH-aI-rct" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="qYn-y2-M30"/>
+                <constraint firstItem="SVH-aI-rct" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="-80" id="rcC-LW-KZ1"/>
                 <constraint firstAttribute="trailing" secondItem="Po8-C0-gRB" secondAttribute="trailing" id="ue0-Lp-pfh"/>
                 <constraint firstItem="Po8-C0-gRB" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="yrk-dS-oR0"/>
+                <constraint firstItem="Qi0-kg-WJh" firstAttribute="top" secondItem="Po8-C0-gRB" secondAttribute="top" id="zt5-v4-PhZ"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <variation key="default">
                 <mask key="constraints">
+                    <exclude reference="6ET-K0-8YD"/>
+                    <exclude reference="O9A-ZQ-iqs"/>
+                    <exclude reference="bSr-ML-4l7"/>
+                    <exclude reference="g5X-aD-Y35"/>
+                    <exclude reference="rcC-LW-KZ1"/>
                     <exclude reference="8bc-fV-AEh"/>
                     <exclude reference="HZu-dW-Oc8"/>
                     <exclude reference="Wh9-uz-cRu"/>
                     <exclude reference="jtt-2w-edE"/>
+                    <exclude reference="MM7-LJ-rIr"/>
+                    <exclude reference="RoK-PO-Ppa"/>
+                    <exclude reference="Sgq-mc-cNc"/>
+                    <exclude reference="Yfl-dl-1LJ"/>
+                    <exclude reference="cri-gS-UfH"/>
+                    <exclude reference="kgI-lx-fK8"/>
+                    <exclude reference="kyq-sc-Aeh"/>
+                    <exclude reference="nqr-aZ-jov"/>
+                    <exclude reference="zt5-v4-PhZ"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="548" y="455"/>
         </view>
     </objects>
     <resources>
-        <image name="LaunchImageBackground" width="414" height="736"/>
+        <image name="at_the_beach.jpg" width="3264" height="2448"/>
+        <image name="logo_big" width="250" height="58"/>
     </resources>
 </document>

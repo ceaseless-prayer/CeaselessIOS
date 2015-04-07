@@ -29,8 +29,6 @@
 	ceaselessImage = [ceaselessImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 	self.navigationItem.titleView = [[UIImageView alloc] initWithImage: ceaselessImage];
 
-	[self setBlurredBackground];
-
     // Configure the page view controller and add it as a child view controller.
     NSDictionary *opts = @{
                            @"UIPageViewControllerOptionInterPageSpacingKey": @20

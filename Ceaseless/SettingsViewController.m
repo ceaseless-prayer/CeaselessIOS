@@ -27,10 +27,10 @@
 
 	self.scrollView.delegate = self;
     self.ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
-
-	if ([[NSUserDefaults standardUserDefaults] stringForKey: @"CeaselessId"]) {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	if ([defaults stringForKey: @"CeaselessId"]) {
 			//get the image and name from the Person
-		PersonIdentifier *person = [_ceaselessContacts getCeaselessContactFromCeaselessId:[[NSUserDefaults standardUserDefaults] stringForKey: @"CeaselessId"]];
+		PersonIdentifier *person = [_ceaselessContacts getCeaselessContactFromCeaselessId:[defaults stringForKey: @"CeaselessId"]];
 		[self formatProfileForPerson: person];
 	} else {
 		self.placeholderText.hidden = NO;
@@ -41,17 +41,17 @@
 		self.placeholderText.layer.cornerRadius = 6.0f;
 	}
 
-	if ([[NSUserDefaults standardUserDefaults] doubleForKey:kDailyPersonCount]) {
-		self.peopleCount.text = [NSString stringWithFormat:@"%.f",[[NSUserDefaults standardUserDefaults] doubleForKey:kDailyPersonCount]];
-		self.stepper.value = [[NSUserDefaults standardUserDefaults] doubleForKey:kDailyPersonCount];
+	if ([defaults integerForKey:kDailyPersonCount]) {
+		self.peopleCount.text = [NSString stringWithFormat:@"%.f",[defaults doubleForKey:kDailyPersonCount]];
+		self.stepper.value = [defaults doubleForKey:kDailyPersonCount];
 	} else {
 		self.peopleCount.text = @"3";
 		self.stepper.value = 3;
 	}
 	NSLog (@"stepper is %@", self.peopleCount.text);
 
-	if ([[NSUserDefaults standardUserDefaults] objectForKey:@"NotificationDate"]) {
-		[self.datePicker setDate: [[NSUserDefaults standardUserDefaults] objectForKey:@"NotificationDate"] animated: NO];
+	if ([defaults objectForKey:@"NotificationDate"]) {
+		[self.datePicker setDate: [defaults objectForKey:@"NotificationDate"] animated: NO];
 	}
 
 		//Set Color of Date Picker
