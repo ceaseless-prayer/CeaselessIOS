@@ -16,6 +16,7 @@
 #import "AppUtils.h"
 #import "CeaselessLocalContacts.h"
 #import <MessageUI/MessageUI.h>
+#import "ContactsListsViewController.h"
 
 @interface PersonViewController () <MFMessageComposeViewControllerDelegate>
 
@@ -85,9 +86,21 @@ static NSString *kSMSMessage;
     if(UIAccessibilityIsReduceTransparencyEnabled()) {
         ((UIView *) self.personView.blurEffect.subviews[0]).backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:0.5f];
     }
+		//force the view down below the navigation bar is segued from People Table
+	if ([[self backViewController] isMemberOfClass:[ContactsListsViewController class]]) {
+		self.personView.topToCardViewConstraint.constant = 64;
+	}
 
 }
+- (UIViewController *)backViewController
+{
+	NSInteger numberOfViewControllers = self.navigationController.viewControllers.count;
 
+	if (numberOfViewControllers < 2)
+		return nil;
+	else
+		return [self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 2];
+}
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 }
