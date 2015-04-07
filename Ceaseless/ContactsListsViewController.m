@@ -16,11 +16,11 @@
 #import "PersonView.h"
 #import "AppUtils.h"
 
-typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
+typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 {
-	searchScopeActive = 0,
-	searchScopeFavorites = 1,
-	searchScopeRemoved = 2
+	predicateScopeActive = 0,
+	predicateScopeFavorites = 1,
+	predicateScopeRemoved = 2
 };
 
 @interface ContactsListsViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating>
@@ -30,7 +30,7 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 @property (nonatomic, strong) UISearchController *searchController;
 @property (nonatomic, strong) NSString *selectedListPredicate;
 @property (nonatomic, strong) PersonPicker *personPicker;
-@property ContactsListsSearchScope selectedList;
+@property ContactsListsPredicateScope selectedList;
 
 @end
 
@@ -66,10 +66,9 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 	self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
 	self.searchController.searchResultsUpdater = self;
 	self.searchController.dimsBackgroundDuringPresentation = NO;
-	self.searchController.searchBar.barTintColor = UIColorFromRGBWithAlpha(0x24292f , 0.4);
+	self.searchController.searchBar.barTintColor = UIColorFromRGBWithAlpha(0x00012f , 0.4);
 	self.searchController.searchBar.tintColor = [UIColor whiteColor];
-//	self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"Friends",@"Friends"),
-//														  NSLocalizedString(@"Me",@"Me")];
+	self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"",@"")];
 	self.searchController.searchBar.delegate = self;
 		//		// Hide the search bar until user scrolls up
 	CGRect newBounds = self.tableView.bounds;
@@ -86,7 +85,7 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
-	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:animated];
+//	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:animated];
 	[super viewWillDisappear:animated];
 }
 - (void)didReceiveMemoryWarning {
@@ -103,6 +102,7 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
     if (![self.managedObjectContext save:&error]) {
         NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
     }
+	[self.tableView reloadData];
 }
 
 #pragma mark - Segues
@@ -111,13 +111,11 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 {
 	if ([[segue identifier] isEqualToString:@"ShowPerson"]) {
 		PersonIdentifier *person = nil;
+		NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
 
 		if (self.searchController.isActive) {
-			NSIndexPath *indexPath = [((UITableViewController *)self.searchController.searchResultsController).tableView indexPathForSelectedRow];
 			person = [self.filteredList objectAtIndex:indexPath.row];
 		} else {
-
-			NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
 			person = [self.fetchedResultsController objectAtIndexPath:indexPath];
 		}
 
@@ -130,6 +128,7 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 - (IBAction)unwindToContactsLists:(UIStoryboardSegue*)sender
 {
 		// Pull any data from the view controller which initiated the unwind segue.
+	[self.tableView reloadData];
 }
 #pragma mark - Table View
 
@@ -206,7 +205,7 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 	NSString *personName = [_ceaselessContacts compositeNameForPerson:person];
 	cell.nameLabel.text = personName;
 
-	if (self.selectedList == searchScopeActive) {
+	if (self.selectedList == predicateScopeActive) {
 		cell.rowSwitch.hidden = YES;
 	} else {
 		cell.rowSwitch.hidden = NO;
@@ -220,17 +219,6 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 	return NO;
 }
 
-
-#pragma mark -
-#pragma mark === UISearchBarDelegate ===
-#pragma mark -
-
-- (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
-{
-	[self updateSearchResultsForSearchController:self.searchController];
-
-}
-
 #pragma mark -
 #pragma mark === UISearchResultsUpdating ===
 #pragma mark -
@@ -238,15 +226,16 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
 	NSString *searchString = searchController.searchBar.text;
-	[self searchForText:searchString scope: searchController.searchBar.selectedScopeButtonIndex];
+	[self searchForText:searchString];
 	[self.tableView reloadData];
 }
 
-- (void)searchForText:(NSString *)searchText scope:(ContactsListsSearchScope)scopeOption
+- (void)searchForText:(NSString *)searchText
 {
-	NSString *predicateFormat = @"representativeInfo.primaryFirstName.name contains[cd] %@ || representativeInfo.primaryLastName.name contains[cd] %@";
+	NSString *buildPredicateFormat = [NSString stringWithString: self.selectedListPredicate];
+	NSString *predicateFormat = [buildPredicateFormat stringByAppendingString: @" AND (representativeInfo.primaryFirstName.name BEGINSWITH[cd] %@ OR representativeInfo.primaryLastName.name BEGINSWITH[cd] %@)"];
 
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, self.selectedListPredicate, searchText, searchText];
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, searchText, searchText];
 
 	[self.searchFetchRequest setPredicate:predicate];
 
