@@ -18,5 +18,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
 @property (weak, nonatomic) IBOutlet UIView *notesView;
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *blurEffect;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topToCardViewConstraint;
 
 @end
