@@ -22,8 +22,9 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CVR-nv-9Et" userLabel="CardView">
                             <rect key="frame" x="8" y="2" width="584" height="596"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Screen Shot 2015-02-18 at 8.22.42 AM.png" translatesAutoresizingMaskIntoConstraints="NO" id="ofI-30-Sup" userLabel="PersonCardBackground">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ofI-30-Sup" userLabel="PersonCardBackground">
                                     <rect key="frame" x="0.0" y="0.0" width="584" height="596"/>
+                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </imageView>
                                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1uu-zD-zYL">
                                     <rect key="frame" x="0.0" y="0.0" width="584" height="596"/>
@@ -105,7 +106,7 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qaX-ht-K8v">
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qaX-ht-K8v">
                                                 <rect key="frame" x="548" y="0.0" width="28" height="44"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <state key="normal" image="icon_more">
@@ -220,7 +221,6 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                             </subviews>
-                            <color key="backgroundColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="centerX" secondItem="vUc-Xs-Ucw" secondAttribute="centerX" id="0KR-tc-haN"/>
                                 <constraint firstItem="9Ne-Vd-rGt" firstAttribute="height" secondItem="vUc-Xs-Ucw" secondAttribute="height" id="0QA-04-Zlh"/>
@@ -284,7 +284,6 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="CVR-nv-9Et" firstAttribute="leading" secondItem="Tsm-1y-Djd" secondAttribute="leading" constant="8" id="5IQ-r2-0uS"/>
                         <constraint firstItem="dQd-fX-c2a" firstAttribute="trailing" secondItem="CVR-nv-9Et" secondAttribute="trailing" id="7fd-iC-CUc"/>
@@ -351,7 +350,6 @@
         </view>
     </objects>
     <resources>
-        <image name="Screen Shot 2015-02-18 at 8.22.42 AM.png" width="466" height="312"/>
         <image name="icon_more" width="28" height="8"/>
     </resources>
 </document>

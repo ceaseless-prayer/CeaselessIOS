@@ -51,7 +51,7 @@
                                         </mask>
                                     </variation>
                                 </view>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Screen Shot 2015-02-18 at 8.22.42 AM.png" translatesAutoresizingMaskIntoConstraints="NO" id="xeq-iM-Snz" userLabel="ScriptureImageReflection">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xeq-iM-Snz" userLabel="ScriptureImageReflection">
                                     <rect key="frame" x="0.0" y="168" width="584" height="428"/>
                                 </imageView>
                                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h1U-rN-1q2">
@@ -80,7 +80,7 @@
                                             </textView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scripture reference" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="240-mT-dOI">
                                                 <rect key="frame" x="0.0" y="376" width="584" height="52"/>
-                                                <color key="backgroundColor" red="0.0" green="0.0039215686274509803" blue="0.18431372549019609" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" red="0.0" green="0.0039215686269999999" blue="0.1843137255" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="52" id="poh-AP-6v3"/>
                                                 </constraints>
@@ -88,11 +88,34 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K9c-0F-rJa" userLabel="ShareButton">
+                                                <rect key="frame" x="534" y="387" width="30" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="2CX-Hq-7Pw"/>
+                                                    <constraint firstAttribute="width" constant="30" id="ZmR-Hq-fGN"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="cLE-ux-rSq"/>
+                                                    <constraint firstAttribute="height" constant="30" id="doW-2p-j8o"/>
+                                                </constraints>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <state key="normal" image="icon_share_ios"/>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="ZmR-Hq-fGN"/>
+                                                        <exclude reference="doW-2p-j8o"/>
+                                                    </mask>
+                                                </variation>
+                                                <connections>
+                                                    <action selector="share:" destination="-1" eventType="touchUpInside" id="96x-ko-lNn"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="240-mT-dOI" secondAttribute="bottom" id="3Ge-9J-gae"/>
                                             <constraint firstItem="240-mT-dOI" firstAttribute="top" secondItem="8Wq-k1-EVN" secondAttribute="bottom" id="HGb-7S-yeg"/>
+                                            <constraint firstAttribute="trailing" secondItem="K9c-0F-rJa" secondAttribute="trailing" constant="20" id="JtA-Sc-Y6f"/>
                                             <constraint firstItem="240-mT-dOI" firstAttribute="leading" secondItem="MVu-Vi-9iM" secondAttribute="leading" id="W4T-G5-y8y"/>
+                                            <constraint firstItem="240-mT-dOI" firstAttribute="top" secondItem="K9c-0F-rJa" secondAttribute="bottom" id="YhQ-gP-HVU"/>
+                                            <constraint firstItem="240-mT-dOI" firstAttribute="centerY" secondItem="K9c-0F-rJa" secondAttribute="centerY" id="aco-rx-Cwz"/>
                                             <constraint firstAttribute="trailing" secondItem="8Wq-k1-EVN" secondAttribute="trailing" id="bZo-te-AuQ"/>
                                             <constraint firstAttribute="trailing" secondItem="240-mT-dOI" secondAttribute="trailing" id="d3D-7Q-w5x"/>
                                             <constraint firstItem="8Wq-k1-EVN" firstAttribute="leading" secondItem="MVu-Vi-9iM" secondAttribute="leading" id="k3Z-jx-VLI"/>
@@ -102,6 +125,7 @@
                                         <variation key="default">
                                             <mask key="constraints">
                                                 <exclude reference="qPN-H5-inL"/>
+                                                <exclude reference="YhQ-gP-HVU"/>
                                             </mask>
                                         </variation>
                                     </view>
@@ -117,30 +141,14 @@
                                         </mask>
                                     </variation>
                                 </visualEffectView>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K9c-0F-rJa" userLabel="ShareButton">
-                                    <rect key="frame" x="542" y="554" width="30" height="30"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="30" id="ZmR-Hq-fGN"/>
-                                        <constraint firstAttribute="height" constant="30" id="doW-2p-j8o"/>
-                                    </constraints>
-                                    <state key="normal" image="icon_share_ios">
-                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="share:" destination="-1" eventType="touchUpInside" id="96x-ko-lNn"/>
-                                    </connections>
-                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="h1U-rN-1q2" secondAttribute="bottom" id="52w-vh-65A"/>
                                 <constraint firstItem="h1U-rN-1q2" firstAttribute="top" secondItem="mnf-Gd-yPc" secondAttribute="bottom" id="CJm-bW-m75"/>
-                                <constraint firstAttribute="trailing" secondItem="K9c-0F-rJa" secondAttribute="trailing" constant="12" id="DAt-WM-D6a"/>
                                 <constraint firstAttribute="trailing" secondItem="DL6-Do-MjI" secondAttribute="trailing" id="DrH-bw-CfI"/>
-                                <constraint firstItem="h1U-rN-1q2" firstAttribute="top" secondItem="K9c-0F-rJa" secondAttribute="bottom" constant="12" id="Gt0-wp-l8J"/>
                                 <constraint firstAttribute="trailing" secondItem="h1U-rN-1q2" secondAttribute="trailing" id="HR7-jC-B51"/>
                                 <constraint firstAttribute="trailing" secondItem="xeq-iM-Snz" secondAttribute="trailing" id="L3r-Vt-5kF"/>
-                                <constraint firstAttribute="bottom" secondItem="K9c-0F-rJa" secondAttribute="bottom" constant="12" id="NS0-fB-bdT"/>
                                 <constraint firstItem="DL6-Do-MjI" firstAttribute="top" secondItem="ayC-9B-Mxc" secondAttribute="top" id="POi-To-WBF"/>
                                 <constraint firstItem="h1U-rN-1q2" firstAttribute="leading" secondItem="ayC-9B-Mxc" secondAttribute="leading" id="S6q-Qh-pMF"/>
                                 <constraint firstItem="xeq-iM-Snz" firstAttribute="top" secondItem="DL6-Do-MjI" secondAttribute="bottom" id="a22-IT-iGM"/>
@@ -154,14 +162,11 @@
                                 <constraint firstAttribute="bottom" secondItem="mnf-Gd-yPc" secondAttribute="bottom" id="ri9-i7-luV"/>
                                 <constraint firstItem="mnf-Gd-yPc" firstAttribute="top" secondItem="ayC-9B-Mxc" secondAttribute="top" id="utP-Iw-Ylz"/>
                                 <constraint firstItem="DL6-Do-MjI" firstAttribute="leading" secondItem="ayC-9B-Mxc" secondAttribute="leading" id="xao-gw-oHY"/>
-                                <constraint firstItem="K9c-0F-rJa" firstAttribute="top" secondItem="mnf-Gd-yPc" secondAttribute="bottom" id="ycL-I6-kL6"/>
                             </constraints>
                             <variation key="default">
                                 <mask key="constraints">
                                     <exclude reference="hlK-pn-f7H"/>
                                     <exclude reference="ri9-i7-luV"/>
-                                    <exclude reference="Gt0-wp-l8J"/>
-                                    <exclude reference="ycL-I6-kL6"/>
                                 </mask>
                             </variation>
                         </view>
@@ -195,6 +200,7 @@
                     </variation>
                 </view>
             </subviews>
+            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="DDC-iP-5uW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="4l0-aW-B0c"/>
                 <constraint firstAttribute="trailing" secondItem="DDC-iP-5uW" secondAttribute="trailing" id="MjG-Vd-yqx"/>
