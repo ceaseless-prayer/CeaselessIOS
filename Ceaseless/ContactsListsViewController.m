@@ -52,14 +52,12 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 	self.tableView.dataSource = self;
 	self.tableView.delegate = self;
 
-	UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.tableView.frame];
-	imageView.contentMode = UIViewContentModeScaleAspectFill;
+
 	UIImage *backgroundImage = [AppUtils getDynamicBackgroundImage];
 	if(backgroundImage != nil) {
-		imageView.image = backgroundImage;
+		self.backgroundView.image = backgroundImage;
+		self.backgroundView.contentMode = UIViewContentModeScaleAspectFill;
 	}
-
-	self.backgroundView = imageView;
 
 	self.tableView.estimatedRowHeight = 130.0;
 	self.tableView.rowHeight = UITableViewAutomaticDimension;
