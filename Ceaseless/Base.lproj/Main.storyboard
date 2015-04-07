@@ -378,9 +378,33 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jTL-eb-szR" userLabel="leftFiller">
+                                            <rect key="frame" x="0.0" y="0.0" width="191" height="28"/>
+                                            <color key="backgroundColor" red="0.16862745100000001" green="0.16862745100000001" blue="0.16862745100000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="5BP-Ny-5Rp"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="5BP-Ny-5Rp"/>
+                                                </mask>
+                                            </variation>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gOF-K7-SX8" userLabel="rightFiller">
+                                            <rect key="frame" x="409" y="0.0" width="191" height="28"/>
+                                            <color key="backgroundColor" red="0.16862745100000001" green="0.16862745100000001" blue="0.16862745100000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="i4d-ds-wb3"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="i4d-ds-wb3"/>
+                                                </mask>
+                                            </variation>
+                                        </view>
                                         <segmentedControl contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ubS-U9-lnF">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="29"/>
-                                            <color key="backgroundColor" red="0.0" green="0.0039215686269999999" blue="0.1843137255" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <rect key="frame" x="191" y="0.0" width="218" height="29"/>
+                                            <color key="backgroundColor" red="0.16862745098039217" green="0.16862745098039217" blue="0.16862745098039217" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="28" id="xsL-k0-E5H"/>
                                             </constraints>
@@ -389,13 +413,18 @@
                                                 <segment title="Favorites"/>
                                                 <segment title="Removed"/>
                                             </segments>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="xsL-k0-E5H"/>
+                                                </mask>
+                                            </variation>
                                             <connections>
                                                 <action selector="contactsListSelector:" destination="Trs-Fq-LiS" eventType="valueChanged" id="CKd-mn-T99"/>
                                             </connections>
                                         </segmentedControl>
                                         <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="i0o-09-bgH">
-                                            <rect key="frame" x="0.0" y="28" width="600" height="508"/>
-                                            <color key="backgroundColor" red="0.0" green="0.0039215686269999999" blue="0.1843137255" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <rect key="frame" x="0.0" y="29" width="600" height="507"/>
+                                            <color key="backgroundColor" red="0.16862745098039217" green="0.16862745098039217" blue="0.16862745098039217" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <prototypes>
                                                 <tableViewCell opaque="NO" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" rowHeight="44" id="8Uh-s7-6nl" customClass="ContactsListTableViewCell">
@@ -485,7 +514,7 @@
                                                             </mask>
                                                         </variation>
                                                     </tableViewCellContentView>
-                                                    <color key="backgroundColor" red="0.0" green="0.0039215686269999999" blue="0.1843137255" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" red="0.16862745098039217" green="0.16862745098039217" blue="0.16862745098039217" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <outlet property="nameLabel" destination="21g-XQ-nPL" id="7Bf-lb-sHT"/>
                                                         <outlet property="personImageView" destination="lpn-rt-0YU" id="Lzp-6Z-g52"/>
@@ -499,23 +528,39 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="centerX" secondItem="ubS-U9-lnF" secondAttribute="centerX" id="2Wk-BO-DPL"/>
+                                        <constraint firstAttribute="centerX" secondItem="ubS-U9-lnF" secondAttribute="centerX" id="2ff-VB-KqX"/>
+                                        <constraint firstAttribute="trailing" secondItem="i0o-09-bgH" secondAttribute="trailing" id="2xu-lr-XjW"/>
+                                        <constraint firstItem="gOF-K7-SX8" firstAttribute="top" secondItem="Gy9-GJ-azv" secondAttribute="top" id="5xe-oK-Hvy"/>
                                         <constraint firstItem="ubS-U9-lnF" firstAttribute="leading" secondItem="Gy9-GJ-azv" secondAttribute="leading" constant="191" id="DBs-W3-bwd"/>
-                                        <constraint firstAttribute="trailing" secondItem="i0o-09-bgH" secondAttribute="trailing" id="IQN-0n-dMd"/>
+                                        <constraint firstItem="gOF-K7-SX8" firstAttribute="leading" secondItem="i0o-09-bgH" secondAttribute="trailing" id="EM7-Tb-Ml5"/>
+                                        <constraint firstAttribute="bottom" secondItem="i0o-09-bgH" secondAttribute="bottom" id="GnB-Ie-FiJ"/>
+                                        <constraint firstItem="ubS-U9-lnF" firstAttribute="height" secondItem="jTL-eb-szR" secondAttribute="height" id="Lik-RS-Cju"/>
                                         <constraint firstAttribute="trailing" secondItem="ubS-U9-lnF" secondAttribute="trailing" constant="191" id="NDH-os-94Z"/>
-                                        <constraint firstItem="i0o-09-bgH" firstAttribute="leading" secondItem="Gy9-GJ-azv" secondAttribute="leading" id="UAP-Oc-Uzv"/>
-                                        <constraint firstItem="i0o-09-bgH" firstAttribute="top" secondItem="ubS-U9-lnF" secondAttribute="bottom" id="Wif-ej-0jL"/>
-                                        <constraint firstItem="i0o-09-bgH" firstAttribute="top" secondItem="Gy9-GJ-azv" secondAttribute="top" constant="29" id="XDu-6I-840"/>
+                                        <constraint firstItem="jTL-eb-szR" firstAttribute="width" secondItem="gOF-K7-SX8" secondAttribute="width" id="Oa0-9l-mGY"/>
+                                        <constraint firstItem="i0o-09-bgH" firstAttribute="top" secondItem="ubS-U9-lnF" secondAttribute="bottom" constant="1" id="V9V-66-E44"/>
+                                        <constraint firstItem="ubS-U9-lnF" firstAttribute="height" secondItem="gOF-K7-SX8" secondAttribute="height" id="XRH-mE-HqX"/>
+                                        <constraint firstItem="i0o-09-bgH" firstAttribute="leading" secondItem="Gy9-GJ-azv" secondAttribute="leading" id="c4C-iM-MfA"/>
+                                        <constraint firstAttribute="trailing" secondItem="gOF-K7-SX8" secondAttribute="trailing" id="dai-Wq-MSb"/>
+                                        <constraint firstItem="jTL-eb-szR" firstAttribute="top" secondItem="Gy9-GJ-azv" secondAttribute="top" id="dl7-XK-VpB"/>
                                         <constraint firstItem="ubS-U9-lnF" firstAttribute="leading" secondItem="Gy9-GJ-azv" secondAttribute="leading" id="drm-jN-FlK"/>
                                         <constraint firstAttribute="trailing" secondItem="ubS-U9-lnF" secondAttribute="trailing" id="eQY-EE-B6v"/>
+                                        <constraint firstItem="ubS-U9-lnF" firstAttribute="leading" secondItem="jTL-eb-szR" secondAttribute="trailing" id="fjP-eF-bx8"/>
+                                        <constraint firstItem="i0o-09-bgH" firstAttribute="top" secondItem="jTL-eb-szR" secondAttribute="bottom" id="pHd-Gw-mdI"/>
+                                        <constraint firstItem="gOF-K7-SX8" firstAttribute="leading" secondItem="ubS-U9-lnF" secondAttribute="trailing" id="s7b-JA-DJS"/>
                                         <constraint firstItem="ubS-U9-lnF" firstAttribute="top" secondItem="Gy9-GJ-azv" secondAttribute="top" id="w4e-YC-4VD"/>
-                                        <constraint firstAttribute="bottom" secondItem="i0o-09-bgH" secondAttribute="bottom" id="x0q-EL-frK"/>
+                                        <constraint firstItem="jTL-eb-szR" firstAttribute="top" secondItem="ubS-U9-lnF" secondAttribute="bottom" id="wsr-zh-J8K"/>
+                                        <constraint firstItem="jTL-eb-szR" firstAttribute="leading" secondItem="Gy9-GJ-azv" secondAttribute="leading" id="yJV-Lw-IQ8"/>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
-                                            <exclude reference="XDu-6I-840"/>
+                                            <exclude reference="wsr-zh-J8K"/>
+                                            <exclude reference="pHd-Gw-mdI"/>
                                             <exclude reference="2Wk-BO-DPL"/>
                                             <exclude reference="DBs-W3-bwd"/>
                                             <exclude reference="NDH-os-94Z"/>
+                                            <exclude reference="drm-jN-FlK"/>
+                                            <exclude reference="eQY-EE-B6v"/>
+                                            <exclude reference="EM7-Tb-Ml5"/>
                                         </mask>
                                     </variation>
                                 </view>

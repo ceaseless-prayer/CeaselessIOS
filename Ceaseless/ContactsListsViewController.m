@@ -257,8 +257,10 @@ typedef NS_ENUM(NSInteger, ContactsListsSearchScope)
 #pragma mark - Fetched results controller
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-		// In the simplest, most efficient, case, reload the table view.
- [self.tableView reloadData];
+		// reload the table if the contacts are not syncing, jittery otherwise
+	if (self.ceaselessContacts.syncing == NO) {
+		[self.tableView reloadData];
+	}
 }
 - (NSFetchedResultsController *)fetchedResultsController
 {
