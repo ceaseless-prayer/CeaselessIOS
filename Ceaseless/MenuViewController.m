@@ -19,6 +19,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+
+	NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+											   [UIColor whiteColor], NSForegroundColorAttributeName,
+											   [UIFont fontWithName:@"AvenirNext-Medium" size:16.0f],NSFontAttributeName,
+											   nil];
+
+	[self.navigationController.navigationBar setTitleTextAttributes:navbarTitleTextAttributes];
+	
 	self.tableView.delegate = self;
 	self.tableView.dataSource = self;
 	self.menuInfoArray = [[NSArray alloc] initWithObjects: @"People", @"Settings", @"Developer", @"Help", @"Feedback", nil];

@@ -36,6 +36,12 @@ static CGFloat const kPadding = 5.0;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+											   [UIColor whiteColor], NSForegroundColorAttributeName,
+											   [UIFont fontWithName:@"AvenirNext-Medium" size:16.0f],NSFontAttributeName,
+											   nil];
+
+	[self.navigationController.navigationBar setTitleTextAttributes:navbarTitleTextAttributes];
     
     if (!self.tokenColor)
     {
