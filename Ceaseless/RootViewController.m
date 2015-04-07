@@ -27,8 +27,6 @@
     // Do any additional setup after loading the view, typically from a nib.
 	self.navigationItem.titleView = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"logo_main"]];
 
-	[self setBlurredBackground];
-
     // Configure the page view controller and add it as a child view controller.
     NSDictionary *opts = @{
                            @"UIPageViewControllerOptionInterPageSpacingKey": @20
