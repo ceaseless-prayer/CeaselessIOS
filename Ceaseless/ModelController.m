@@ -150,21 +150,23 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
     NSError *error;
     // TODO make this async for a better user experience?
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
-    NSArray *announcements = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    
-    // get last announcement refresh date
-    // compare to the date of the announcement in the array
-    // TODO define the announcement format more strictly.
-    NSDate *latestAnnouncementDate = [NSDate dateWithTimeIntervalSince1970:
-                                      [[announcements[0] objectForKey:@"date"] doubleValue]];
-    
-    BOOL developerMode = [defaults boolForKey:kDeveloperMode];
-    if(developerMode || latestAnnouncementDate > lastAnnouncementDate) {
-        NSLog(@"Latest %@ Last %@", latestAnnouncementDate, lastAnnouncementDate);
-        result = announcements[0][@"content"];
-        [defaults setObject:latestAnnouncementDate forKey:kLastAnnouncementDate];
-        [defaults synchronize];
-        NSLog(@"Latest announcement shown!");
+    if (data != nil) {
+        NSArray *announcements = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        
+        // get last announcement refresh date
+        // compare to the date of the announcement in the array
+        // TODO define the announcement format more strictly.
+        NSDate *latestAnnouncementDate = [NSDate dateWithTimeIntervalSince1970:
+                                          [[announcements[0] objectForKey:@"date"] doubleValue]];
+        
+        BOOL developerMode = [defaults boolForKey:kDeveloperMode];
+        if(developerMode || latestAnnouncementDate > lastAnnouncementDate) {
+            NSLog(@"Latest %@ Last %@", latestAnnouncementDate, lastAnnouncementDate);
+            result = announcements[0][@"content"];
+            [defaults setObject:latestAnnouncementDate forKey:kLastAnnouncementDate];
+            [defaults synchronize];
+            NSLog(@"Latest announcement shown!");
+        }
     }
 
     return result;
@@ -197,22 +199,27 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
     // TODO make this async for a better user experience?
     // put it on a non-main queue
     [NSURLConnection sendAsynchronousRequest:request queue: [NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        NSError *error;
-        NSDictionary *imageUrl = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-        NSLog(@"%@", imageUrl);
-        [request setURL: [NSURL URLWithString: [imageUrl objectForKey:@"imageUrl"]]];
-        // TODO handle error cases like no connection
-        [NSURLConnection sendAsynchronousRequest:request queue: [NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *imageData, NSError *connectionError) {
-            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString *documentDirectory = [paths objectAtIndex:0];
-            NSString *imagePath = [documentDirectory stringByAppendingPathComponent:kNextDynamicBackgroundImage];
-            
-            if (![imageData writeToFile:imagePath atomically:YES]) {
-                NSLog(@"Failed to cache image data to disk %@", imagePath);
-            } else {
-                NSLog(@"the cachedImagedPath is %@", imagePath);
-            }
-        }];
+        if (connectionError == nil && data != nil) {
+            NSError *error;
+            NSDictionary *imageUrl = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+            NSLog(@"%@", imageUrl);
+            [request setURL: [NSURL URLWithString: [imageUrl objectForKey:@"imageUrl"]]];
+            // TODO handle error cases like no connection
+            [NSURLConnection sendAsynchronousRequest:request queue: [NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *imageData, NSError *connectionError) {
+                if(connectionError == nil && imageData != nil) {
+                    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                    NSString *documentDirectory = [paths objectAtIndex:0];
+                    NSString *imagePath = [documentDirectory stringByAppendingPathComponent:kNextDynamicBackgroundImage];
+                    
+                    if (![imageData writeToFile:imagePath atomically:YES]) {
+                        NSLog(@"Failed to cache image data to disk %@", imagePath);
+                    } else {
+                        NSLog(@"the cachedImagedPath is %@", imagePath);
+                    }
+                    
+                }
+            }];
+        }
     }];
 }
 

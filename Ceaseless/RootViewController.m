@@ -70,10 +70,15 @@
     if (!_modelController) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            _modelController = [[ModelController alloc] init];
-            // add observer's the first time.
-            [[NSNotificationCenter defaultCenter] addObserver:_modelController selector:@selector(runIfNewDay) name:UIApplicationDidBecomeActiveNotification object:nil];
+            // listen for when the model changes
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshPageView) name:kModelRefreshNotification object:nil];
+            
+            //prepare the model
+            _modelController = [[ModelController alloc] init];
+            
+            // make the model try to refresh whenever the app becomse active
+            [[NSNotificationCenter defaultCenter] addObserver:_modelController selector:@selector(runIfNewDay) name:UIApplicationDidBecomeActiveNotification object:nil];
+
         });
         // TODO figure out when/where we need to call this
         //[[NSNotificationCenter defaultCenter] removeObserver:self name:kModelRefreshNotification object:nil];

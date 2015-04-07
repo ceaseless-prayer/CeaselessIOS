@@ -22,7 +22,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ayC-9B-Mxc" userLabel="CardView">
                             <rect key="frame" x="8" y="2" width="584" height="596"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Screen Shot 2015-02-18 at 8.22.42 AM.png" translatesAutoresizingMaskIntoConstraints="NO" id="mnf-Gd-yPc" userLabel="ScriptureImage">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="at_the_beach.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="mnf-Gd-yPc" userLabel="ScriptureImage">
                                     <rect key="frame" x="0.0" y="0.0" width="584" height="168"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="a36-58-Uf6"/>
@@ -220,7 +220,7 @@
         </view>
     </objects>
     <resources>
-        <image name="Screen Shot 2015-02-18 at 8.22.42 AM.png" width="466" height="312"/>
+        <image name="at_the_beach.jpg" width="3264" height="2448"/>
         <image name="icon_share_ios" width="19" height="26"/>
     </resources>
 </document>

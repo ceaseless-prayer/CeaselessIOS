@@ -50,9 +50,21 @@
 	}
 	NSLog (@"stepper is %@", self.peopleCount.text);
 
-	if ([defaults objectForKey:@"NotificationDate"]) {
-		[self.datePicker setDate: [defaults objectForKey:@"NotificationDate"] animated: NO];
-	}
+	if ([defaults objectForKey:kNotificationDate]) {
+		[self.datePicker setDate: [defaults objectForKey:kNotificationDate] animated: NO];
+    } else {
+        // show a default of 8am.
+        NSCalendar *gregorian = [[NSCalendar alloc]
+                                 initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        NSDate *now = [NSDate date];
+        NSDateComponents *dateComponent = [gregorian components:NSCalendarUnitYear | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitWeekday | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour fromDate: now];
+        
+        dateComponent.hour = 8; // the default notification time is 8am.
+        dateComponent.minute = 0;
+        dateComponent.second = 0;
+        now = [[NSCalendar currentCalendar] dateFromComponents:dateComponent];
+        [self.datePicker setDate: now animated: NO];
+    }
 
 		//Set Color of Date Picker
 	self.datePicker.datePickerMode = UIDatePickerModeTime;
@@ -96,7 +108,7 @@
 	[super viewWillDisappear:animated];
 	if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
 			// back button code
-		[[NSUserDefaults standardUserDefaults] setObject:[self.datePicker date] forKey:@"NotificationDate"];
+		[[NSUserDefaults standardUserDefaults] setObject:[self.datePicker date] forKey:kNotificationDate];
 	}
 }
 /*

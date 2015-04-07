@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "AppConstants.h"
 
 @interface AppDelegate ()
 
@@ -44,26 +45,29 @@
     
     // scheduling local notifications
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    
     NSCalendar *gregorian = [[NSCalendar alloc]
                              initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
 
 	NSDate *notificationDate;
-	if ([[NSUserDefaults standardUserDefaults] objectForKey:@"NotificationDate"]) {
-		notificationDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"NotificationDate"];
-	} else {
-		notificationDate = [NSDate date];
-	}
-//		notificationDate = [NSDate date]; //for testing uncomment this line and the dateComponent.second line below
-	
-    NSDateComponents *dateComponent = [gregorian components:NSCalendarUnitYear | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitWeekday | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour fromDate: notificationDate];
-
-//    dateComponent.second += 30; // for testing--a notification shows up 30 seconds after you close the app.
-
-    NSDate *fireDate = [[NSCalendar currentCalendar] dateFromComponents:dateComponent];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	if (![defaults objectForKey:kNotificationDate]) {
+        NSDate *now = [NSDate date];
+        NSDateComponents *dateComponent = [gregorian components:NSCalendarUnitYear | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitWeekday | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour fromDate: now];
+        
+        dateComponent.hour = 8; // the default notification time is 8am.
+        dateComponent.minute = 0;
+        dateComponent.second = 0;
+        notificationDate = [[NSCalendar currentCalendar] dateFromComponents:dateComponent];
+        [defaults setObject:notificationDate forKey:kNotificationDate];
+        [defaults synchronize];
+    } else {
+        notificationDate = [defaults objectForKey:kNotificationDate];
+    }
     
-    UILocalNotification *notification = [[UILocalNotification alloc]init];
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
     [notification setAlertBody:@"Remember to pray for others today."];
-    [notification setFireDate:fireDate];
+    [notification setFireDate:notificationDate];
     notification.repeatInterval = NSCalendarUnitWeekday;
     [notification setTimeZone:[NSTimeZone defaultTimeZone]];
 	[notification setSoundName: UILocalNotificationDefaultSoundName];
