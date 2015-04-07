@@ -28,12 +28,17 @@
     self = [super init];
     if (self) {
         AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
-        int dailyPersonCount;
-        if ([[NSUserDefaults standardUserDefaults] doubleForKey:kDailyPersonCount]) {
-            dailyPersonCount= [[NSUserDefaults standardUserDefaults] doubleForKey:kDailyPersonCount];
-        } else {
-            dailyPersonCount = 5;
+        
+        NSInteger dailyPersonCount;
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+        if(![defaults integerForKey: kDailyPersonCount]) {
+            // set default daily count
+            [defaults setInteger:5 forKey: kDailyPersonCount];
+            [defaults synchronize];
         }
+        dailyPersonCount = [defaults integerForKey:kDailyPersonCount];
+        
         [self initializeAddressBook];
         self.managedObjectContext = appDelegate.managedObjectContext;
         self.numberOfPeople = dailyPersonCount;
