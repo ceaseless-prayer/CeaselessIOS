@@ -346,6 +346,7 @@
                 <outlet property="personImageView" destination="vRz-LA-Wxx" id="qEU-mH-kAb"/>
                 <outlet property="placeholderText" destination="eF7-HN-urH" id="Qeq-K7-9Su"/>
                 <outlet property="shadowView" destination="dQd-fX-c2a" id="Y9q-jL-OwW"/>
+                <outlet property="topToCardViewConstraint" destination="RhB-Nh-ECF" id="aIO-aA-eaA"/>
             </connections>
         </view>
     </objects>
