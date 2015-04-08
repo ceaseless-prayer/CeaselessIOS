@@ -533,7 +533,10 @@
     for(id record in unifiedRecord) {
         ABRecordRef personData = (__bridge ABRecordRef) record;
         NSString *firstName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonFirstNameProperty));
-        if (firstName != nil) {
+        if (firstName != nil && ![firstName isEqual: @""] && ![firstName hasPrefix:@"#"]) {
+            // if the first name is not nil or blank
+            // and does not begin with # (as in #BAL and other special codes)
+            // then we accept it.
             hasFirstName = YES;
         }
         
