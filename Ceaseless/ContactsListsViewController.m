@@ -127,7 +127,10 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 - (IBAction)unwindToContactsLists:(UIStoryboardSegue*)sender
 {
 		// Pull any data from the view controller which initiated the unwind segue.
-	[self.tableView reloadData];
+		// reload the table if the contacts are not syncing, jittery otherwise
+	if (self.ceaselessContacts.syncing == NO) {
+		[self.tableView reloadData];
+	}
 }
 #pragma mark - Table View
 
@@ -151,12 +154,19 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 - (NSArray *) sectionIndexTitlesForTableView: (UITableView *) tableView
 {
-	return [self.fetchedResultsController sectionIndexTitles];
+	//add the magnifying glass to the top of the index
+	return [[NSArray arrayWithObject:@"{search}"] arrayByAddingObjectsFromArray:[self.fetchedResultsController sectionIndexTitles]];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
 {
-	return [self.fetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
+	//since search was added to the array, need to return index - 1 to get to correct title, for search, set content Offset to top of table :)
+	if ([title isEqualToString: @"{search}"]) {
+		[tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+		return NSNotFound;
+	} else {
+		return [self.fetchedResultsController sectionForSectionIndexTitle:title atIndex:index - 1];
+	}
 }
 
 - (ContactsListTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
