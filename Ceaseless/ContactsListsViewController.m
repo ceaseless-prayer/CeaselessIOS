@@ -59,9 +59,6 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 		self.backgroundView.contentMode = UIViewContentModeScaleAspectFill;
 	}
 
-	self.tableView.estimatedRowHeight = 130.0;
-	self.tableView.rowHeight = UITableViewAutomaticDimension;
-
 		//searchController cannot be set up in IB, so set it up here
 	self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
 	self.searchController.searchResultsUpdater = self;
@@ -102,7 +99,6 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
     if (![self.managedObjectContext save:&error]) {
         NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
     }
-	[self.tableView reloadData];
 }
 
 #pragma mark - Segues
@@ -127,10 +123,6 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 - (IBAction)unwindToContactsLists:(UIStoryboardSegue*)sender
 {
 		// Pull any data from the view controller which initiated the unwind segue.
-		// reload the table if the contacts are not syncing, jittery otherwise
-	if (self.ceaselessContacts.syncing == NO) {
-		[self.tableView reloadData];
-	}
 }
 #pragma mark - Table View
 
