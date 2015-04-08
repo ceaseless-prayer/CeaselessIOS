@@ -79,8 +79,9 @@
             // make the model try to refresh whenever the app becomse active
             [[NSNotificationCenter defaultCenter] addObserver:_modelController selector:@selector(runIfNewDay) name:UIApplicationDidBecomeActiveNotification object:nil];
             
-            // when a refresh happens, hide the page view controller until it is done
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showLoading) name:UIApplicationDidBecomeActiveNotification object:nil];
+            // show the loading view when the app enters the foreground
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showLoading) name:UIApplicationWillEnterForegroundNotification object:nil];
+
         });
         // TODO figure out when/where we need to call this
         //[[NSNotificationCenter defaultCenter] removeObserver:self name:kModelRefreshNotification object:nil];
@@ -89,11 +90,22 @@
 }
 
 - (void) showLoading {
-    self.loadingLabel.hidden = NO;
+    if (self.loadingLabel.hidden) {
+        self.loadingLabel.hidden = NO;
+        self.pageViewController.view.hidden = YES;
+    }
+}
+
+- (void) hideLoading {
+    if (!self.loadingLabel.hidden) {
+        self.loadingLabel.hidden = YES;
+        self.pageViewController.view.hidden = NO;
+    }
 }
 
 - (void) refreshPageView {
-    self.loadingLabel.hidden = YES;
+    NSLog(@"Refreshing page view");
+    [self hideLoading];
     [self setBlurredBackground];
     DataViewController *startingViewController = [self.modelController viewControllerAtIndex:0 storyboard:self.storyboard];
     [self.pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
