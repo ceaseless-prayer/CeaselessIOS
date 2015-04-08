@@ -16,10 +16,10 @@
 #import "AppUtils.h"
 #import "UIImageEffects.h"
 
-typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
+typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
 {
-	searchScopeFriends = 0,
-	searchScopeMe = 1
+	predicateScopeFriends = 0,
+	predicateScopeMe = 1
 };
 
 @interface PrayerJournalViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating>
@@ -28,6 +28,7 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 @property (strong, nonatomic) NSFetchRequest *searchFetchRequest;
 @property (nonatomic, strong) UISearchController *searchController;
 @property (nonatomic, strong) CeaselessLocalContacts *ceaselessContacts;
+@property (nonatomic, strong) NSString *selectedNotesPredicate;
 
 
 @end
@@ -39,6 +40,7 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
 	self.managedObjectContext = appDelegate.managedObjectContext;
     self.ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
+	[self selectNotesPredicate];
 }
 
 - (void)viewDidLoad {
@@ -61,8 +63,7 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	self.searchController.dimsBackgroundDuringPresentation = NO;
 	self.searchController.searchBar.barTintColor = UIColorFromRGBWithAlpha(0x24292f , 0.4);
 	self.searchController.searchBar.tintColor = [UIColor whiteColor];
-	self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"Friends",@"Friends"),
-														  NSLocalizedString(@"Me",@"Me")];
+	self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"",@"")];
 	self.searchController.searchBar.delegate = self;
 //		// Hide the search bar until user scrolls up
 	CGRect newBounds = self.tableView.bounds;
@@ -71,6 +72,14 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 
 	self.tableView.tableHeaderView = self.searchController.searchBar;
 	self.definesPresentationContext = YES;
+
+	NSDictionary *segmentTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+											   [UIColor whiteColor], NSForegroundColorAttributeName,
+											   [UIFont fontWithName:@"AvenirNext-Medium" size:15.0f],NSFontAttributeName,
+											   nil];
+
+	[self.segment setTitleTextAttributes: segmentTitleTextAttributes forState:UIControlStateNormal];
+	[self.segment setTitleTextAttributes: segmentTitleTextAttributes forState:UIControlStateSelected];
 
 }
 
@@ -142,13 +151,12 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 {
 	if ([[segue identifier] isEqualToString:@"ShowNote"]) {
 		Note *currentNote = nil;
+		NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
 
 		if (self.searchController.isActive) {
-			NSIndexPath *indexPath = [((UITableViewController *)self.searchController.searchResultsController).tableView indexPathForSelectedRow];
 			currentNote = [self.filteredList objectAtIndex:indexPath.row];
 		} else {
 
-			NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
 			currentNote = [self.fetchedResultsController objectAtIndexPath:indexPath];
 		}
 
@@ -305,21 +313,15 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
 	NSString *searchString = searchController.searchBar.text;
-	[self searchForText:searchString scope: searchController.searchBar.selectedScopeButtonIndex];
+	[self searchForText:searchString];
 	[self.tableView reloadData];
 }
 
-- (void)searchForText:(NSString *)searchText scope:(PrayerJournalSearchScope)scopeOption
+- (void)searchForText:(NSString *)searchText
 {
 	if (self.managedObjectContext) {
-		NSString *predicateFormat;
-
-		if (scopeOption == searchScopeFriends) {
-			predicateFormat = @"peopleTagged.@count > 0 AND text contains[cd] %@";
-		} else {
-			predicateFormat = @"peopleTagged.@count < 1 AND text contains[cd] %@";
-
-		}
+		NSString *buildPredicateFormat = [NSString stringWithString: self.selectedNotesPredicate];
+		NSString *predicateFormat = [buildPredicateFormat stringByAppendingString: @" AND text contains[cd] %@"];
 
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, searchText];
 
@@ -355,6 +357,10 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	NSArray *sortDescriptors = @[sortDescriptor];
 
 	[fetchRequest setSortDescriptors:sortDescriptors];
+
+	NSPredicate *selectedContacts = [NSPredicate predicateWithFormat: self.selectedNotesPredicate];
+
+	[fetchRequest setPredicate: selectedContacts];
 
 		// Edit the section name key path and cache name if appropriate.
 		// nil for section name key path means "no sections".
@@ -408,6 +414,30 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	  NSLog(@"text: %@", [managedObject valueForKey: @"text"]);
 	  NSLog(@"last update date: %@", [managedObject valueForKey: @"lastUpdatedDate"]);
   }
+}
+
+- (IBAction)notesListSelector:(id)sender {
+	[self selectNotesPredicate];
+	[self.tableView reloadData];
+}
+
+- (void) selectNotesPredicate {
+	{
+	switch (self.segment.selectedSegmentIndex){
+		case 0:
+			self.selectedNotesPredicate = @"peopleTagged.@count > 0";
+			_fetchedResultsController = nil;
+			break;
+
+		case 1:
+			self.selectedNotesPredicate = @"peopleTagged.@count == 0";
+			_fetchedResultsController = nil;
+			break;
+
+		default:
+			break;
+	}
+	}
 }
 
 @end
