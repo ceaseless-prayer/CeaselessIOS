@@ -90,6 +90,7 @@
 }
 
 - (void) showLoading {
+    self.view.userInteractionEnabled = NO;
     if (self.loadingLabel.hidden) {
         [self.loadingIndicator startAnimating];
         self.loadingLabel.hidden = NO;
@@ -98,6 +99,7 @@
 }
 
 - (void) hideLoading {
+    self.view.userInteractionEnabled = YES;
     if (!self.loadingLabel.hidden) {
         [self.loadingIndicator stopAnimating];
         self.loadingLabel.hidden = YES;
