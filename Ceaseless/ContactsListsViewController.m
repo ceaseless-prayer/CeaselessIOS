@@ -256,9 +256,9 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
 		// reload the table if the contacts are not syncing, jittery otherwise
-	if (self.ceaselessContacts.syncing == NO) {
+//	if (self.ceaselessContacts.syncing == NO) {
 		[self.tableView reloadData];
-	}
+//	}
 }
 - (NSFetchedResultsController *)fetchedResultsController
 {
