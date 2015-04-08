@@ -19,7 +19,7 @@
 #import <AddressBookUI/AddressBookUI.h>
 #import "ContactsListsViewController.h"
 
-@interface PersonViewController () <MFMessageComposeViewControllerDelegate, ABPersonViewControllerDelegate>
+@interface PersonViewController () <MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate, ABPersonViewControllerDelegate>
 
 @property (strong, nonatomic) UINavigationController *navController;
 @end
@@ -210,7 +210,21 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                         style:UIAlertActionStyleDefault
                                         handler:^(UIAlertAction *action)
                                         {
-                                            [self showSMS: kSMSMessage];
+                                            PersonInfo *info = self.person.representativeInfo;
+                                            // TODO should we switch the order?
+                                            if(info.primaryPhoneNumber) {
+                                                [self showSMS: kSMSMessage];
+                                            } else if(info.primaryEmail) {
+                                                [self showEmailForm];
+                                            } else {
+                                                UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
+                                                                                                       message:NSLocalizedString(@"Could not send a message because this person is missing contact information.", nil)
+                                                                                                      delegate:nil
+                                                                                             cancelButtonTitle:@"OK"
+                                                                                             otherButtonTitles:nil];
+                                                
+                                                [warningAlert show];
+                                            }
                                             NSLog(@"Send Message");
                                         }];
     
@@ -358,6 +372,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
 }
 
+#pragma mark - Direct contact methods
 - (void)showSMS:(NSString*)file {
     
     if(![MFMessageComposeViewController canSendText]) {
@@ -381,6 +396,17 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Present message view controller on screen
     [self presentViewController:messageController animated:YES completion:nil];
 }
+
+- (void)showEmailForm {
+    NSArray *recipents = [NSArray arrayWithObjects:self.person.representativeInfo.primaryEmail.address, nil];
+    MFMailComposeViewController *mailController = [[MFMailComposeViewController alloc] init];
+    mailController.mailComposeDelegate = self;
+    [mailController setToRecipients: recipents];
+    
+    // Present mail view controller on screen
+    [self presentViewController:mailController animated:YES completion:nil];
+}
+
 
 #pragma mark - MessageUI delegate methods
 
@@ -410,6 +436,39 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+
+
+- (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult) result error: (NSError*) error
+{
+    UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Did not send message.", nil) delegate:nil
+                                                 cancelButtonTitle:@"OK"
+                                                 otherButtonTitles:nil];
+    
+    if(error) {
+        [warningAlert show];
+    } else {
+        switch (result) {
+            case MFMailComposeResultCancelled:
+                break;
+                
+            case MFMailComposeResultFailed:
+            {
+                [warningAlert show];
+            }
+                break;
+                
+            case MFMailComposeResultSent:
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - Notification handling
 
 - (void) registerForNotifications {
