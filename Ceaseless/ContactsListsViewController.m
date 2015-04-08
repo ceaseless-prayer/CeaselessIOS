@@ -119,8 +119,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 			person = [self.fetchedResultsController objectAtIndexPath:indexPath];
 		}
 
-		PersonViewController *personViewController = [PersonViewController alloc];
-		personViewController = segue.destinationViewController;
+		PersonViewController *personViewController = segue.destinationViewController;
 		personViewController.dataObject = person;
 
 	}

@@ -77,9 +77,8 @@ int const kDefaultQueueMinSize = 1;
 
 // gets the most recently presented scripture from the queue
 - (ScriptureQueue *) peekScriptureQueue {
-    NSArray *scriptureArray = [[NSArray alloc] init];
     NSSortDescriptor *scripturePresentedDateSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"lastPresentedDate" ascending:NO];
-    scriptureArray = [[self getScriptureWithPredicate:@"TRUEPREDICATE"]sortedArrayUsingDescriptors:[NSArray arrayWithObject:scripturePresentedDateSortDescriptor]];
+    NSArray *scriptureArray = [[self getScriptureWithPredicate:@"TRUEPREDICATE"]sortedArrayUsingDescriptors:[NSArray arrayWithObject:scripturePresentedDateSortDescriptor]];
     if([scriptureArray count] > 0) {
         return [scriptureArray objectAtIndex:0];
     } else {
@@ -90,9 +89,7 @@ int const kDefaultQueueMinSize = 1;
 
 // returns the last scripture from the queue and marks it as presented.
 - (ScriptureQueue *)popScriptureQueue {
-	NSArray *scriptureArray = [[NSArray alloc] init];
-		//get unused scripture
-	scriptureArray = [self getScriptureWithPredicate: @"lastPresentedDate == nil"];
+	NSArray *scriptureArray = [self getScriptureWithPredicate: @"lastPresentedDate == nil"];
 	if ([scriptureArray count] < 1) {
 			//get a previously used scripture
 		scriptureArray = [self getScriptureWithPredicate: @"lastPresentedDate != nil"];

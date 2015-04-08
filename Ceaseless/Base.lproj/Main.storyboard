@@ -47,7 +47,7 @@
                                 <segue destination="RCf-ys-Sgi" kind="presentation" identifier="ShowMenu" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="eva-OG-hTf"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="icon_notes" style="plain" id="KcV-zW-dSC">
+                        <barButtonItem key="rightBarButtonItem" image="icon_notes" id="KcV-zW-dSC">
                             <connections>
                                 <segue destination="Eu1-lG-zhA" kind="show" identifier="ShowNotes" id="qoQ-Mi-grr"/>
                             </connections>
@@ -362,6 +362,7 @@
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
+                                            <exclude reference="bI4-AK-ncr"/>
                                             <exclude reference="tz8-Z6-byg"/>
                                             <exclude reference="AXX-67-Vrn"/>
                                             <exclude reference="F02-Ga-PFb"/>
@@ -370,7 +371,6 @@
                                             <exclude reference="s0D-Ux-gof"/>
                                             <exclude reference="s9N-CS-oT6"/>
                                             <exclude reference="sFR-rj-FsS"/>
-                                            <exclude reference="bI4-AK-ncr"/>
                                         </mask>
                                     </variation>
                                 </view>
@@ -1525,7 +1525,7 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Menu" id="wnR-wZ-T2Y">
-                        <barButtonItem key="rightBarButtonItem" title="Done" style="plain" id="K2I-Qv-Zz7">
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="K2I-Qv-Zz7">
                             <connections>
                                 <action selector="menuDoneClicked:" destination="JcK-uc-3mv" id="q1O-0u-JUo"/>
                             </connections>
