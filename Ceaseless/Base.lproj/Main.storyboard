@@ -115,7 +115,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r8K-Y6-IDZ" userLabel="leftFiller">
+                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r8K-Y6-IDZ" userLabel="leftFiller">
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="Z91-wn-3pZ"/>
@@ -126,7 +126,7 @@
                                                 </mask>
                                             </variation>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j74-k2-2nG" userLabel="rightFiller">
+                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j74-k2-2nG" userLabel="rightFiller">
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="vGZ-j1-nPJ"/>
@@ -757,7 +757,7 @@
                                                                 <constraint firstAttribute="height" constant="150" id="v43-0h-DDF"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="ME" borderStyle="roundedRect" textAlignment="center" minimumFontSize="60" translatesAutoresizingMaskIntoConstraints="NO" id="oqk-y9-t0v" userLabel="PlaceholderText">
+                                                        <textField hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="ME" borderStyle="roundedRect" textAlignment="center" minimumFontSize="60" translatesAutoresizingMaskIntoConstraints="NO" id="oqk-y9-t0v" userLabel="PlaceholderText">
                                                             <rect key="frame" x="96" y="20" width="127" height="127"/>
                                                             <color key="backgroundColor" red="0.0" green="0.0039215686269999999" blue="0.1843137255" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
