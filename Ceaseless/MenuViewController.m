@@ -9,8 +9,9 @@
 #import "MenuViewController.h"
 #import "AppConstants.h"
 #import "AppUtils.h"
+#import <MessageUI/MessageUI.h>
 
-@interface MenuViewController ()
+@interface MenuViewController () <MFMailComposeViewControllerDelegate>
 
 @end
 
@@ -91,6 +92,9 @@
 	if (indexPath.row == 1) {
 		[self performSegueWithIdentifier:@"ShowSettings" sender: self];
 	}
+    if (indexPath.row == 4) {
+        [self showFeedbackForm];
+    }
 }
 
 - (void) switchChanged:(id)sender {
@@ -117,5 +121,57 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - Give Feedback
+- (void)showFeedbackForm {
+    NSArray *recipents = [NSArray arrayWithObjects:@"ceaseless@theotech.org", nil];
+    NSString *subject = @"Ceaseless for iOS Feedback";
+    
+    MFMailComposeViewController *mailController = [[MFMailComposeViewController alloc] init];
+    mailController.mailComposeDelegate = self;
+    [mailController setToRecipients: recipents];
+    [mailController setSubject:subject];
+    
+    // Present mail view controller on screen
+    [self presentViewController:mailController animated:YES completion:nil];
+}
+
+#pragma mark - MessageUI delegate methods
+
+- (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult) result error: (NSError*) error
+{
+    UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Did not send feedback.", nil) delegate:nil
+                                                 cancelButtonTitle:@"OK"
+                                                 otherButtonTitles:nil];
+    UIAlertView *thanksAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Thank you!", nil) message:NSLocalizedString(@"Thanks for your feedback.", nil) delegate:nil
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil];
+    
+    if(error) {
+        [warningAlert show];
+    } else {
+        switch (result) {
+            case MFMailComposeResultCancelled:
+                break;
+                
+            case MFMailComposeResultFailed:
+            {
+                [warningAlert show];
+            }
+                break;
+                
+            case MFMailComposeResultSent:
+            {
+                [thanksAlert show];
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 @end
