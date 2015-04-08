@@ -375,41 +375,53 @@
 - (void) createPersonInfoForCeaselessContact: (PersonIdentifier*) person {
     PersonInfo *newCeaselessPersonInfo = [NSEntityDescription insertNewObjectForEntityForName:@"PersonInfo" inManagedObjectContext:self.managedObjectContext];
     newCeaselessPersonInfo.identifier = person;
-    ABRecordRef rawPerson;
-    AddressBookId *abId = person.addressBookIds[0];
-    rawPerson = ABAddressBookGetPersonWithRecordID(_addressBook, (ABRecordID) [abId.recordId intValue]);
-    newCeaselessPersonInfo.primaryAddressBookId = abId;
-    NSString *primaryFirstName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonFirstNameProperty));
-    NSString *primaryLastName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonLastNameProperty));
-    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"name = %@", primaryFirstName];
-    newCeaselessPersonInfo.primaryFirstName = (Name*)[self getOrCreateManagedObject:@"Name" withPredicate:predicate];
-    predicate = [NSPredicate predicateWithFormat: @"name = %@", primaryLastName];
-    newCeaselessPersonInfo.primaryLastName = (Name*)[self getOrCreateManagedObject:@"Name" withPredicate:predicate];
+    // the first entry is always the primary address book id for consistency
+    newCeaselessPersonInfo.primaryAddressBookId = person.addressBookIds[0];
     
-    // TODO:  this needs to be mobile or iphone first the other because it is used for texting from the device
-    ABMultiValueRef phoneNumbers = ABRecordCopyValue(rawPerson, kABPersonPhoneProperty);
-    CFIndex numberOfPhoneNumbers = ABMultiValueGetCount(phoneNumbers);
-    for (CFIndex i = 0; i < numberOfPhoneNumbers; i++) {
-        NSString *phoneNumber = CFBridgingRelease(ABMultiValueCopyValueAtIndex(phoneNumbers, i));
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                                  @"number = %@", phoneNumber];
-        PhoneNumber *phoneNumberObject = (PhoneNumber *) [self getOrCreateManagedObject: @"PhoneNumber" withPredicate:predicate];
-        phoneNumberObject.number = phoneNumber;
-        newCeaselessPersonInfo.primaryPhoneNumber = phoneNumberObject;
+    // we always try to enrich our contact information from all linked records
+    // beginning with the primary address book id.
+    for (AddressBookId *abId in person.addressBookIds) {
+        ABRecordRef rawPerson;
+        rawPerson = ABAddressBookGetPersonWithRecordID(_addressBook, (ABRecordID) [abId.recordId intValue]);
+
+        if (newCeaselessPersonInfo.primaryFirstName == nil || newCeaselessPersonInfo.primaryLastName == nil) {
+            NSString *primaryFirstName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonFirstNameProperty));
+            NSString *primaryLastName = CFBridgingRelease(ABRecordCopyValue(rawPerson, kABPersonLastNameProperty));
+            NSPredicate *predicate = [NSPredicate predicateWithFormat: @"name = %@", primaryFirstName];
+            newCeaselessPersonInfo.primaryFirstName = (Name*)[self getOrCreateManagedObject:@"Name" withPredicate:predicate];
+            predicate = [NSPredicate predicateWithFormat: @"name = %@", primaryLastName];
+            newCeaselessPersonInfo.primaryLastName = (Name*)[self getOrCreateManagedObject:@"Name" withPredicate:predicate];
+        }
+        
+        // TODO:  this needs to be mobile or iphone first the other because it is used for texting from the device
+        if(newCeaselessPersonInfo.primaryPhoneNumber == nil) {
+            ABMultiValueRef phoneNumbers = ABRecordCopyValue(rawPerson, kABPersonPhoneProperty);
+            CFIndex numberOfPhoneNumbers = ABMultiValueGetCount(phoneNumbers);
+            for (CFIndex i = 0; i < numberOfPhoneNumbers; i++) {
+                NSString *phoneNumber = CFBridgingRelease(ABMultiValueCopyValueAtIndex(phoneNumbers, i));
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                                          @"number = %@", phoneNumber];
+                PhoneNumber *phoneNumberObject = (PhoneNumber *) [self getOrCreateManagedObject: @"PhoneNumber" withPredicate:predicate];
+                phoneNumberObject.number = phoneNumber;
+                newCeaselessPersonInfo.primaryPhoneNumber = phoneNumberObject;
+            }
+            CFRelease(phoneNumbers);
+        }
+        
+        if(newCeaselessPersonInfo.primaryEmail == nil) {
+            ABMultiValueRef emails = ABRecordCopyValue(rawPerson, kABPersonEmailProperty);
+            CFIndex numberOfEmails = ABMultiValueGetCount(emails);
+            for (CFIndex i = 0; i < numberOfEmails; i++) {
+                NSString *email = CFBridgingRelease(ABMultiValueCopyValueAtIndex(emails, i));
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                                          @"address = %@", email];
+                Email *emailObject = (Email *) [self getOrCreateManagedObject: @"Email" withPredicate:predicate];
+                emailObject.address = email;
+                newCeaselessPersonInfo.primaryEmail = emailObject;
+            }
+            CFRelease(emails);
+        }
     }
-    CFRelease(phoneNumbers);
-    
-    ABMultiValueRef emails = ABRecordCopyValue(rawPerson, kABPersonEmailProperty);
-    CFIndex numberOfEmails = ABMultiValueGetCount(emails);
-    for (CFIndex i = 0; i < numberOfEmails; i++) {
-        NSString *email = CFBridgingRelease(ABMultiValueCopyValueAtIndex(emails, i));
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                                  @"address = %@", email];
-        Email *emailObject = (Email *) [self getOrCreateManagedObject: @"Email" withPredicate:predicate];
-        emailObject.address = email;
-        newCeaselessPersonInfo.primaryEmail = emailObject;
-    }
-    CFRelease(emails);
     
     // save our changes
     NSError *error;
