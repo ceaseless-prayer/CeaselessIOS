@@ -196,8 +196,8 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
     [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setHTTPMethod:@"GET"];
     
-    // TODO make this async for a better user experience?
-    // put it on a non-main queue
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = TRUE;
+    // TODO use promises so i don't have to repeat turning off the activity indicator in every case?
     [NSURLConnection sendAsynchronousRequest:request queue: [NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         if (connectionError == nil && data != nil) {
             NSError *error;
@@ -216,9 +216,13 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
                     } else {
                         NSLog(@"the cachedImagedPath is %@", imagePath);
                     }
-                    
+                    [UIApplication sharedApplication].networkActivityIndicatorVisible = FALSE;
+                } else {
+                    [UIApplication sharedApplication].networkActivityIndicatorVisible = FALSE;
                 }
             }];
+        } else {
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = FALSE;
         }
     }];
 }
