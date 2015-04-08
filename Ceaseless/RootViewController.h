@@ -18,6 +18,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (weak, nonatomic) IBOutlet UILabel *loadingLabel;
-
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
 @end
 

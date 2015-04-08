@@ -28,15 +28,20 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="gEO-za-U7L">
+                                <rect key="frame" x="222" y="259" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.14117647058823529" green="0.16078431372549021" blue="0.18431372549019609" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="rxH-h1-ZKU" firstAttribute="leading" secondItem="502-Ir-ELC" secondAttribute="leading" id="2GC-Tn-0gq"/>
+                            <constraint firstItem="VDk-V7-qRO" firstAttribute="centerY" secondItem="gEO-za-U7L" secondAttribute="centerY" id="9CY-tR-JfR"/>
                             <constraint firstItem="rxH-h1-ZKU" firstAttribute="top" secondItem="502-Ir-ELC" secondAttribute="top" id="Hrs-zr-Qa6"/>
                             <constraint firstItem="IfR-02-kHw" firstAttribute="top" secondItem="rxH-h1-ZKU" secondAttribute="bottom" id="KOb-Ub-UOv"/>
                             <constraint firstItem="rxH-h1-ZKU" firstAttribute="centerY" secondItem="VDk-V7-qRO" secondAttribute="centerY" id="V6Z-lr-qTR"/>
                             <constraint firstItem="rxH-h1-ZKU" firstAttribute="bottom" secondItem="502-Ir-ELC" secondAttribute="bottomMargin" id="jLJ-7L-NNL"/>
                             <constraint firstAttribute="trailing" secondItem="rxH-h1-ZKU" secondAttribute="trailing" id="l1O-Je-Lax"/>
+                            <constraint firstItem="VDk-V7-qRO" firstAttribute="leading" secondItem="gEO-za-U7L" secondAttribute="leading" constant="24" id="mnf-g8-kAa"/>
                             <constraint firstItem="rxH-h1-ZKU" firstAttribute="centerX" secondItem="VDk-V7-qRO" secondAttribute="centerX" id="v3F-Pf-bz6"/>
                         </constraints>
                         <variation key="default">
@@ -63,6 +68,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="backgroundImageView" destination="rxH-h1-ZKU" id="cdk-J6-Cit"/>
+                        <outlet property="loadingIndicator" destination="gEO-za-U7L" id="4zf-Q3-sdt"/>
                         <outlet property="loadingLabel" destination="VDk-V7-qRO" id="dND-l1-47Y"/>
                     </connections>
                 </viewController>

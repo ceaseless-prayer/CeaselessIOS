@@ -91,6 +91,7 @@
 
 - (void) showLoading {
     if (self.loadingLabel.hidden) {
+        [self.loadingIndicator startAnimating];
         self.loadingLabel.hidden = NO;
         self.pageViewController.view.hidden = YES;
     }
@@ -98,6 +99,7 @@
 
 - (void) hideLoading {
     if (!self.loadingLabel.hidden) {
+        [self.loadingIndicator stopAnimating];
         self.loadingLabel.hidden = YES;
         self.pageViewController.view.hidden = NO;
     }
