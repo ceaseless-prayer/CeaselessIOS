@@ -13,4 +13,5 @@
     FOUNDATION_EXPORT NSString *const kDailyPersonCount;
     FOUNDATION_EXPORT NSString *const kDynamicBackgroundImage;
     FOUNDATION_EXPORT NSString *const kNextDynamicBackgroundImage;
+    FOUNDATION_EXPORT NSString *const kNotificationDate;
 @end

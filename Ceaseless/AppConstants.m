@@ -13,4 +13,5 @@
     NSString *const kDailyPersonCount = @"DailyPersonCount";
     NSString *const kDynamicBackgroundImage = @"dynamicBackgroundImage";
     NSString *const kNextDynamicBackgroundImage = @"nextDynamicBackgroundImage";
+    NSString *const kNotificationDate = @"NotificationDate";
 @end
