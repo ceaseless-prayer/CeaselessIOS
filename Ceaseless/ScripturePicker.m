@@ -23,15 +23,7 @@ NSString *const kVerseOfTheDayURL = @"http://api.ceaselessprayer.com/v1/votd";
 NSString *const kGetScriptureURL = @"http://api.ceaselessprayer.com/v1/getScripture";
 int const kDefaultQueueMaxSize = 5;
 int const kDefaultQueueMinSize = 1;
-	// verseOfTheDay
-	//		if its still the same day return the verse we cached
-	//		else pop a scripture off the queue
-	//
-	// pop a scripture off the queue
-	//		get the first scripture on the queue
-	//		delete it from the queue
-	//		return the scripture
-	//
+
 
 - (id)init {
 	self = [super init];
@@ -117,36 +109,22 @@ int const kDefaultQueueMinSize = 1;
 	}
 };
 
-- (void)requestDailyVerseReference
-{
-	NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-	NSURLSession *urlSession = [NSURLSession sessionWithConfiguration:configuration delegate:nil delegateQueue:nil];
-
+- (void)requestDailyVerseReference {
 	NSURL *url = [NSURL URLWithString: kVerseOfTheDayURL];
-
-	NSURLSessionDataTask *urlSessionDataTask = [urlSession dataTaskWithURL:url
-														 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-		{
-		NSLog(@"Response:%@ %@\n", response, error);
-		if (error == nil)
-			{
-			NSDictionary *dailyVerseData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-			[self requestScriptureText: dailyVerseData];
-			}
-
-		}];
-
-	[urlSessionDataTask resume];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    [NSURLConnection sendAsynchronousRequest:request queue: [NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        NSLog(@"Response:%@ %@\n", response, connectionError);
+        if (connectionError == nil && data != nil) {
+            NSDictionary *dailyVerseData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&connectionError];
+            [self requestScriptureText: dailyVerseData];
+        }
+    }];
 }
 
--(void) requestScriptureText: (NSDictionary *) dailyVerseData
-{
-
-	NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-	NSURLSession *urlSession = [NSURLSession sessionWithConfiguration:configuration delegate:nil delegateQueue:nil];
-
+-(void) requestScriptureText: (NSDictionary *) dailyVerseData {
 	NSURL *url = [NSURL URLWithString: kGetScriptureURL];
-
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
 														   cachePolicy:NSURLRequestUseProtocolCachePolicy
 													   timeoutInterval:60.0];
@@ -170,37 +148,31 @@ int const kDefaultQueueMinSize = 1;
 	NSData *postData = [NSJSONSerialization dataWithJSONObject:jsonData options:0 error:&error];
 
 	[request setHTTPBody:postData];
-
-	NSURLSessionDataTask * dataTask =[urlSession dataTaskWithRequest:request
-												   completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-	  {
-	  NSLog(@"Response:%@ %@\n", response, error);
-
-	  if (error == nil)
-		  {
-		  NSDictionary *verseDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-		  if (verseDictionary)
-			  {
-			  dispatch_async(dispatch_get_main_queue(), ^{
-				  NSError * error = nil;
-
-				  NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"ScriptureQueue" inManagedObjectContext:self.managedObjectContext];
-				  [newManagedObject setValue: [verseDictionary objectForKey:@"text"]forKey: @"verse"];
-				  [newManagedObject setValue: [verseDictionary objectForKey:@"citation"] forKey: @"citation"];
-                  
-                  // TODO configure the right bible for the local language
-                  NSString *shareLink = [NSString stringWithFormat:@"%@/%@/%@#%@", @"http://www.bible.is/ENGESV", jsonData[@"book"], jsonData[@"chapter"], jsonData[@"verse_start"]];
-                  
-                  [newManagedObject setValue: shareLink forKey: @"shareLink"];
-				  if (![self.managedObjectContext save: &error]) {
-					  NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
-				  }
-
-			  });
-		  }
-		  }
-	  }];
-	[dataTask resume];
+    [NSURLConnection sendAsynchronousRequest:request queue: [NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        NSLog(@"Response:%@ %@\n", response, connectionError);
+        
+        if (error == nil && data != nil) {
+            NSDictionary *verseDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&connectionError];
+            if (verseDictionary) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    NSError * error = nil;
+                    
+                    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"ScriptureQueue" inManagedObjectContext:self.managedObjectContext];
+                    [newManagedObject setValue: [verseDictionary objectForKey:@"text"]forKey: @"verse"];
+                    [newManagedObject setValue: [verseDictionary objectForKey:@"citation"] forKey: @"citation"];
+                    
+                    // TODO configure the right bible for the local language
+                    NSString *shareLink = [NSString stringWithFormat:@"%@/%@/%@#%@", @"http://www.bible.is/ENGESV", jsonData[@"book"], jsonData[@"chapter"], jsonData[@"verse_start"]];
+                    
+                    [newManagedObject setValue: shareLink forKey: @"shareLink"];
+                    if (![self.managedObjectContext save: &error]) {
+                        NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
+                    }
+                    
+                });
+            }
+        }
+    }];
 }
 
 - (NSArray *) getScriptureWithPredicate: (NSString *) predicateArgument {

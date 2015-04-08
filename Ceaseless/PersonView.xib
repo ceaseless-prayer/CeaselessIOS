@@ -22,7 +22,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CVR-nv-9Et" userLabel="CardView">
                             <rect key="frame" x="8" y="2" width="584" height="596"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Screen Shot 2015-02-18 at 8.22.42 AM.png" translatesAutoresizingMaskIntoConstraints="NO" id="ofI-30-Sup" userLabel="PersonCardBackground">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="at_the_beach.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="ofI-30-Sup" userLabel="PersonCardBackground">
                                     <rect key="frame" x="0.0" y="0.0" width="584" height="596"/>
                                 </imageView>
                                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1uu-zD-zYL">
@@ -332,7 +332,7 @@
         </view>
     </objects>
     <resources>
-        <image name="Screen Shot 2015-02-18 at 8.22.42 AM.png" width="466" height="312"/>
+        <image name="at_the_beach.jpg" width="3264" height="2448"/>
         <image name="icon_more" width="28" height="8"/>
     </resources>
 </document>

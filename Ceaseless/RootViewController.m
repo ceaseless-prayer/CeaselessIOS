@@ -70,10 +70,18 @@
     if (!_modelController) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            _modelController = [[ModelController alloc] init];
-            // add observer's the first time.
-            [[NSNotificationCenter defaultCenter] addObserver:_modelController selector:@selector(runIfNewDay) name:UIApplicationDidBecomeActiveNotification object:nil];
+            // listen for when the model changes
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshPageView) name:kModelRefreshNotification object:nil];
+            
+            //prepare the model
+            _modelController = [[ModelController alloc] init];
+            
+            // make the model try to refresh whenever the app becomse active
+            [[NSNotificationCenter defaultCenter] addObserver:_modelController selector:@selector(runIfNewDay) name:UIApplicationDidBecomeActiveNotification object:nil];
+            
+            // show the loading view when the app enters the foreground
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showLoading) name:UIApplicationWillEnterForegroundNotification object:nil];
+
         });
         // TODO figure out when/where we need to call this
         //[[NSNotificationCenter defaultCenter] removeObserver:self name:kModelRefreshNotification object:nil];
@@ -81,7 +89,25 @@
     return _modelController;
 }
 
+- (void) showLoading {
+    if (self.loadingLabel.hidden) {
+        [self.loadingIndicator startAnimating];
+        self.loadingLabel.hidden = NO;
+        self.pageViewController.view.hidden = YES;
+    }
+}
+
+- (void) hideLoading {
+    if (!self.loadingLabel.hidden) {
+        [self.loadingIndicator stopAnimating];
+        self.loadingLabel.hidden = YES;
+        self.pageViewController.view.hidden = NO;
+    }
+}
+
 - (void) refreshPageView {
+    NSLog(@"Refreshing page view");
+    [self hideLoading];
     [self setBlurredBackground];
     DataViewController *startingViewController = [self.modelController viewControllerAtIndex:0 storyboard:self.storyboard];
     [self.pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
