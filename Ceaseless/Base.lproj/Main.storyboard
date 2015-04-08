@@ -115,7 +115,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r8K-Y6-IDZ" userLabel="leftFiller">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r8K-Y6-IDZ" userLabel="leftFiller">
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="Z91-wn-3pZ"/>
@@ -126,7 +126,7 @@
                                                 </mask>
                                             </variation>
                                         </view>
-                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j74-k2-2nG" userLabel="rightFiller">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j74-k2-2nG" userLabel="rightFiller">
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="vGZ-j1-nPJ"/>
@@ -178,7 +178,7 @@
                                                                             <constraint firstAttribute="width" constant="42" id="UD9-tP-sTT"/>
                                                                             <constraint firstAttribute="height" constant="42" id="sgv-uD-W6F"/>
                                                                         </constraints>
-                                                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="23"/>
+                                                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="22"/>
                                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
@@ -209,7 +209,7 @@
                                                                             <constraint firstAttribute="width" constant="42" id="pzU-VY-f2E"/>
                                                                             <constraint firstAttribute="height" constant="42" id="rTG-0l-7fP"/>
                                                                         </constraints>
-                                                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="23"/>
+                                                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="22"/>
                                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
@@ -499,10 +499,10 @@
                                                 <action selector="contactsListSelector:" destination="Trs-Fq-LiS" eventType="valueChanged" id="CKd-mn-T99"/>
                                             </connections>
                                         </segmentedControl>
-                                        <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="i0o-09-bgH">
+                                        <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" sectionIndexMinimumDisplayRowCount="25" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="i0o-09-bgH">
                                             <rect key="frame" x="0.0" y="29" width="600" height="507"/>
                                             <color key="backgroundColor" red="0.0" green="0.0039215686269999999" blue="0.1843137255" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <color key="sectionIndexBackgroundColor" red="0.0" green="0.0039215686269999999" blue="0.1843137255" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                             <prototypes>
                                                 <tableViewCell opaque="NO" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" rowHeight="44" id="8Uh-s7-6nl" customClass="ContactsListTableViewCell">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -533,7 +533,7 @@
                                                                     <constraint firstAttribute="height" constant="41" id="UXl-Kp-dS3"/>
                                                                     <constraint firstAttribute="width" constant="41" id="ZSp-iP-q8X"/>
                                                                 </constraints>
-                                                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="23"/>
+                                                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="22"/>
                                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>

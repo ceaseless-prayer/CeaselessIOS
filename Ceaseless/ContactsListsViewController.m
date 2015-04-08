@@ -148,9 +148,17 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 		return [sectionInfo numberOfObjects];
 	}
 }
-- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	return 0;
+
+- (NSArray *) sectionIndexTitlesForTableView: (UITableView *) tableView
+{
+	return [self.fetchedResultsController sectionIndexTitles];
 }
+
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
+{
+	return [self.fetchedResultsController sectionForSectionIndexTitle:title atIndex:index];
+}
+
 - (ContactsListTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     ContactsListTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
@@ -265,7 +273,8 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	[fetchRequest setFetchBatchSize:20];
 
 		// Edit the sort key as appropriate.
-	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryLastName.name" ascending:YES];
+
+	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryLastName.name" ascending:YES selector: @selector(caseInsensitiveCompare:)];
 
 	NSArray *sortDescriptors = @[sortDescriptor];
 
@@ -277,7 +286,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 		// Edit the section name key path and cache name if appropriate.
 		// nil for section name key path means "no sections".
-	NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+	NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath: @"representativeInfo.primaryLastName.name" cacheName:nil];
 	aFetchedResultsController.delegate = self;
 	self.fetchedResultsController = aFetchedResultsController;
 
@@ -303,7 +312,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	[_searchFetchRequest setEntity:entity];
 
 		// Edit the sort key as appropriate.
-	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryLastName.name" ascending:YES];
+	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryLastName.name" ascending:YES selector: @selector(caseInsensitiveCompare:)];
 	NSArray *sortDescriptors = @[sortDescriptor];
 	[_searchFetchRequest setSortDescriptors:sortDescriptors];
 
