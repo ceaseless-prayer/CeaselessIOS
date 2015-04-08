@@ -16,9 +16,10 @@
 #import "AppUtils.h"
 #import "CeaselessLocalContacts.h"
 #import <MessageUI/MessageUI.h>
+#import <AddressBookUI/AddressBookUI.h>
 #import "ContactsListsViewController.h"
 
-@interface PersonViewController () <MFMessageComposeViewControllerDelegate>
+@interface PersonViewController () <MFMessageComposeViewControllerDelegate, ABPersonViewControllerDelegate>
 
 @property (strong, nonatomic) UINavigationController *navController;
 @end
@@ -249,11 +250,21 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                            NSLog(@"Add note");
                                        }];
     
+    UIAlertAction *viewContact = [UIAlertAction
+                              actionWithTitle:NSLocalizedString(@"View contact", @"View contact")
+                              style:UIAlertActionStyleDefault
+                              handler:^(UIAlertAction *action)
+                              {
+                                  [self showABPerson];
+                                  NSLog(@"Showing contact");
+                              }];
+    
     [alertController addAction:cancelAction];
     [alertController addAction:removeFromCeaselessAction];
     [alertController addAction:inviteAction];
     [alertController addAction:sendMessageAction];
     [alertController addAction:addNote];
+    [alertController addAction:viewContact];
     
     // TODO this should toggle between adding or removing from favorites.
     // for now only show it if it isn't already favorited
@@ -331,6 +342,20 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     self.person.favoritedDate = nil;
     [self save];
     // TODO animate?
+}
+
+- (void) showABPerson {
+    ABPersonViewController *view = [[ABPersonViewController alloc] init];
+    
+    view.personViewDelegate = self;
+    CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
+    
+    view.displayedPerson = [ceaselessContacts getRepresentativeABPersonForCeaselessContact:self.person];
+    [self.navigationController pushViewController:view animated:YES];
+}
+
+- (BOOL) personViewController:(ABPersonViewController*) controller shouldPerformDefaultActionForPerson: (ABRecordRef) person property: (ABPropertyID) property identifier: (ABMultiValueIdentifier) identifier {
+    return YES;
 }
 
 - (void)showSMS:(NSString*)file {

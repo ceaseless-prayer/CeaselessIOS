@@ -96,6 +96,10 @@
     return results;
 }
 
+- (ABRecordRef) getRepresentativeABPersonForCeaselessContact: (PersonIdentifier*) person {
+    return ABAddressBookGetPersonWithRecordID(_addressBook, (ABRecordID) [person.representativeInfo.primaryAddressBookId.recordId intValue]);
+}
+
 #pragma mark - Keeping Ceaseless and the address book in sync
 - (void) ensureCeaselessContactsSynced {
     if(!_syncing && ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
