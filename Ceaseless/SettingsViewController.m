@@ -13,6 +13,7 @@
 #import "PersonInfo.h"
 #import "PersonPicker.h"
 #import "AppConstants.h"
+#import "AppUtils.h"
 
 @interface SettingsViewController ()
 
@@ -24,7 +25,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.backgroundImageView.image = [AppUtils getDynamicBackgroundImage];
+    self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
+    
 	self.scrollView.delegate = self;
     self.ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -167,9 +170,6 @@
     self.profileImage.contentMode = UIViewContentModeScaleAspectFit;
     self.profileImage.layer.cornerRadius = 6.0f;
     [self.profileImage setClipsToBounds:YES];
-    
-    self.backgroundImageView.image = self.profileImage.image;
-    self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
     
     NSString *fullName = [_ceaselessContacts compositeNameForPerson:person];
     if (fullName) {
