@@ -17,7 +17,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    float progress = [((NSNumber *) self.dataObject) floatValue];
     self.progressView.backgroundImageView.image = [AppUtils getDynamicBackgroundImage];
+    [self.progressView.progressBar setProgress:progress animated:YES];
     [self formatCardView: self.progressView.cardView withShadowView:self.progressView.shadowView];
     // Do any additional setup after loading the view.
 }

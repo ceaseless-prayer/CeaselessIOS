@@ -135,8 +135,8 @@
                 <outlet property="backgroundImageView" destination="7NO-1f-oWc" id="2Kc-sY-Xzg"/>
                 <outlet property="cardView" destination="hEW-dC-O9l" id="Tf3-3s-R21"/>
                 <outlet property="contentView" destination="Hsk-Xf-eDg" id="h5y-2b-afk"/>
+                <outlet property="progressBar" destination="23m-e6-afm" id="NRJ-Bv-vyF"/>
                 <outlet property="progressLabel" destination="ecU-u3-d6X" id="rJG-jD-eHT"/>
-                <outlet property="progressView" destination="23m-e6-afm" id="mcc-Zx-A1K"/>
                 <outlet property="shadowView" destination="INo-O8-ATa" id="0WT-d6-582"/>
             </connections>
             <point key="canvasLocation" x="454" y="706"/>

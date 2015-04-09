@@ -76,7 +76,7 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
     }
     
     // TODO calculate the actual progress through
-    [_cardArray addObject: [NSNumber numberWithInteger:1]];
+    [_cardArray addObject: [personPicker computePrayerCycleProgress]];
 }
 
 #pragma mark - Ceaseless daily digest process
