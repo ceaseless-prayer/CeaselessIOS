@@ -64,6 +64,7 @@
     
     NSNumber *totalPeople = [NSNumber numberWithInteger:[ceaselessPeople count]];
     NSNumber *totalPeoplePrayedForThisCycle = [NSNumber numberWithInteger:[ceaselessPeoplePrayedForThisCycle count]];
+    NSLog(@"Prayer cycle progress: %@/%@", totalPeoplePrayedForThisCycle, totalPeople);
     
     // when everyone is prayed for restart the cycle.
     if (totalPeople == totalPeoplePrayedForThisCycle) {

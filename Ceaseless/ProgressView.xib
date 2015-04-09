@@ -32,13 +32,13 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thanks for Praying!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecU-u3-d6X">
-                                                <rect key="frame" x="205" y="284" width="174" height="28"/>
-                                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
+                                                <rect key="frame" x="188" y="282" width="208" height="33"/>
+                                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="24"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="23m-e6-afm">
-                                                <rect key="frame" x="205" y="314" width="174" height="2"/>
+                                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="23m-e6-afm">
+                                                <rect key="frame" x="188" y="318" width="208" height="2"/>
                                             </progressView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -47,7 +47,7 @@
                                             <constraint firstAttribute="centerY" secondItem="ecU-u3-d6X" secondAttribute="centerY" id="2mN-98-pcC"/>
                                             <constraint firstItem="ecU-u3-d6X" firstAttribute="centerX" secondItem="23m-e6-afm" secondAttribute="centerX" id="8H6-DG-6MO"/>
                                             <constraint firstItem="ecU-u3-d6X" firstAttribute="bottom" secondItem="23m-e6-afm" secondAttribute="bottom" constant="20" id="AVM-iP-JQE"/>
-                                            <constraint firstItem="ecU-u3-d6X" firstAttribute="top" secondItem="23m-e6-afm" secondAttribute="top" constant="-30" id="Jef-eC-hzb"/>
+                                            <constraint firstItem="ecU-u3-d6X" firstAttribute="top" secondItem="23m-e6-afm" secondAttribute="top" constant="-36" id="Jef-eC-hzb"/>
                                             <constraint firstItem="ecU-u3-d6X" firstAttribute="centerY" secondItem="23m-e6-afm" secondAttribute="centerY" constant="1" id="caI-Iu-BpC"/>
                                             <constraint firstItem="23m-e6-afm" firstAttribute="top" secondItem="Hsk-Xf-eDg" secondAttribute="top" constant="14" id="dUy-da-5qB"/>
                                             <constraint firstItem="ecU-u3-d6X" firstAttribute="width" secondItem="23m-e6-afm" secondAttribute="width" id="yCG-4T-PlG"/>
