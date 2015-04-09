@@ -14,4 +14,5 @@
     NSString *const kDynamicBackgroundImage = @"dynamicBackgroundImage";
     NSString *const kNextDynamicBackgroundImage = @"nextDynamicBackgroundImage";
     NSString *const kNotificationDate = @"NotificationDate";
+    NSString *const kLocalLastAddressBookSyncedDate = @"localLastAddressBookSyncedDate";
 @end

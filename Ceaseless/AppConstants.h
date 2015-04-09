@@ -14,4 +14,5 @@
     FOUNDATION_EXPORT NSString *const kDynamicBackgroundImage;
     FOUNDATION_EXPORT NSString *const kNextDynamicBackgroundImage;
     FOUNDATION_EXPORT NSString *const kNotificationDate;
+    FOUNDATION_EXPORT NSString *const kLocalLastAddressBookSyncedDate;
 @end
