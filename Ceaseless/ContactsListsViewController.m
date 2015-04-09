@@ -15,6 +15,7 @@
 #import "PersonViewController.h"
 #import "PersonView.h"
 #import "AppUtils.h"
+#import "NSString+FetchedGroupByString.h"
 
 typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 {
@@ -288,7 +289,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 		// Edit the section name key path and cache name if appropriate.
 		// nil for section name key path means "no sections".
-	NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath: @"representativeInfo.primaryLastName.name" cacheName:nil];
+	NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath: @"representativeInfo.primaryLastName.name.stringGroupByFirstInitial" cacheName:nil];
 	aFetchedResultsController.delegate = self;
 	self.fetchedResultsController = aFetchedResultsController;
 
