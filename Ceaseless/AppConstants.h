@@ -15,5 +15,6 @@
     FOUNDATION_EXPORT NSString *const kNextDynamicBackgroundImage;
     FOUNDATION_EXPORT NSString *const kNotificationDate;
     FOUNDATION_EXPORT NSString *const kLocalLastAddressBookSyncedDate;
-	FOUNDATION_EXPORT NSString *const kContactsSyncedNotification;
+    FOUNDATION_EXPORT NSString *const kPrayerCycleStartDate;
+    FOUNDATION_EXPORT NSString *const kContactsSyncedNotification;
 @end

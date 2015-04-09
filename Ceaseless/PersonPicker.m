@@ -47,6 +47,39 @@
     return self;
 }
 
+- (NSNumber *) computePrayerCycleProgress {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if(![defaults objectForKey:kPrayerCycleStartDate]) {
+        [defaults setObject:[NSDate date] forKey:kPrayerCycleStartDate];
+        [defaults synchronize];
+    }
+    NSDate *cycleStartDate = [defaults objectForKey:kPrayerCycleStartDate];
+    
+    // filter out removed contacts
+    NSPredicate *filterRemovedContacts = [NSPredicate predicateWithFormat: @"removedDate = nil"];
+    NSArray *ceaselessPeople = [[_ceaselessContacts getAllCeaselessContacts] filteredArrayUsingPredicate:filterRemovedContacts];
+    
+    NSPredicate *peoplePrayedForThisCycle = [NSPredicate predicateWithFormat:@"prayerRecords.@max.createDate > %@", cycleStartDate];
+    NSArray *ceaselessPeoplePrayedForThisCycle = [[_ceaselessContacts getAllCeaselessContacts] filteredArrayUsingPredicate:peoplePrayedForThisCycle];
+    
+    NSNumber *totalPeople = [NSNumber numberWithInteger:[ceaselessPeople count]];
+    NSNumber *totalPeoplePrayedForThisCycle = [NSNumber numberWithInteger:[ceaselessPeoplePrayedForThisCycle count]];
+    NSLog(@"Prayer cycle progress: %@/%@", totalPeoplePrayedForThisCycle, totalPeople);
+    
+    // when everyone is prayed for restart the cycle.
+    if (totalPeople == totalPeoplePrayedForThisCycle) {
+        [defaults setObject:[NSDate date] forKey:kPrayerCycleStartDate];
+        [defaults synchronize];
+        return [NSNumber numberWithDouble:1];
+    } else {
+        if (totalPeople == 0) {
+            return 0;
+        } else {
+            return [NSNumber numberWithDouble:[totalPeoplePrayedForThisCycle doubleValue] / [totalPeople doubleValue]];
+        }
+    }
+}
+
 - (void)initializeAddressBook {
     // get address book authorization
     ABAuthorizationStatus status = ABAddressBookGetAuthorizationStatus();
