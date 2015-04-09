@@ -125,15 +125,18 @@
                 [clc refreshCeaselessContacts];
             }];
             if (addressBook2) CFRelease(addressBook2);
-            [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
-            self.backgroundTask = UIBackgroundTaskInvalid;
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             NSDate *now = [NSDate date];
             [defaults setObject:now forKey:kLocalLastAddressBookSyncedDate];
             [defaults synchronize];
-			[[NSNotificationCenter defaultCenter] postNotificationName:kContactsSyncedNotification object:nil];
+
+			dispatch_async(dispatch_get_main_queue(), ^(void) {
+				[[NSNotificationCenter defaultCenter] postNotificationName:kContactsSyncedNotification object:nil];
+			});
 
             _syncing = NO;
+			[[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
+			self.backgroundTask = UIBackgroundTaskInvalid;
         });
     }
 }

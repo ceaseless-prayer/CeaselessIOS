@@ -74,30 +74,34 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 	self.tableView.tableHeaderView = self.searchController.searchBar;
 	self.definesPresentationContext = YES;
+}
 
-//	if (![[NSUserDefaults standardUserDefaults] objectForKey:kLocalLastAddressBookSyncedDate]
-//		&& (self.ceaselessContacts.syncing == YES)) {
+- (void) viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+
+		// make the model try to refresh whenever the app becomse active
+	[[NSNotificationCenter defaultCenter] addObserver: self selector:@selector(handleSyncing) name:UIApplicationDidBecomeActiveNotification object:nil];
+	[self handleSyncing];
+}
+
+- (void) handleSyncing {
 	if (self.ceaselessContacts.syncing == YES) {
-		self.syncingLabel.hidden = NO;
+		self.syncingOverlay.hidden = NO;
 		[self.activityIndicator startAnimating];
+		self.segment.enabled = NO;
 		self.tableView.userInteractionEnabled = NO;
 		self.tableView.sectionIndexMinimumDisplayRowCount = INT_MAX;
 
-		NSLog (@"first sync");
+		NSLog (@"syncing");
 		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 
 			//listen for contacts to finish syncing
 		[notificationCenter addObserver: self
-							   selector: @selector (enableTable:)
+							   selector: @selector (enableTable)
 								   name: kContactsSyncedNotification
 								 object: nil];
 	} else {
-		self.syncingLabel.hidden = YES;
-		[self.activityIndicator stopAnimating];
-
-		self.tableView.userInteractionEnabled = YES;
-		self.tableView.sectionIndexMinimumDisplayRowCount = 20;
-
+		[self enableTable];
 	}
 
 }
@@ -107,8 +111,13 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
-//	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:animated];
 	[super viewWillDisappear:animated];
+	[[NSNotificationCenter defaultCenter] removeObserver:self
+													name:kContactsSyncedNotification
+												  object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self
+													name:UIApplicationDidBecomeActiveNotification
+												  object:nil];
 }
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];
@@ -283,9 +292,9 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
 		// reload the table if the contacts are not syncing, jittery otherwise
-//	if (self.ceaselessContacts.syncing == NO) {
+	if (self.ceaselessContacts.syncing == NO) {
 		[self.tableView reloadData];
-//	}
+	}
 }
 - (NSFetchedResultsController *)fetchedResultsController
 {
@@ -398,19 +407,15 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	}
 }
 
-- (void) enableTable: (id) sender {
+- (void) enableTable {
 
-	self.syncingLabel.hidden = YES;
+	NSLog (@"enable Table");
+	self.syncingOverlay.hidden = YES;
 	[self.activityIndicator stopAnimating];
-	[self.view layoutSubviews];
-
+	self.segment.enabled = YES;
 	self.tableView.userInteractionEnabled = YES;
 	self.tableView.sectionIndexMinimumDisplayRowCount = 20;
 	[self.tableView reloadData];
-
-	[[NSNotificationCenter defaultCenter] removeObserver:self
-														name:kContactsSyncedNotification
-													  object:nil];
 
 }
 @end
