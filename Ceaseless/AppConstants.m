@@ -35,4 +35,7 @@
     // once all contacts have been prayed for
     // this date is reset.
     NSString *const kPrayerCycleStartDate = @"prayerCycleStartDate";
+
+    // this is the name of the notification that contacts have been synced
+    NSString *const kContactsSyncedNotification = @"contactsSyncedNotification";
 @end
