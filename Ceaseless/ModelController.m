@@ -14,6 +14,7 @@
 #import "ScripturePicker.h"
 #import "ScriptureQueue.h"
 #import "ScriptureViewController.h"
+#import "ProgressViewController.h"
 #import "PersonViewController.h"
 #import "WebCardViewController.h"
 #import "CeaselessLocalContacts.h"
@@ -73,6 +74,9 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
     if (announcement) {
         [_cardArray addObject: announcement];
     }
+    
+    // TODO calculate the actual progress through
+    [_cardArray addObject: [NSNumber numberWithInteger:1]];
 }
 
 #pragma mark - Ceaseless daily digest process
@@ -241,6 +245,9 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
 		self.mainStoryboard = storyboard;
     } else if ([self.cardArray[index] isKindOfClass:[NSString class]]) {
         contentViewController = [[WebCardViewController alloc] init];
+        contentViewController.mainStoryboard = self.mainStoryboard;
+    } else if ([self.cardArray[index] isKindOfClass:[NSNumber class]]) {
+        contentViewController = [[ProgressViewController alloc] init];
         contentViewController.mainStoryboard = self.mainStoryboard;
     } else {
         contentViewController = [[PersonViewController alloc] init];
