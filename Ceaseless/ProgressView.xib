@@ -31,6 +31,12 @@
                                         <rect key="frame" x="0.0" y="0.0" width="584" height="596"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Rejoice always,  pray without ceasing, give thanks in all circumstances, for this is God's will for you in Christ Jesus.&quot;" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Rj-CP-8zw" userLabel="&quot;Rejoice always,  pray without ceasing, give thanks in all circumstances, for this is God's will for you in Christ Jesus.&quot;">
+                                                <rect key="frame" x="16" y="483" width="552" height="93"/>
+                                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thanks for Praying!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecU-u3-d6X">
                                                 <rect key="frame" x="188" y="282" width="208" height="33"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="24"/>
@@ -38,22 +44,28 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="23m-e6-afm">
-                                                <rect key="frame" x="188" y="318" width="208" height="2"/>
+                                                <rect key="frame" x="188" y="328" width="208" height="2"/>
                                             </progressView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="centerX" secondItem="ecU-u3-d6X" secondAttribute="centerX" id="1Q8-qk-DrY"/>
                                             <constraint firstAttribute="centerY" secondItem="ecU-u3-d6X" secondAttribute="centerY" id="2mN-98-pcC"/>
+                                            <constraint firstAttribute="bottom" secondItem="6Rj-CP-8zw" secondAttribute="bottom" constant="20" id="5bq-AJ-FB9"/>
                                             <constraint firstItem="ecU-u3-d6X" firstAttribute="centerX" secondItem="23m-e6-afm" secondAttribute="centerX" id="8H6-DG-6MO"/>
                                             <constraint firstItem="ecU-u3-d6X" firstAttribute="bottom" secondItem="23m-e6-afm" secondAttribute="bottom" constant="20" id="AVM-iP-JQE"/>
-                                            <constraint firstItem="ecU-u3-d6X" firstAttribute="top" secondItem="23m-e6-afm" secondAttribute="top" constant="-36" id="Jef-eC-hzb"/>
+                                            <constraint firstItem="6Rj-CP-8zw" firstAttribute="leading" secondItem="Hsk-Xf-eDg" secondAttribute="leading" constant="16" id="AaN-xK-DsB"/>
+                                            <constraint firstItem="6Rj-CP-8zw" firstAttribute="top" secondItem="ecU-u3-d6X" secondAttribute="top" constant="-104" id="Cig-yZ-YY7"/>
+                                            <constraint firstItem="ecU-u3-d6X" firstAttribute="top" secondItem="23m-e6-afm" secondAttribute="top" constant="-46" id="Jef-eC-hzb"/>
+                                            <constraint firstItem="6Rj-CP-8zw" firstAttribute="centerX" secondItem="ecU-u3-d6X" secondAttribute="centerX" id="TSQ-6p-mtP"/>
                                             <constraint firstItem="ecU-u3-d6X" firstAttribute="centerY" secondItem="23m-e6-afm" secondAttribute="centerY" constant="1" id="caI-Iu-BpC"/>
                                             <constraint firstItem="23m-e6-afm" firstAttribute="top" secondItem="Hsk-Xf-eDg" secondAttribute="top" constant="14" id="dUy-da-5qB"/>
+                                            <constraint firstAttribute="trailing" secondItem="6Rj-CP-8zw" secondAttribute="trailing" constant="16" id="icI-LK-GvU"/>
                                             <constraint firstItem="ecU-u3-d6X" firstAttribute="width" secondItem="23m-e6-afm" secondAttribute="width" id="yCG-4T-PlG"/>
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
+                                                <exclude reference="Cig-yZ-YY7"/>
                                                 <exclude reference="AVM-iP-JQE"/>
                                                 <exclude reference="caI-Iu-BpC"/>
                                                 <exclude reference="dUy-da-5qB"/>
@@ -91,7 +103,7 @@
                                 </mask>
                             </variation>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="INo-O8-ATa" userLabel="ShadowView">
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="INo-O8-ATa" userLabel="ShadowView">
                             <rect key="frame" x="8" y="2" width="584" height="596"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
