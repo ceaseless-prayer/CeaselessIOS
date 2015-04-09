@@ -62,38 +62,33 @@
 }
 
 - (NSArray *) lookupContactsByFirstName:(NSString*) firstName andLastName: (NSString*) lastName {
-    NSMutableArray *results = [[NSMutableArray alloc]init];
+    NSArray *results = [[NSArray alloc]init];
     NSPredicate *getFirstNameObj = [NSPredicate predicateWithFormat:@"name = %@", firstName];
     NSPredicate *getLastNameObj = [NSPredicate predicateWithFormat:@"name = %@", lastName];
     
     NSArray* firstNameObj = [self fetchEntityForName:@"Name" withPredicate: getFirstNameObj];
     NSArray* lastNameObj = [self fetchEntityForName:@"Name" withPredicate: getLastNameObj];
-    NSArray* contacts = [self getAllCeaselessContacts];
     
     if([firstNameObj count] > 0 && [lastNameObj count] > 0) {
         NSPredicate *namePredicate = [NSPredicate predicateWithFormat: @"%@ IN firstNames AND %@ IN lastNames", firstNameObj[0], lastNameObj[0]];
-        results = [[NSMutableArray alloc]initWithArray:[contacts filteredArrayUsingPredicate: namePredicate]];
+        results = [self fetchEntityForName:@"PersonIdentifier" withPredicate:namePredicate];
     }
     
     return results;
 }
 
 - (NSArray *) lookupContactsByAddressBookId:(NSString*) addressBookId {
-    NSMutableArray *results = [[NSMutableArray alloc]init];
+    NSArray *results = [[NSArray alloc] init];
     NSUUID *oNSUUID = [[UIDevice currentDevice] identifierForVendor];
     NSString *deviceId = [oNSUUID UUIDString];
     
     NSPredicate *getAddressBookIdObj = [NSPredicate predicateWithFormat:
                                         @"recordId = %@ AND deviceId = %@", addressBookId, deviceId];
-    NSArray *addressBookIds = [self getAllAddressBookIds];
-    NSArray *contacts = [self getAllCeaselessContacts];
-    NSArray *addressBookIdObj = [addressBookIds filteredArrayUsingPredicate:getAddressBookIdObj];
-    
+    NSArray *addressBookIdObj = [self fetchEntityForName:@"AddressBookId" withPredicate: getAddressBookIdObj];
     if([addressBookIdObj count] > 0) {
         NSPredicate *idPredicate = [NSPredicate predicateWithFormat: @"%@ IN addressBookIds", addressBookIdObj[0]];
-        results = [[NSMutableArray alloc]initWithArray:[contacts filteredArrayUsingPredicate: idPredicate]];
+        results = [self fetchEntityForName:@"PersonIdentifier" withPredicate: idPredicate];
     }
-    
     return results;
 }
 
