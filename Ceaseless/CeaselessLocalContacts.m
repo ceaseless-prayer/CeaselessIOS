@@ -705,17 +705,37 @@
 }
 
 - (void) copyDataFromCeaselessContact: (PersonIdentifier *) src toContact: (PersonIdentifier *) dst {
+    
+    // we favorite the contact if one of them has been favorited
+    if (src.favoritedDate != nil && dst.favoritedDate == nil) {
+        dst.favoritedDate = src.favoritedDate;
+    }
+    
+    // we keep a contact unless both have been removed
+    if(src.removedDate == nil) {
+        dst.removedDate = nil;
+    }
+    
+    // if at least one is not system removed, we keep it.
+    if(dst.systemRemovedDate != nil && src.systemRemovedDate == nil) {
+        dst.systemRemovedDate = nil;
+    }
+    
     // for each relationship, change the id of the relationship to point to the id of the one we want to keep
-    [src addAddressBookIds:dst.addressBookIds];
-    [src addFirstNames:dst.firstNames];
-    [src addLastNames:dst.lastNames];
-    [src addPhoneNumbers:dst.phoneNumbers];
-    [src addEmails:dst.emails];
-    // TODO because notes and prayer records have a to-one relationship
-    // do we need to remove the old relationship off the destination before this will work?
-    // test it out.
-    [src addNotes:dst.notes];
-    [src addPrayerRecords:dst.prayerRecords];
+    // apple core data generated code has a bug, so we have to do it this way
+    // http://stackoverflow.com/questions/7385439/exception-thrown-in-nsorderedset-generated-accessors
+    // http://stackoverflow.com/questions/7385439/exception-thrown-in-nsorderedset-generated-accessors/26676124#26676124
+    NSMutableOrderedSet* tempOrderedSet = [NSMutableOrderedSet orderedSetWithOrderedSet:src.addressBookIds];
+    [tempOrderedSet addObjectsFromArray:[dst.addressBookIds array]];
+    dst.addressBookIds = tempOrderedSet;
+    
+    [dst addFirstNames:src.firstNames];
+    [dst addLastNames:src.lastNames];
+    [dst addPhoneNumbers:src.phoneNumbers];
+    [dst addEmails:src.emails];
+    
+    [dst addNotes: src.notes];
+    [dst addPrayerRecords:src.prayerRecords];
 }
 
 - (NSMutableSet*) collectMultiValueRefAcrossSetMembers: (NSSet *)unifiedRecord propertyKey: (ABPropertyID) property {
