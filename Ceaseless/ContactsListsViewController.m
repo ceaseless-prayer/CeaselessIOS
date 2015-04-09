@@ -15,7 +15,6 @@
 #import "PersonViewController.h"
 #import "PersonView.h"
 #import "AppUtils.h"
-#import "NSString+FetchedGroupByString.h"
 
 typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 {
@@ -75,6 +74,31 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 	self.tableView.tableHeaderView = self.searchController.searchBar;
 	self.definesPresentationContext = YES;
+
+//	if (![[NSUserDefaults standardUserDefaults] objectForKey:kLocalLastAddressBookSyncedDate]
+//		&& (self.ceaselessContacts.syncing == YES)) {
+	if (self.ceaselessContacts.syncing == YES) {
+		self.syncingLabel.hidden = NO;
+		[self.activityIndicator startAnimating];
+		self.tableView.userInteractionEnabled = NO;
+		self.tableView.sectionIndexMinimumDisplayRowCount = INT_MAX;
+
+		NSLog (@"first sync");
+		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+
+			//listen for contacts to finish syncing
+		[notificationCenter addObserver: self
+							   selector: @selector (enableTable:)
+								   name: kContactsSyncedNotification
+								 object: nil];
+	} else {
+		self.syncingLabel.hidden = YES;
+		[self.activityIndicator stopAnimating];
+
+		self.tableView.userInteractionEnabled = YES;
+		self.tableView.sectionIndexMinimumDisplayRowCount = 20;
+
+	}
 
 }
 - (void) viewDidAppear:(BOOL)animated {
@@ -217,9 +241,11 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 	if (self.selectedList == predicateScopeActive) {
 		cell.rowSwitch.hidden = YES;
+		cell.nameLabelTrailingConstraint.constant = 0;
 	} else {
 		cell.rowSwitch.hidden = NO;
 		cell.rowSwitch.on = YES;
+		cell.nameLabelTrailingConstraint.constant = 49;
 	}
 	cell.backgroundColor = [UIColor clearColor];
 
@@ -289,7 +315,8 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 		// Edit the section name key path and cache name if appropriate.
 		// nil for section name key path means "no sections".
-	NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath: @"representativeInfo.primaryLastName.name.stringGroupByFirstInitial" cacheName:nil];
+//	NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath: @"representativeInfo.primaryLastName.name.stringGroupByFirstInitial" cacheName:nil];
+		NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath: @"representativeInfo.sectionLastName" cacheName:nil];
 	aFetchedResultsController.delegate = self;
 	self.fetchedResultsController = aFetchedResultsController;
 
@@ -371,4 +398,19 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	}
 }
 
+- (void) enableTable: (id) sender {
+
+	self.syncingLabel.hidden = YES;
+	[self.activityIndicator stopAnimating];
+	[self.view layoutSubviews];
+
+	self.tableView.userInteractionEnabled = YES;
+	self.tableView.sectionIndexMinimumDisplayRowCount = 20;
+	[self.tableView reloadData];
+
+	[[NSNotificationCenter defaultCenter] removeObserver:self
+														name:kContactsSyncedNotification
+													  object:nil];
+
+}
 @end

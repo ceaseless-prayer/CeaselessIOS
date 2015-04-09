@@ -131,6 +131,7 @@
             NSDate *now = [NSDate date];
             [defaults setObject:now forKey:kLocalLastAddressBookSyncedDate];
             [defaults synchronize];
+			[[NSNotificationCenter defaultCenter] postNotificationName:kContactsSyncedNotification object:nil];
 
             _syncing = NO;
         });
