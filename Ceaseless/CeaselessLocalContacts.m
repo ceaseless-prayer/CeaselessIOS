@@ -7,6 +7,7 @@
 //
 
 #import "CeaselessLocalContacts.h"
+#import "AppConstants.h"
 
 @implementation CeaselessLocalContacts
 
@@ -126,6 +127,11 @@
             if (addressBook2) CFRelease(addressBook2);
             [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
             self.backgroundTask = UIBackgroundTaskInvalid;
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSDate *now = [NSDate date];
+            [defaults setObject:now forKey:kLocalLastAddressBookSyncedDate];
+            [defaults synchronize];
+
             _syncing = NO;
         });
     }
