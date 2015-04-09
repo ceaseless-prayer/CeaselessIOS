@@ -10,10 +10,11 @@
 
 @implementation NSString (FetchedGroupByString)
 - (NSString *)stringGroupByFirstInitial {
+	if (self == nil) {
+		return @"";
+	}
 	NSString *temp = [self uppercaseString];
-	if (!temp.length) {
-		return @" ";
-	} else if (temp.length == 1) {
+	if (!temp.length || temp.length == 1) {
 		return self;
 	}
 	return [temp substringToIndex:1];
