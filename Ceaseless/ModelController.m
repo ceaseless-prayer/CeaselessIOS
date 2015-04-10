@@ -75,7 +75,6 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
         [_cardArray addObject: announcement];
     }
     
-    // TODO calculate the actual progress through
     [_cardArray addObject: [personPicker computePrayerCycleProgress]];
 }
 
