@@ -79,7 +79,7 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
 }
 
 #pragma mark - Ceaseless daily digest process
-- (void)showNewContent {
+- (void) showNewContent {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSDate *now = [NSDate date];
     
@@ -97,7 +97,9 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
     
     [self prepareCardArray];
     [self getNewBackgroundImage];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];
+    });
 }
 
 // when the app becomes active, this method is run to update the model
