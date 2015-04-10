@@ -57,7 +57,7 @@
                                                     <action selector="showMorePeople:" destination="-1" eventType="touchUpInside" id="Aqe-lN-JoD"/>
                                                 </connections>
                                             </button>
-                                            <activityIndicatorView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="wPs-Xv-DFK">
+                                            <activityIndicatorView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="wPs-Xv-DFK">
                                                 <rect key="frame" x="282" y="350" width="20" height="20"/>
                                             </activityIndicatorView>
                                         </subviews>

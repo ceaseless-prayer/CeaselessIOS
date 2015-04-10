@@ -30,6 +30,7 @@
     <entity name="PersonIdentifier" representedClassName="PersonIdentifier" syncable="YES">
         <attribute name="ceaselessId" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="favoritedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="lastInvitedDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="removedDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="systemRemovedDate" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="addressBookIds" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="AddressBookId" inverseName="ceaselessContact" inverseEntity="AddressBookId" syncable="YES"/>
@@ -72,7 +73,7 @@
         <element name="Name" positionX="0" positionY="0" width="128" height="120"/>
         <element name="Note" positionX="0" positionY="0" width="128" height="105"/>
         <element name="PeopleQueue" positionX="0" positionY="0" width="128" height="60"/>
-        <element name="PersonIdentifier" positionX="0" positionY="0" width="128" height="240"/>
+        <element name="PersonIdentifier" positionX="0" positionY="0" width="128" height="255"/>
         <element name="PersonInfo" positionX="9" positionY="90" width="128" height="133"/>
         <element name="PhoneNumber" positionX="0" positionY="0" width="128" height="90"/>
         <element name="PrayerRecord" positionX="0" positionY="0" width="128" height="90"/>

@@ -2,7 +2,7 @@
 //  PersonIdentifier.h
 //  Ceaseless
 //
-//  Created by Christopher Lim on 4/6/15.
+//  Created by Christopher Lim on 4/10/15.
 //  Copyright (c) 2015 Christopher Lim. All rights reserved.
 //
 
@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSDate * favoritedDate;
 @property (nonatomic, retain) NSDate * removedDate;
 @property (nonatomic, retain) NSDate * systemRemovedDate;
+@property (nonatomic, retain) NSDate * lastInvitedDate;
 @property (nonatomic, retain) NSOrderedSet *addressBookIds;
 @property (nonatomic, retain) NSSet *emails;
 @property (nonatomic, retain) NSSet *firstNames;

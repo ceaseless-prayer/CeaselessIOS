@@ -2,7 +2,7 @@
 //  PersonIdentifier.m
 //  Ceaseless
 //
-//  Created by Christopher Lim on 4/6/15.
+//  Created by Christopher Lim on 4/10/15.
 //  Copyright (c) 2015 Christopher Lim. All rights reserved.
 //
 
@@ -23,6 +23,7 @@
 @dynamic favoritedDate;
 @dynamic removedDate;
 @dynamic systemRemovedDate;
+@dynamic lastInvitedDate;
 @dynamic addressBookIds;
 @dynamic emails;
 @dynamic firstNames;
