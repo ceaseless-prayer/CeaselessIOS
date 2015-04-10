@@ -42,9 +42,7 @@
 @implementation ModelController
 NSString *const kModelRefreshNotification = @"ceaselessModelRefreshed";
 NSString *const kLocalLastRefreshDate = @"localLastRefreshDate";
-NSString *const kAnnouncementsUrl = @"http://www.ceaselessprayer.com/announcements/feed";
 NSString *const kScriptureImagesUrl = @"http://api.ceaselessprayer.com/v1/getAScriptureImage";
-NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
 
 // this method sets up the card array for display
 // everything here should be read only
@@ -67,12 +65,6 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
     
     if (_scripture) {
         [_cardArray insertObject: _scripture atIndex: 0];
-    }
-    
-    // TODO check the server if new content needs to be shown.
-    NSString *announcement = [self getAnnouncements];
-    if (announcement) {
-        [_cardArray addObject: announcement];
     }
     
     [_cardArray addObject: [personPicker computePrayerCycleProgress]];
@@ -144,44 +136,6 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
     NSInteger endDay = [gregorian ordinalityOfUnit:NSCalendarUnitDay
                                             inUnit: NSCalendarUnitEra forDate:endDate];
     return endDay-startDay;
-}
-
-- (NSString*) getAnnouncements {
-    NSURL *url = [NSURL URLWithString: kAnnouncementsUrl];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSDate *lastAnnouncementDate = [defaults objectForKey:kLastAnnouncementDate];
-    NSString *result = nil;
-    
-    NSURLResponse *response;
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                                       timeoutInterval:5.0];
-    
-    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request setHTTPMethod:@"GET"];
-    NSError *error;
-    // TODO make this async for a better user experience?
-    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
-    if (data != nil) {
-        NSArray *announcements = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-        
-        // get last announcement refresh date
-        // compare to the date of the announcement in the array
-        // TODO define the announcement format more strictly.
-        NSDate *latestAnnouncementDate = [NSDate dateWithTimeIntervalSince1970:
-                                          [[announcements[0] objectForKey:@"date"] doubleValue]];
-        
-        BOOL developerMode = [defaults boolForKey:kDeveloperMode];
-        if(developerMode || latestAnnouncementDate > lastAnnouncementDate) {
-            NSLog(@"Latest %@ Last %@", latestAnnouncementDate, lastAnnouncementDate);
-            result = announcements[0][@"content"];
-            [defaults setObject:latestAnnouncementDate forKey:kLastAnnouncementDate];
-            [defaults synchronize];
-            NSLog(@"Latest announcement shown!");
-        }
-    }
-
-    return result;
 }
 
 - (void) getNewBackgroundImage {
