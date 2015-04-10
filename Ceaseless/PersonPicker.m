@@ -47,6 +47,13 @@
     return self;
 }
 
+- (NSUInteger) countFetchResultForEntityName: (NSString*) entityName withPredicate: (NSPredicate *) predicate {
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
+    [fetchRequest setPredicate:predicate];
+    NSError *error = nil;
+    return [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+}
+
 - (NSNumber *) computePrayerCycleProgress {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if(![defaults objectForKey:kPrayerCycleStartDate]) {
@@ -57,13 +64,9 @@
     
     // filter out removed contacts
     NSPredicate *filterRemovedContacts = [NSPredicate predicateWithFormat: @"removedDate = nil"];
-    NSArray *ceaselessPeople = [[_ceaselessContacts getAllCeaselessContacts] filteredArrayUsingPredicate:filterRemovedContacts];
-    
     NSPredicate *peoplePrayedForThisCycle = [NSPredicate predicateWithFormat:@"prayerRecords.@max.createDate > %@", cycleStartDate];
-    NSArray *ceaselessPeoplePrayedForThisCycle = [[_ceaselessContacts getAllCeaselessContacts] filteredArrayUsingPredicate:peoplePrayedForThisCycle];
-    
-    NSNumber *totalPeople = [NSNumber numberWithInteger:[ceaselessPeople count]];
-    NSNumber *totalPeoplePrayedForThisCycle = [NSNumber numberWithInteger:[ceaselessPeoplePrayedForThisCycle count]];
+    NSNumber *totalPeople = [NSNumber numberWithUnsignedInteger: [self countFetchResultForEntityName:@"PersonIdentifier" withPredicate: filterRemovedContacts]];
+    NSNumber *totalPeoplePrayedForThisCycle = [NSNumber numberWithUnsignedInteger:[self countFetchResultForEntityName:@"PersonIdentifier" withPredicate: peoplePrayedForThisCycle]];
     NSLog(@"Prayer cycle progress: %@/%@", totalPeoplePrayedForThisCycle, totalPeople);
     
     // when everyone is prayed for restart the cycle.

@@ -106,7 +106,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Screen Shot 2015-02-18 at 8.22.42 AM.png" translatesAutoresizingMaskIntoConstraints="NO" id="3IW-LQ-T7x">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="at_the_beach.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="3IW-LQ-T7x">
                                 <rect key="frame" x="0.0" y="64" width="600" height="492"/>
                             </imageView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B3F-0K-YAk">
@@ -609,14 +609,19 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                             <subviews>
                                                 <activityIndicatorView opaque="NO" userInteractionEnabled="NO" alpha="0.39999999999999963" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" verticalCompressionResistancePriority="749" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="uTW-aS-DVe">
-                                                    <rect key="frame" x="227" y="258" width="20" height="20"/>
+                                                    <rect key="frame" x="223" y="258" width="20" height="20"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="uTW-aS-DVe" secondAttribute="height" multiplier="3:3" id="FWz-Ze-lmv"/>
                                                     </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="FWz-Ze-lmv"/>
+                                                        </mask>
+                                                    </variation>
                                                 </activityIndicatorView>
                                                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.39999999999999963" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Syncing..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bg0-Qa-79x">
-                                                    <rect key="frame" x="247" y="253" width="106" height="30"/>
+                                                    <rect key="frame" x="247" y="252" width="106" height="33"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="GlS-G9-9a2"/>
@@ -627,6 +632,7 @@
                                                     <nil key="highlightedColor"/>
                                                     <variation key="default">
                                                         <mask key="constraints">
+                                                            <exclude reference="GlS-G9-9a2"/>
                                                             <exclude reference="wK4-3j-3L0"/>
                                                         </mask>
                                                     </variation>
@@ -635,10 +641,16 @@
                                             <color key="backgroundColor" red="0.0" green="0.0039215686269999999" blue="0.1843137255" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="centerX" secondItem="bg0-Qa-79x" secondAttribute="centerX" id="4gL-LI-dF4"/>
-                                                <constraint firstItem="bg0-Qa-79x" firstAttribute="leading" secondItem="uTW-aS-DVe" secondAttribute="trailing" id="Qlb-Sy-Fum"/>
+                                                <constraint firstItem="bg0-Qa-79x" firstAttribute="leading" secondItem="uTW-aS-DVe" secondAttribute="trailing" constant="24" id="Qlb-Sy-Fum"/>
                                                 <constraint firstAttribute="centerY" secondItem="uTW-aS-DVe" secondAttribute="centerY" id="V2g-h7-i7n"/>
+                                                <constraint firstItem="bg0-Qa-79x" firstAttribute="leading" secondItem="uTW-aS-DVe" secondAttribute="leading" constant="24" id="ueH-Bx-51w"/>
                                                 <constraint firstAttribute="centerY" secondItem="bg0-Qa-79x" secondAttribute="centerY" id="ug8-75-7LE"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="Qlb-Sy-Fum"/>
+                                                </mask>
+                                            </variation>
                                         </view>
                                     </subviews>
                                     <constraints>
@@ -1719,7 +1731,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Screen Shot 2015-02-18 at 8.22.42 AM.png" width="466" height="312"/>
         <image name="at_the_beach.jpg" width="3264" height="2448"/>
         <image name="icon_notes" width="24" height="24"/>
     </resources>

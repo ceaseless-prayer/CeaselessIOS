@@ -149,34 +149,9 @@
         [self updateCeaselessContactLocalIds: person];
     }
     
-    [self cleanupOrphanedPersonInfoRecords];
-    
     NSLog(@"Total person info records: %lu", (unsigned long) [self.getAllCeaselessPersonInfo count]);
     NSLog(@"Total address book records: %lu", (unsigned long) [allAddressBookContacts count]);
     NSLog(@"Total Ceaseless contacts: %lu", (unsigned long)[allCeaselessContacts count]);
-}
-
-- (void) cleanupOrphanedPersonInfoRecords {
-    // clean up orphaned PersonInfo objects (they are no longer valid)
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PersonInfo"
-                                              inManagedObjectContext:self.managedObjectContext];
-    
-    [fetchRequest setEntity:entity];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"identifier = nil"];
-    [fetchRequest setPredicate:predicate];
-    
-    NSError * error = nil;
-    NSArray *results = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    
-    for (PersonInfo *orphanedInfo in results) {
-        [self.managedObjectContext deleteObject: orphanedInfo];
-    }
-    
-    // save
-    if (![self.managedObjectContext save:&error]) {
-        NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
-    }
 }
 
 - (void) initializeFirstContacts: (NSInteger) n {
@@ -379,6 +354,7 @@
 
 - (void) createPersonInfoForCeaselessContact: (PersonIdentifier*) person {
     PersonInfo *newCeaselessPersonInfo = [NSEntityDescription insertNewObjectForEntityForName:@"PersonInfo" inManagedObjectContext:self.managedObjectContext];
+    PersonInfo *oldPersonInfo = person.representativeInfo;
     newCeaselessPersonInfo.identifier = person;
     // the first entry is always the primary address book id for consistency
     newCeaselessPersonInfo.primaryAddressBookId = person.addressBookIds[0];
@@ -426,6 +402,10 @@
             }
             CFRelease(emails);
         }
+    }
+    
+    if(oldPersonInfo != nil) {
+        [self.managedObjectContext deleteObject: oldPersonInfo];
     }
     
     // save our changes

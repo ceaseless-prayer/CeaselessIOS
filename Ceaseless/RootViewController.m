@@ -79,6 +79,9 @@
             // make the model try to refresh whenever the app becomse active
             [[NSNotificationCenter defaultCenter] addObserver:_modelController selector:@selector(runIfNewDay) name:UIApplicationDidBecomeActiveNotification object:nil];
             
+            // make the model show new content when forced by the user
+            [[NSNotificationCenter defaultCenter] addObserver:_modelController selector:@selector(showNewContent) name:kForceShowNewContent object:nil];
+            
             // show the loading view when the app enters the foreground
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showLoading) name:UIApplicationWillEnterForegroundNotification object:nil];
 
