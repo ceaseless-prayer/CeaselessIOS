@@ -32,7 +32,7 @@ static NSString *kSMSMessage;
 
 +(void)initialize
 {
-    kInviteMessage =  NSLocalizedString(@"I prayed for you using the Ceaseless app today. You would like it. Search for Ceaseless Prayer in the App Store.", nil);
+    kInviteMessage =  NSLocalizedString(@"I prayed for you using the Ceaseless app today. You would like it. Visit http://www.ceaselessprayer.com", nil);
     kSMSMessage = NSLocalizedString(@"I prayed for you today when you came up in my Ceaseless app.", nil);
 }
 
@@ -196,13 +196,39 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                        NSLog(@"Cancel action");
                                    }];
 
+    NSString *invitationActionTitle = @"Invite to Ceaseless";
+    if(self.person.lastInvitedDate != nil) {
+        NSString *formattedDate = [NSDateFormatter localizedStringFromDate:self.person.lastInvitedDate
+                                                                 dateStyle:NSDateFormatterShortStyle
+                                                                 timeStyle:NSDateFormatterNoStyle];
+        invitationActionTitle = [NSString stringWithFormat: @"Invited %@", formattedDate];
+    }
+    
     UIAlertAction *inviteAction = [UIAlertAction
-                                   actionWithTitle:NSLocalizedString(@"Invite to Ceaseless", @"Invite to Ceaseless")
+                                   actionWithTitle:invitationActionTitle
                                    style:UIAlertActionStyleDefault
                                    handler:^(UIAlertAction *action)
                                    {
-                                       [self showSMS: kInviteMessage];
+                                       PersonInfo *info = self.person.representativeInfo;
+                                       if(info.primaryPhoneNumber) {
+                                           [self showSMS: kInviteMessage];
+                                       } else if(info.primaryEmail) {
+                                           [self showEmailForm];
+                                       } else {
+                                           UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
+                                                                                                  message:NSLocalizedString(@"Could not send an invitation because this person is missing contact information.", nil)
+                                                                                                 delegate:nil
+                                                                                        cancelButtonTitle:@"OK"
+                                                                                        otherButtonTitles:nil];
+                                           
+                                           [warningAlert show];
+                                       }
+                                       
+                                       self.person.lastInvitedDate = [NSDate date];
+                                       [self save];
+
                                        NSLog(@"Invite to Ceaseless");
+                                       
                                    }];
     
     UIAlertAction *sendMessageAction = [UIAlertAction
