@@ -43,7 +43,7 @@
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="23m-e6-afm">
+                                            <progressView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="23m-e6-afm">
                                                 <rect key="frame" x="188" y="328" width="208" height="2"/>
                                             </progressView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xyC-Sa-Zer">
@@ -57,7 +57,7 @@
                                                     <action selector="showMorePeople:" destination="-1" eventType="touchUpInside" id="Aqe-lN-JoD"/>
                                                 </connections>
                                             </button>
-                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="wPs-Xv-DFK">
+                                            <activityIndicatorView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="wPs-Xv-DFK">
                                                 <rect key="frame" x="282" y="350" width="20" height="20"/>
                                             </activityIndicatorView>
                                         </subviews>

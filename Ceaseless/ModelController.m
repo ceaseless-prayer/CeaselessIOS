@@ -87,7 +87,6 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
     // Update the last refresh date
     [defaults setObject:now forKey:kLocalLastRefreshDate];
     [defaults synchronize];
-    NSLog(@"It's a new day!");
     
     ScripturePicker *scripturePicker = [[ScripturePicker alloc] init];
     [scripturePicker manageScriptureQueue];
@@ -122,7 +121,7 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
         if(developerMode) {
             NSLog(@"Debug Mode enabled: refreshing application every time it is newly opened.");
         }
-        
+        NSLog(@"It's a new day!");
         [self showNewContent];
         [ceaselessContacts ensureCeaselessContactsSynced];
         NSLog(@"Ceaseless has been refreshed");
