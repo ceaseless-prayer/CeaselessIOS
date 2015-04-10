@@ -14,6 +14,7 @@
 #import "ScripturePicker.h"
 #import "ScriptureQueue.h"
 #import "ScriptureViewController.h"
+#import "ProgressViewController.h"
 #import "PersonViewController.h"
 #import "WebCardViewController.h"
 #import "CeaselessLocalContacts.h"
@@ -73,9 +74,34 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
     if (announcement) {
         [_cardArray addObject: announcement];
     }
+    
+    [_cardArray addObject: [personPicker computePrayerCycleProgress]];
 }
 
 #pragma mark - Ceaseless daily digest process
+- (void) showNewContent {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDate *now = [NSDate date];
+    
+    // Update the last refresh date
+    [defaults setObject:now forKey:kLocalLastRefreshDate];
+    [defaults synchronize];
+    
+    ScripturePicker *scripturePicker = [[ScripturePicker alloc] init];
+    [scripturePicker manageScriptureQueue];
+    [scripturePicker popScriptureQueue];
+    
+    PersonPicker *personPicker = [[PersonPicker alloc] init];
+    [personPicker emptyQueue];
+    [personPicker pickPeople];
+    
+    [self prepareCardArray];
+    [self getNewBackgroundImage];
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];
+    });
+}
+
 // when the app becomes active, this method is run to update the model
 - (void) runIfNewDay {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -96,30 +122,16 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
         if(developerMode) {
             NSLog(@"Debug Mode enabled: refreshing application every time it is newly opened.");
         }
-        
-        // Update the last refresh date
-        [defaults setObject:now forKey:kLocalLastRefreshDate];
-        [defaults synchronize];
         NSLog(@"It's a new day!");
-        
-        ScripturePicker *scripturePicker = [[ScripturePicker alloc] init];
-        [scripturePicker manageScriptureQueue];
-        [scripturePicker popScriptureQueue];
-        
-        PersonPicker *personPicker = [[PersonPicker alloc] init];
-        [personPicker emptyQueue];
-        [personPicker pickPeople];
-        
-        [self prepareCardArray];
-        [self getNewBackgroundImage];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];
+        [self showNewContent];
         [ceaselessContacts ensureCeaselessContactsSynced];
         NSLog(@"Ceaseless has been refreshed");
     } else if([_cardArray count] == 0) {
         [self prepareCardArray]; // initial card array prep when app starts
         [[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];
-    }
-
+	} else {
+		[[NSNotificationCenter defaultCenter] postNotificationName:kHideLoadingNotification object:nil];
+	}
 }
 
 // https://developer.apple.com/library/prerelease/ios//documentation/Cocoa/Conceptual/DatesAndTimes/Articles/dtCalendricalCalculations.html#//apple_ref/doc/uid/TP40007836-SW1
@@ -241,6 +253,9 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
 		self.mainStoryboard = storyboard;
     } else if ([self.cardArray[index] isKindOfClass:[NSString class]]) {
         contentViewController = [[WebCardViewController alloc] init];
+        contentViewController.mainStoryboard = self.mainStoryboard;
+    } else if ([self.cardArray[index] isKindOfClass:[NSNumber class]]) {
+        contentViewController = [[ProgressViewController alloc] init];
         contentViewController.mainStoryboard = self.mainStoryboard;
     } else {
         contentViewController = [[PersonViewController alloc] init];

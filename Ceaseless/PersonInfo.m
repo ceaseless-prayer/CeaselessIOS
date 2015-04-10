@@ -23,4 +23,13 @@
 @dynamic primaryLastName;
 @dynamic primaryPhoneNumber;
 
+	//this is a transient property, not part of the model, used to fix nil and caseInsensitive inconsistencies in the index
+-(NSString*) sectionLastName {
+
+	NSString *temp = [self.primaryLastName.name uppercaseString];
+	if (!temp.length || temp.length == 1) {
+		return temp ? temp : @"";
+	}
+	return temp ? [temp substringToIndex:1] : @"";
+}
 @end

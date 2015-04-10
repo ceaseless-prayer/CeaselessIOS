@@ -59,9 +59,6 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 		self.backgroundView.contentMode = UIViewContentModeScaleAspectFill;
 	}
 
-	self.tableView.estimatedRowHeight = 130.0;
-	self.tableView.rowHeight = UITableViewAutomaticDimension;
-
 		//searchController cannot be set up in IB, so set it up here
 	self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
 	self.searchController.searchResultsUpdater = self;
@@ -77,6 +74,35 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 	self.tableView.tableHeaderView = self.searchController.searchBar;
 	self.definesPresentationContext = YES;
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+
+		// make the model try to refresh whenever the app becomse active
+	[[NSNotificationCenter defaultCenter] addObserver: self selector:@selector(handleSyncing) name:UIApplicationDidBecomeActiveNotification object:nil];
+	[self handleSyncing];
+}
+
+- (void) handleSyncing {
+	if (self.ceaselessContacts.syncing == YES) {
+		self.syncingOverlay.hidden = NO;
+		[self.activityIndicator startAnimating];
+		self.segment.enabled = NO;
+		self.tableView.userInteractionEnabled = NO;
+		self.tableView.sectionIndexMinimumDisplayRowCount = INT_MAX;
+
+		NSLog (@"syncing");
+		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+
+			//listen for contacts to finish syncing
+		[notificationCenter addObserver: self
+							   selector: @selector (enableTable)
+								   name: kContactsSyncedNotification
+								 object: nil];
+	} else {
+		[self enableTable];
+	}
 
 }
 - (void) viewDidAppear:(BOOL)animated {
@@ -85,8 +111,13 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
-//	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:animated];
 	[super viewWillDisappear:animated];
+	[[NSNotificationCenter defaultCenter] removeObserver:self
+													name:kContactsSyncedNotification
+												  object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self
+													name:UIApplicationDidBecomeActiveNotification
+												  object:nil];
 }
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];
@@ -102,7 +133,6 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
     if (![self.managedObjectContext save:&error]) {
         NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
     }
-	[self.tableView reloadData];
 }
 
 #pragma mark - Segues
@@ -119,8 +149,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 			person = [self.fetchedResultsController objectAtIndexPath:indexPath];
 		}
 
-		PersonViewController *personViewController = [PersonViewController alloc];
-		personViewController = segue.destinationViewController;
+		PersonViewController *personViewController = segue.destinationViewController;
 		personViewController.dataObject = person;
 
 	}
@@ -128,7 +157,6 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 - (IBAction)unwindToContactsLists:(UIStoryboardSegue*)sender
 {
 		// Pull any data from the view controller which initiated the unwind segue.
-	[self.tableView reloadData];
 }
 #pragma mark - Table View
 
@@ -149,9 +177,24 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 		return [sectionInfo numberOfObjects];
 	}
 }
-- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	return 0;
+
+- (NSArray *) sectionIndexTitlesForTableView: (UITableView *) tableView
+{
+	//add the magnifying glass to the top of the index
+	return [[NSArray arrayWithObject:@"{search}"] arrayByAddingObjectsFromArray:[self.fetchedResultsController sectionIndexTitles]];
 }
+
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
+{
+	//since search was added to the array, need to return index - 1 to get to correct title, for search, set content Offset to top of table :)
+	if ([title isEqualToString: @"{search}"]) {
+		[tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+		return NSNotFound;
+	} else {
+		return [self.fetchedResultsController sectionForSectionIndexTitle:title atIndex:index - 1];
+	}
+}
+
 - (ContactsListTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     ContactsListTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
@@ -207,9 +250,11 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 	if (self.selectedList == predicateScopeActive) {
 		cell.rowSwitch.hidden = YES;
+		cell.nameLabelTrailingConstraint.constant = 0;
 	} else {
 		cell.rowSwitch.hidden = NO;
 		cell.rowSwitch.on = YES;
+		cell.nameLabelTrailingConstraint.constant = 49;
 	}
 	cell.backgroundColor = [UIColor clearColor];
 
@@ -266,7 +311,8 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	[fetchRequest setFetchBatchSize:20];
 
 		// Edit the sort key as appropriate.
-	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryLastName.name" ascending:YES];
+
+	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryLastName.name" ascending:YES selector: @selector(caseInsensitiveCompare:)];
 
 	NSArray *sortDescriptors = @[sortDescriptor];
 
@@ -278,7 +324,8 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 		// Edit the section name key path and cache name if appropriate.
 		// nil for section name key path means "no sections".
-	NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+//	NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath: @"representativeInfo.primaryLastName.name.stringGroupByFirstInitial" cacheName:nil];
+		NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath: @"representativeInfo.sectionLastName" cacheName:nil];
 	aFetchedResultsController.delegate = self;
 	self.fetchedResultsController = aFetchedResultsController;
 
@@ -304,7 +351,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	[_searchFetchRequest setEntity:entity];
 
 		// Edit the sort key as appropriate.
-	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryLastName.name" ascending:YES];
+	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryLastName.name" ascending:YES selector: @selector(caseInsensitiveCompare:)];
 	NSArray *sortDescriptors = @[sortDescriptor];
 	[_searchFetchRequest setSortDescriptors:sortDescriptors];
 
@@ -360,4 +407,15 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	}
 }
 
+- (void) enableTable {
+
+	NSLog (@"enable Table");
+	self.syncingOverlay.hidden = YES;
+	[self.activityIndicator stopAnimating];
+	self.segment.enabled = YES;
+	self.tableView.userInteractionEnabled = YES;
+	self.tableView.sectionIndexMinimumDisplayRowCount = 20;
+	[self.tableView reloadData];
+
+}
 @end

@@ -19,13 +19,13 @@
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hEW-dC-O9l" userLabel="CardView">
-                            <rect key="frame" x="8" y="2" width="584" height="596"/>
+                            <rect key="frame" x="0.0" y="2" width="600" height="596"/>
                             <subviews>
                                 <view opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="KWS-Ba-d4C">
-                                    <rect key="frame" x="0.0" y="0.0" width="584" height="596"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="596"/>
                                     <subviews>
                                         <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PiV-RI-TmQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="584" height="596"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="596"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </webView>
                                     </subviews>
@@ -46,7 +46,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="INo-O8-ATa" userLabel="ShadowView">
-                            <rect key="frame" x="8" y="2" width="584" height="596"/>
+                            <rect key="frame" x="0.0" y="2" width="600" height="596"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                     </subviews>
@@ -57,9 +57,9 @@
                         <constraint firstAttribute="trailing" secondItem="INo-O8-ATa" secondAttribute="trailing" id="EuS-iK-tEe"/>
                         <constraint firstItem="INo-O8-ATa" firstAttribute="top" secondItem="hEW-dC-O9l" secondAttribute="top" id="F6t-qa-cmk"/>
                         <constraint firstItem="INo-O8-ATa" firstAttribute="leading" secondItem="hEW-dC-O9l" secondAttribute="leading" id="KMk-eh-lq3"/>
-                        <constraint firstAttribute="trailing" secondItem="hEW-dC-O9l" secondAttribute="trailing" constant="8" id="KTt-34-Ec6"/>
+                        <constraint firstAttribute="trailing" secondItem="hEW-dC-O9l" secondAttribute="trailing" id="KTt-34-Ec6"/>
                         <constraint firstItem="INo-O8-ATa" firstAttribute="trailing" secondItem="hEW-dC-O9l" secondAttribute="trailing" id="RBn-tn-MQI"/>
-                        <constraint firstItem="hEW-dC-O9l" firstAttribute="leading" secondItem="A8i-8l-8LP" secondAttribute="leading" constant="8" id="bbk-88-36U"/>
+                        <constraint firstItem="hEW-dC-O9l" firstAttribute="leading" secondItem="A8i-8l-8LP" secondAttribute="leading" id="bbk-88-36U"/>
                         <constraint firstItem="INo-O8-ATa" firstAttribute="top" secondItem="A8i-8l-8LP" secondAttribute="top" id="h1o-wM-1bT"/>
                         <constraint firstItem="hEW-dC-O9l" firstAttribute="top" secondItem="A8i-8l-8LP" secondAttribute="top" constant="2" id="hea-UU-5d7"/>
                         <constraint firstAttribute="bottom" secondItem="hEW-dC-O9l" secondAttribute="bottom" constant="2" id="k0P-d6-RdG"/>
@@ -67,10 +67,10 @@
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
+                            <exclude reference="2Ep-Rk-WfA"/>
                             <exclude reference="EuS-iK-tEe"/>
                             <exclude reference="h1o-wM-1bT"/>
                             <exclude reference="pNs-T0-djB"/>
-                            <exclude reference="2Ep-Rk-WfA"/>
                         </mask>
                     </variation>
                 </view>

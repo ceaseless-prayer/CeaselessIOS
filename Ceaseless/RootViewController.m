@@ -79,17 +79,26 @@
             // make the model try to refresh whenever the app becomse active
             [[NSNotificationCenter defaultCenter] addObserver:_modelController selector:@selector(runIfNewDay) name:UIApplicationDidBecomeActiveNotification object:nil];
             
+            // make the model show new content when forced by the user
+            [[NSNotificationCenter defaultCenter] addObserver:_modelController selector:@selector(showNewContent) name:kForceShowNewContent object:nil];
+            
             // show the loading view when the app enters the foreground
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showLoading) name:UIApplicationWillEnterForegroundNotification object:nil];
+
+				// turn off the loading view when the page does not need to be refreshed
+			[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideLoading) name: kHideLoadingNotification object:nil];
 
         });
         // TODO figure out when/where we need to call this
         //[[NSNotificationCenter defaultCenter] removeObserver:self name:kModelRefreshNotification object:nil];
+		//[[NSNotificationCenter defaultCenter] removeObserver:self name:kHideLoadingNotification object:nil];
+
     }
     return _modelController;
 }
 
 - (void) showLoading {
+    self.view.userInteractionEnabled = NO;
     if (self.loadingLabel.hidden) {
         [self.loadingIndicator startAnimating];
         self.loadingLabel.hidden = NO;
@@ -98,6 +107,7 @@
 }
 
 - (void) hideLoading {
+    self.view.userInteractionEnabled = YES;
     if (!self.loadingLabel.hidden) {
         [self.loadingIndicator stopAnimating];
         self.loadingLabel.hidden = YES;
@@ -107,10 +117,10 @@
 
 - (void) refreshPageView {
     NSLog(@"Refreshing page view");
-    [self hideLoading];
     [self setBlurredBackground];
     DataViewController *startingViewController = [self.modelController viewControllerAtIndex:0 storyboard:self.storyboard];
     [self.pageViewController setViewControllers:@[startingViewController] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+    [self hideLoading];
 }
 
 #pragma mark - UIPageViewController delegate methods

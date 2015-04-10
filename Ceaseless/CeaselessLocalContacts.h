@@ -36,6 +36,7 @@
 - (PrayerRecord *) createPrayerRecordForPerson: (PersonIdentifier *) person;
 - (PersonIdentifier *) createCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
 - (NSArray *) getAllCeaselessContacts;
+- (ABRecordRef) getRepresentativeABPersonForCeaselessContact: (PersonIdentifier*) person;
 - (UIImage *) getImageForPersonIdentifier: (PersonIdentifier *) person;
 - (NSString*) initialsForPerson: (PersonIdentifier *) person;
 - (NSString*) compositeNameForPerson: (PersonIdentifier *) person;

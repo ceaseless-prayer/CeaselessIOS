@@ -15,5 +15,6 @@
 - (NSArray *) queuedPeople;
 - (void) emptyQueue;
 - (void) pickPeople;
+- (NSNumber *) computePrayerCycleProgress;
     
 @end

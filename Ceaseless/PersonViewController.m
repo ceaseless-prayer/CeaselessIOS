@@ -16,9 +16,10 @@
 #import "AppUtils.h"
 #import "CeaselessLocalContacts.h"
 #import <MessageUI/MessageUI.h>
+#import <AddressBookUI/AddressBookUI.h>
 #import "ContactsListsViewController.h"
 
-@interface PersonViewController () <MFMessageComposeViewControllerDelegate>
+@interface PersonViewController () <MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate, ABPersonViewControllerDelegate>
 
 @property (strong, nonatomic) UINavigationController *navController;
 @end
@@ -31,7 +32,7 @@ static NSString *kSMSMessage;
 
 +(void)initialize
 {
-    kInviteMessage =  NSLocalizedString(@"I prayed for you using the Ceaseless app today. You would like it. Search for Ceaseless Prayer in the App Store.", nil);
+    kInviteMessage =  NSLocalizedString(@"I prayed for you using the Ceaseless app today. You would like it. Visit http://www.ceaselessprayer.com", nil);
     kSMSMessage = NSLocalizedString(@"I prayed for you today when you came up in my Ceaseless app.", nil);
 }
 
@@ -195,13 +196,39 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                        NSLog(@"Cancel action");
                                    }];
 
+    NSString *invitationActionTitle = @"Invite to Ceaseless";
+    if(self.person.lastInvitedDate != nil) {
+        NSString *formattedDate = [NSDateFormatter localizedStringFromDate:self.person.lastInvitedDate
+                                                                 dateStyle:NSDateFormatterShortStyle
+                                                                 timeStyle:NSDateFormatterNoStyle];
+        invitationActionTitle = [NSString stringWithFormat: @"Invited %@", formattedDate];
+    }
+    
     UIAlertAction *inviteAction = [UIAlertAction
-                                   actionWithTitle:NSLocalizedString(@"Invite to Ceaseless", @"Invite to Ceaseless")
+                                   actionWithTitle:invitationActionTitle
                                    style:UIAlertActionStyleDefault
                                    handler:^(UIAlertAction *action)
                                    {
-                                       [self showSMS: kInviteMessage];
+                                       PersonInfo *info = self.person.representativeInfo;
+                                       if(info.primaryPhoneNumber) {
+                                           [self showSMS: kInviteMessage];
+                                       } else if(info.primaryEmail) {
+                                           [self showEmailForm];
+                                       } else {
+                                           UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
+                                                                                                  message:NSLocalizedString(@"Could not send an invitation because this person is missing contact information.", nil)
+                                                                                                 delegate:nil
+                                                                                        cancelButtonTitle:@"OK"
+                                                                                        otherButtonTitles:nil];
+                                           
+                                           [warningAlert show];
+                                       }
+                                       
+                                       self.person.lastInvitedDate = [NSDate date];
+                                       [self save];
+
                                        NSLog(@"Invite to Ceaseless");
+                                       
                                    }];
     
     UIAlertAction *sendMessageAction = [UIAlertAction
@@ -209,7 +236,21 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                         style:UIAlertActionStyleDefault
                                         handler:^(UIAlertAction *action)
                                         {
-                                            [self showSMS: kSMSMessage];
+                                            PersonInfo *info = self.person.representativeInfo;
+                                            // TODO should we switch the order?
+                                            if(info.primaryPhoneNumber) {
+                                                [self showSMS: kSMSMessage];
+                                            } else if(info.primaryEmail) {
+                                                [self showEmailForm];
+                                            } else {
+                                                UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
+                                                                                                       message:NSLocalizedString(@"Could not send a message because this person is missing contact information.", nil)
+                                                                                                      delegate:nil
+                                                                                             cancelButtonTitle:@"OK"
+                                                                                             otherButtonTitles:nil];
+                                                
+                                                [warningAlert show];
+                                            }
                                             NSLog(@"Send Message");
                                         }];
     
@@ -249,11 +290,21 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                            NSLog(@"Add note");
                                        }];
     
+    UIAlertAction *viewContact = [UIAlertAction
+                              actionWithTitle:NSLocalizedString(@"View contact", @"View contact")
+                              style:UIAlertActionStyleDefault
+                              handler:^(UIAlertAction *action)
+                              {
+                                  [self showABPerson];
+                                  NSLog(@"Showing contact");
+                              }];
+    
     [alertController addAction:cancelAction];
     [alertController addAction:removeFromCeaselessAction];
     [alertController addAction:inviteAction];
     [alertController addAction:sendMessageAction];
     [alertController addAction:addNote];
+    [alertController addAction:viewContact];
     
     // TODO this should toggle between adding or removing from favorites.
     // for now only show it if it isn't already favorited
@@ -333,6 +384,21 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // TODO animate?
 }
 
+- (void) showABPerson {
+    ABPersonViewController *view = [[ABPersonViewController alloc] init];
+    
+    view.personViewDelegate = self;
+    CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
+    
+    view.displayedPerson = [ceaselessContacts getRepresentativeABPersonForCeaselessContact:self.person];
+    [self.navigationController pushViewController:view animated:YES];
+}
+
+- (BOOL) personViewController:(ABPersonViewController*) controller shouldPerformDefaultActionForPerson: (ABRecordRef) person property: (ABPropertyID) property identifier: (ABMultiValueIdentifier) identifier {
+    return YES;
+}
+
+#pragma mark - Direct contact methods
 - (void)showSMS:(NSString*)file {
     
     if(![MFMessageComposeViewController canSendText]) {
@@ -356,6 +422,17 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Present message view controller on screen
     [self presentViewController:messageController animated:YES completion:nil];
 }
+
+- (void)showEmailForm {
+    NSArray *recipents = [NSArray arrayWithObjects:self.person.representativeInfo.primaryEmail.address, nil];
+    MFMailComposeViewController *mailController = [[MFMailComposeViewController alloc] init];
+    mailController.mailComposeDelegate = self;
+    [mailController setToRecipients: recipents];
+    
+    // Present mail view controller on screen
+    [self presentViewController:mailController animated:YES completion:nil];
+}
+
 
 #pragma mark - MessageUI delegate methods
 
@@ -385,6 +462,39 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+
+
+- (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult) result error: (NSError*) error
+{
+    UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Did not send message.", nil) delegate:nil
+                                                 cancelButtonTitle:@"OK"
+                                                 otherButtonTitles:nil];
+    
+    if(error) {
+        [warningAlert show];
+    } else {
+        switch (result) {
+            case MFMailComposeResultCancelled:
+                break;
+                
+            case MFMailComposeResultFailed:
+            {
+                [warningAlert show];
+            }
+                break;
+                
+            case MFMailComposeResultSent:
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - Notification handling
 
 - (void) registerForNotifications {

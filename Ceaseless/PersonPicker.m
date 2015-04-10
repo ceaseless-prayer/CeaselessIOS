@@ -47,6 +47,42 @@
     return self;
 }
 
+- (NSUInteger) countFetchResultForEntityName: (NSString*) entityName withPredicate: (NSPredicate *) predicate {
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
+    [fetchRequest setPredicate:predicate];
+    NSError *error = nil;
+    return [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+}
+
+- (NSNumber *) computePrayerCycleProgress {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if(![defaults objectForKey:kPrayerCycleStartDate]) {
+        [defaults setObject:[NSDate date] forKey:kPrayerCycleStartDate];
+        [defaults synchronize];
+    }
+    NSDate *cycleStartDate = [defaults objectForKey:kPrayerCycleStartDate];
+    
+    // filter out removed contacts
+    NSPredicate *filterRemovedContacts = [NSPredicate predicateWithFormat: @"removedDate = nil"];
+    NSPredicate *peoplePrayedForThisCycle = [NSPredicate predicateWithFormat:@"prayerRecords.@max.createDate > %@", cycleStartDate];
+    NSNumber *totalPeople = [NSNumber numberWithUnsignedInteger: [self countFetchResultForEntityName:@"PersonIdentifier" withPredicate: filterRemovedContacts]];
+    NSNumber *totalPeoplePrayedForThisCycle = [NSNumber numberWithUnsignedInteger:[self countFetchResultForEntityName:@"PersonIdentifier" withPredicate: peoplePrayedForThisCycle]];
+    NSLog(@"Prayer cycle progress: %@/%@", totalPeoplePrayedForThisCycle, totalPeople);
+    
+    // when everyone is prayed for restart the cycle.
+    if (totalPeople == totalPeoplePrayedForThisCycle) {
+        [defaults setObject:[NSDate date] forKey:kPrayerCycleStartDate];
+        [defaults synchronize];
+        return [NSNumber numberWithDouble:1];
+    } else {
+        if (totalPeople == 0) {
+            return 0;
+        } else {
+            return [NSNumber numberWithDouble:[totalPeoplePrayedForThisCycle doubleValue] / [totalPeople doubleValue]];
+        }
+    }
+}
+
 - (void)initializeAddressBook {
     // get address book authorization
     ABAuthorizationStatus status = ABAddressBookGetAuthorizationStatus();

@@ -147,7 +147,7 @@
                                         </mask>
                                     </variation>
                                 </view>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="60" translatesAutoresizingMaskIntoConstraints="NO" id="eF7-HN-urH" userLabel="PlaceholderText">
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="60" translatesAutoresizingMaskIntoConstraints="NO" id="eF7-HN-urH" userLabel="PlaceholderText">
                                     <rect key="frame" x="273" y="88" width="39" height="39"/>
                                     <color key="backgroundColor" red="0.0" green="0.0039215686274509803" blue="0.18431372549019609" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
