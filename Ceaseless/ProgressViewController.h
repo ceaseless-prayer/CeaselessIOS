@@ -11,4 +11,5 @@
 
 @interface ProgressViewController : DataViewController
     @property (strong, nonatomic) IBOutlet ProgressView *progressView;
+    - (IBAction)showMorePeople:(id)sender;
 @end

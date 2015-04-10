@@ -13,6 +13,8 @@
 @property (weak, nonatomic) IBOutlet UIView *shadowView;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UIProgressView *progressBar;
+@property (weak, nonatomic) IBOutlet UIButton *showMoreButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingMore;
 @property (weak, nonatomic) IBOutlet UILabel *progressLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @end

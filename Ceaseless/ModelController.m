@@ -80,6 +80,28 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
 }
 
 #pragma mark - Ceaseless daily digest process
+- (void)showNewContent {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDate *now = [NSDate date];
+    
+    // Update the last refresh date
+    [defaults setObject:now forKey:kLocalLastRefreshDate];
+    [defaults synchronize];
+    NSLog(@"It's a new day!");
+    
+    ScripturePicker *scripturePicker = [[ScripturePicker alloc] init];
+    [scripturePicker manageScriptureQueue];
+    [scripturePicker popScriptureQueue];
+    
+    PersonPicker *personPicker = [[PersonPicker alloc] init];
+    [personPicker emptyQueue];
+    [personPicker pickPeople];
+    
+    [self prepareCardArray];
+    [self getNewBackgroundImage];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];
+}
+
 // when the app becomes active, this method is run to update the model
 - (void) runIfNewDay {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -101,29 +123,13 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
             NSLog(@"Debug Mode enabled: refreshing application every time it is newly opened.");
         }
         
-        // Update the last refresh date
-        [defaults setObject:now forKey:kLocalLastRefreshDate];
-        [defaults synchronize];
-        NSLog(@"It's a new day!");
-        
-        ScripturePicker *scripturePicker = [[ScripturePicker alloc] init];
-        [scripturePicker manageScriptureQueue];
-        [scripturePicker popScriptureQueue];
-        
-        PersonPicker *personPicker = [[PersonPicker alloc] init];
-        [personPicker emptyQueue];
-        [personPicker pickPeople];
-        
-        [self prepareCardArray];
-        [self getNewBackgroundImage];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];
+        [self showNewContent];
         [ceaselessContacts ensureCeaselessContactsSynced];
         NSLog(@"Ceaseless has been refreshed");
     } else if([_cardArray count] == 0) {
         [self prepareCardArray]; // initial card array prep when app starts
         [[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];
     }
-
 }
 
 // https://developer.apple.com/library/prerelease/ios//documentation/Cocoa/Conceptual/DatesAndTimes/Articles/dtCalendricalCalculations.html#//apple_ref/doc/uid/TP40007836-SW1

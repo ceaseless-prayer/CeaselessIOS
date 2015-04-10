@@ -38,4 +38,8 @@
 
     // this is the name of the notification that contacts have been synced
     NSString *const kContactsSyncedNotification = @"contactsSyncedNotification";
+
+    // this is the name of the notification that the user wants to
+    // show new content
+    NSString *const kForceShowNewContent = @"forceShowNewContent";
 @end

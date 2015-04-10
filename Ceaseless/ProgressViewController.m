@@ -8,6 +8,7 @@
 
 #import "ProgressViewController.h"
 #import "AppUtils.h"
+#import "AppConstants.h"
 
 @interface ProgressViewController ()
 
@@ -27,6 +28,12 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)showMorePeople:(id)sender {
+    self.progressView.showMoreButton.hidden = YES;
+    [self.progressView.loadingMore startAnimating];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kForceShowNewContent object:nil];
 }
 
 /*
