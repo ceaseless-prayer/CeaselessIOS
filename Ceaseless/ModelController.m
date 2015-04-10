@@ -122,7 +122,9 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
     } else if([_cardArray count] == 0) {
         [self prepareCardArray]; // initial card array prep when app starts
         [[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];
-    }
+	} else {
+		[[NSNotificationCenter defaultCenter] postNotificationName:kHideLoadingNotification object:nil];
+	}
 
 }
 

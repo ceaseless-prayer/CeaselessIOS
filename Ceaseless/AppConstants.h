@@ -17,4 +17,5 @@
     FOUNDATION_EXPORT NSString *const kLocalLastAddressBookSyncedDate;
     FOUNDATION_EXPORT NSString *const kPrayerCycleStartDate;
     FOUNDATION_EXPORT NSString *const kContactsSyncedNotification;
+	FOUNDATION_EXPORT NSString *const kHideLoadingNotification;
 @end
