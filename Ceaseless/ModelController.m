@@ -128,7 +128,9 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
     } else if([_cardArray count] == 0) {
         [self prepareCardArray]; // initial card array prep when app starts
         [[NSNotificationCenter defaultCenter] postNotificationName:kModelRefreshNotification object:nil];
-    }
+	} else {
+		[[NSNotificationCenter defaultCenter] postNotificationName:kHideLoadingNotification object:nil];
+	}
 }
 
 // https://developer.apple.com/library/prerelease/ios//documentation/Cocoa/Conceptual/DatesAndTimes/Articles/dtCalendricalCalculations.html#//apple_ref/doc/uid/TP40007836-SW1

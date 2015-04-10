@@ -85,9 +85,14 @@
             // show the loading view when the app enters the foreground
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showLoading) name:UIApplicationWillEnterForegroundNotification object:nil];
 
+				// turn off the loading view when the page does not need to be refreshed
+			[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideLoading) name: kHideLoadingNotification object:nil];
+
         });
         // TODO figure out when/where we need to call this
         //[[NSNotificationCenter defaultCenter] removeObserver:self name:kModelRefreshNotification object:nil];
+		//[[NSNotificationCenter defaultCenter] removeObserver:self name:kHideLoadingNotification object:nil];
+
     }
     return _modelController;
 }
