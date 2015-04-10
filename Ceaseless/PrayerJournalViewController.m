@@ -21,7 +21,11 @@ typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
 	predicateScopeFriends = 0,
 	predicateScopeMe = 1
 };
-
+typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
+{
+	searchScopeNotes = 0,
+	searchScopePeople = 1
+};
 @interface PrayerJournalViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating>
 
 @property (strong, nonatomic) NSArray *filteredList;
@@ -63,7 +67,8 @@ typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
 	self.searchController.dimsBackgroundDuringPresentation = NO;
 	self.searchController.searchBar.barTintColor = UIColorFromRGBWithAlpha(0x24292f , 0.4);
 	self.searchController.searchBar.tintColor = [UIColor whiteColor];
-	self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"",@"")];
+	self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"Note text",@"Note text"),
+														  NSLocalizedString(@"Person Tagged",@"Person Tagged")];
 	self.searchController.searchBar.delegate = self;
 //		// Hide the search bar until user scrolls up
 	CGRect newBounds = self.tableView.bounds;
@@ -313,23 +318,51 @@ typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
 	NSString *searchString = searchController.searchBar.text;
-	[self searchForText:searchString];
+	[self searchForText:searchString scope: searchController.searchBar.selectedScopeButtonIndex];
 	[self.tableView reloadData];
 }
 
-- (void)searchForText:(NSString *)searchText
+- (void)searchForText:(NSString *)searchText scope:(PrayerJournalSearchScope)scopeOption
 {
 	if (self.managedObjectContext) {
+
+
 		NSString *buildPredicateFormat = [NSString stringWithString: self.selectedNotesPredicate];
-		NSString *predicateFormat = [buildPredicateFormat stringByAppendingString: @" AND text contains[cd] %@"];
+		NSString *predicateFormat;
+		NSString *entityName;
+
+		if (scopeOption == searchScopeNotes) {
+			entityName = @"Note";
+			predicateFormat = [buildPredicateFormat stringByAppendingString: @" AND text contains[cd] %@"];
+//		} else {
+//			entityName = @"PersonIdentifier";
+//			predicateFormat = @"notes@count > 0 AND (representativeInfo.primaryFirstName.name BEGINSWITH[cd] %@ OR representativeInfo.primaryLastName.name BEGINSWITH[cd] %@)";
+		}
+		NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:self.managedObjectContext];
+		[self.searchFetchRequest setEntity:entity];
 
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, searchText];
-
 		[self.searchFetchRequest setPredicate:predicate];
 
 		NSError *error = nil;
 		self.filteredList = [self.managedObjectContext executeFetchRequest:self.searchFetchRequest error:&error];
 	}
+}
+
+- (NSFetchRequest *)searchFetchRequest
+{
+	if (_searchFetchRequest != nil)
+  {
+  return _searchFetchRequest;
+  }
+
+	_searchFetchRequest = [[NSFetchRequest alloc] init];
+
+	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastUpdatedDate" ascending:NO];
+	NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
+	[_searchFetchRequest setSortDescriptors:sortDescriptors];
+
+	return _searchFetchRequest;
 }
 
 #pragma mark - Fetched results controller
@@ -378,27 +411,9 @@ typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
 
 	return _fetchedResultsController;
 }
-- (NSFetchRequest *)searchFetchRequest
-{
-	if (_searchFetchRequest != nil)
-  {
-  return _searchFetchRequest;
-  }
 
-	_searchFetchRequest = [[NSFetchRequest alloc] init];
-	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
-	[_searchFetchRequest setEntity:entity];
-
-	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastUpdatedDate" ascending:NO];
-	NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
-	[_searchFetchRequest setSortDescriptors:sortDescriptors];
-
-	return _searchFetchRequest;
-}
 - (void) listAll {
-	  // Test listing all tagData from the store
-//  AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-//  NSManagedObjectContext *managedObjectContext = appDelegate.managedObjectContext;
+
   NSError * error = nil;
 
   NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
