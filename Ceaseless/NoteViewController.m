@@ -386,7 +386,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 - (void)updatePersonInfo:(NSOrderedSet *)abRecordIDs
 {
-	ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+	ABAddressBookRef addressBook = [AppUtils getAddressBookRef];
 
 		//reset mutablePeople set with no objects
 	self.mutablePeopleSet = [[NSMutableOrderedSet alloc] initWithCapacity: 1];
