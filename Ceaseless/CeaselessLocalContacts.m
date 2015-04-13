@@ -8,6 +8,7 @@
 
 #import "CeaselessLocalContacts.h"
 #import "AppConstants.h"
+#import "AppUtils.h"
 
 @implementation CeaselessLocalContacts
 
@@ -26,7 +27,7 @@
 - (instancetype) init {
     AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
     CFErrorRef error = NULL;
-    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, &error);
+    ABAddressBookRef addressBook = [AppUtils getAddressBookRef];
     CFBridgingRelease(error);
     // TODO when is this address book cleaned up?
     return [self initWithManagedObjectContext:appDelegate.managedObjectContext andAddressBook:addressBook];
@@ -104,7 +105,7 @@ void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictiona
 }
 
 - (void) ensureCeaselessContactsSynced {
-    if(!_syncing && ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
+    if(!_syncing && ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized && self.backgroundTask == UIBackgroundTaskInvalid) {
         
         self.backgroundTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
             NSLog(@"Background handler called. Not running background tasks anymore.");
@@ -115,8 +116,7 @@ void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictiona
         _syncing = YES;
         // refresh address book in the background
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            CFErrorRef error = NULL;
-            ABAddressBookRef addressBook2 = ABAddressBookCreateWithOptions(NULL, &error);
+            ABAddressBookRef addressBook2 = [AppUtils getAddressBookRef];
             
             NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
             [managedObjectContext setParentContext:self.managedObjectContext];

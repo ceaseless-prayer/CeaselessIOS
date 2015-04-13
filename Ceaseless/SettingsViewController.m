@@ -142,7 +142,7 @@
 - (void)taggedPersonPickerDidFinish:(TaggedPersonPicker *)taggedPersonPicker
 					withABRecordIDs:(NSOrderedSet *)abRecordIDs {
 
-	ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+	ABAddressBookRef addressBook = [AppUtils getAddressBookRef];
 
 
 	NSNumber *number = [abRecordIDs firstObject];

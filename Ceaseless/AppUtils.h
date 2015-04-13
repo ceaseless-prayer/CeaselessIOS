@@ -12,6 +12,7 @@
 #import "PersonIdentifier.h"
 #import "PersonInfo.h"
 #import "Name.h"
+#import <AddressBookUI/AddressBookUI.h>
 
 #define UIColorFromRGBWithAlpha(rgbValue,a) [UIColor \
 colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
@@ -21,6 +22,5 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 @interface AppUtils : NSObject
 + (UIImageView *)setBlurredBackgroundForFrame: (CGRect) frame;
 + (UIImage *) getDynamicBackgroundImage;
-
-
++ (ABAddressBookRef) getAddressBookRef;
 @end
