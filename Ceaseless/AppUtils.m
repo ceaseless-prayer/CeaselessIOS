@@ -64,6 +64,7 @@
 
     // get address book authorization
     ABAuthorizationStatus status = ABAddressBookGetAuthorizationStatus();
+    
     if (status == kABAuthorizationStatusDenied) {
         // if you got here, user had previously denied/revoked permission for your
         // app to access the contacts, and all you can do is handle this gracefully,
@@ -117,6 +118,6 @@
         return addressBook;
     }
     
-    return NULL;
+    return addressBook;
 }
 @end
