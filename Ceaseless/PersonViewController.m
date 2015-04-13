@@ -328,6 +328,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)removePersonFromCeaseless {
     self.person.removedDate = [NSDate date];
+    [self.managedObjectContext deleteObject: (NSManagedObject*)self.person.queued];
     [self save];
     
     //if the card is in a pageController then its in the card deck, if its not then it was called by the contacts list
