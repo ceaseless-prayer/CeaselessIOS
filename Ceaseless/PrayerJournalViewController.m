@@ -328,24 +328,53 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 
 
 		NSString *buildPredicateFormat = [NSString stringWithString: self.selectedNotesPredicate];
-		NSString *predicateFormat;
-		NSString *entityName;
 
 		if (scopeOption == searchScopeNotes) {
-			entityName = @"Note";
-			predicateFormat = [buildPredicateFormat stringByAppendingString: @" AND text contains[cd] %@"];
-//		} else {
-//			entityName = @"PersonIdentifier";
-//			predicateFormat = @"notes@count > 0 AND (representativeInfo.primaryFirstName.name BEGINSWITH[cd] %@ OR representativeInfo.primaryLastName.name BEGINSWITH[cd] %@)";
+			NSString *predicateFormat = [buildPredicateFormat stringByAppendingString: @" AND text contains[cd] %@"];
+			NSEntityDescription *entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
+			[self.searchFetchRequest setEntity:entity];
+
+			NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastUpdatedDate" ascending:NO];
+			NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
+			[self.searchFetchRequest setSortDescriptors:sortDescriptors];
+
+			NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, searchText];
+			[self.searchFetchRequest setPredicate:predicate];
+
+			NSError *error = nil;
+			self.filteredList = [self.managedObjectContext executeFetchRequest:self.searchFetchRequest error:&error];
+
+		} else {
+//			NSString *predicateFormat = @"notes@count > 0 AND (representativeInfo.primaryFirstName.name BEGINSWITH[cd] %@ OR representativeInfo.primaryLastName.name BEGINSWITH[cd] %@)";
+			NSString *predicateFormat = @"(representativeInfo.primaryFirstName.name BEGINSWITH[cd] %@ OR representativeInfo.primaryLastName.name BEGINSWITH[cd] %@)";
+
+			NSEntityDescription *entity = [NSEntityDescription entityForName:@"PersonIdentifier" inManagedObjectContext:self.managedObjectContext];
+			[self.searchFetchRequest setEntity:entity];
+
+			NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey: @"representativeInfo.primaryLastName.name" ascending: YES selector: @selector (caseInsensitiveCompare:)];
+			NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
+			[self.searchFetchRequest setSortDescriptors:sortDescriptors];
+
+			NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, searchText, searchText];
+//			NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat];
+
+			[self.searchFetchRequest setPredicate:predicate];
+
+			NSError *error = nil;
+			NSArray *arrayOfPersonIdentifiers = [self.managedObjectContext executeFetchRequest:self.searchFetchRequest error:&error];
+
+			NSSortDescriptor *sortDescriptorForNotes = [[NSSortDescriptor alloc] initWithKey:@"lastUpdatedDate" ascending:NO];
+			NSArray *sortDescriptorsForNotes = [NSArray arrayWithObjects:sortDescriptorForNotes, nil];
+
+			NSMutableArray *arrayOfAllNotes = [[NSMutableArray alloc] initWithCapacity: [arrayOfPersonIdentifiers count]];
+			for (PersonIdentifier *person in arrayOfPersonIdentifiers) {
+				if ([person.notes count] > 0) {
+					NSArray *arrayOfPersonNotes = [person.notes sortedArrayUsingDescriptors:sortDescriptorsForNotes];
+					[arrayOfAllNotes addObjectsFromArray: arrayOfPersonNotes];
+				}
+			}
+			self.filteredList = [NSArray arrayWithArray:arrayOfAllNotes];
 		}
-		NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:self.managedObjectContext];
-		[self.searchFetchRequest setEntity:entity];
-
-		NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, searchText];
-		[self.searchFetchRequest setPredicate:predicate];
-
-		NSError *error = nil;
-		self.filteredList = [self.managedObjectContext executeFetchRequest:self.searchFetchRequest error:&error];
 	}
 }
 
@@ -358,9 +387,7 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 
 	_searchFetchRequest = [[NSFetchRequest alloc] init];
 
-	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastUpdatedDate" ascending:NO];
-	NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
-	[_searchFetchRequest setSortDescriptors:sortDescriptors];
+
 
 	return _searchFetchRequest;
 }
