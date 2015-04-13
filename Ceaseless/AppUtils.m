@@ -60,6 +60,9 @@
 	return [UIImage imageWithContentsOfFile:imagePath];
 }
 
+// this is a blocking way to get an address book reference
+// we can alternatively use the non-blocking way
+// if we are in a view that can be updated after the user has set permissions.
 + (ABAddressBookRef) getAddressBookRef {
 
     // get address book authorization
