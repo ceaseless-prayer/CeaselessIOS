@@ -76,8 +76,8 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
 	self.searchController.searchResultsUpdater = self;
 	self.searchController.dimsBackgroundDuringPresentation = NO;
-	self.searchController.searchBar.barTintColor = UIColorFromRGBWithAlpha(0x24292f , 0.4);
-	self.searchController.searchBar.tintColor = [UIColor whiteColor];
+	self.searchController.searchBar.barTintColor = UIColorFromRGBWithAlpha(0x00012f , 0.4);
+	self.searchController.searchBar.tintColor = [UIColor lightGrayColor];
 	self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"Note text",@"Note text"),
 														  NSLocalizedString(@"Person Tagged",@"Person Tagged")];
 	self.searchController.searchBar.delegate = self;
