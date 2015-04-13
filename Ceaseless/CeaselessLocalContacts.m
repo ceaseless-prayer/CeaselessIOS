@@ -16,6 +16,8 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedCeaselessLocalContacts = [[self alloc] init];
+        // listen for changes to address book and update.
+        ABAddressBookRegisterExternalChangeCallback(sharedCeaselessLocalContacts.addressBook, externalAddressBookChangeCallback, (__bridge void *)(sharedCeaselessLocalContacts));
     });
     
     return sharedCeaselessLocalContacts;
@@ -97,6 +99,10 @@
 }
 
 #pragma mark - Keeping Ceaseless and the address book in sync
+void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictionaryRef info, void *context) {
+    [((__bridge CeaselessLocalContacts *) context) ensureCeaselessContactsSynced];
+}
+
 - (void) ensureCeaselessContactsSynced {
     if(!_syncing && ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
         
