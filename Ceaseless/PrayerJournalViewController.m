@@ -21,8 +21,12 @@ typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
 	predicateScopeFriends = 0,
 	predicateScopeMe = 1
 };
-
-@interface PrayerJournalViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating>
+typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
+{
+	searchScopeNotes = 0,
+	searchScopePeople = 1
+};
+@interface PrayerJournalViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UISearchControllerDelegate>
 
 @property (strong, nonatomic) NSArray *filteredList;
 @property (strong, nonatomic) NSFetchRequest *searchFetchRequest;
@@ -52,26 +56,11 @@ typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
 	if(backgroundImage != nil) {
 		self.backgroundImageView.image = backgroundImage;
 	}
-
 	
 	self.tableView.estimatedRowHeight = 130.0;
 	self.tableView.rowHeight = UITableViewAutomaticDimension;
 
-		//searchController cannot be set up in IB, so set it up here
-	self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-	self.searchController.searchResultsUpdater = self;
-	self.searchController.dimsBackgroundDuringPresentation = NO;
-	self.searchController.searchBar.barTintColor = UIColorFromRGBWithAlpha(0x24292f , 0.4);
-	self.searchController.searchBar.tintColor = [UIColor whiteColor];
-	self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"",@"")];
-	self.searchController.searchBar.delegate = self;
-//		// Hide the search bar until user scrolls up
-	CGRect newBounds = self.tableView.bounds;
-	newBounds.origin.y = newBounds.origin.y + self.searchController.searchBar.bounds.size.height;
-	self.tableView.bounds = newBounds;
-
-	self.tableView.tableHeaderView = self.searchController.searchBar;
-	self.definesPresentationContext = YES;
+	[self searchControllerSetup];
 
 	NSDictionary *segmentTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
 											   [UIColor whiteColor], NSForegroundColorAttributeName,
@@ -82,56 +71,35 @@ typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
 	[self.segment setTitleTextAttributes: segmentTitleTextAttributes forState:UIControlStateSelected];
 
 }
+- (void) searchControllerSetup {
+		//searchController cannot be set up in IB, so set it up here
+	self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+	self.searchController.searchResultsUpdater = self;
+	self.searchController.dimsBackgroundDuringPresentation = NO;
+	self.searchController.searchBar.barTintColor = UIColorFromRGBWithAlpha(0x00012f , 0.4);
+	self.searchController.searchBar.tintColor = [UIColor lightGrayColor];
+	self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"Note text",@"Note text"),
+														  NSLocalizedString(@"Person Tagged",@"Person Tagged")];
+	self.searchController.searchBar.delegate = self;
+	self.searchController.delegate = self;
+		//		// Hide the search bar until user scrolls up
+	CGRect newBounds = self.tableView.bounds;
+	newBounds.origin.y = newBounds.origin.y + self.searchController.searchBar.bounds.size.height;
+	self.tableView.bounds = newBounds;
 
-//- (UIImageView *)setBlurredBackgroundForFrame: (CGRect) frame {
-//		//| ----------------------------------------------------------------------------
-//		//! Applies a blur, tint color, and saturation adjustment to @a inputImage,
-//		//! optionally within the area specified by @a maskImage.
-//		//!
-//		//! @param  inputImage
-//		//!         The source image.  A modified copy of this image will be returned.
-//		//! @param  blurRadius
-//		//!         The radius of the blur in points.
-//		//! @param  tintColor
-//		//!         An optional UIColor object that is uniformly blended with the
-//		//!         result of the blur and saturation operations.  The alpha channel
-//		//!         of this color determines how strong the tint is.
-//		//! @param  saturationDeltaFactor
-//		//!         A value of 1.0 produces no change in the resulting image.  Values
-//		//!         less than 1.0 will desaturation the resulting image while values
-//		//!         greater than 1.0 will have the opposite effect.
-//		//! @param  maskImage
-//		//!         If specified, @a inputImage is only modified in the area(s) defined
-//		//!         by this mask.  This must be an image mask or it must meet the
-//		//!         requirements of the mask parameter of CGContextClipToMask.
-//
-//	UIImageView *imageView = [[UIImageView alloc] initWithFrame: frame];
-//	imageView.contentMode = UIViewContentModeScaleAspectFill;
-//	UIImage *backgroundImage = [AppUtils getDynamicBackgroundImage];
-//	if(backgroundImage != nil) {
-//		imageView.image = backgroundImage;
-//	} else {
-//		imageView.image = [UIImage imageNamed:@"Screen Shot 2015-02-18 at 8.22.42 AM.png"];
-//	}
-//
-//		// Blur effect
-//	UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-//	UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-//	[blurEffectView setFrame: frame];
-//	[imageView addSubview:blurEffectView];
-//
-//	imageView.image = [imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-//	imageView.tintColor = UIColorFromRGBWithAlpha(0x00012f, 0.4);
-//
-//
-////	UIImage *blurredImage = [UIImageEffects imageByApplyingBlurToImage:imageView.image withRadius: 0 tintColor: UIColorFromRGBWithAlpha(0x00012f, 0.6) saturationDeltaFactor:1.0 maskImage:imageView.image];
-////	imageView.image = blurredImage;
-//	return imageView;
-//
-//}
-- (void) viewDidAppear:(BOOL)animated {
-	[super viewDidAppear: animated];
+	self.tableView.tableHeaderView = self.searchController.searchBar;
+	self.definesPresentationContext = YES;
+}
 
+- (void) viewWillAppear:(BOOL)animated {
+	[super viewWillAppear: animated];
+	[self adjustSearchBarToShowScopeBar];
+}
+
+- (void)adjustSearchBarToShowScopeBar{
+		//if this isn't done, the top cell is hidden under the scope buttons :(  Apple Bug
+	[self.searchController.searchBar sizeToFit];
+	self.tableView.tableHeaderView = self.searchController.searchBar;
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -303,7 +271,6 @@ typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
 {
 	[self updateSearchResultsForSearchController:self.searchController];
-
 }
 
 #pragma mark -
@@ -313,23 +280,82 @@ typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
 	NSString *searchString = searchController.searchBar.text;
-	[self searchForText:searchString];
+	[self searchForText:searchString scope: searchController.searchBar.selectedScopeButtonIndex];
+	[self adjustSearchBarToShowScopeBar];
 	[self.tableView reloadData];
 }
 
-- (void)searchForText:(NSString *)searchText
+- (void)searchForText:(NSString *)searchText scope:(PrayerJournalSearchScope)scopeOption
 {
 	if (self.managedObjectContext) {
+
 		NSString *buildPredicateFormat = [NSString stringWithString: self.selectedNotesPredicate];
-		NSString *predicateFormat = [buildPredicateFormat stringByAppendingString: @" AND text contains[cd] %@"];
 
-		NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, searchText];
+		if (scopeOption == searchScopeNotes) {
+			NSString *predicateFormat = [buildPredicateFormat stringByAppendingString: @" AND text contains[cd] %@"];
+			NSEntityDescription *entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
+			[self.searchFetchRequest setEntity:entity];
 
-		[self.searchFetchRequest setPredicate:predicate];
+			NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastUpdatedDate" ascending:NO];
+			NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
+			[self.searchFetchRequest setSortDescriptors:sortDescriptors];
 
-		NSError *error = nil;
-		self.filteredList = [self.managedObjectContext executeFetchRequest:self.searchFetchRequest error:&error];
+			NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, searchText];
+			[self.searchFetchRequest setPredicate:predicate];
+
+			NSError *error = nil;
+			self.filteredList = [self.managedObjectContext executeFetchRequest:self.searchFetchRequest error:&error];
+
+		} else {
+//			NSString *predicateFormat = @"notes@count > 0 AND (representativeInfo.primaryFirstName.name BEGINSWITH[cd] %@ OR representativeInfo.primaryLastName.name BEGINSWITH[cd] %@)";
+			NSString *predicateFormat = @"(representativeInfo.primaryFirstName.name BEGINSWITH[cd] %@ OR representativeInfo.primaryLastName.name BEGINSWITH[cd] %@)";
+
+			NSEntityDescription *entity = [NSEntityDescription entityForName:@"PersonIdentifier" inManagedObjectContext:self.managedObjectContext];
+			[self.searchFetchRequest setEntity:entity];
+
+			NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey: @"representativeInfo.primaryLastName.name" ascending: YES selector: @selector (caseInsensitiveCompare:)];
+			NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
+			[self.searchFetchRequest setSortDescriptors:sortDescriptors];
+
+			NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, searchText, searchText];
+//			NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat];
+
+			[self.searchFetchRequest setPredicate:predicate];
+
+			NSError *error = nil;
+			NSArray *arrayOfPersonIdentifiers = [self.managedObjectContext executeFetchRequest:self.searchFetchRequest error:&error];
+
+			NSSortDescriptor *sortDescriptorForNotes = [[NSSortDescriptor alloc] initWithKey:@"lastUpdatedDate" ascending:NO];
+			NSArray *sortDescriptorsForNotes = [NSArray arrayWithObjects:sortDescriptorForNotes, nil];
+
+			NSMutableArray *arrayOfAllNotes = [[NSMutableArray alloc] initWithCapacity: [arrayOfPersonIdentifiers count]];
+			for (PersonIdentifier *person in arrayOfPersonIdentifiers) {
+				if ([person.notes count] > 0) {
+					NSArray *arrayOfPersonNotes = [person.notes sortedArrayUsingDescriptors:sortDescriptorsForNotes];
+					[arrayOfAllNotes addObjectsFromArray: arrayOfPersonNotes];
+				}
+			}
+			self.filteredList = [NSArray arrayWithArray:arrayOfAllNotes];
+		}
 	}
+}
+
+- (NSFetchRequest *)searchFetchRequest
+{
+	if (_searchFetchRequest != nil)
+  {
+  return _searchFetchRequest;
+  }
+
+	_searchFetchRequest = [[NSFetchRequest alloc] init];
+
+
+
+	return _searchFetchRequest;
+}
+
+- (void)willDismissSearchController:(UISearchController *)searchController {
+	[self searchControllerSetup];
 }
 
 #pragma mark - Fetched results controller
@@ -378,27 +404,9 @@ typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
 
 	return _fetchedResultsController;
 }
-- (NSFetchRequest *)searchFetchRequest
-{
-	if (_searchFetchRequest != nil)
-  {
-  return _searchFetchRequest;
-  }
 
-	_searchFetchRequest = [[NSFetchRequest alloc] init];
-	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
-	[_searchFetchRequest setEntity:entity];
-
-	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastUpdatedDate" ascending:NO];
-	NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
-	[_searchFetchRequest setSortDescriptors:sortDescriptors];
-
-	return _searchFetchRequest;
-}
 - (void) listAll {
-	  // Test listing all tagData from the store
-//  AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-//  NSManagedObjectContext *managedObjectContext = appDelegate.managedObjectContext;
+
   NSError * error = nil;
 
   NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];

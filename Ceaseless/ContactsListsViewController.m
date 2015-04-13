@@ -64,7 +64,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	self.searchController.searchResultsUpdater = self;
 	self.searchController.dimsBackgroundDuringPresentation = NO;
 	self.searchController.searchBar.barTintColor = UIColorFromRGBWithAlpha(0x00012f , 0.4);
-	self.searchController.searchBar.tintColor = [UIColor whiteColor];
+	self.searchController.searchBar.tintColor = [UIColor lightGrayColor];
 	self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"",@"")];
 	self.searchController.searchBar.delegate = self;
 		//		// Hide the search bar until user scrolls up
