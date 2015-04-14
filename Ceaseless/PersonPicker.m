@@ -12,6 +12,7 @@
 #import "PrayerRecord.h"
 #import "PeopleQueue.h"
 #import "AppConstants.h"
+#import "AppUtils.h"
 
 @interface PersonPicker ()
 
@@ -39,7 +40,7 @@
         }
         dailyPersonCount = [defaults integerForKey:kDailyPersonCount];
         
-        [self initializeAddressBook];
+        _addressBook = [AppUtils getAddressBookRef];
         self.managedObjectContext = appDelegate.managedObjectContext;
         self.numberOfPeople = dailyPersonCount;
         self.ceaselessContacts =  [CeaselessLocalContacts sharedCeaselessLocalContacts];
@@ -80,56 +81,6 @@
         } else {
             return [NSNumber numberWithDouble:[totalPeoplePrayedForThisCycle doubleValue] / [totalPeople doubleValue]];
         }
-    }
-}
-
-- (void)initializeAddressBook {
-    // get address book authorization
-    ABAuthorizationStatus status = ABAddressBookGetAuthorizationStatus();
-    if (status == kABAuthorizationStatusDenied) {
-        // if you got here, user had previously denied/revoked permission for your
-        // app to access the contacts, and all you can do is handle this gracefully,
-        // perhaps telling the user that they have to go to settings to grant access
-        // to contacts
-        [[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit to the \"Privacy\" section in the iPhone Settings app." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-    }
-    
-    CFErrorRef error = NULL;
-    _addressBook = ABAddressBookCreateWithOptions(NULL, &error);
-    // TODO figure out when we release the address book.
-    //        if (_addressBook) CFRelease(_addressBook);
-    
-    if (error) {
-        NSLog(@"ABAddressBookCreateWithOptions error: %@", CFBridgingRelease(error));
-        if (_addressBook) CFRelease(_addressBook);
-    }
-    
-    if (status == kABAuthorizationStatusNotDetermined) {
-        // present the user the UI that requests permission to contacts ...
-        ABAddressBookRequestAccessWithCompletion(_addressBook, ^(bool granted, CFErrorRef error) {
-            if (error) {
-                NSLog(@"ABAddressBookRequestAccessWithCompletion error: %@", CFBridgingRelease(error));
-            }
-            
-            if (granted) {
-                // TODO this should probably be a notification
-                // which then kicks off the initalization process.
-                // show a housekeeping loading view and hide it when the process is done.
-                // if they gave you permission, then just carry on
-                // send out notification that permission is granted.
-                // we can detect the notification, kick off ensureContactsAreInitializedAndRefreshed
-                // and show the UI.
-            } else {
-                // however, if they didn't give you permission, handle it gracefully, for example...
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    // BTW, this is not on the main thread, so dispatch UI updates back to the main queue
-                    [[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit to the \"Privacy\" section in the iPhone Settings app." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                });
-            }
-        });
-        
-    } else if (status == kABAuthorizationStatusAuthorized) {
-        NSLog(@"Address Book initialized");
     }
 }
 

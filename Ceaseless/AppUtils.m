@@ -62,13 +62,77 @@
 
 // https://developer.apple.com/library/prerelease/ios//documentation/Cocoa/Conceptual/DatesAndTimes/Articles/dtCalendricalCalculations.html#//apple_ref/doc/uid/TP40007836-SW1
 // Listing 13. Days between two dates, as the number of midnights between
-+ (NSInteger) daysWithinEraFromDate:(NSDate *) startDate toDate:(NSDate *) endDate {
++ (NSNumber *) daysWithinEraFromDate:(NSDate *) startDate toDate:(NSDate *) endDate {
     NSCalendar *gregorian = [[NSCalendar alloc]
                              initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSInteger startDay = [gregorian ordinalityOfUnit:NSCalendarUnitDay
                                               inUnit: NSCalendarUnitEra forDate:startDate];
     NSInteger endDay = [gregorian ordinalityOfUnit:NSCalendarUnitDay
                                             inUnit: NSCalendarUnitEra forDate:endDate];
-    return endDay-startDay;
+    return [NSNumber numberWithLong: endDay-startDay];
+}
+
+// this is a blocking way to get an address book reference
+// we can alternatively use the non-blocking way
+// if we are in a view that can be updated after the user has set permissions.
++ (ABAddressBookRef) getAddressBookRef {
+
+    // get address book authorization
+    ABAuthorizationStatus status = ABAddressBookGetAuthorizationStatus();
+    
+    if (status == kABAuthorizationStatusDenied) {
+        // if you got here, user had previously denied/revoked permission for your
+        // app to access the contacts, and all you can do is handle this gracefully,
+        // perhaps telling the user that they have to go to settings to grant access
+        // to contacts
+        [[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit to the \"Privacy\" section in the iPhone Settings app." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
+    
+    CFErrorRef error = NULL;
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, &error);
+    // TODO figure out when we release the address book.
+    //        if (_addressBook) CFRelease(_addressBook);
+    
+    if (error) {
+        NSLog(@"ABAddressBookCreateWithOptions error: %@", CFBridgingRelease(error));
+        if (addressBook) CFRelease(addressBook);
+    }
+    
+    if (status == kABAuthorizationStatusNotDetermined) {
+        __block BOOL accessGranted = NO;
+        dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+        // present the user the UI that requests permission to contacts ...
+        ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+            if (error) {
+                NSLog(@"ABAddressBookRequestAccessWithCompletion error: %@", CFBridgingRelease(error));
+                
+            }
+            accessGranted = granted;
+            dispatch_semaphore_signal(sema);
+        });
+        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+        
+        if (accessGranted) {
+            // TODO this should probably be a notification
+            // which then kicks off the initalization process.
+            // show a housekeeping loading view and hide it when the process is done.
+            // if they gave you permission, then just carry on
+            // send out notification that permission is granted.
+            // we can detect the notification, kick off ensureContactsAreInitializedAndRefreshed
+            // and show the UI.
+            return addressBook;
+        } else {
+            // however, if they didn't give you permission, handle it gracefully, for example...
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // BTW, this is not on the main thread, so dispatch UI updates back to the main queue
+                [[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit to the \"Privacy\" section in the iPhone Settings app." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            });
+        }
+    } else if (status == kABAuthorizationStatusAuthorized) {
+        NSLog(@"Address Book initialized");
+        return addressBook;
+    }
+    
+    return addressBook;
 }
 @end
