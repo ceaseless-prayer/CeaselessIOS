@@ -21,11 +21,7 @@ typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
 	predicateScopeFriends = 0,
 	predicateScopeMe = 1
 };
-typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
-{
-	searchScopeNotes = 0,
-	searchScopePeople = 1
-};
+
 @interface PrayerJournalViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UISearchControllerDelegate>
 
 @property (strong, nonatomic) NSArray *filteredList;
@@ -78,8 +74,7 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 	self.searchController.dimsBackgroundDuringPresentation = NO;
 	self.searchController.searchBar.barTintColor = UIColorFromRGBWithAlpha(0x00012f , 0.4);
 	self.searchController.searchBar.tintColor = [UIColor lightGrayColor];
-	self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"Note text",@"Note text"),
-														  NSLocalizedString(@"Person Tagged",@"Person Tagged")];
+	self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"",@"")];
 	self.searchController.searchBar.delegate = self;
 	self.searchController.delegate = self;
 		//		// Hide the search bar until user scrolls up
@@ -89,17 +84,6 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 
 	self.tableView.tableHeaderView = self.searchController.searchBar;
 	self.definesPresentationContext = YES;
-}
-
-- (void) viewWillAppear:(BOOL)animated {
-	[super viewWillAppear: animated];
-	[self adjustSearchBarToShowScopeBar];
-}
-
-- (void)adjustSearchBarToShowScopeBar{
-		//if this isn't done, the top cell is hidden under the scope buttons :(  Apple Bug
-	[self.searchController.searchBar sizeToFit];
-	self.tableView.tableHeaderView = self.searchController.searchBar;
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -280,63 +264,80 @@ typedef NS_ENUM(NSInteger, PrayerJournalSearchScope)
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
 	NSString *searchString = searchController.searchBar.text;
-	[self searchForText:searchString scope: searchController.searchBar.selectedScopeButtonIndex];
-	[self adjustSearchBarToShowScopeBar];
+	[self searchForText:searchString];
 	[self.tableView reloadData];
 }
 
-- (void)searchForText:(NSString *)searchText scope:(PrayerJournalSearchScope)scopeOption
+- (void)searchForText:(NSString *)searchText
 {
 	if (self.managedObjectContext) {
 
+			//first search text in Notes
 		NSString *buildPredicateFormat = [NSString stringWithString: self.selectedNotesPredicate];
 
-		if (scopeOption == searchScopeNotes) {
-			NSString *predicateFormat = [buildPredicateFormat stringByAppendingString: @" AND text contains[cd] %@"];
-			NSEntityDescription *entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
-			[self.searchFetchRequest setEntity:entity];
+		NSString *predicateFormat = [buildPredicateFormat stringByAppendingString: @" AND text contains[cd] %@"];
+		NSEntityDescription *entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
+		[self.searchFetchRequest setEntity:entity];
 
-			NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastUpdatedDate" ascending:NO];
-			NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
-			[self.searchFetchRequest setSortDescriptors:sortDescriptors];
+		[self.searchFetchRequest setSortDescriptors:nil];
 
-			NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, searchText];
-			[self.searchFetchRequest setPredicate:predicate];
+		NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, searchText];
+		[self.searchFetchRequest setPredicate:predicate];
 
-			NSError *error = nil;
-			self.filteredList = [self.managedObjectContext executeFetchRequest:self.searchFetchRequest error:&error];
+		NSError *error = nil;
+		NSArray *selectedNotes = [self.managedObjectContext executeFetchRequest:self.searchFetchRequest error:&error];
 
-		} else {
-//			NSString *predicateFormat = @"notes@count > 0 AND (representativeInfo.primaryFirstName.name BEGINSWITH[cd] %@ OR representativeInfo.primaryLastName.name BEGINSWITH[cd] %@)";
-			NSString *predicateFormat = @"(representativeInfo.primaryFirstName.name BEGINSWITH[cd] %@ OR representativeInfo.primaryLastName.name BEGINSWITH[cd] %@)";
+			//put the selected Notes in a Set
+		NSMutableSet* selectedNotesSet = [[NSMutableSet alloc] init];
+		[selectedNotesSet addObjectsFromArray: selectedNotes];
 
-			NSEntityDescription *entity = [NSEntityDescription entityForName:@"PersonIdentifier" inManagedObjectContext:self.managedObjectContext];
-			[self.searchFetchRequest setEntity:entity];
+			//now search by name
+		predicateFormat = @"(representativeInfo.primaryFirstName.name BEGINSWITH[cd] %@ OR representativeInfo.primaryLastName.name BEGINSWITH[cd] %@)";
 
-			NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey: @"representativeInfo.primaryLastName.name" ascending: YES selector: @selector (caseInsensitiveCompare:)];
-			NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
-			[self.searchFetchRequest setSortDescriptors:sortDescriptors];
+		entity = [NSEntityDescription entityForName:@"PersonIdentifier" inManagedObjectContext:self.managedObjectContext];
+		[self.searchFetchRequest setEntity:entity];
 
-			NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, searchText, searchText];
-//			NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat];
+		[self.searchFetchRequest setSortDescriptors:nil];
 
-			[self.searchFetchRequest setPredicate:predicate];
+			//use same search in both first and last names unless a space has been entered,
+			//assume that the space separates the first and last name - there are so edge cases that this does not work on like Jessica Jo de Reuter
+			//when a space is entered, assume that the second word is the last name
 
-			NSError *error = nil;
-			NSArray *arrayOfPersonIdentifiers = [self.managedObjectContext executeFetchRequest:self.searchFetchRequest error:&error];
+		NSString *searchFirst = searchText;
+		NSString *searchLast = searchText;
 
-			NSSortDescriptor *sortDescriptorForNotes = [[NSSortDescriptor alloc] initWithKey:@"lastUpdatedDate" ascending:NO];
-			NSArray *sortDescriptorsForNotes = [NSArray arrayWithObjects:sortDescriptorForNotes, nil];
-
-			NSMutableArray *arrayOfAllNotes = [[NSMutableArray alloc] initWithCapacity: [arrayOfPersonIdentifiers count]];
-			for (PersonIdentifier *person in arrayOfPersonIdentifiers) {
-				if ([person.notes count] > 0) {
-					NSArray *arrayOfPersonNotes = [person.notes sortedArrayUsingDescriptors:sortDescriptorsForNotes];
-					[arrayOfAllNotes addObjectsFromArray: arrayOfPersonNotes];
-				}
+		if ([searchText containsString: @" "]) {
+			NSArray *substrings = [searchText componentsSeparatedByString:@" "];
+			if ([searchText hasSuffix: @" "]) {
+				searchFirst = [substrings objectAtIndex:0];
+				searchLast = searchFirst;
+			} else {
+				searchFirst = [substrings objectAtIndex:0];
+					//when there is a first name and last name change operator to "AND" to return just that person
+				predicateFormat = @"(representativeInfo.primaryFirstName.name BEGINSWITH[cd] %@ AND representativeInfo.primaryLastName.name BEGINSWITH[cd] %@)";
+				searchLast = [substrings objectAtIndex:1];
 			}
-			self.filteredList = [NSArray arrayWithArray:arrayOfAllNotes];
 		}
+
+		predicate = [NSPredicate predicateWithFormat:predicateFormat, searchFirst, searchLast];
+
+		[self.searchFetchRequest setPredicate:predicate];
+
+		error = nil;
+		NSArray *arrayOfPersonIdentifiers = [self.managedObjectContext executeFetchRequest:self.searchFetchRequest error:&error];
+
+		for (PersonIdentifier *person in arrayOfPersonIdentifiers) {
+			if ([person.notes count] > 0) {
+					//add the notes to the set of Notes selected by text
+				[selectedNotesSet unionSet: person.notes];
+			}
+		}
+
+		NSSortDescriptor *sortDescriptorForNotes = [[NSSortDescriptor alloc] initWithKey:@"lastUpdatedDate" ascending:NO];
+		NSArray *sortDescriptorsForNotes = [NSArray arrayWithObjects:sortDescriptorForNotes, nil];
+
+			//sort the selected notes by last updated Date
+		self.filteredList = [selectedNotesSet sortedArrayUsingDescriptors:sortDescriptorsForNotes];
 	}
 }
 
