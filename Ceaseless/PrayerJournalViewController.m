@@ -82,8 +82,19 @@ typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
 	newBounds.origin.y = newBounds.origin.y + self.searchController.searchBar.bounds.size.height;
 	self.tableView.bounds = newBounds;
 
-	self.tableView.tableHeaderView = self.searchController.searchBar;
+	[self adjustSearchBar];
 	self.definesPresentationContext = YES;
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+	[super viewWillAppear: animated];
+	[self adjustSearchBar];
+}
+
+- (void)adjustSearchBar{
+		//if this isn't done, the textfield gets positioned to far left some of the time :(  Apple Bug
+	[self.searchController.searchBar setPositionAdjustment: UIOffsetMake (0.0, 0.0) forSearchBarIcon: UISearchBarIconSearch];
+	self.tableView.tableHeaderView = self.searchController.searchBar;
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -265,6 +276,7 @@ typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
 {
 	NSString *searchString = searchController.searchBar.text;
 	[self searchForText:searchString];
+	[self adjustSearchBar];
 	[self.tableView reloadData];
 }
 
