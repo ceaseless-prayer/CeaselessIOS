@@ -23,7 +23,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	predicateScopeRemoved = 2
 };
 
-@interface ContactsListsViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating>
+@interface ContactsListsViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UISearchControllerDelegate>
 
 @property (strong, nonatomic) NSArray *filteredList;
 @property (strong, nonatomic) NSFetchRequest *searchFetchRequest;
@@ -59,29 +59,41 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 		self.backgroundView.contentMode = UIViewContentModeScaleAspectFill;
 	}
 
+	[self searchControllerSetup];
+}
+
+- (void) searchControllerSetup {
+
 		//searchController cannot be set up in IB, so set it up here
 	self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
 	self.searchController.searchResultsUpdater = self;
 	self.searchController.dimsBackgroundDuringPresentation = NO;
 	self.searchController.searchBar.barTintColor = UIColorFromRGBWithAlpha(0x00012f , 0.4);
-	self.searchController.searchBar.tintColor = [UIColor whiteColor];
+	self.searchController.searchBar.tintColor = [UIColor lightGrayColor];
 	self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"",@"")];
 	self.searchController.searchBar.delegate = self;
+	self.searchController.delegate = self;
 		//		// Hide the search bar until user scrolls up
 	CGRect newBounds = self.tableView.bounds;
 	newBounds.origin.y = newBounds.origin.y + self.searchController.searchBar.bounds.size.height;
 	self.tableView.bounds = newBounds;
 
-	self.tableView.tableHeaderView = self.searchController.searchBar;
+	[self adjustSearchBar];
 	self.definesPresentationContext = YES;
 }
 
 - (void) viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-
+	[self adjustSearchBar];
 		// make the model try to refresh whenever the app becomse active
 	[[NSNotificationCenter defaultCenter] addObserver: self selector:@selector(handleSyncing) name:UIApplicationDidBecomeActiveNotification object:nil];
 	[self handleSyncing];
+}
+
+- (void)adjustSearchBar{
+		//if this isn't done, the textfield gets positioned to far left some of the time :(  Apple Bug
+	[self.searchController.searchBar setPositionAdjustment: UIOffsetMake (0.0, 0.0) forSearchBarIcon: UISearchBarIconSearch];
+	self.tableView.tableHeaderView = self.searchController.searchBar;
 }
 
 - (void) handleSyncing {
@@ -272,6 +284,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 {
 	NSString *searchString = searchController.searchBar.text;
 	[self searchForText:searchString];
+	[self adjustSearchBar];
 	[self.tableView reloadData];
 }
 
@@ -288,6 +301,14 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	self.filteredList = [self.managedObjectContext executeFetchRequest:self.searchFetchRequest error:&error];
 }
 
+- (void)willPresentSearchController:(UISearchController *)searchController {
+		//push the view up under status bar
+	self.topToVisualEffectsViewConstraint.constant = 34;
+}
+- (void)willDismissSearchController:(UISearchController *)searchController {
+	self.topToVisualEffectsViewConstraint.constant = 64;
+	[self searchControllerSetup];
+}
 #pragma mark - Fetched results controller
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
@@ -312,9 +333,10 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 		// Edit the sort key as appropriate.
 
-	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryLastName.name" ascending:YES selector: @selector(caseInsensitiveCompare:)];
+	NSSortDescriptor *sortDescriptor1 = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryLastName.name" ascending:YES selector: @selector(caseInsensitiveCompare:)];
+	NSSortDescriptor *sortDescriptor2 = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryFirstName.name" ascending:YES selector: @selector(caseInsensitiveCompare:)];
 
-	NSArray *sortDescriptors = @[sortDescriptor];
+	NSArray *sortDescriptors = @[sortDescriptor1, sortDescriptor2];
 
 	[fetchRequest setSortDescriptors:sortDescriptors];
 
@@ -324,8 +346,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 		// Edit the section name key path and cache name if appropriate.
 		// nil for section name key path means "no sections".
-//	NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath: @"representativeInfo.primaryLastName.name.stringGroupByFirstInitial" cacheName:nil];
-		NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath: @"representativeInfo.sectionLastName" cacheName:nil];
+	NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath: @"representativeInfo.sectionLastName" cacheName:nil];
 	aFetchedResultsController.delegate = self;
 	self.fetchedResultsController = aFetchedResultsController;
 
@@ -351,8 +372,9 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	[_searchFetchRequest setEntity:entity];
 
 		// Edit the sort key as appropriate.
-	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryLastName.name" ascending:YES selector: @selector(caseInsensitiveCompare:)];
-	NSArray *sortDescriptors = @[sortDescriptor];
+	NSSortDescriptor *sortDescriptor1 = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryLastName.name" ascending:YES selector: @selector(caseInsensitiveCompare:)];
+	NSSortDescriptor *sortDescriptor2 = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryFirstName.name" ascending:YES selector: @selector(caseInsensitiveCompare:)];
+	NSArray *sortDescriptors = @[sortDescriptor1, sortDescriptor2];
 	[_searchFetchRequest setSortDescriptors:sortDescriptors];
 
 	return _searchFetchRequest;
