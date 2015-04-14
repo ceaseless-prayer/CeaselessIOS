@@ -19,6 +19,7 @@
 #import "WebCardViewController.h"
 #import "CeaselessLocalContacts.h"
 #import "AppConstants.h"
+#import "AppUtils.h"
 
 /*
  A controller object that manages a simple model -- a collection of month names.
@@ -110,7 +111,7 @@ NSString *const kScriptureImagesUrl = @"http://api.ceaselessprayer.com/v1/getASc
     // developer mode is enabled (that way the application refreshes each time it is newly opened)
     // there is no refresh date
     // there is at least 1 midnight since the last date
-    if(developerMode || lastRefreshDate == nil || [self daysWithinEraFromDate: lastRefreshDate toDate: now] > 0) {
+    if(developerMode || lastRefreshDate == nil || [AppUtils daysWithinEraFromDate: lastRefreshDate toDate: now] > 0) {
         if(developerMode) {
             NSLog(@"Debug Mode enabled: refreshing application every time it is newly opened.");
         }
@@ -124,18 +125,6 @@ NSString *const kScriptureImagesUrl = @"http://api.ceaselessprayer.com/v1/getASc
 	} else {
 		[[NSNotificationCenter defaultCenter] postNotificationName:kHideLoadingNotification object:nil];
 	}
-}
-
-// https://developer.apple.com/library/prerelease/ios//documentation/Cocoa/Conceptual/DatesAndTimes/Articles/dtCalendricalCalculations.html#//apple_ref/doc/uid/TP40007836-SW1
-// Listing 13. Days between two dates, as the number of midnights between
-- (NSInteger) daysWithinEraFromDate:(NSDate *) startDate toDate:(NSDate *) endDate {
-    NSCalendar *gregorian = [[NSCalendar alloc]
-                             initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSInteger startDay = [gregorian ordinalityOfUnit:NSCalendarUnitDay
-                                              inUnit: NSCalendarUnitEra forDate:startDate];
-    NSInteger endDay = [gregorian ordinalityOfUnit:NSCalendarUnitDay
-                                            inUnit: NSCalendarUnitEra forDate:endDate];
-    return endDay-startDay;
 }
 
 - (void) getNewBackgroundImage {

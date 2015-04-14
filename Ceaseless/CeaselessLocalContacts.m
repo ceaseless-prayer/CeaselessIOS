@@ -226,7 +226,7 @@ void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictiona
     // http://stackoverflow.com/questions/11351454/dealing-with-duplicate-contacts-due-to-linked-cards-in-ios-address-book-api
     NSMutableSet *unifiedRecordsSet = [NSMutableSet set];
     
-    CFArrayRef records = ABAddressBookCopyArrayOfAllPeople(addressBook);
+    CFArrayRef records = ABAddressBookCopyArrayOfAllPeopleInSource(addressBook, kABSourceTypeLocal);
     for (CFIndex i = 0; i < CFArrayGetCount(records); i++)
     {
         NSMutableSet *contactSet = [NSMutableSet set];

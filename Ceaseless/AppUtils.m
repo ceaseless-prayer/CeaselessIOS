@@ -60,6 +60,18 @@
 	return [UIImage imageWithContentsOfFile:imagePath];
 }
 
+// https://developer.apple.com/library/prerelease/ios//documentation/Cocoa/Conceptual/DatesAndTimes/Articles/dtCalendricalCalculations.html#//apple_ref/doc/uid/TP40007836-SW1
+// Listing 13. Days between two dates, as the number of midnights between
++ (NSNumber *) daysWithinEraFromDate:(NSDate *) startDate toDate:(NSDate *) endDate {
+    NSCalendar *gregorian = [[NSCalendar alloc]
+                             initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSInteger startDay = [gregorian ordinalityOfUnit:NSCalendarUnitDay
+                                              inUnit: NSCalendarUnitEra forDate:startDate];
+    NSInteger endDay = [gregorian ordinalityOfUnit:NSCalendarUnitDay
+                                            inUnit: NSCalendarUnitEra forDate:endDate];
+    return [NSNumber numberWithLong: endDay-startDay];
+}
+
 // this is a blocking way to get an address book reference
 // we can alternatively use the non-blocking way
 // if we are in a view that can be updated after the user has set permissions.
