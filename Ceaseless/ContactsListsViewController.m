@@ -23,7 +23,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	predicateScopeRemoved = 2
 };
 
-@interface ContactsListsViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating>
+@interface ContactsListsViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UISearchControllerDelegate>
 
 @property (strong, nonatomic) NSArray *filteredList;
 @property (strong, nonatomic) NSFetchRequest *searchFetchRequest;
@@ -59,6 +59,11 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 		self.backgroundView.contentMode = UIViewContentModeScaleAspectFill;
 	}
 
+	[self searchControllerSetup];
+}
+
+- (void) searchControllerSetup {
+
 		//searchController cannot be set up in IB, so set it up here
 	self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
 	self.searchController.searchResultsUpdater = self;
@@ -67,21 +72,28 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	self.searchController.searchBar.tintColor = [UIColor lightGrayColor];
 	self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"",@"")];
 	self.searchController.searchBar.delegate = self;
+	self.searchController.delegate = self;
 		//		// Hide the search bar until user scrolls up
 	CGRect newBounds = self.tableView.bounds;
 	newBounds.origin.y = newBounds.origin.y + self.searchController.searchBar.bounds.size.height;
 	self.tableView.bounds = newBounds;
 
-	self.tableView.tableHeaderView = self.searchController.searchBar;
+	[self adjustSearchBar];
 	self.definesPresentationContext = YES;
 }
 
 - (void) viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-
+	[self adjustSearchBar];
 		// make the model try to refresh whenever the app becomse active
 	[[NSNotificationCenter defaultCenter] addObserver: self selector:@selector(handleSyncing) name:UIApplicationDidBecomeActiveNotification object:nil];
 	[self handleSyncing];
+}
+
+- (void)adjustSearchBar{
+		//if this isn't done, the textfield gets positioned to far left some of the time :(  Apple Bug
+	[self.searchController.searchBar setPositionAdjustment: UIOffsetMake (0.0, 0.0) forSearchBarIcon: UISearchBarIconSearch];
+	self.tableView.tableHeaderView = self.searchController.searchBar;
 }
 
 - (void) handleSyncing {
@@ -272,6 +284,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 {
 	NSString *searchString = searchController.searchBar.text;
 	[self searchForText:searchString];
+	[self adjustSearchBar];
 	[self.tableView reloadData];
 }
 
@@ -288,6 +301,14 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	self.filteredList = [self.managedObjectContext executeFetchRequest:self.searchFetchRequest error:&error];
 }
 
+- (void)willPresentSearchController:(UISearchController *)searchController {
+		//push the view up under status bar
+	self.topToVisualEffectsViewConstraint.constant = 34;
+}
+- (void)willDismissSearchController:(UISearchController *)searchController {
+	self.topToVisualEffectsViewConstraint.constant = 64;
+	[self searchControllerSetup];
+}
 #pragma mark - Fetched results controller
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {

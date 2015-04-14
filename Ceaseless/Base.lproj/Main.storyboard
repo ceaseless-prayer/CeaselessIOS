@@ -718,6 +718,7 @@
                             <constraint firstItem="Xej-DT-Gs2" firstAttribute="leading" secondItem="jbz-sN-c37" secondAttribute="leading" id="3tS-oH-OvN"/>
                             <constraint firstItem="Xej-DT-Gs2" firstAttribute="top" secondItem="KlX-hV-Of8" secondAttribute="bottom" constant="65" id="4RW-WY-T1C"/>
                             <constraint firstItem="cn3-n2-eBd" firstAttribute="top" secondItem="Xej-DT-Gs2" secondAttribute="bottom" id="Bzu-Do-64r"/>
+                            <constraint firstItem="Xej-DT-Gs2" firstAttribute="top" secondItem="jbz-sN-c37" secondAttribute="top" constant="64" id="CWr-7g-oL7"/>
                             <constraint firstItem="Xej-DT-Gs2" firstAttribute="top" secondItem="KlX-hV-Of8" secondAttribute="bottom" id="DtV-Pa-u3m"/>
                             <constraint firstItem="cn3-n2-eBd" firstAttribute="top" secondItem="Xej-DT-Gs2" secondAttribute="bottom" id="G6C-Uq-5ao"/>
                             <constraint firstAttribute="trailing" secondItem="Xej-DT-Gs2" secondAttribute="trailing" id="UYl-rH-O9f"/>
@@ -734,6 +735,7 @@
                                 <exclude reference="4RW-WY-T1C"/>
                                 <exclude reference="DtV-Pa-u3m"/>
                                 <exclude reference="X84-oh-7w1"/>
+                                <exclude reference="mbC-hI-fxy"/>
                                 <exclude reference="uKk-Py-ga9"/>
                                 <exclude reference="G6C-Uq-5ao"/>
                             </mask>
@@ -747,6 +749,7 @@
                         <outlet property="syncingLabel" destination="bg0-Qa-79x" id="p95-6D-L02"/>
                         <outlet property="syncingOverlay" destination="qly-UT-DUY" id="yQO-ax-TMj"/>
                         <outlet property="tableView" destination="i0o-09-bgH" id="KMe-aT-lXP"/>
+                        <outlet property="topToVisualEffectsViewConstraint" destination="CWr-7g-oL7" id="pi9-iX-Pz0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RVK-Lq-42w" userLabel="First Responder" sceneMemberID="firstResponder"/>
