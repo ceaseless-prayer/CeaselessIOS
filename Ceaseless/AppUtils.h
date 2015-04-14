@@ -21,6 +21,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 @interface AppUtils : NSObject
 + (UIImageView *)setBlurredBackgroundForFrame: (CGRect) frame;
 + (UIImage *) getDynamicBackgroundImage;
-
++ (NSInteger) daysWithinEraFromDate:(NSDate *) startDate toDate:(NSDate *) endDate;
 
 @end

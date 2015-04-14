@@ -59,4 +59,16 @@
 	NSString *imagePath = [documentDirectory stringByAppendingPathComponent:kDynamicBackgroundImage];
 	return [UIImage imageWithContentsOfFile:imagePath];
 }
+
+// https://developer.apple.com/library/prerelease/ios//documentation/Cocoa/Conceptual/DatesAndTimes/Articles/dtCalendricalCalculations.html#//apple_ref/doc/uid/TP40007836-SW1
+// Listing 13. Days between two dates, as the number of midnights between
++ (NSInteger) daysWithinEraFromDate:(NSDate *) startDate toDate:(NSDate *) endDate {
+    NSCalendar *gregorian = [[NSCalendar alloc]
+                             initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSInteger startDay = [gregorian ordinalityOfUnit:NSCalendarUnitDay
+                                              inUnit: NSCalendarUnitEra forDate:startDate];
+    NSInteger endDay = [gregorian ordinalityOfUnit:NSCalendarUnitDay
+                                            inUnit: NSCalendarUnitEra forDate:endDate];
+    return endDay-startDay;
+}
 @end
