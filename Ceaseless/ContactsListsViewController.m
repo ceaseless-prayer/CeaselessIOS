@@ -312,9 +312,10 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 		// Edit the sort key as appropriate.
 
-	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryLastName.name" ascending:YES selector: @selector(caseInsensitiveCompare:)];
+	NSSortDescriptor *sortDescriptor1 = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryLastName.name" ascending:YES selector: @selector(caseInsensitiveCompare:)];
+	NSSortDescriptor *sortDescriptor2 = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryFirstName.name" ascending:YES selector: @selector(caseInsensitiveCompare:)];
 
-	NSArray *sortDescriptors = @[sortDescriptor];
+	NSArray *sortDescriptors = @[sortDescriptor1, sortDescriptor2];
 
 	[fetchRequest setSortDescriptors:sortDescriptors];
 
@@ -324,8 +325,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 		// Edit the section name key path and cache name if appropriate.
 		// nil for section name key path means "no sections".
-//	NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath: @"representativeInfo.primaryLastName.name.stringGroupByFirstInitial" cacheName:nil];
-		NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath: @"representativeInfo.sectionLastName" cacheName:nil];
+	NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath: @"representativeInfo.sectionLastName" cacheName:nil];
 	aFetchedResultsController.delegate = self;
 	self.fetchedResultsController = aFetchedResultsController;
 
@@ -351,8 +351,9 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	[_searchFetchRequest setEntity:entity];
 
 		// Edit the sort key as appropriate.
-	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryLastName.name" ascending:YES selector: @selector(caseInsensitiveCompare:)];
-	NSArray *sortDescriptors = @[sortDescriptor];
+	NSSortDescriptor *sortDescriptor1 = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryLastName.name" ascending:YES selector: @selector(caseInsensitiveCompare:)];
+	NSSortDescriptor *sortDescriptor2 = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryFirstName.name" ascending:YES selector: @selector(caseInsensitiveCompare:)];
+	NSArray *sortDescriptors = @[sortDescriptor1, sortDescriptor2];
 	[_searchFetchRequest setSortDescriptors:sortDescriptors];
 
 	return _searchFetchRequest;
