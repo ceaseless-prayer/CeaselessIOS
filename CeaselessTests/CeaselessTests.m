@@ -49,8 +49,8 @@
     
     NSDate *end = [[NSCalendar currentCalendar] dateFromComponents:dateComponent];
 
-    NSInteger days = [AppUtils daysWithinEraFromDate:start toDate:end];
-    XCTAssert(days == 1, @"Pass");
+    NSNumber *days = [AppUtils daysWithinEraFromDate:start toDate:end];
+    XCTAssert(days == [NSNumber numberWithInt: 1], @"Pass");
 }
 
 - (void)testPerformanceExample {
