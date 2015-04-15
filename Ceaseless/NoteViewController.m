@@ -192,9 +192,8 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 #pragma mark - Respond to touch and become first responder.
 
-- (BOOL)canBecomeFirstResponder
-{
-    if(self.currentNote) {
+- (BOOL)canBecomeFirstResponder {
+    if(self.currentNote && !self.selectedButton) {
         return NO; //don't show keyboard by default
     } else {
         return YES; // show keyboard by default for a blank note.
@@ -261,9 +260,12 @@ NSString *const kPlaceHolderText = @"Enter note";
 	self.filteredPeople = [NSMutableArray array];
 }
 
-#pragma mark - Update Person info
-- (void) layoutScrollView: (UIScrollView *) scrollView forGroup: (NSOrderedSet *) abRecordIDs
-{
+#pragma mark - Update the displayed list of tagged people
+- (void) layoutScrollView: (UIScrollView *) scrollView forGroup: (NSOrderedSet *) abRecordIDs {
+    [self layoutScrollView:scrollView forGroup:abRecordIDs selectLast:NO];
+}
+
+- (void) layoutScrollView: (UIScrollView *) scrollView forGroup: (NSOrderedSet *) abRecordIDs selectLast: (BOOL) selectLast {
     // Remove existing buttons
     for (UIView *subview in scrollView.subviews) {
         if ([subview isKindOfClass:[UIButton class]]) {
@@ -315,6 +317,13 @@ NSString *const kPlaceHolderText = @"Enter note";
         xPosition += button.frame.size.width + kPadding;
     }
     
+    if (selectLast) {
+        UIButton *lastButton = scrollView.subviews.lastObject;
+        if(lastButton) {
+            [self buttonSelected:lastButton];
+        }
+    }
+    
     UIFont *font = [UIFont fontWithName:@"AvenirNext-Medium" size:14.0f];
     
     // Create the textfield at the end of the buttons
@@ -323,8 +332,7 @@ NSString *const kPlaceHolderText = @"Enter note";
     NSString *placeholderName = @"Average Size";
     CGSize nameSize = [placeholderName sizeWithAttributes:@{NSFontAttributeName:font}];
     
-    if ((xPosition + nameSize.width + kPadding) > maxWidth)
-    {
+    if ((xPosition + nameSize.width + kPadding) > maxWidth) {
         // Reset horizontal position to left edge of superview's frame
         xPosition = kPadding;
         
@@ -356,7 +364,6 @@ NSString *const kPlaceHolderText = @"Enter note";
     // Set the content size so it can be scrollable
     CGFloat height = yPosition + 30.0;
     [scrollView setContentSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width - 16, height)];
-
 }
 
 #pragma mark - TextView methods
@@ -445,7 +452,6 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 - (IBAction)saveButtonPressed:(id)sender {
 
-
 	NSError *error = nil;
 
 	Note *note = [self containsItem:[self.currentNote valueForKey: @"createDate"]];
@@ -482,7 +488,6 @@ NSString *const kPlaceHolderText = @"Enter note";
 	}
 }
 - (Note*) containsItem: (NSDate *) createDate {
-
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
 	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Note"
 											  inManagedObjectContext:self.managedObjectContext];
@@ -532,11 +537,6 @@ NSString *const kPlaceHolderText = @"Enter note";
 #pragma mark - UIKeyInput protocol conformance
 
 - (BOOL)hasText {
-    // if the field is blank
-    // and there is a previous pill
-    // select that pill
-    // Clear other button states
-    NSLog(@"search %@", self.searchField);
 	return NO;
 }
 
@@ -570,7 +570,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 	[self.group removeObject:number];
 	self.abRecordIDs = [NSOrderedSet orderedSetWithOrderedSet:self.group];
 	[self updatePersonInfo: self.abRecordIDs];
-	[self layoutScrollView: self.personsTaggedView forGroup: self.abRecordIDs];
+    [self layoutScrollView: self.personsTaggedView forGroup: self.abRecordIDs selectLast: YES];
 
 	if (self.abRecordIDs.count > 0) {
 		self.tagFriendsPlaceholderText.hidden = YES;
