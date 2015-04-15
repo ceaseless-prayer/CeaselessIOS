@@ -62,14 +62,17 @@
 
 // https://developer.apple.com/library/prerelease/ios//documentation/Cocoa/Conceptual/DatesAndTimes/Articles/dtCalendricalCalculations.html#//apple_ref/doc/uid/TP40007836-SW1
 // Listing 13. Days between two dates, as the number of midnights between
+// http://stackoverflow.com/questions/14653114/nsdate-comparison-figuring-out-number-of-midnights-between-in-specific-local
 + (NSNumber *) daysWithinEraFromDate:(NSDate *) startDate toDate:(NSDate *) endDate {
-    NSCalendar *gregorian = [[NSCalendar alloc]
-                             initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSInteger startDay = [gregorian ordinalityOfUnit:NSCalendarUnitDay
-                                              inUnit: NSCalendarUnitEra forDate:startDate];
-    NSInteger endDay = [gregorian ordinalityOfUnit:NSCalendarUnitDay
-                                            inUnit: NSCalendarUnitEra forDate:endDate];
-    return [NSNumber numberWithLong: endDay-startDay];
+    NSCalendar *cal = [NSCalendar autoupdatingCurrentCalendar];
+    NSUInteger unit = NSCalendarUnitDay;
+    NSDate *startDays, *endDays;
+    
+    [cal rangeOfUnit:unit startDate:&startDays interval:NULL forDate:startDate];
+    [cal rangeOfUnit:unit startDate:&endDays interval:NULL forDate:endDate];
+    
+    NSDateComponents *comp = [cal components:unit fromDate:startDays toDate:endDays options:0];
+    return [NSNumber numberWithLong:[comp day]];
 }
 
 // this is a blocking way to get an address book reference
