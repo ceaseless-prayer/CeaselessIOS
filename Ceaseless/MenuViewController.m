@@ -30,7 +30,8 @@
 	
 	self.tableView.delegate = self;
 	self.tableView.dataSource = self;
-	self.menuInfoArray = [[NSArray alloc] initWithObjects: @"People", @"Settings", @"Developer", @"Help", @"Feedback", nil];
+	self.menuInfoArray = [[NSMutableArray alloc] initWithObjects: @"People", @"Settings", @"Help", @"Feedback", nil];
+    [self.menuInfoArray addObject: @""]; // for the developer mode row
     UIImage *background = [AppUtils getDynamicBackgroundImage];
     if(background != nil) {
         self.menuBackground.image = background;
@@ -68,18 +69,27 @@
 	cell.textLabel.text = [self.menuInfoArray objectAtIndex: indexPath.row];
 	cell.backgroundColor = [UIColor clearColor];
 
-	if (indexPath.row == 2) {
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-		UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
-		cell.accessoryView = switchView;
-
-		BOOL developerMode = [[NSUserDefaults standardUserDefaults] boolForKey: kDeveloperMode];
-		[switchView setOn: developerMode animated:NO];
-		[switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
+	if (indexPath.row == 4) {
+        [cell setAccessoryType: UITableViewCellAccessoryNone];
+        UITapGestureRecognizer *tripleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTripleTap:)];
+        tripleTap.numberOfTapsRequired = 3;
+        [cell addGestureRecognizer:tripleTap];
 	}
-
-
 }
+
+- (void)handleTripleTap:(UIGestureRecognizer *)gestureRecognizer {
+    NSLog(@"Triple Tap Detected..");
+    UITableViewCell *cell = (UITableViewCell*)gestureRecognizer.view;
+    cell.textLabel.text = @"Developer mode";
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
+    cell.accessoryView = switchView;
+    
+    BOOL developerMode = [[NSUserDefaults standardUserDefaults] boolForKey: kDeveloperMode];
+    [switchView setOn: developerMode animated:NO];
+    [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
+}
+
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
 		// Return NO if you do not want the specified item to be editable.
 	return NO;
@@ -92,7 +102,7 @@
 	if (indexPath.row == 1) {
 		[self performSegueWithIdentifier:@"ShowSettings" sender: self];
 	}
-    if (indexPath.row == 4) {
+    if (indexPath.row == 3) {
         [self showFeedbackForm];
     }
 }

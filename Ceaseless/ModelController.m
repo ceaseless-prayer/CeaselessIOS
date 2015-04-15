@@ -111,7 +111,7 @@ NSString *const kScriptureImagesUrl = @"http://api.ceaselessprayer.com/v1/getASc
     // developer mode is enabled (that way the application refreshes each time it is newly opened)
     // there is no refresh date
     // there is at least 1 midnight since the last date
-    if(developerMode || lastRefreshDate == nil || [AppUtils daysWithinEraFromDate: lastRefreshDate toDate: now] > 0) {
+    if(developerMode || lastRefreshDate == nil || [[AppUtils daysWithinEraFromDate: lastRefreshDate toDate: now]intValue] > 0) {
         if(developerMode) {
             NSLog(@"Debug Mode enabled: refreshing application every time it is newly opened.");
         }

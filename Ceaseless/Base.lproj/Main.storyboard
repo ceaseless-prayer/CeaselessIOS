@@ -535,6 +535,7 @@
                                                                 <rect key="frame" x="8" y="1" width="41" height="41"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                 <constraints>
+                                                                    <constraint firstAttribute="width" constant="41" id="0WT-qC-lWe"/>
                                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="41" id="RNy-9C-uEb"/>
                                                                     <constraint firstAttribute="width" constant="40" id="Xg2-pZ-Pcq"/>
                                                                     <constraint firstAttribute="width" secondItem="lpn-rt-0YU" secondAttribute="height" multiplier="1:1" id="hwh-dm-cjh"/>
