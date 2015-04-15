@@ -142,13 +142,21 @@ typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
 		return [[self.fetchedResultsController sections] count];
 	}
 }
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 	if (self.searchController.active) {
 		return [self.filteredList count];
 	} else {
 		id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-		return [sectionInfo numberOfObjects];
+        NSInteger rowCount = [sectionInfo numberOfObjects];
+        if(rowCount == 0) {
+            [self showInstructions];
+        } else {
+            // if we ever have a cell, it means no instructions are needed anymore
+            [self hideInstructions];
+        }
+		return rowCount;
 	}
 }
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -163,7 +171,7 @@ typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
 }
 
 - (void)configureCell:(PrayerJournalTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-
+    
 	Note *note = nil;
 	if (self.searchController.active) {
 		note = [self.filteredList objectAtIndex:indexPath.row];
@@ -461,4 +469,14 @@ typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
 	}
 }
 
+
+- (void) showInstructions {
+    self.instructionBubble.layer.cornerRadius = 6.0f;
+    [AppUtils bounceView:self.instructionBubble distance: -6.0 duration: 0.4];
+    self.instructionBubble.hidden = NO;
+}
+
+- (void) hideInstructions {
+    self.instructionBubble.hidden = YES;
+}
 @end
