@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -39,7 +39,7 @@
                                     <blurEffect style="light"/>
                                 </visualEffectView>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vRz-LA-Wxx" userLabel="PersonImageView">
-                                    <rect key="frame" x="273" y="88" width="39" height="39"/>
+                                    <rect key="frame" x="217" y="88" width="150" height="150"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="vRz-LA-Wxx" secondAttribute="height" multiplier="1:1" id="1BG-U7-Qo7"/>
                                         <constraint firstAttribute="height" constant="20" id="4ZB-E0-Nsx"/>
@@ -47,7 +47,7 @@
                                         <constraint firstAttribute="width" constant="20" id="IRv-UB-pCz"/>
                                         <constraint firstAttribute="width" constant="400" id="KUb-Rn-v3W"/>
                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="424" id="Pr7-Kt-zkA"/>
-                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="150" id="VQB-9K-SnB"/>
+                                        <constraint firstAttribute="width" constant="150" id="VQB-9K-SnB"/>
                                         <constraint firstAttribute="width" constant="50" id="VSe-Kx-LIb"/>
                                         <constraint firstAttribute="height" constant="304" id="jla-bv-BZQ"/>
                                         <constraint firstAttribute="height" constant="50" id="pO4-UW-Fmw"/>
@@ -75,8 +75,8 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="584" height="44"/>
                                                 <color key="backgroundColor" red="0.0" green="0.0039215686274509803" blue="0.18431372549019609" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                             </imageView>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" text="Name Label" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="29f-oR-vIq">
-                                                <rect key="frame" x="8" y="0.0" width="117" height="44"/>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" text="Label Name" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="29f-oR-vIq">
+                                                <rect key="frame" x="8" y="0.0" width="524" height="44"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="xHd-ew-cfm"/>
@@ -86,7 +86,10 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qaX-ht-K8v">
-                                                <rect key="frame" x="548" y="0.0" width="28" height="44"/>
+                                                <rect key="frame" x="532" y="0.0" width="44" height="44"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="44" id="i9x-cj-2tY"/>
+                                                </constraints>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <state key="normal" image="icon_more"/>
                                             </button>
@@ -100,7 +103,7 @@
                                             <constraint firstItem="fUs-uE-zvf" firstAttribute="leading" secondItem="29f-oR-vIq" secondAttribute="trailing" id="Joy-4d-Bm0"/>
                                             <constraint firstItem="qaX-ht-K8v" firstAttribute="leading" secondItem="fUs-uE-zvf" secondAttribute="trailing" id="Lbb-6s-Jyv"/>
                                             <constraint firstItem="fUs-uE-zvf" firstAttribute="leading" secondItem="9JQ-bm-x4R" secondAttribute="leading" id="OJa-4L-rH1"/>
-                                            <constraint firstItem="qaX-ht-K8v" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="29f-oR-vIq" secondAttribute="trailing" constant="10" id="Wxf-it-RA9"/>
+                                            <constraint firstItem="qaX-ht-K8v" firstAttribute="leading" secondItem="29f-oR-vIq" secondAttribute="trailing" id="Wxf-it-RA9"/>
                                             <constraint firstAttribute="trailing" secondItem="qaX-ht-K8v" secondAttribute="trailing" constant="8" id="cAt-d1-8tL"/>
                                             <constraint firstItem="29f-oR-vIq" firstAttribute="top" secondItem="9JQ-bm-x4R" secondAttribute="top" id="cO7-0i-ugN"/>
                                             <constraint firstItem="qaX-ht-K8v" firstAttribute="top" relation="greaterThanOrEqual" secondItem="9JQ-bm-x4R" secondAttribute="top" constant="-8" id="ezW-5b-gur"/>
@@ -148,7 +151,7 @@
                                     </variation>
                                 </view>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="60" translatesAutoresizingMaskIntoConstraints="NO" id="eF7-HN-urH" userLabel="PlaceholderText">
-                                    <rect key="frame" x="273" y="88" width="39" height="39"/>
+                                    <rect key="frame" x="217" y="88" width="150" height="150"/>
                                     <color key="backgroundColor" red="0.0" green="0.0039215686274509803" blue="0.18431372549019609" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="150" id="OK2-cF-Q54"/>
@@ -175,7 +178,7 @@
                                     </variation>
                                 </textField>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vUc-Xs-Ucw" userLabel="MiddlePlaceholderView">
-                                    <rect key="frame" x="270" y="127" width="44" height="44"/>
+                                    <rect key="frame" x="270" y="238" width="44" height="44"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="88" id="4H5-Xx-QYG"/>
@@ -194,7 +197,7 @@
                                     </variation>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yRE-GT-fO6" userLabel="TableViewPlaceholder">
-                                    <rect key="frame" x="0.0" y="171" width="584" height="425"/>
+                                    <rect key="frame" x="0.0" y="282" width="584" height="314"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                             </subviews>
