@@ -61,7 +61,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 	if (self.addressBook == NULL) {
 		self.addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
 	}
-		// Check whether we are authorized to access the user's address book data
+    // Check whether we are authorized to access the user's address book data
 	[self checkAddressBookAccess];
 
 	self.namesArray = [NSMutableArray arrayWithCapacity: 1];
@@ -72,7 +72,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 	self.appColor = UIColorFromRGBWithAlpha(0x24292f , 0.4);
 
 
-		//Add a searchBar, it will get positioned in the scrollview just past the last name
+    //Add a searchBar, it will get positioned in the scrollview just past the last name
 	self.searchField  = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
 	self.searchField.searchBarStyle = UISearchBarStyleMinimal;
 	[self.searchField setImage: [UIImage imageNamed: @"noImage"] forSearchBarIcon: UISearchBarIconSearch state:UIControlStateNormal];
@@ -86,7 +86,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 	[self.searchField.layer setCornerRadius:4.0];
 
 
-		// Add a tap gesture recognizer to our scrollView
+    // Add a tap gesture recognizer to our scrollView
 	self.singleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewTapped:)];
 	self.singleTapGestureRecognizer.numberOfTapsRequired = 1;
 	self.singleTapGestureRecognizer.enabled = YES;
@@ -123,17 +123,16 @@ NSString *const kPlaceHolderText = @"Enter note";
 	} else {
 		self.navigationItem.rightBarButtonItem = saveButton;
 	}
-//	[self listAll];
 
-		//initialize
+    //initialize
 	self.group = [NSMutableOrderedSet orderedSet];
 	NSOrderedSet *peopleTagged = [[NSOrderedSet alloc] init];
 
 
-		//if there is a curent note display it
+    //if there is a curent note display it
 	if (self.currentNote) {
 
-			//use the date for the title of the screen
+        //use the date for the title of the screen
 		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 		dateFormatter.timeStyle = NSDateFormatterNoStyle;
 		dateFormatter.dateStyle = NSDateFormatterShortStyle;
@@ -150,9 +149,8 @@ NSString *const kPlaceHolderText = @"Enter note";
 		peopleTagged = [self.currentNote valueForKey: @"peopleTagged"];
 
 	} else {
-			//no note passed in, so add a new note
-
-			//screen title is Add Note
+        //no note passed in, so add a new note
+        //screen title is Add Note
 		if (!self.navigationController) {
 			self.item.title = @"Add Note";
 		} else {
@@ -165,7 +163,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 		}
 		self.notesTextView.text = kPlaceHolderText;
 		self.notesTextView.textColor = [UIColor lightGrayColor];
-
+        [self.notesTextView becomeFirstResponder];
 	}
 
 	for (PersonIdentifier *personTagged in peopleTagged) {
@@ -374,10 +372,9 @@ NSString *const kPlaceHolderText = @"Enter note";
 	BOOL shouldReceiveTouch = NO;
 
 		// Only receive touches on scrollView, not on subviews
-	if (touch.view == self.personsTaggedView)
-		{
-		shouldReceiveTouch = YES;
-		}
+    if (touch.view == self.personsTaggedView) {
+        shouldReceiveTouch = YES;
+    }
 
 	return shouldReceiveTouch;
 }
@@ -417,26 +414,20 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 	self.selectedButton = (UIButton *)sender;
 
-		// Clear other button states
-	for (UIView *subview in self.personsTaggedView.subviews)
-		{
-		if ([subview isKindOfClass:[UIButton class]] && subview != self.selectedButton)
-			{
-			((UIButton *)subview).backgroundColor = [UIColor lightGrayColor];
-			}
-		}
+    // Clear other button states
+    for (UIView *subview in self.personsTaggedView.subviews) {
+        if ([subview isKindOfClass:[UIButton class]] && subview != self.selectedButton) {
+            ((UIButton *)subview).backgroundColor = [UIColor lightGrayColor];
+        }
+    }
 
-	if (self.selectedButton.backgroundColor == self.selectedTokenColor)
-		{
+	if (self.selectedButton.backgroundColor == self.selectedTokenColor) {
 		self.selectedButton.backgroundColor = self.tokenColor;
-		}
-	else
-		{
+    } else {
 		self.selectedButton.backgroundColor = self.selectedTokenColor;
-		}
+    }
 
 	[self becomeFirstResponder];
-
 }
 
 - (IBAction)saveButtonPressed:(id)sender {
@@ -461,7 +452,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 		newNote.peopleTagged = [[NSOrderedSet alloc] initWithSet:[self.mutablePeopleSet set]];
 
 
-		}
+    }
 	if (![self.managedObjectContext save: &error]) {
 		NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
 	}
@@ -509,8 +500,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 }
 
 	// Action receiver for the clicking of Cancel button
-- (IBAction)cancelClick:(id)sender
-{
+- (IBAction)cancelClick:(id)sender {
 	if (self.delegate) {
 		[self.delegate noteViewControllerDidCancel:self];
 	} else {
@@ -519,8 +509,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 }
 
 	// Action receiver for the clicking on personsTaggedView
-- (IBAction)scrollViewTapped:(id)sender
-{
+- (IBAction)scrollViewTapped:(id)sender {
 	self.tagFriendsPlaceholderText.hidden = YES;
 	[self.searchField becomeFirstResponder];
 	self.searchField.hidden = NO;
@@ -529,15 +518,13 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 #pragma mark - UIKeyInput protocol conformance
 
-- (BOOL)hasText
-{
+- (BOOL)hasText {
 	return NO;
 }
 
 - (void)insertText:(NSString *)text {}
 
-- (void)deleteBackward
-{
+- (void)deleteBackward {
 		// Cast tag value to ABRecordID type
 	ABRecordID abRecordID = (ABRecordID)self.selectedButton.tag;
 	ABRecordRef abPerson = ABAddressBookGetPersonWithRecordID(self.addressBook, abRecordID);
@@ -580,15 +567,13 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 #pragma mark - UITableViewDataSource protocol conformance
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-		// do we have search text? if yes, are there search results? if yes, return number of results, otherwise, return 1 (add email row)
-		// if there are no search results, the table is empty, so return 0
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    // do we have search text? if yes, are there search results? if yes, return number of results, otherwise, return 1 (add email row)
+    // if there are no search results, the table is empty, so return 0
 	return self.searchField.text.length > 0 ? MAX( 1, self.filteredPeople.count ) : 0 ;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
 
 	cell.accessoryType = UITableViewCellAccessoryNone;
@@ -596,19 +581,16 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 
 		// If this is the last row in filteredPeople, take special action
-	if (self.filteredPeople.count == indexPath.row)
-		{
+	if (self.filteredPeople.count == indexPath.row) {
 		cell.textLabel.text	= @"Add new contact";
 		cell.detailTextLabel.text = nil;
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-		}
-	else
-		{
+    } else {
 		ABRecordRef abPerson = (__bridge ABRecordRef)([self.filteredPeople objectAtIndex:indexPath.row]);
 
 		cell.textLabel.text = (__bridge_transfer NSString *)ABRecordCopyCompositeName(abPerson);
 		cell.detailTextLabel.text = (__bridge_transfer NSString *)ABRecordCopyValue(abPerson, kABPersonOrganizationProperty);
-		}
+    }
 
 	return cell;
 }
