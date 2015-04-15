@@ -121,7 +121,8 @@ NSString *const kPlaceHolderText = @"Enter note";
 	} else {
 		self.navigationItem.rightBarButtonItem = saveButton;
 	}
-
+//	[self listAll];
+    
     //initialize
 	self.group = [NSMutableOrderedSet orderedSet];
 	NSOrderedSet *peopleTagged = [[NSOrderedSet alloc] init];
@@ -145,7 +146,6 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 		self.notesTextView.text = [self.currentNote valueForKey: @"text"];
 		peopleTagged = [self.currentNote valueForKey: @"peopleTagged"];
-
 	} else {
         //no note passed in, so add a new note
         //screen title is Add Note
@@ -194,8 +194,13 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 - (BOOL)canBecomeFirstResponder
 {
-	return YES;
+    if(self.currentNote) {
+        return NO; //don't show keyboard by default
+    } else {
+        return YES; // show keyboard by default for a blank note.
+    }
 }
+
 #pragma mark - Address Book access
 
 	// Check the authorization status of our application for Address Book
@@ -331,7 +336,19 @@ NSString *const kPlaceHolderText = @"Enter note";
     CGRect searchFieldFrame = CGRectMake(xPosition, yPosition, nameSize.width + (kPadding * 2), nameSize.height);
     self.searchField.frame = searchFieldFrame;
     self.searchField.hidden = YES;
-    
+ 
+    // setting font color of search field
+    for (UIView *subView in self.searchField.subviews) {
+        for (UIView *secondLevelSubview in subView.subviews){
+            if ([secondLevelSubview isKindOfClass:[UITextField class]]) {
+                UITextField *searchBarTextField = (UITextField *)secondLevelSubview;
+                
+                //set font color here
+                searchBarTextField.textColor = [UIColor whiteColor];
+                break;
+            }
+        }
+    }
     
     // Add the button to its superview
     [scrollView addSubview:self.searchField];
@@ -506,6 +523,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 // Action receiver for the clicking on personsTaggedView
 - (IBAction)scrollViewTapped:(id)sender {
+
 	self.tagFriendsPlaceholderText.hidden = YES;
 	[self.searchField becomeFirstResponder];
 	self.searchField.hidden = NO;
