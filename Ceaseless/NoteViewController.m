@@ -78,13 +78,11 @@ NSString *const kPlaceHolderText = @"Enter note";
 	[self.searchField setImage: [UIImage imageNamed: @"noImage"] forSearchBarIcon: UISearchBarIconSearch state:UIControlStateNormal];
 	[[UISearchBar appearance] setPositionAdjustment:UIOffsetMake(-15, 0) forSearchBarIcon:UISearchBarIconSearch];
 
-
 	self.searchField.delegate = self;
 	self.searchField.backgroundColor = self.tokenColor;
 	self.searchField.barTintColor = self.tokenColor;
 	self.searchField.tintColor = [UIColor whiteColor];
 	[self.searchField.layer setCornerRadius:4.0];
-
 
 		// Add a tap gesture recognizer to our scrollView
 	self.singleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewTapped:)];
@@ -124,13 +122,13 @@ NSString *const kPlaceHolderText = @"Enter note";
 		self.navigationItem.rightBarButtonItem = saveButton;
 	}
 //	[self listAll];
-
-		//initialize
+    
+    //initialize
 	self.group = [NSMutableOrderedSet orderedSet];
 	NSOrderedSet *peopleTagged = [[NSOrderedSet alloc] init];
 
 
-		//if there is a curent note display it
+    //if there is a curent note display it
 	if (self.currentNote) {
 
 			//use the date for the title of the screen
@@ -148,7 +146,6 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 		self.notesTextView.text = [self.currentNote valueForKey: @"text"];
 		peopleTagged = [self.currentNote valueForKey: @"peopleTagged"];
-
 	} else {
 			//no note passed in, so add a new note
 
@@ -198,8 +195,13 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 - (BOOL)canBecomeFirstResponder
 {
-	return YES;
+    if(self.currentNote) {
+        return NO; //don't show keyboard by default
+    } else {
+        return YES; // show keyboard by default for a blank note.
+    }
 }
+
 #pragma mark - Address Book access
 
 	// Check the authorization status of our application for Address Book
@@ -520,7 +522,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 }
 
-	// Action receiver for the clicking of Cancel button
+// Action receiver for the clicking of Cancel button
 - (IBAction)cancelClick:(id)sender
 {
 	if (self.delegate) {
@@ -530,7 +532,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 	}
 }
 
-	// Action receiver for the clicking on personsTaggedView
+// Action receiver for the clicking on personsTaggedView
 - (IBAction)scrollViewTapped:(id)sender
 {
 	self.tagFriendsPlaceholderText.hidden = YES;
