@@ -78,13 +78,11 @@ NSString *const kPlaceHolderText = @"Enter note";
 	[self.searchField setImage: [UIImage imageNamed: @"noImage"] forSearchBarIcon: UISearchBarIconSearch state:UIControlStateNormal];
 	[[UISearchBar appearance] setPositionAdjustment:UIOffsetMake(-15, 0) forSearchBarIcon:UISearchBarIconSearch];
 
-
 	self.searchField.delegate = self;
 	self.searchField.backgroundColor = self.tokenColor;
 	self.searchField.barTintColor = self.tokenColor;
 	self.searchField.tintColor = [UIColor whiteColor];
 	[self.searchField.layer setCornerRadius:4.0];
-
 
     // Add a tap gesture recognizer to our scrollView
 	self.singleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewTapped:)];
@@ -371,7 +369,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 {
 	BOOL shouldReceiveTouch = NO;
 
-		// Only receive touches on scrollView, not on subviews
+    // Only receive touches on scrollView, not on subviews
     if (touch.view == self.personsTaggedView) {
         shouldReceiveTouch = YES;
     }
@@ -407,11 +405,9 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 #pragma mark - Target-action methods
 
-	// Action receiver for the selecting of name button
-- (void)buttonSelected:(id)sender
-{
+// Action receiver for the selecting of name button
+- (void)buttonSelected:(id)sender {
 	[self.searchField becomeFirstResponder];
-
 	self.selectedButton = (UIButton *)sender;
 
     // Clear other button states
@@ -444,7 +440,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 //		[note addPeopleTagged: self.mutablePeopleSet];
 		note.peopleTagged = [[NSOrderedSet alloc] initWithSet:[self.mutablePeopleSet set]];
 	} else {
-	Note *newNote = [NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
+        Note *newNote = [NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
 		[newNote setValue: [NSDate date] forKey: @"createDate"];
 		[newNote setValue: self.notesTextView.text forKey: @"text"];
 		[newNote setValue: [NSDate date] forKey: @"lastUpdatedDate"];
@@ -499,7 +495,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 }
 
-	// Action receiver for the clicking of Cancel button
+// Action receiver for the clicking of Cancel button
 - (IBAction)cancelClick:(id)sender {
 	if (self.delegate) {
 		[self.delegate noteViewControllerDidCancel:self];
@@ -508,34 +504,37 @@ NSString *const kPlaceHolderText = @"Enter note";
 	}
 }
 
-	// Action receiver for the clicking on personsTaggedView
+// Action receiver for the clicking on personsTaggedView
 - (IBAction)scrollViewTapped:(id)sender {
 	self.tagFriendsPlaceholderText.hidden = YES;
 	[self.searchField becomeFirstResponder];
 	self.searchField.hidden = NO;
-
 }
 
 #pragma mark - UIKeyInput protocol conformance
 
 - (BOOL)hasText {
+    // if the field is blank
+    // and there is a previous pill
+    // select that pill
+    // Clear other button states
+    NSLog(@"search %@", self.searchField);
 	return NO;
 }
 
 - (void)insertText:(NSString *)text {}
 
-- (void)deleteBackward {
-		// Cast tag value to ABRecordID type
+- (void) deleteBackward {
+    // Cast tag value to ABRecordID type
 	ABRecordID abRecordID = (ABRecordID)self.selectedButton.tag;
 	ABRecordRef abPerson = ABAddressBookGetPersonWithRecordID(self.addressBook, abRecordID);
-
+    
 	[self removePersonFromGroup:abPerson];
 }
 
-#pragma mark - Add and remove a person to/from the group
+#pragma mark - Add and remove a person to/from the group of people tagged
 
-- (void)addPersonToGroup:(ABRecordRef)abRecordRef
-{
+- (void)addPersonToGroup:(ABRecordRef)abRecordRef {
 	ABRecordID abRecordID = ABRecordGetRecordID(abRecordRef);
 	NSNumber *number = [NSNumber numberWithInt:abRecordID];
 
@@ -544,11 +543,9 @@ NSString *const kPlaceHolderText = @"Enter note";
 	[self updatePersonInfo: self.abRecordIDs];
 	[self layoutScrollView: self.personsTaggedView forGroup: self.abRecordIDs];
 	[self.searchField becomeFirstResponder];
-
 }
 
-- (void)removePersonFromGroup:(ABRecordRef)abRecordRef
-{
+- (void)removePersonFromGroup:(ABRecordRef)abRecordRef {
 	ABRecordID abRecordID = ABRecordGetRecordID(abRecordRef);
 	NSNumber *number = [NSNumber numberWithInt:abRecordID];
 
@@ -578,7 +575,6 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 	cell.accessoryType = UITableViewCellAccessoryNone;
 	cell.backgroundColor = [UIColor clearColor];
-
 
 		// If this is the last row in filteredPeople, take special action
 	if (self.filteredPeople.count == indexPath.row) {
@@ -658,26 +654,22 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-	if (self.searchField.text.length > 0)
-		{
+	if (self.searchField.text.length > 0) {
 		[self.contactsTableView setHidden:NO];
 		[self filterContentForSearchText:self.searchField.text];
 		[self.contactsTableView reloadData];
-		}
-	else
-		{
+    } else {
 		[self.contactsTableView setHidden:YES];
-		}
+    }
 }
 
 #pragma mark - ABNewPersonViewControllerDelegate protocol conformance
 
 - (void)newPersonViewController:(ABNewPersonViewController *)newPersonView didCompleteWithNewPerson:(ABRecordRef)person
 {
-	if (person != NULL)
-		{
+	if (person != NULL) {
 		[self addPersonToGroup:person];
-		}
+    }
 
 	[newPersonView dismissViewControllerAnimated:YES completion:NULL];
 }
