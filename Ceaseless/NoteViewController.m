@@ -335,7 +335,19 @@ NSString *const kPlaceHolderText = @"Enter note";
     CGRect searchFieldFrame = CGRectMake(xPosition, yPosition, nameSize.width + (kPadding * 2), nameSize.height);
     self.searchField.frame = searchFieldFrame;
     self.searchField.hidden = YES;
-    
+ 
+    // setting font color of search field
+    for (UIView *subView in self.searchField.subviews) {
+        for (UIView *secondLevelSubview in subView.subviews){
+            if ([secondLevelSubview isKindOfClass:[UITextField class]]) {
+                UITextField *searchBarTextField = (UITextField *)secondLevelSubview;
+                
+                //set font color here
+                searchBarTextField.textColor = [UIColor whiteColor];
+                break;
+            }
+        }
+    }
     
     // Add the button to its superview
     [scrollView addSubview:self.searchField];
