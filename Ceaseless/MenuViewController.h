@@ -12,7 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIImageView *menuBackground;
-@property (strong, nonatomic) NSArray *menuInfoArray;
+@property (strong, nonatomic) NSMutableArray *menuInfoArray;
 
 
 @end
