@@ -115,7 +115,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r8K-Y6-IDZ" userLabel="leftFiller">
+                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r8K-Y6-IDZ" userLabel="leftFiller">
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="Z91-wn-3pZ"/>
@@ -126,7 +126,7 @@
                                                 </mask>
                                             </variation>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j74-k2-2nG" userLabel="rightFiller">
+                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j74-k2-2nG" userLabel="rightFiller">
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="vGZ-j1-nPJ"/>
@@ -377,6 +377,7 @@
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
+                                            <exclude reference="bI4-AK-ncr"/>
                                             <exclude reference="tz8-Z6-byg"/>
                                             <exclude reference="AXX-67-Vrn"/>
                                             <exclude reference="F02-Ga-PFb"/>
@@ -385,13 +386,12 @@
                                             <exclude reference="s0D-Ux-gof"/>
                                             <exclude reference="s9N-CS-oT6"/>
                                             <exclude reference="sFR-rj-FsS"/>
-                                            <exclude reference="bI4-AK-ncr"/>
                                         </mask>
                                     </variation>
                                 </view>
                                 <blurEffect style="light"/>
                             </visualEffectView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Skz-16-KHd" userLabel="instructionBubble">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Skz-16-KHd" userLabel="instructionBubble">
                                 <rect key="frame" x="414" y="68" width="166" height="55"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="^ Tap to create a note." textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vaC-PW-6Xb">
