@@ -10,14 +10,13 @@
 #import "AppUtils.h"
 #import "AppConstants.h"
 #import "WebCardViewController.h"
+#import "CeaselessService.h"
 
 @interface ProgressViewController ()
     @property (strong, nonatomic) NSArray *announcements;
 @end
 
 @implementation ProgressViewController
-
-NSString *const kAnnouncementsUrl = @"http://www.ceaselessprayer.com/announcements/feed";
 NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
 
 - (void)viewDidLoad {
@@ -42,7 +41,7 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
 }
 
 - (void)showAnnouncementButtonIfNeeded {
-    NSURL *url = [NSURL URLWithString: kAnnouncementsUrl];
+    NSURL *url = [NSURL URLWithString: [[CeaselessService sharedCeaselessService] getUrlForKey:kFetchAnnouncementsURL]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                        timeoutInterval:5.0];
     
