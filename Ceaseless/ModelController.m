@@ -20,6 +20,7 @@
 #import "CeaselessLocalContacts.h"
 #import "AppConstants.h"
 #import "AppUtils.h"
+#import "CeaselessService.h"
 
 /*
  A controller object that manages a simple model -- a collection of month names.
@@ -43,7 +44,6 @@
 @implementation ModelController
 NSString *const kModelRefreshNotification = @"ceaselessModelRefreshed";
 NSString *const kLocalLastRefreshDate = @"localLastRefreshDate";
-NSString *const kScriptureImagesUrl = @"http://api.ceaselessprayer.com/v1/getAScriptureImage";
 
 // this method sets up the card array for display
 // everything here should be read only
@@ -143,7 +143,7 @@ NSString *const kScriptureImagesUrl = @"http://api.ceaselessprayer.com/v1/getASc
     }
     
     // fetch the next background image for caching purposes.
-    NSURL *url = [NSURL URLWithString: kScriptureImagesUrl];
+    NSURL *url = [NSURL URLWithString: [[CeaselessService sharedCeaselessService] getUrlForKey: kFetchNewScriptureImageURL]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                        timeoutInterval:5.0];
     

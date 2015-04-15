@@ -8,6 +8,7 @@
 
 #import "ScripturePicker.h"
 #import "AppDelegate.h"
+#import "CeaselessService.h"
 
 @interface ScripturePicker ()
 
@@ -18,9 +19,6 @@
 @implementation ScripturePicker
 NSString *const kDefaultScripture = @"\"And whatever you ask in prayer, you will receive, if you have faith.\"";
 NSString *const kDefaultCitation = @"(Matthew 21:22,ESV)";
-NSString *const kDefaultShareLink = @"http://www.bible.is/ENGESV/Matt/21#22";
-NSString *const kVerseOfTheDayURL = @"http://api.ceaselessprayer.com/v1/votd";
-NSString *const kGetScriptureURL = @"http://api.ceaselessprayer.com/v1/getScripture";
 int const kDefaultQueueMaxSize = 5;
 int const kDefaultQueueMinSize = 1;
 
@@ -110,7 +108,7 @@ int const kDefaultQueueMinSize = 1;
 };
 
 - (void)requestDailyVerseReference {
-	NSURL *url = [NSURL URLWithString: kVerseOfTheDayURL];
+	NSURL *url = [NSURL URLWithString: [[CeaselessService sharedCeaselessService]getUrlForKey:kFetchVerseOfTheDayURL]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                        timeoutInterval:60.0];
@@ -124,7 +122,7 @@ int const kDefaultQueueMinSize = 1;
 }
 
 -(void) requestScriptureText: (NSDictionary *) dailyVerseData {
-	NSURL *url = [NSURL URLWithString: kGetScriptureURL];
+	NSURL *url = [NSURL URLWithString: [[CeaselessService sharedCeaselessService]getUrlForKey:kFetchScriptureURL]];
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
 														   cachePolicy:NSURLRequestUseProtocolCachePolicy
 													   timeoutInterval:60.0];
@@ -197,7 +195,7 @@ int const kDefaultQueueMinSize = 1;
 	NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"ScriptureQueue" inManagedObjectContext:self.managedObjectContext];
 	[newManagedObject setValue: kDefaultScripture forKey: @"verse"];
 	[newManagedObject setValue: kDefaultCitation forKey: @"citation"];
-    	[newManagedObject setValue: kDefaultShareLink forKey: @"shareLink"];
+    [newManagedObject setValue: [[CeaselessService sharedCeaselessService] getUrlForKey:kDefaultScriptureShareURL] forKey: @"shareLink"];
 	if (![self.managedObjectContext save: &error]) {
 		NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
 	}
