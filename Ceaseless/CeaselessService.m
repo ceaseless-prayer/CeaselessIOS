@@ -29,6 +29,7 @@
     if (self) {
         _defaults = [NSUserDefaults standardUserDefaults];
         _defaultUrls = [[NSMutableDictionary alloc] init];
+        // TODO move DBP related methods into their own service class.
         [_defaultUrls setValue:@"http://www.bible.is/ENGESV/Matt/21#22" forKey:kDefaultScriptureShareURL];
         [_defaultUrls setValue:@"http://api.ceaselessprayer.com/v1/votd" forKey:kFetchVerseOfTheDayURL];
         [_defaultUrls setValue:@"http://api.ceaselessprayer.com/v1/getScripture" forKey:kFetchScriptureURL];
@@ -46,4 +47,12 @@
         return overridenValue;
     }
 }
+
+- (void) setUrlString: (NSString*) url forKey: (NSString*) key {
+    // only set it if it is one of the keys managed by this class
+    if([[_defaultUrls allKeys] containsObject:key]) {
+        [_defaults setObject:url forKey: key];
+    }
+}
+
 @end

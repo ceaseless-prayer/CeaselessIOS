@@ -23,4 +23,5 @@ FOUNDATION_EXPORT NSString *const kDefaultScriptureShareURL;
 + (id) sharedCeaselessService;
 - (instancetype) init;
 - (NSString *) getUrlForKey: (NSString*) key;
+- (void) setUrlString: (NSString*) url forKey: (NSString*) key;
 @end
