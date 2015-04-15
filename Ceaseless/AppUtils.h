@@ -24,4 +24,5 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 + (UIImage *) getDynamicBackgroundImage;
 + (NSNumber *) daysWithinEraFromDate:(NSDate *) startDate toDate:(NSDate *) endDate;
 + (ABAddressBookRef) getAddressBookRef;
++ (void) bounceView: (UIView *) viewToAnimate distance: (CGFloat) toValue duration: (CGFloat) duration;
 @end

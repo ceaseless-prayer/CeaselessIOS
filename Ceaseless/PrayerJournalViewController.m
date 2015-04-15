@@ -139,6 +139,11 @@ typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
 	if (self.searchController.active) {
 		return 1;
 	} else {
+        if(YES) {
+            self.instructionBubble.layer.cornerRadius = 6.0f;
+            [AppUtils bounceView:self.instructionBubble distance: -6.0 duration: 0.4];
+            self.instructionBubble.hidden = NO;
+        }
 		return [[self.fetchedResultsController sections] count];
 	}
 }
@@ -460,5 +465,4 @@ typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
 	}
 	}
 }
-
 @end

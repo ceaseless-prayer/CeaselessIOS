@@ -135,4 +135,17 @@
     
     return addressBook;
 }
+
+#pragma mark - Animation
++ (void) bounceView: (UIView *) viewToAnimate distance: (CGFloat) toValue duration: (CGFloat) duration{
+    CABasicAnimation *hover = [CABasicAnimation animationWithKeyPath:@"position"];
+    hover.additive = YES; // fromValue and toValue will be relative instead of absolute values
+    hover.fromValue = [NSValue valueWithCGPoint:CGPointZero];
+    hover.toValue = [NSValue valueWithCGPoint:CGPointMake(0.0, toValue)]; // y increases downwards on iOS
+    hover.autoreverses = YES; // Animate back to normal afterwards
+    hover.duration = duration; // The duration for one part of the animation (0.2 up and 0.2 down)
+    hover.repeatCount = INFINITY; // The number of times the animation should repeat
+    [viewToAnimate.layer addAnimation:hover forKey:@"myHoverAnimation"];
+}
+
 @end
