@@ -43,25 +43,22 @@ static CGFloat const kPadding = 5.0;
 
 	[self.navigationController.navigationBar setTitleTextAttributes:navbarTitleTextAttributes];
     
-    if (!self.tokenColor)
-    {
+    if (!self.tokenColor) {
         self.tokenColor = self.view.tintColor;
-	self.tokenColor = [UIColor lightGrayColor];
-
+        self.tokenColor = [UIColor lightGrayColor];
     }
 
-    if (!self.selectedTokenColor)
-    {
+    if (!self.selectedTokenColor) {
         self.selectedTokenColor = [UIColor darkGrayColor];
     }
 
-		//Customized the searchBar
+    //Customized the searchBar
 	self.searchField.searchBarStyle = UISearchBarStyleMinimal;
-
 	self.searchField.backgroundColor = self.tokenColor;
 	self.searchField.barTintColor = self.selectedTokenColor;
 	self.searchField.tintColor = [UIColor whiteColor];
 	[self.searchField.layer setCornerRadius:4.0];
+    
     // Add a tap gesture recognizer to our scrollView
     UITapGestureRecognizer *singleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewTapped:)];
     singleTapGestureRecognizer.numberOfTapsRequired = 1;
@@ -71,17 +68,14 @@ static CGFloat const kPadding = 5.0;
     [self.scrollView addGestureRecognizer:singleTapGestureRecognizer];
 
 		// Check whether we are authorized to access the user's address book data
-	if (self.addressBook == NULL)
-		{
+	if (self.addressBook == NULL) {
 		self.addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
-		}
+    }
 	[self checkAddressBookAccess];
 	[self layoutScrollView:self.scrollView forGroup:self.abRecordIDs];
-
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
     // Keep the keyboard up
@@ -91,16 +85,14 @@ static CGFloat const kPadding = 5.0;
 
 #pragma mark - Respond to touch and become first responder.
 
-- (BOOL)canBecomeFirstResponder
-{
+- (BOOL)canBecomeFirstResponder {
 	return YES;
 }
 
 #pragma mark - Address Book access
 
 // Check the authorization status of our application for Address Book
-- (void)checkAddressBookAccess
-{
+- (void)checkAddressBookAccess {
     switch (ABAddressBookGetAuthorizationStatus())
     {
             // Update our UI if the user has granted access to their Contacts
@@ -129,8 +121,7 @@ static CGFloat const kPadding = 5.0;
 }
 
 // Prompt the user for access to their Address Book data
-- (void)requestAddressBookAccess
-{
+- (void)requestAddressBookAccess {
     TaggedPersonPicker* __weak weakSelf = self;
     
     ABAddressBookRequestAccessWithCompletion(self.addressBook, ^(bool granted, CFErrorRef error)
@@ -146,8 +137,7 @@ static CGFloat const kPadding = 5.0;
 }
 
 // This method is called when the user has granted access to their address book data.
-- (void)accessGrantedForAddressBook
-{
+- (void)accessGrantedForAddressBook {
 	_people = (__bridge_transfer NSArray *)ABAddressBookCopyArrayOfAllPeople(self.addressBook);
     
     self.group = [[NSMutableOrderedSet alloc] initWithOrderedSet:self.abRecordIDs];
@@ -159,8 +149,7 @@ static CGFloat const kPadding = 5.0;
 #pragma mark - Target-action methods
 
 // Action receiver for the clicking of Done button
-- (IBAction)doneClick:(id)sender
-{
+- (IBAction)doneClick:(id)sender {
 	if ([self.group count] > self.maxCount) {
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
 														message:NSLocalizedString(@"Please select only one name.", @"Please select only one name.")
@@ -177,15 +166,13 @@ static CGFloat const kPadding = 5.0;
 }
 
 // Action receiver for the clicking of Cancel button
-- (IBAction)cancelClick:(id)sender
-{
+- (IBAction)cancelClick:(id)sender {
 //	[self.group removeAllObjects];
 	[self.delegate taggedPersonPickerDidCancel:self];
 }
 
 // Action receiver for the selecting of name button
-- (void)buttonSelected:(id)sender
-{
+- (void)buttonSelected:(id)sender {
 	self.selectedButton = (UIButton *)sender;
 	
 	// Clear other button states
@@ -210,8 +197,7 @@ static CGFloat const kPadding = 5.0;
 }
 
 // Action receiver when scrollView is tapped
-- (void)scrollViewTapped:(UITapGestureRecognizer *)gestureRecognizer
-{
+- (void)scrollViewTapped:(UITapGestureRecognizer *)gestureRecognizer {
     // Clear button states
 	for (UIView *subview in self.scrollView.subviews)
     {
@@ -224,15 +210,13 @@ static CGFloat const kPadding = 5.0;
 
 #pragma mark - UIKeyInput protocol conformance
 
-- (BOOL)hasText
-{
+- (BOOL)hasText {
 	return NO;
 }
 
 - (void)insertText:(NSString *)text {}
 
-- (void)deleteBackward
-{
+- (void)deleteBackward {
     // Cast tag value to ABRecordID type
     ABRecordID abRecordID = (ABRecordID)self.selectedButton.tag;
     ABRecordRef abPerson = ABAddressBookGetPersonWithRecordID(self.addressBook, abRecordID);
@@ -242,15 +226,13 @@ static CGFloat const kPadding = 5.0;
 
 #pragma mark - UITableViewDataSource protocol conformance
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	// do we have search text? if yes, are there search results? if yes, return number of results, otherwise, return 1 (add email row)
 	// if there are no search results, the table is empty, so return 0
 	return self.searchField.text.length > 0 ? MAX( 1, self.filteredPeople.count ) : 0 ;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
    
     cell.accessoryType = UITableViewCellAccessoryNone;
@@ -263,9 +245,7 @@ static CGFloat const kPadding = 5.0;
 		cell.textLabel.text	= @"Add new contact";
         cell.detailTextLabel.text = nil;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-	}
-	else
-    {
+	} else {
 		ABRecordRef abPerson = (__bridge ABRecordRef)([self.filteredPeople objectAtIndex:indexPath.row]);
 
         cell.textLabel.text = (__bridge_transfer NSString *)ABRecordCopyCompositeName(abPerson);
@@ -277,24 +257,19 @@ static CGFloat const kPadding = 5.0;
 
 #pragma mark - UITableViewDelegate protocol conformance
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	[tableView setHidden:YES];
 
     // If this is the last row in filteredPeople, take special action
-	if (indexPath.row == self.filteredPeople.count)
-    {
+	if (indexPath.row == self.filteredPeople.count) {
         ABNewPersonViewController *newPersonViewController = [[ABNewPersonViewController alloc] init];
         newPersonViewController.newPersonViewDelegate = self;
         
         UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:newPersonViewController];
         
         [self presentViewController:navController animated:YES completion:NULL];
-	}
-	else
-    {
+	} else {
 		ABRecordRef abRecordRef = (__bridge ABRecordRef)([self.filteredPeople objectAtIndex:indexPath.row]);
-		
 		[self addPersonToGroup:abRecordRef];
 	}
 
@@ -303,8 +278,7 @@ static CGFloat const kPadding = 5.0;
 
 #pragma mark - Update the filteredPeople array based on the search text.
 
-- (void)filterContentForSearchText:(NSString *)searchText
-{
+- (void)filterContentForSearchText:(NSString *)searchText {
 	// First clear the filtered array.
 	[self.filteredPeople removeAllObjects];
 
@@ -339,8 +313,7 @@ static CGFloat const kPadding = 5.0;
 
 #pragma mark - UISearchBarDelegate protocol conformance
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     if (self.searchField.text.length > 0)
     {
 		[self.contactsTableView setHidden:NO];
@@ -353,8 +326,7 @@ static CGFloat const kPadding = 5.0;
 	}
 }
 
-- (void)searchBarBookmarkButtonClicked:(UISearchBar *)searchBar
-{
+- (void)searchBarBookmarkButtonClicked:(UISearchBar *)searchBar {
 	ABPeoplePickerNavigationController *peoplePicker = [[ABPeoplePickerNavigationController alloc] init];
     peoplePicker.addressBook = self.addressBook;
 	peoplePicker.peoplePickerDelegate = self;
@@ -365,8 +337,7 @@ static CGFloat const kPadding = 5.0;
 
 #pragma mark - UIGestureRecognizer delegate protocol conformance
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
-{
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     BOOL shouldReceiveTouch = NO;
 
     // Only receive touches on scrollView, not on subviews
@@ -380,8 +351,7 @@ static CGFloat const kPadding = 5.0;
 
 #pragma mark - Add and remove a person to/from the group
 
-- (void)addPersonToGroup:(ABRecordRef)abRecordRef
-{
+- (void)addPersonToGroup:(ABRecordRef)abRecordRef {
     ABRecordID abRecordID = ABRecordGetRecordID(abRecordRef);
     NSNumber *number = [NSNumber numberWithInt:abRecordID];
 
@@ -392,8 +362,7 @@ static CGFloat const kPadding = 5.0;
 
 }
 
-- (void)removePersonFromGroup:(ABRecordRef)abRecordRef
-{
+- (void)removePersonFromGroup:(ABRecordRef)abRecordRef {
     ABRecordID abRecordID = ABRecordGetRecordID(abRecordRef);
     NSNumber *number = [NSNumber numberWithInt:abRecordID];
     
@@ -405,8 +374,7 @@ static CGFloat const kPadding = 5.0;
 }
 
 #pragma mark - Update Person info
-- (void) layoutScrollView: (UIScrollView *) scrollView forGroup: (NSOrderedSet *) abRecordIDs
-{
+- (void) layoutScrollView: (UIScrollView *) scrollView forGroup: (NSOrderedSet *) abRecordIDs {
 	// Remove existing buttons
 	for (UIView *subview in scrollView.subviews)
     {
@@ -480,8 +448,7 @@ static CGFloat const kPadding = 5.0;
 #pragma mark - ABPeoplePickerNavigationControllerDelegate protocol conformance
 
 // Displays the information of a selected person
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)picker shouldContinueAfterSelectingPerson:(ABRecordRef)person
-{
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)picker shouldContinueAfterSelectingPerson:(ABRecordRef)person {
 	[self addPersonToGroup:person];
     
 	// Dismiss the people picker
@@ -494,14 +461,12 @@ static CGFloat const kPadding = 5.0;
 }
 
 // This should never get called since we dismiss the picker in the above method.
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier
-{	
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier {
 	return NO;
 }
 
 // Dismisses the people picker and shows the application when users tap Cancel. 
-- (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker
-{
+- (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker {
 	// Dismiss the people picker
     [peoplePicker dismissViewControllerAnimated:YES completion:NULL];
 	
@@ -511,10 +476,8 @@ static CGFloat const kPadding = 5.0;
 
 #pragma mark - ABNewPersonViewControllerDelegate protocol conformance
 
-- (void)newPersonViewController:(ABNewPersonViewController *)newPersonView didCompleteWithNewPerson:(ABRecordRef)person
-{
-    if (person != NULL)
-    {
+- (void)newPersonViewController:(ABNewPersonViewController *)newPersonView didCompleteWithNewPerson:(ABRecordRef)person {
+    if (person != NULL) {
         [self addPersonToGroup:person];
     }
 
