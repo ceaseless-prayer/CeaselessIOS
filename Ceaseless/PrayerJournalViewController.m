@@ -16,20 +16,12 @@
 #import "AppUtils.h"
 #import "UIImageEffects.h"
 
-typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
-{
-	predicateScopeFriends = 0,
-	predicateScopeMe = 1
-};
-
 @interface PrayerJournalViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UISearchControllerDelegate>
 
 @property (strong, nonatomic) NSArray *filteredList;
 @property (strong, nonatomic) NSFetchRequest *searchFetchRequest;
 @property (nonatomic, strong) UISearchController *searchController;
 @property (nonatomic, strong) CeaselessLocalContacts *ceaselessContacts;
-@property (nonatomic, strong) NSString *selectedNotesPredicate;
-
 
 @end
 
@@ -40,7 +32,6 @@ typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
 	AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
 	self.managedObjectContext = appDelegate.managedObjectContext;
     self.ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
-	[self selectNotesPredicate];
 }
 
 - (void)viewDidLoad {
@@ -57,14 +48,6 @@ typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
 	self.tableView.rowHeight = UITableViewAutomaticDimension;
 
 	[self searchControllerSetup];
-
-	NSDictionary *segmentTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-											   [UIColor whiteColor], NSForegroundColorAttributeName,
-											   [UIFont fontWithName:@"AvenirNext-Medium" size:15.0f],NSFontAttributeName,
-											   nil];
-
-	[self.segment setTitleTextAttributes: segmentTitleTextAttributes forState:UIControlStateNormal];
-	[self.segment setTitleTextAttributes: segmentTitleTextAttributes forState:UIControlStateSelected];
 
 }
 - (void) searchControllerSetup {
@@ -293,9 +276,7 @@ typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
 	if (self.managedObjectContext) {
 
 			//first search text in Notes
-		NSString *buildPredicateFormat = [NSString stringWithString: self.selectedNotesPredicate];
-
-		NSString *predicateFormat = [buildPredicateFormat stringByAppendingString: @" AND text contains[cd] %@"];
+		NSString *predicateFormat = @"text contains[cd] %@";
 		NSEntityDescription *entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
 		[self.searchFetchRequest setEntity:entity];
 
@@ -405,10 +386,6 @@ typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
 
 	[fetchRequest setSortDescriptors:sortDescriptors];
 
-	NSPredicate *selectedContacts = [NSPredicate predicateWithFormat: self.selectedNotesPredicate];
-
-	[fetchRequest setPredicate: selectedContacts];
-
 		// Edit the section name key path and cache name if appropriate.
 		// nil for section name key path means "no sections".
 	NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
@@ -444,31 +421,6 @@ typedef NS_ENUM(NSInteger, PrayerJournalPredicateScope)
 	  NSLog(@"last update date: %@", [managedObject valueForKey: @"lastUpdatedDate"]);
   }
 }
-
-- (IBAction)notesListSelector:(id)sender {
-	[self selectNotesPredicate];
-	[self.tableView reloadData];
-}
-
-- (void) selectNotesPredicate {
-	{
-	switch (self.segment.selectedSegmentIndex){
-		case 0:
-			self.selectedNotesPredicate = @"peopleTagged.@count > 0";
-			_fetchedResultsController = nil;
-			break;
-
-		case 1:
-			self.selectedNotesPredicate = @"peopleTagged.@count == 0";
-			_fetchedResultsController = nil;
-			break;
-
-		default:
-			break;
-	}
-	}
-}
-
 
 - (void) showInstructions {
     self.instructionBubble.layer.cornerRadius = 6.0f;
