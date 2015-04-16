@@ -542,6 +542,7 @@
                                                                     <constraint firstAttribute="width" constant="40" id="Xg2-pZ-Pcq"/>
                                                                     <constraint firstAttribute="width" secondItem="lpn-rt-0YU" secondAttribute="height" multiplier="1:1" id="hwh-dm-cjh"/>
                                                                     <constraint firstAttribute="height" constant="41" id="nCF-7v-Gom"/>
+                                                                    <constraint firstAttribute="height" constant="41" id="rlg-xn-8iA"/>
                                                                     <constraint firstAttribute="width" constant="41" id="wac-G0-SYN"/>
                                                                 </constraints>
                                                                 <variation key="default">
@@ -602,7 +603,7 @@
                                                             <constraint firstItem="Tzf-UG-h6t" firstAttribute="bottom" secondItem="lpn-rt-0YU" secondAttribute="bottom" id="FSd-Fh-KBh"/>
                                                             <constraint firstAttribute="trailingMargin" secondItem="21g-XQ-nPL" secondAttribute="trailing" constant="65" id="HH1-MA-j2U"/>
                                                             <constraint firstItem="cxT-HB-S1b" firstAttribute="leading" secondItem="21g-XQ-nPL" secondAttribute="trailing" id="Ifd-jP-rGj"/>
-                                                            <constraint firstItem="lpn-rt-0YU" firstAttribute="top" secondItem="Rid-lh-ysD" secondAttribute="top" constant="1" id="LTk-Gg-3JT"/>
+                                                            <constraint firstItem="lpn-rt-0YU" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Rid-lh-ysD" secondAttribute="top" constant="1" id="LTk-Gg-3JT"/>
                                                             <constraint firstAttribute="trailing" secondItem="lpn-rt-0YU" secondAttribute="trailing" id="Nxu-yN-Ljx"/>
                                                             <constraint firstItem="cxT-HB-S1b" firstAttribute="centerY" secondItem="21g-XQ-nPL" secondAttribute="centerY" id="Opl-63-bWc"/>
                                                             <constraint firstItem="lpn-rt-0YU" firstAttribute="bottom" secondItem="Tzf-UG-h6t" secondAttribute="bottom" id="UoW-6Y-b84"/>
