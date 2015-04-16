@@ -15,7 +15,6 @@
 		42458BF61ACF1FEC00C48830 /* AddressBookId.m in Sources */ = {isa = PBXBuildFile; fileRef = 42458BF51ACF1FEC00C48830 /* AddressBookId.m */; };
 		42458C021ACF32FD00C48830 /* PersonInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 42458C011ACF32FD00C48830 /* PersonInfo.m */; };
 		424C5B231ADF1137005C4CFC /* CeaselessService.m in Sources */ = {isa = PBXBuildFile; fileRef = 424C5B221ADF1137005C4CFC /* CeaselessService.m */; };
-		424C5B251AE07334005C4CFC /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 424C5B241AE07334005C4CFC /* Resources */; };
 		424C5B281AE0734F005C4CFC /* NSString+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 424C5B271AE0734F005C4CFC /* NSString+FontAwesome.m */; };
 		424C5B2B1AE073BE005C4CFC /* UIFont+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 424C5B2A1AE073BE005C4CFC /* UIFont+FontAwesome.m */; };
 		424C5B2E1AE073D5005C4CFC /* FAImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 424C5B2D1AE073D5005C4CFC /* FAImageView.m */; };
@@ -104,13 +103,13 @@
 		42458C011ACF32FD00C48830 /* PersonInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonInfo.m; sourceTree = "<group>"; };
 		424C5B211ADF1137005C4CFC /* CeaselessService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CeaselessService.h; sourceTree = "<group>"; };
 		424C5B221ADF1137005C4CFC /* CeaselessService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CeaselessService.m; sourceTree = "<group>"; };
-		424C5B241AE07334005C4CFC /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources; sourceTree = "<group>"; };
 		424C5B261AE0734F005C4CFC /* NSString+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FontAwesome.h"; sourceTree = "<group>"; };
 		424C5B271AE0734F005C4CFC /* NSString+FontAwesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FontAwesome.m"; sourceTree = "<group>"; };
 		424C5B291AE073BE005C4CFC /* UIFont+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+FontAwesome.h"; sourceTree = "<group>"; };
 		424C5B2A1AE073BE005C4CFC /* UIFont+FontAwesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+FontAwesome.m"; sourceTree = "<group>"; };
 		424C5B2C1AE073D5005C4CFC /* FAImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FAImageView.h; sourceTree = "<group>"; };
 		424C5B2D1AE073D5005C4CFC /* FAImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FAImageView.m; sourceTree = "<group>"; };
+		424C5B311AE07B76005C4CFC /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
 		425271A71AB1FA9A005098F6 /* ScripturePickerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScripturePickerTests.m; sourceTree = "<group>"; };
 		425271A91AB1FF1C005098F6 /* PersonPickerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonPickerTests.m; sourceTree = "<group>"; };
 		425271AE1AB37F29005098F6 /* CeaselessLocalContacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CeaselessLocalContacts.h; sourceTree = "<group>"; };
@@ -292,7 +291,7 @@
 		42F3AE1B1AA4DD7F003A88F5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				424C5B241AE07334005C4CFC /* Resources */,
+				424C5B311AE07B76005C4CFC /* FontAwesome.ttf */,
 				7083F7111AD4C474002D93AD /* at_the_beach.jpg */,
 				7075100D1ACB2B13006500A9 /* AppConstants.h */,
 				7075100E1ACB2B13006500A9 /* AppConstants.m */,
@@ -528,7 +527,6 @@
 				707BE2E61AAA1B1A0020FF29 /* Screen Shot 2015-02-17 at 9.05.16 PM.png in Resources */,
 				709D83391AA598A600C3486E /* Screen Shot 2015-02-18 at 8.25.51 AM.png in Resources */,
 				70D51C131AA66F5100FA7CDC /* PersonView.xib in Resources */,
-				424C5B251AE07334005C4CFC /* Resources in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
