@@ -376,6 +376,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 		textView.textColor = [UIColor whiteColor];
 	}
 
+	[self registerForKeyboardNotifications];
 	return YES;
 }
 
@@ -385,8 +386,70 @@ NSString *const kPlaceHolderText = @"Enter note";
 		textView.text = kPlaceHolderText;
 		textView.textColor = [UIColor lightGrayColor];
 	}
+	[self unregisterForKeyboardNotifications];
 	return YES;
 }
+
+- (void)registerForKeyboardNotifications
+{
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(keyboardWillShow:)
+												 name:UIKeyboardWillShowNotification
+											   object:nil];
+
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(keyboardWillBeHidden:)
+												 name:UIKeyboardWillHideNotification
+											   object:nil];
+
+
+}
+- (void)unregisterForKeyboardNotifications {
+		//    LogMethod();
+	[[NSNotificationCenter defaultCenter] removeObserver: self
+													name: UIKeyboardWillShowNotification
+												  object: nil];
+
+	[[NSNotificationCenter defaultCenter] removeObserver: self
+													name: UIKeyboardWillHideNotification
+												  object: nil];
+
+}
+
+#pragma mark - Keyboard methods
+
+	// Called when the UIKeyboardDidShowNotification is sent.
+- (void)keyboardWillShow:(NSNotification*)aNotification
+{
+	NSDictionary *info = [aNotification userInfo];
+	NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+
+	CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+
+	self.verticalSpaceTextToBottomConstraint.constant = kbSize.height;
+
+	[self.view setNeedsUpdateConstraints];
+
+	[UIView animateWithDuration:animationDuration animations:^{
+		[self.view layoutIfNeeded];
+	}];
+}
+
+	// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+	NSDictionary *info = [aNotification userInfo];
+	NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+
+	self.verticalSpaceTextToBottomConstraint.constant = 0;
+
+	[self.view setNeedsUpdateConstraints];
+
+	[UIView animateWithDuration:animationDuration animations:^{
+		[self.view layoutIfNeeded];
+	}];
+}
+
 #pragma mark - UIGestureRecognizer delegate protocol conformance
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch

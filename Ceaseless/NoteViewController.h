@@ -28,6 +28,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 @property (weak, nonatomic) IBOutlet UILabel *tagFriendsPlaceholderText;
 @property (weak, nonatomic) IBOutlet UITextView *notesTextView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceTopToView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpaceTextToBottomConstraint;
 
 @property (strong, nonatomic) Note *currentNote;
 @property (strong, nonatomic) PersonIdentifier *personForNewNote;
