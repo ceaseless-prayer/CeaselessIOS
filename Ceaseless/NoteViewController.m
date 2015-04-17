@@ -242,8 +242,8 @@ NSString *const kPlaceHolderText = @"Enter note";
     }
     
     if (selectLast) {
-        UIButton *lastButton = scrollView.subviews.lastObject;
-        if(lastButton) {
+        UIView *lastButton = scrollView.subviews.lastObject;
+        if(lastButton && lastButton != self.searchField) {
             [self buttonSelected:lastButton];
         }
     }
@@ -291,8 +291,6 @@ NSString *const kPlaceHolderText = @"Enter note";
 }
 
 #pragma mark - TextView methods
-
-
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
 	if ([[textView text] isEqualToString:kPlaceHolderText]) {
@@ -300,6 +298,8 @@ NSString *const kPlaceHolderText = @"Enter note";
 		textView.textColor = [UIColor whiteColor];
 	}
 
+    [self hideTagInput];
+    
 	[self registerForKeyboardNotifications];
 	return YES;
 }
@@ -393,14 +393,10 @@ NSString *const kPlaceHolderText = @"Enter note";
 // Action receiver for the selecting of name button
 - (void)buttonSelected:(id)sender {
 	[self.searchField becomeFirstResponder];
+    [self hideTagInput];
 	self.selectedButton = (UIButton *)sender;
 
-    // Clear other button states
-    for (UIView *subview in self.personsTaggedView.subviews) {
-        if ([subview isKindOfClass:[UIButton class]] && subview != self.selectedButton) {
-            ((UIButton *)subview).backgroundColor = [UIColor lightGrayColor];
-        }
-    }
+    [self resetAppearanceOfPeopleTagged];
 
 	if (self.selectedButton.backgroundColor == self.selectedTokenColor) {
 		self.selectedButton.backgroundColor = self.tokenColor;
@@ -409,6 +405,15 @@ NSString *const kPlaceHolderText = @"Enter note";
     }
 
 	[self becomeFirstResponder];
+}
+
+- (void) resetAppearanceOfPeopleTagged {
+    // Clear other button states
+    for (UIView *subview in self.personsTaggedView.subviews) {
+        if ([subview isKindOfClass:[UIButton class]] && subview != self.selectedButton) {
+            ((UIButton *)subview).backgroundColor = [UIColor lightGrayColor];
+        }
+    }
 }
 
 - (IBAction)saveButtonPressed:(id)sender {
@@ -420,15 +425,13 @@ NSString *const kPlaceHolderText = @"Enter note";
 			//if the object is found, update its fields
 		note.text = self.notesTextView.text;
 		note.lastUpdatedDate = [NSDate date];
-		note.peopleTagged = nil; 
-//		[note addPeopleTagged: self.mutablePeopleSet];
+		note.peopleTagged = nil;
 		note.peopleTagged = [[NSOrderedSet alloc] initWithSet:[self.mutablePeopleSet set]];
 	} else {
         Note *newNote = [NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:self.managedObjectContext];
 		[newNote setValue: [NSDate date] forKey: @"createDate"];
 		[newNote setValue: self.notesTextView.text forKey: @"text"];
 		[newNote setValue: [NSDate date] forKey: @"lastUpdatedDate"];
-//		[newNote addPeopleTagged: self.mutablePeopleSet];
 		newNote.peopleTagged = [[NSOrderedSet alloc] initWithSet:[self.mutablePeopleSet set]];
 
 
@@ -489,10 +492,16 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 // Action receiver for the clicking on personsTaggedView
 - (IBAction)scrollViewTapped:(id)sender {
-
 	self.tagFriendsPlaceholderText.hidden = YES;
 	[self.searchField becomeFirstResponder];
 	self.searchField.hidden = NO;
+}
+
+- (void) hideTagInput {
+    if(self.mutablePeopleSet.count == 0) {
+        self.tagFriendsPlaceholderText.hidden = NO;
+    }
+    self.searchField.hidden = YES;
 }
 
 #pragma mark - UIKeyInput protocol conformance
@@ -504,7 +513,6 @@ NSString *const kPlaceHolderText = @"Enter note";
 - (void)insertText:(NSString *)text {}
 
 - (void) deleteBackward {
-
 	[self.mutablePeopleSet removeObjectAtIndex: self.selectedButton.tag];
 	[self layoutScrollView: self.personsTaggedView forGroup: self.mutablePeopleSet selectLast: YES];
 
@@ -513,7 +521,9 @@ NSString *const kPlaceHolderText = @"Enter note";
 	} else  {
 		self.tagFriendsPlaceholderText.hidden = NO;
 	}
-
+    if(self.searchField.isFirstResponder) {
+        self.searchField.hidden = YES;
+    }
 }
 #pragma mark - Add and remove a person to/from the group of people tagged
 
@@ -539,6 +549,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 	[self layoutScrollView: self.personsTaggedView forGroup: self.mutablePeopleSet];
 	[self.searchField becomeFirstResponder];
+    [self scrollViewTapped:self];
 }
 
 #pragma mark - UITableViewDataSource protocol conformance
