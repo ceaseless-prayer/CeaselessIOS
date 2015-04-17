@@ -68,15 +68,9 @@ static NSString *kSMSMessage;
 	}
     
     // setup actions
-//    self.personView.actionsView.layer.cornerRadius = 6.0f;
     [self.personView.favoriteButton setTitle:[NSString fontAwesomeIconStringForEnum:FAHeartO] forState:UIControlStateNormal];
-//    [self.personView.favoriteButton.titleLabel setFont:[UIFont fontWithName:kFontAwesomeFamilyName size:15]];
-    
     [self.personView.addNoteButton setTitle:[NSString fontAwesomeIconStringForEnum:FAdatabase] forState:UIControlStateNormal];
-//    [self.personView.addNoteButton.titleLabel setFont:[UIFont fontWithName:kFontAwesomeFamilyName size:15]];
-    
     [self.personView.contactButton setTitle: [NSString fontAwesomeIconStringForEnum:FAEnvelope] forState:UIControlStateNormal];
-//    [self.personView.contactButton.titleLabel setFont:[UIFont fontWithName:kFontAwesomeFamilyName size:15]];
     
     UIImage *backgroundImage = [AppUtils getDynamicBackgroundImage];
     if(backgroundImage != nil) {
@@ -249,21 +243,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                         style:UIAlertActionStyleDefault
                                         handler:^(UIAlertAction *action)
                                         {
-                                            PersonInfo *info = self.person.representativeInfo;
-                                            // TODO should we switch the order?
-                                            if(info.primaryPhoneNumber) {
-                                                [self showSMS: kSMSMessage];
-                                            } else if(info.primaryEmail) {
-                                                [self showEmailForm];
-                                            } else {
-                                                UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
-                                                                                                       message:NSLocalizedString(@"Could not send a message because this person is missing contact information.", nil)
-                                                                                                      delegate:nil
-                                                                                             cancelButtonTitle:@"OK"
-                                                                                             otherButtonTitles:nil];
-                                                
-                                                [warningAlert show];
-                                            }
+                                            [self sendMessageAction];
                                             NSLog(@"Send Message");
                                         }];
     
@@ -377,7 +357,41 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 }
 
+- (IBAction) toggleFavorite: (id) sender {
+    if (self.person.favoritedDate) {
+        [self.personView.favoriteButton setTitle: [NSString fontAwesomeIconStringForEnum:FAHeartO] forState:UIControlStateNormal];
+        [self removePersonFromFavorites];
+    } else {
+        [self.personView.favoriteButton setTitle: [NSString fontAwesomeIconStringForEnum:FAHeart] forState:UIControlStateNormal];
+        [self addPersonToFavorites];
+    }
+
+}
+- (IBAction) addNote: (id) sender {
+    [self addNote];
+}
+- (IBAction) sendMessage: (id) sender {
+    [self sendMessageAction];
+}
 // TODO enable for ceaseless as well when you reach this view not from the pageviewcontroller
+
+- (void)sendMessageAction {
+    PersonInfo *info = self.person.representativeInfo;
+    // TODO should we switch the order?
+    if(info.primaryPhoneNumber) {
+        [self showSMS: kSMSMessage];
+    } else if(info.primaryEmail) {
+        [self showEmailForm];
+    } else {
+        UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
+                                                               message:NSLocalizedString(@"Could not send a message because this person is missing contact information.", nil)
+                                                              delegate:nil
+                                                     cancelButtonTitle:@"OK"
+                                                     otherButtonTitles:nil];
+        
+        [warningAlert show];
+    }
+}
 
 - (void)addNote {
     NoteViewController *noteViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"NoteViewController"];
