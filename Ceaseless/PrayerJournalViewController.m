@@ -83,10 +83,18 @@
     self.tableView.tableHeaderView.clipsToBounds = YES;
 }
 
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [AppUtils pushOpenScreenEventWithScreenName:@"PrayerJournal"];
+}
+
 - (void) viewWillDisappear:(BOOL)animated {
 	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:animated];
+    [AppUtils pushCloseScreenEventWithScreenName:@"PrayerJournal"];
 	[super viewWillDisappear:animated];
 }
+
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];
 		// Dispose of any resources that can be recreated.

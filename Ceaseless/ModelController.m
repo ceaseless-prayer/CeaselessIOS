@@ -117,6 +117,7 @@ NSString *const kLocalLastRefreshDate = @"localLastRefreshDate";
         }
         NSLog(@"It's a new day!");
         [self showNewContent];
+        [AppUtils refreshTagContainer];
         [ceaselessContacts ensureCeaselessContactsSynced];
         NSLog(@"Ceaseless has been refreshed");
     } else if([_cardArray count] == 0) {

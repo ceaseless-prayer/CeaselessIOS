@@ -65,9 +65,20 @@
     // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
     self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
 }
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [AppUtils pushOpenScreenEventWithScreenName:@"MainScreen"];
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    [AppUtils pushCloseScreenEventWithScreenName:@"MainScreen"];
+    [super viewWillDisappear:animated];
+}
+
 - (void) viewDidLayoutSubviews {
 	[super viewDidLayoutSubviews];
-	self.navigationController.navigationBar.translucent = NO;
+	self.navigationController.navigationBar.translucent = YES;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

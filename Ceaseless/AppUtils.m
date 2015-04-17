@@ -7,6 +7,9 @@
 //
 
 #import "AppUtils.h"
+#import "AppDelegate.h"
+#import "TAGDataLayer.h"
+#import "TAGManager.h"
 
 @implementation AppUtils
 
@@ -149,6 +152,24 @@
     hover.duration = duration; // The duration for one part of the animation (0.2 up and 0.2 down)
     hover.repeatCount = INFINITY; // The number of times the animation should repeat
     [viewToAnimate.layer addAnimation:hover forKey:@"myHoverAnimation"];
+}
+
+#pragma mark - Analytics
++ (void)pushOpenScreenEventWithScreenName:(NSString *)screenName {
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    [delegate.tagManager.dataLayer push:@{@"event": @"openScreen",
+                                          @"screenName": screenName}];
+}
+
++ (void)pushCloseScreenEventWithScreenName:(NSString *)screenName {
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    [delegate.tagManager.dataLayer push:@{@"event": @"closeScreen",
+                                          @"screenName": screenName}];
+}
+
++ (void) refreshTagContainer {
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    [delegate.container refresh];
 }
 
 @end

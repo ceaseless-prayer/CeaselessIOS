@@ -22,6 +22,13 @@
 		425271A81AB1FA9A005098F6 /* ScripturePickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271A71AB1FA9A005098F6 /* ScripturePickerTests.m */; };
 		425271AA1AB1FF1C005098F6 /* PersonPickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271A91AB1FF1C005098F6 /* PersonPickerTests.m */; };
 		425271B01AB37F29005098F6 /* CeaselessLocalContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271AF1AB37F29005098F6 /* CeaselessLocalContacts.m */; };
+		4270C3E51AE1A80400C83E01 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4270C3E41AE1A80400C83E01 /* libGoogleAnalyticsServices.a */; };
+		4270C3E71AE1A85900C83E01 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4270C3E61AE1A85900C83E01 /* CoreData.framework */; };
+		4270C3E91AE1A86600C83E01 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4270C3E81AE1A86600C83E01 /* SystemConfiguration.framework */; };
+		4270C3EB1AE1A87000C83E01 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4270C3EA1AE1A87000C83E01 /* libz.dylib */; };
+		4270C3ED1AE1A87A00C83E01 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4270C3EC1AE1A87A00C83E01 /* libsqlite3.dylib */; };
+		4270C3EF1AE1A8CD00C83E01 /* libAdIdAccess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4270C3EE1AE1A8CD00C83E01 /* libAdIdAccess.a */; };
+		4270C3F11AE1A8E400C83E01 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4270C3F01AE1A8E400C83E01 /* AdSupport.framework */; };
 		42869B091AC9FC5100E612F7 /* AppConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 42869B081AC9FC5100E612F7 /* AppConstants.m */; };
 		429E60891AAA5FD8003F37BF /* ScriptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E60881AAA5FD7003F37BF /* ScriptureViewController.m */; };
 		429E608C1AAA61B1003F37BF /* PersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E608B1AAA61B1003F37BF /* PersonViewController.m */; };
@@ -115,6 +122,19 @@
 		425271A91AB1FF1C005098F6 /* PersonPickerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonPickerTests.m; sourceTree = "<group>"; };
 		425271AE1AB37F29005098F6 /* CeaselessLocalContacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CeaselessLocalContacts.h; sourceTree = "<group>"; };
 		425271AF1AB37F29005098F6 /* CeaselessLocalContacts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CeaselessLocalContacts.m; sourceTree = "<group>"; };
+		4270C3DF1AE1A7EE00C83E01 /* TAGContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAGContainer.h; sourceTree = "<group>"; };
+		4270C3E01AE1A7EE00C83E01 /* TAGContainerOpener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAGContainerOpener.h; sourceTree = "<group>"; };
+		4270C3E11AE1A7EE00C83E01 /* TAGDataLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAGDataLayer.h; sourceTree = "<group>"; };
+		4270C3E21AE1A7EE00C83E01 /* TAGLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAGLogger.h; sourceTree = "<group>"; };
+		4270C3E31AE1A7EE00C83E01 /* TAGManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAGManager.h; sourceTree = "<group>"; };
+		4270C3E41AE1A80400C83E01 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
+		4270C3E61AE1A85900C83E01 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		4270C3E81AE1A86600C83E01 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4270C3EA1AE1A87000C83E01 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		4270C3EC1AE1A87A00C83E01 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		4270C3EE1AE1A8CD00C83E01 /* libAdIdAccess.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAdIdAccess.a; sourceTree = "<group>"; };
+		4270C3F01AE1A8E400C83E01 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		4270C3F31AE1BD8900C83E01 /* GTM-KP4WD6 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTM-KP4WD6"; sourceTree = "<group>"; };
 		42869B071AC9FC5100E612F7 /* AppConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstants.h; sourceTree = "<group>"; };
 		42869B081AC9FC5100E612F7 /* AppConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConstants.m; sourceTree = "<group>"; };
 		429E60871AAA5FD7003F37BF /* ScriptureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptureViewController.h; sourceTree = "<group>"; };
@@ -215,11 +235,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4270C3F11AE1A8E400C83E01 /* AdSupport.framework in Frameworks */,
+				4270C3ED1AE1A87A00C83E01 /* libsqlite3.dylib in Frameworks */,
+				4270C3EB1AE1A87000C83E01 /* libz.dylib in Frameworks */,
+				4270C3E91AE1A86600C83E01 /* SystemConfiguration.framework in Frameworks */,
+				4270C3E71AE1A85900C83E01 /* CoreData.framework in Frameworks */,
 				70F664091AA82B360073801E /* QuartzCore.framework in Frameworks */,
 				70F664041AA7E4780073801E /* Foundation.framework in Frameworks */,
 				70F664021AA7E46C0073801E /* UIKit.framework in Frameworks */,
 				70F664001AA7E4470073801E /* Accelerate.framework in Frameworks */,
+				4270C3EF1AE1A8CD00C83E01 /* libAdIdAccess.a in Frameworks */,
 				70F663FB1AA7E14F0073801E /* CoreGraphics.framework in Frameworks */,
+				4270C3E51AE1A80400C83E01 /* libGoogleAnalyticsServices.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,6 +260,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4270C3DE1AE1A7EE00C83E01 /* Google TagManager SDK */ = {
+			isa = PBXGroup;
+			children = (
+				4270C3E41AE1A80400C83E01 /* libGoogleAnalyticsServices.a */,
+				4270C3EE1AE1A8CD00C83E01 /* libAdIdAccess.a */,
+				4270C3DF1AE1A7EE00C83E01 /* TAGContainer.h */,
+				4270C3E01AE1A7EE00C83E01 /* TAGContainerOpener.h */,
+				4270C3E11AE1A7EE00C83E01 /* TAGDataLayer.h */,
+				4270C3E21AE1A7EE00C83E01 /* TAGLogger.h */,
+				4270C3E31AE1A7EE00C83E01 /* TAGManager.h */,
+			);
+			name = "Google TagManager SDK";
+			path = Library;
+			sourceTree = "<group>";
+		};
 		42F3AE0F1AA4DD7F003A88F5 = {
 			isa = PBXGroup;
 			children = (
@@ -254,6 +296,7 @@
 		42F3AE1A1AA4DD7F003A88F5 /* Ceaseless */ = {
 			isa = PBXGroup;
 			children = (
+				4270C3DE1AE1A7EE00C83E01 /* Google TagManager SDK */,
 				42F3AE1F1AA4DD7F003A88F5 /* AppDelegate.h */,
 				42F3AE201AA4DD7F003A88F5 /* AppDelegate.m */,
 				70F664161AA8B9260073801E /* ScripturePicker.h */,
@@ -292,6 +335,7 @@
 		42F3AE1B1AA4DD7F003A88F5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4270C3F31AE1BD8900C83E01 /* GTM-KP4WD6 */,
 				424C5B311AE07B76005C4CFC /* FontAwesome.ttf */,
 				7083F7111AD4C474002D93AD /* at_the_beach.jpg */,
 				7075100D1ACB2B13006500A9 /* AppConstants.h */,
@@ -356,6 +400,11 @@
 		70F664051AA7E4840073801E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4270C3F01AE1A8E400C83E01 /* AdSupport.framework */,
+				4270C3EC1AE1A87A00C83E01 /* libsqlite3.dylib */,
+				4270C3EA1AE1A87000C83E01 /* libz.dylib */,
+				4270C3E81AE1A86600C83E01 /* SystemConfiguration.framework */,
+				4270C3E61AE1A85900C83E01 /* CoreData.framework */,
 				70F664081AA82B360073801E /* QuartzCore.framework */,
 				70F664031AA7E4780073801E /* Foundation.framework */,
 				70F664011AA7E46C0073801E /* UIKit.framework */,
@@ -482,6 +531,11 @@
 					42F3AE171AA4DD7F003A88F5 = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = 28DYBASY7W;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					42F3AE361AA4DD80003A88F5 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -738,6 +792,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Ceaseless/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Ceaseless/Library",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -752,6 +810,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Ceaseless/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Ceaseless/Library",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

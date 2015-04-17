@@ -10,11 +10,17 @@
 #import <CoreData/CoreData.h>
 #import "ModelController.h"
 
+
+@class TAGManager;
+@class TAGContainer;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic, strong) TAGManager *tagManager;
+@property (nonatomic, strong) TAGContainer *container;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
