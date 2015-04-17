@@ -451,14 +451,17 @@ NSString *const kPlaceHolderText = @"Enter note";
 	[self listAll];
     
     // TODO this could be causing some memory/cleanup issues, which lead to erratic crashing.
-    
-	if (self.delegate) {
+    // if this came from the root view controller/page view controller/ person card
+    // then we can pop back.
+    if(self.navigationController.viewControllers.count == 2) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else if(self.delegate) { // TODO still needed?
 		[self.delegate noteViewControllerDidFinish:self];
 	} else {
 		[self performSegueWithIdentifier:@"UnwindAddNoteSegue" sender: self];
-
 	}
 }
+
 - (Note*) containsItem: (NSDate *) createDate {
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
 	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Note"

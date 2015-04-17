@@ -67,8 +67,13 @@ static NSString *kSMSMessage;
 		self.personView.placeholderText.text = [ceaselessContacts initialsForPerson:self.person];
 	}
     
-    // setup actions
-    [self.personView.favoriteButton setTitle:[NSString fontAwesomeIconStringForEnum:FAHeartO] forState:UIControlStateNormal];
+    // setup quick actions on card
+    NSString *favoriteIcon = [NSString fontAwesomeIconStringForEnum:FAHeartO];
+    if (self.person.favoritedDate != nil) {
+        favoriteIcon = [NSString fontAwesomeIconStringForEnum:FAHeart];
+    }
+    
+    [self.personView.favoriteButton setTitle:favoriteIcon forState:UIControlStateNormal];
     [self.personView.addNoteButton setTitle:[NSString fontAwesomeIconStringForEnum:FAPencil] forState:UIControlStateNormal];
     [self.personView.contactButton setTitle: [NSString fontAwesomeIconStringForEnum:FApaperPlaneO] forState:UIControlStateNormal];
     
