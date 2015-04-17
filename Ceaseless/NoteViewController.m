@@ -592,7 +592,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	[tableView setHidden:YES];
+    self.contactsBlurBackground.hidden = YES;
 
 		// If this is the last row in filteredPeople, take special action
 	if (indexPath.row == self.filteredPeople.count) {
@@ -647,11 +647,11 @@ NSString *const kPlaceHolderText = @"Enter note";
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
 	if (self.searchField.text.length > 0) {
-		[self.contactsTableView setHidden:NO];
+		[self.contactsBlurBackground setHidden:NO];
 		[self filterContentForSearchText:self.searchField.text];
 		[self.contactsTableView reloadData];
     } else {
-		[self.contactsTableView setHidden:YES];
+		[self.contactsBlurBackground setHidden:YES];
     }
 }
 

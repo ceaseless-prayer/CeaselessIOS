@@ -24,6 +24,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @property (weak, nonatomic) IBOutlet UIScrollView *personsTaggedView;
+@property (weak, nonatomic) IBOutlet UIVisualEffectView *contactsBlurBackground;
 @property (weak, nonatomic) IBOutlet UITableView *contactsTableView;
 @property (weak, nonatomic) IBOutlet UILabel *tagFriendsPlaceholderText;
 @property (weak, nonatomic) IBOutlet UITextView *notesTextView;
