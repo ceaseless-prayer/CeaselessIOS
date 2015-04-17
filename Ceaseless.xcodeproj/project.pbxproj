@@ -134,7 +134,7 @@
 		4270C3EC1AE1A87A00C83E01 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		4270C3EE1AE1A8CD00C83E01 /* libAdIdAccess.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAdIdAccess.a; sourceTree = "<group>"; };
 		4270C3F01AE1A8E400C83E01 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
-		4270C3F31AE1BD8900C83E01 /* GTM-KP4WD6 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTM-KP4WD6"; sourceTree = "<group>"; };
+		4270C3F41AE1CC8800C83E01 /* GTM-KP4WD6 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTM-KP4WD6"; sourceTree = "<group>"; };
 		42869B071AC9FC5100E612F7 /* AppConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstants.h; sourceTree = "<group>"; };
 		42869B081AC9FC5100E612F7 /* AppConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConstants.m; sourceTree = "<group>"; };
 		429E60871AAA5FD7003F37BF /* ScriptureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptureViewController.h; sourceTree = "<group>"; };
@@ -335,7 +335,7 @@
 		42F3AE1B1AA4DD7F003A88F5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				4270C3F31AE1BD8900C83E01 /* GTM-KP4WD6 */,
+				4270C3F41AE1CC8800C83E01 /* GTM-KP4WD6 */,
 				424C5B311AE07B76005C4CFC /* FontAwesome.ttf */,
 				7083F7111AD4C474002D93AD /* at_the_beach.jpg */,
 				7075100D1ACB2B13006500A9 /* AppConstants.h */,
