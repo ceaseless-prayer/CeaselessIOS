@@ -18,6 +18,7 @@
 		424C5B281AE0734F005C4CFC /* NSString+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 424C5B271AE0734F005C4CFC /* NSString+FontAwesome.m */; };
 		424C5B2B1AE073BE005C4CFC /* UIFont+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 424C5B2A1AE073BE005C4CFC /* UIFont+FontAwesome.m */; };
 		424C5B2E1AE073D5005C4CFC /* FAImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 424C5B2D1AE073D5005C4CFC /* FAImageView.m */; };
+		424C5B321AE08433005C4CFC /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 424C5B311AE07B76005C4CFC /* FontAwesome.ttf */; };
 		425271A81AB1FA9A005098F6 /* ScripturePickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271A71AB1FA9A005098F6 /* ScripturePickerTests.m */; };
 		425271AA1AB1FF1C005098F6 /* PersonPickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271A91AB1FF1C005098F6 /* PersonPickerTests.m */; };
 		425271B01AB37F29005098F6 /* CeaselessLocalContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271AF1AB37F29005098F6 /* CeaselessLocalContacts.m */; };
@@ -524,6 +525,7 @@
 				42F3AE321AA4DD80003A88F5 /* LaunchScreen.xib in Resources */,
 				42CBFBAE1ABBC9BA00F9FB1D /* WebCardView.xib in Resources */,
 				42F3AE2F1AA4DD7F003A88F5 /* Images.xcassets in Resources */,
+				424C5B321AE08433005C4CFC /* FontAwesome.ttf in Resources */,
 				707BE2E61AAA1B1A0020FF29 /* Screen Shot 2015-02-17 at 9.05.16 PM.png in Resources */,
 				709D83391AA598A600C3486E /* Screen Shot 2015-02-18 at 8.25.51 AM.png in Resources */,
 				70D51C131AA66F5100FA7CDC /* PersonView.xib in Resources */,

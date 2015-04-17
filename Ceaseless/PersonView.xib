@@ -4,6 +4,13 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="FontAwesome.ttf">
+            <string>FontAwesome</string>
+            <string>FontAwesome</string>
+            <string>FontAwesome</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PersonViewController">
             <connections>
@@ -130,6 +137,50 @@
                                     </constraints>
                                     <blurEffect style="light"/>
                                 </visualEffectView>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gWq-sw-mnH" userLabel="ActionView">
+                                    <rect key="frame" x="534" y="44" width="50" height="238"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tnL-by-V0y" userLabel="AddNoteButton">
+                                            <rect key="frame" x="10" y="25" width="30" height="33"/>
+                                            <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="20"/>
+                                            <state key="normal">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G4n-VS-DPd" userLabel="ContactButton">
+                                            <rect key="frame" x="10" y="103" width="30" height="33"/>
+                                            <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="20"/>
+                                            <state key="normal">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dV9-y4-nbl" userLabel="FavoriteButton">
+                                            <rect key="frame" x="-4" y="180" width="58" height="33"/>
+                                            <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="20"/>
+                                            <state key="normal" title="Button">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.0" green="0.0039215686269999999" blue="0.1843137255" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="centerX" secondItem="tnL-by-V0y" secondAttribute="centerX" id="AcH-ZU-NCN"/>
+                                        <constraint firstAttribute="width" constant="50" id="EZO-Yz-a8V"/>
+                                        <constraint firstAttribute="height" constant="150" id="IVL-2c-4zh"/>
+                                        <constraint firstAttribute="height" constant="150" id="TNR-k0-DcW"/>
+                                        <constraint firstAttribute="bottom" secondItem="dV9-y4-nbl" secondAttribute="bottom" constant="25" id="bDV-RN-df0"/>
+                                        <constraint firstAttribute="centerY" secondItem="G4n-VS-DPd" secondAttribute="centerY" id="kpq-8O-n1a"/>
+                                        <constraint firstItem="tnL-by-V0y" firstAttribute="top" secondItem="gWq-sw-mnH" secondAttribute="top" constant="25" id="lMP-c4-R4R"/>
+                                        <constraint firstAttribute="centerX" secondItem="dV9-y4-nbl" secondAttribute="centerX" id="s09-Xe-lNh"/>
+                                        <constraint firstAttribute="centerX" secondItem="G4n-VS-DPd" secondAttribute="centerX" id="sIh-FI-Gyh"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="IVL-2c-4zh"/>
+                                            <exclude reference="TNR-k0-DcW"/>
+                                        </mask>
+                                    </variation>
+                                </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Ne-Vd-rGt" userLabel="TopPlaceholderView">
                                     <rect key="frame" x="248" y="0.0" width="88" height="88"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -207,6 +258,7 @@
                                 <constraint firstAttribute="centerY" secondItem="vRz-LA-Wxx" secondAttribute="centerY" id="0ZT-RI-Gpd"/>
                                 <constraint firstAttribute="trailing" secondItem="ofI-30-Sup" secondAttribute="trailing" id="3J5-hR-r19"/>
                                 <constraint firstAttribute="trailing" secondItem="vRz-LA-Wxx" secondAttribute="trailing" id="7I9-Uk-jzg"/>
+                                <constraint firstItem="gWq-sw-mnH" firstAttribute="top" secondItem="eF7-HN-urH" secondAttribute="top" id="7Vg-8e-Y5L"/>
                                 <constraint firstItem="9Ne-Vd-rGt" firstAttribute="height" secondItem="vUc-Xs-Ucw" secondAttribute="height" id="8Pu-ka-uRD"/>
                                 <constraint firstAttribute="centerX" secondItem="vRz-LA-Wxx" secondAttribute="centerX" id="8w4-AB-gFB"/>
                                 <constraint firstItem="vUc-Xs-Ucw" firstAttribute="top" secondItem="eF7-HN-urH" secondAttribute="bottom" id="9Tp-QI-85w"/>
@@ -221,7 +273,10 @@
                                 <constraint firstItem="ofI-30-Sup" firstAttribute="leading" secondItem="CVR-nv-9Et" secondAttribute="leading" id="TLw-v6-zD7"/>
                                 <constraint firstAttribute="trailing" secondItem="zHl-KV-Ywy" secondAttribute="trailing" id="Tiq-ZA-xLj"/>
                                 <constraint firstItem="yRE-GT-fO6" firstAttribute="top" secondItem="1uu-zD-zYL" secondAttribute="top" id="Uw5-Yr-R7E"/>
+                                <constraint firstAttribute="trailing" secondItem="gWq-sw-mnH" secondAttribute="trailing" id="Vjb-2G-d2S"/>
+                                <constraint firstItem="gWq-sw-mnH" firstAttribute="top" secondItem="zHl-KV-Ywy" secondAttribute="bottom" id="XS3-oM-dzN"/>
                                 <constraint firstAttribute="trailing" secondItem="yRE-GT-fO6" secondAttribute="trailing" id="Y0I-Z5-dUS"/>
+                                <constraint firstItem="yRE-GT-fO6" firstAttribute="top" secondItem="gWq-sw-mnH" secondAttribute="bottom" id="a5e-6P-m7O"/>
                                 <constraint firstAttribute="centerY" secondItem="vUc-Xs-Ucw" secondAttribute="centerY" id="aT4-Uu-frt"/>
                                 <constraint firstAttribute="bottom" secondItem="ofI-30-Sup" secondAttribute="bottom" id="brc-qZ-neh"/>
                                 <constraint firstItem="vUc-Xs-Ucw" firstAttribute="width" secondItem="9Ne-Vd-rGt" secondAttribute="height" multiplier="1:2" id="cb5-MW-whA"/>
@@ -247,10 +302,6 @@
                             <variation key="default">
                                 <mask key="constraints">
                                     <exclude reference="uLI-tE-GRM"/>
-                                    <exclude reference="Uw5-Yr-R7E"/>
-                                    <exclude reference="0QA-04-Zlh"/>
-                                    <exclude reference="8Pu-ka-uRD"/>
-                                    <exclude reference="ddV-M7-HdD"/>
                                     <exclude reference="ztQ-C4-bs7"/>
                                     <exclude reference="0ZT-RI-Gpd"/>
                                     <exclude reference="7I9-Uk-jzg"/>
@@ -258,8 +309,13 @@
                                     <exclude reference="Ewd-Om-5ad"/>
                                     <exclude reference="lab-OW-1yx"/>
                                     <exclude reference="svj-ci-kpd"/>
+                                    <exclude reference="0QA-04-Zlh"/>
+                                    <exclude reference="8Pu-ka-uRD"/>
+                                    <exclude reference="ddV-M7-HdD"/>
+                                    <exclude reference="Uw5-Yr-R7E"/>
                                     <exclude reference="9ns-VK-0z0"/>
                                     <exclude reference="aT4-Uu-frt"/>
+                                    <exclude reference="7Vg-8e-Y5L"/>
                                 </mask>
                             </variation>
                         </view>
@@ -321,8 +377,12 @@
                 </mask>
             </variation>
             <connections>
+                <outlet property="actionsView" destination="gWq-sw-mnH" id="9ff-Qs-2zq"/>
+                <outlet property="addNoteButton" destination="tnL-by-V0y" id="NG5-Wi-ucR"/>
                 <outlet property="blurEffect" destination="zHl-KV-Ywy" id="le5-ib-gOF"/>
                 <outlet property="cardView" destination="CVR-nv-9Et" id="oNj-B3-ubf"/>
+                <outlet property="contactButton" destination="G4n-VS-DPd" id="RFn-Fl-mzb"/>
+                <outlet property="favoriteButton" destination="dV9-y4-nbl" id="w92-hJ-eeg"/>
                 <outlet property="moreButton" destination="qaX-ht-K8v" id="Le3-KC-TG5"/>
                 <outlet property="nameLabel" destination="29f-oR-vIq" id="2Sr-5j-cHx"/>
                 <outlet property="notesView" destination="yRE-GT-fO6" id="4kv-2F-xMc"/>

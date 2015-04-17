@@ -18,6 +18,8 @@
 #import <MessageUI/MessageUI.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import "ContactsListsViewController.h"
+#import "UIFont+FontAwesome.h"
+#import "NSString+FontAwesome.h"
 
 @interface PersonViewController () <MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate, ABPersonViewControllerDelegate>
 
@@ -64,6 +66,17 @@ static NSString *kSMSMessage;
 		self.personView.placeholderText.hidden = NO;
 		self.personView.placeholderText.text = [ceaselessContacts initialsForPerson:self.person];
 	}
+    
+    // setup actions
+//    self.personView.actionsView.layer.cornerRadius = 6.0f;
+    [self.personView.favoriteButton setTitle:[NSString fontAwesomeIconStringForEnum:FAHeartO] forState:UIControlStateNormal];
+//    [self.personView.favoriteButton.titleLabel setFont:[UIFont fontWithName:kFontAwesomeFamilyName size:15]];
+    
+    [self.personView.addNoteButton setTitle:[NSString fontAwesomeIconStringForEnum:FAdatabase] forState:UIControlStateNormal];
+//    [self.personView.addNoteButton.titleLabel setFont:[UIFont fontWithName:kFontAwesomeFamilyName size:15]];
+    
+    [self.personView.contactButton setTitle: [NSString fontAwesomeIconStringForEnum:FAEnvelope] forState:UIControlStateNormal];
+//    [self.personView.contactButton.titleLabel setFont:[UIFont fontWithName:kFontAwesomeFamilyName size:15]];
     
     UIImage *backgroundImage = [AppUtils getDynamicBackgroundImage];
     if(backgroundImage != nil) {
