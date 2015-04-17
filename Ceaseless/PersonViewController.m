@@ -69,8 +69,8 @@ static NSString *kSMSMessage;
     
     // setup actions
     [self.personView.favoriteButton setTitle:[NSString fontAwesomeIconStringForEnum:FAHeartO] forState:UIControlStateNormal];
-    [self.personView.addNoteButton setTitle:[NSString fontAwesomeIconStringForEnum:FAdatabase] forState:UIControlStateNormal];
-    [self.personView.contactButton setTitle: [NSString fontAwesomeIconStringForEnum:FAEnvelope] forState:UIControlStateNormal];
+    [self.personView.addNoteButton setTitle:[NSString fontAwesomeIconStringForEnum:FAPencil] forState:UIControlStateNormal];
+    [self.personView.contactButton setTitle: [NSString fontAwesomeIconStringForEnum:FApaperPlaneO] forState:UIControlStateNormal];
     
     UIImage *backgroundImage = [AppUtils getDynamicBackgroundImage];
     if(backgroundImage != nil) {
@@ -238,15 +238,6 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                        
                                    }];
     
-    UIAlertAction *sendMessageAction = [UIAlertAction
-                                        actionWithTitle:NSLocalizedString(@"Send Message", @"Send Message")
-                                        style:UIAlertActionStyleDefault
-                                        handler:^(UIAlertAction *action)
-                                        {
-                                            [self sendMessageAction];
-                                            NSLog(@"Send Message");
-                                        }];
-    
     UIAlertAction *removeFromCeaselessAction = [UIAlertAction
                                         actionWithTitle:NSLocalizedString(@"Remove from Ceaseless", @"Remove from Ceaseless")
                                         style:UIAlertActionStyleDefault
@@ -256,35 +247,8 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                             NSLog(@"Remove from Ceaseless");
                                         }];
     
-    UIAlertAction *addToFavoritesAction = [UIAlertAction
-                                        actionWithTitle:NSLocalizedString(@"Add to Favorites", @"Add to Favorites")
-                                        style:UIAlertActionStyleDefault
-                                        handler:^(UIAlertAction *action)
-                                        {
-                                            [self addPersonToFavorites];
-                                            NSLog(@"Add to Favorites");
-                                        }];
-    
-    UIAlertAction *unfavoriteAction = [UIAlertAction
-                                           actionWithTitle:NSLocalizedString(@"Remove from Favorites", @"Remove from Favorites")
-                                           style:UIAlertActionStyleDefault
-                                           handler:^(UIAlertAction *action)
-                                           {
-                                               [self removePersonFromFavorites];
-                                               NSLog(@"Remove from Favorites");
-                                           }];
-    
-    UIAlertAction *addNote = [UIAlertAction
-                                       actionWithTitle:NSLocalizedString(@"Add note", @"Add note")
-                                       style:UIAlertActionStyleDefault
-                                       handler:^(UIAlertAction *action)
-                                       {
-                                           [self addNote];
-                                           NSLog(@"Add note");
-                                       }];
-    
     UIAlertAction *viewContact = [UIAlertAction
-                              actionWithTitle:NSLocalizedString(@"View contact", @"View contact")
+                              actionWithTitle:NSLocalizedString(@"View in Contacts", @"View in Contacts")
                               style:UIAlertActionStyleDefault
                               handler:^(UIAlertAction *action)
                               {
@@ -295,17 +259,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [alertController addAction:cancelAction];
     [alertController addAction:removeFromCeaselessAction];
     [alertController addAction:inviteAction];
-    [alertController addAction:sendMessageAction];
-    [alertController addAction:addNote];
     [alertController addAction:viewContact];
-    
-    // TODO this should toggle between adding or removing from favorites.
-    // for now only show it if it isn't already favorited
-    if (self.person.favoritedDate == nil) {
-        [alertController addAction: addToFavoritesAction];
-    } else {
-        [alertController addAction: unfavoriteAction];
-    }
     
     //this prevents crash on iPad in iOS 8 - known Apple bug
     UIPopoverPresentationController *popover = alertController.popoverPresentationController;
