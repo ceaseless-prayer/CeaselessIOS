@@ -197,7 +197,7 @@ NSString *const kLocalLastRefreshDate = @"localLastRefreshDate";
     } else if ([self.cardArray[index] isKindOfClass:[NSString class]]) {
         contentViewController = [[WebCardViewController alloc] init];
         contentViewController.mainStoryboard = self.mainStoryboard;
-    } else if ([self.cardArray[index] isKindOfClass:[NSNumber class]]) {
+    } else if ([self.cardArray[index] isKindOfClass:[NSArray class]]) {
         contentViewController = [[ProgressViewController alloc] init];
         contentViewController.mainStoryboard = self.mainStoryboard;
     } else {

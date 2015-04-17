@@ -55,7 +55,7 @@
     return [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
 }
 
-- (NSNumber *) computePrayerCycleProgress {
+- (NSArray *) computePrayerCycleProgress {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if(![defaults objectForKey:kPrayerCycleStartDate]) {
         [defaults setObject:[NSDate date] forKey:kPrayerCycleStartDate];
@@ -74,14 +74,9 @@
     if (totalPeople == totalPeoplePrayedForThisCycle) {
         [defaults setObject:[NSDate date] forKey:kPrayerCycleStartDate];
         [defaults synchronize];
-        return [NSNumber numberWithDouble:1];
-    } else {
-        if (totalPeople == 0) {
-            return 0;
-        } else {
-            return [NSNumber numberWithDouble:[totalPeoplePrayedForThisCycle doubleValue] / [totalPeople doubleValue]];
-        }
     }
+//            return [NSNumber numberWithDouble:[totalPeoplePrayedForThisCycle doubleValue] / [totalPeople doubleValue]];
+    return @[totalPeoplePrayedForThisCycle, totalPeople];
 }
 
 #pragma mark - Selecting people to show

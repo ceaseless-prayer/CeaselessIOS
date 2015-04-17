@@ -22,9 +22,19 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self showAnnouncementButtonIfNeeded];
-    float progress = [((NSNumber *) self.dataObject) floatValue];
+    NSArray *progress = (NSArray *) self.dataObject;
+    NSNumber *totalPeoplePrayedForThisCycle = progress[0];
+    NSNumber *totalPeople = progress[1];
+    
+    float progressPercentage = 0;
+    if(totalPeople > 0) {
+        progressPercentage = [[NSNumber numberWithDouble:[totalPeoplePrayedForThisCycle doubleValue] / [totalPeople doubleValue]]floatValue];
+    }
+    
+    self.progressView.progressLabel.text = [NSString stringWithFormat: @"%@ / %@ people", totalPeoplePrayedForThisCycle, totalPeople];
+    
     self.progressView.backgroundImageView.image = [AppUtils getDynamicBackgroundImage];
-    [self.progressView.progressBar setProgress:progress animated:YES];
+    [self.progressView.progressBar setProgress: progressPercentage animated:YES];
     [self formatCardView: self.progressView.cardView withShadowView:self.progressView.shadowView];
     // Do any additional setup after loading the view.
 }
