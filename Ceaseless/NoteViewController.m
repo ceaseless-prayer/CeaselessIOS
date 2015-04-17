@@ -86,36 +86,13 @@ NSString *const kPlaceHolderText = @"Enter note";
 	self.singleTapGestureRecognizer.delegate = self;
 	[self.personsTaggedView addGestureRecognizer:self.singleTapGestureRecognizer];
 
-		//create navigation bar if there is no navigation controller
-	if (!self.navigationController) {
-		UINavigationBar *navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
-		navBar.barTintColor = self.appColor;
-
-		NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-												   [UIColor whiteColor], NSForegroundColorAttributeName,
-												   [UIFont fontWithName:@"AvenirNext-Medium" size:16.0f],NSFontAttributeName,
-												   nil];
-		navBar.titleTextAttributes = navbarTitleTextAttributes;
-		self.verticalSpaceTopToView.constant = 44;
-
-		UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelClick:)];
-
-		self.item = [[UINavigationItem alloc] initWithTitle:@"Notes"];
-		self.item.leftBarButtonItem = cancelButton;
-		[navBar pushNavigationItem:self.item animated:NO];
-
-		[self.view addSubview:navBar];
-
-	}
-
 	UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveButtonPressed:)];
+	self.navigationItem.rightBarButtonItem = saveButton;
 
-	if (!self.navigationController) {
-		self.item.rightBarButtonItem = saveButton;
-	} else {
-		self.navigationItem.rightBarButtonItem = saveButton;
-	}
-    
+		// change the back button to cancel and add an event handler
+	UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: @"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelClick:)];
+	self.navigationItem.leftBarButtonItem = backButton;
+
     //initialize
 	NSOrderedSet *peopleTagged = [[NSOrderedSet alloc] init];
 
@@ -129,23 +106,14 @@ NSString *const kPlaceHolderText = @"Enter note";
 		dateFormatter.dateStyle = NSDateFormatterShortStyle;
 		NSDate *date = [self.currentNote valueForKey: @"createDate"];
 
-		if (!self.navigationController) {
-			self.item.title = [dateFormatter stringFromDate:date];
-
-		} else {
-			self.navigationItem.title = [dateFormatter stringFromDate:date];
-		}
+		self.navigationItem.title = [dateFormatter stringFromDate:date];
 
 		self.notesTextView.text = [self.currentNote valueForKey: @"text"];
 		peopleTagged = [self.currentNote valueForKey: @"peopleTagged"];
 	} else {
         //no note passed in, so add a new note
         //screen title is Add Note
-		if (!self.navigationController) {
-			self.item.title = @"Add Note";
-		} else {
-			self.navigationItem.title = @"Add Note";
-		}
+		self.navigationItem.title = @"Add Note";
 
 		if (self.personForNewNote) {
 			peopleTagged = [[NSOrderedSet alloc] initWithObjects: self.personForNewNote, nil];
@@ -449,14 +417,9 @@ NSString *const kPlaceHolderText = @"Enter note";
 	}
 
 	[self listAll];
-    
-    // TODO this could be causing some memory/cleanup issues, which lead to erratic crashing.
-    // if this came from the root view controller/page view controller/ person card
-    // then we can pop back.
-    if(self.navigationController.viewControllers.count == 2) {
-        [self.navigationController popViewControllerAnimated:YES];
-    } else if(self.delegate) { // TODO still needed?
-		[self.delegate noteViewControllerDidFinish:self];
+
+	if (self.delegate) {
+		[self.delegate noteViewControllerDidFinish: self];
 	} else {
 		[self performSegueWithIdentifier:@"UnwindAddNoteSegue" sender: self];
 	}

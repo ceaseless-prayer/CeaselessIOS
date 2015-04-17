@@ -165,8 +165,7 @@ static NSString *kSMSMessage;
 
 #pragma mark - TableView Delegate
 
-- (void)tableView:(UITableView *)tableView
-didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	NoteViewController *noteViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"NoteViewController"];
 	noteViewController.delegate = self;
 
@@ -176,21 +175,44 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 		noteViewController.personForNewNote = self.personNotesViewController.person;
 	}
 
-	[self.navigationController pushViewController:noteViewController animated:YES];
-
+	[self performAnimationAndPushController:noteViewController];
 }
+
+- (void) performAnimationAndPushController: (NoteViewController *) noteViewController {
+
+	CATransition* transition = [CATransition animation];
+	transition.duration = 0.4f;
+	transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+	transition.type = kCATransitionMoveIn; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
+	transition.subtype = kCATransitionFromTop; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
+
+	[self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+	[self.navigationController pushViewController:noteViewController animated:NO];
+}
+
 #pragma mark - NoteViewControllerDelegate protocol conformance
 
 - (void)noteViewControllerDidFinish:(NoteViewController *)noteViewController
 {
-
-	[noteViewController dismissViewControllerAnimated:YES completion:NULL];
+	[self performDismissAnimationForController:noteViewController];
 
 }
 
 - (void)noteViewControllerDidCancel:(NoteViewController *)noteViewController
 {
-	[noteViewController dismissViewControllerAnimated:NO completion:NULL];
+	[self performDismissAnimationForController:noteViewController];
+
+}
+
+- (void) performDismissAnimationForController: (NoteViewController *)noteViewController {
+	CATransition* transition = [CATransition animation];
+	transition.duration = 0.4f;
+	transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+	transition.type = kCATransitionReveal; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
+	transition.subtype = kCATransitionFromBottom; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
+
+	[self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+	[self.navigationController popViewControllerAnimated:NO];
 
 }
 #pragma mark - Action Sheet
@@ -327,7 +349,12 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 }
 - (IBAction) addNote: (id) sender {
-    [self addNote];
+
+	NoteViewController *noteViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"NoteViewController"];
+	noteViewController.delegate = self;
+	noteViewController.personForNewNote = self.personNotesViewController.person;
+
+	[self performAnimationAndPushController: noteViewController];
 }
 - (IBAction) sendMessage: (id) sender {
     [self sendMessageAction];
@@ -352,12 +379,6 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
-- (void)addNote {
-    NoteViewController *noteViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"NoteViewController"];
-    noteViewController.delegate = self;
-    noteViewController.personForNewNote = self.personNotesViewController.person;
-    [self presentViewController:noteViewController animated:YES completion:nil];
-}
 
 - (void)addPersonToFavorites {
     self.person.favoritedDate = [NSDate date];
