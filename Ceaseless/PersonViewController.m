@@ -171,7 +171,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 		noteViewController.personForNewNote = self.personNotesViewController.person;
 	}
 
-	[self presentViewController:noteViewController animated:YES completion:NULL];
+	[self.navigationController pushViewController:noteViewController animated:YES];
 
 }
 #pragma mark - NoteViewControllerDelegate protocol conformance
@@ -185,7 +185,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)noteViewControllerDidCancel:(NoteViewController *)noteViewController
 {
-	[noteViewController dismissViewControllerAnimated:YES completion:NULL];
+	[noteViewController dismissViewControllerAnimated:NO completion:NULL];
 
 }
 #pragma mark - Action Sheet

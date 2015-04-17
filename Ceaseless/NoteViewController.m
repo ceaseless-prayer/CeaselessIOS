@@ -11,6 +11,7 @@
 #import "PersonIdentifier.h"
 #import "PersonInfo.h"
 #import "PersonPicker.h"
+#import "PersonViewController.h"
 #import "CeaselessLocalContacts.h"
 #import "Name.h"
 #import "AppUtils.h"
@@ -114,7 +115,6 @@ NSString *const kPlaceHolderText = @"Enter note";
 	} else {
 		self.navigationItem.rightBarButtonItem = saveButton;
 	}
-//	[self listAll];
     
     //initialize
 	NSOrderedSet *peopleTagged = [[NSOrderedSet alloc] init];
@@ -298,7 +298,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 		textView.textColor = [UIColor whiteColor];
 	}
 
-    [self hideTagInput];
+	[self layoutScrollView: self.personsTaggedView forGroup: self.mutablePeopleSet];
     
 	[self registerForKeyboardNotifications];
 	return YES;
@@ -399,7 +399,17 @@ NSString *const kPlaceHolderText = @"Enter note";
     [self resetAppearanceOfPeopleTagged];
 
 	if (self.selectedButton.backgroundColor == self.selectedTokenColor) {
-		self.selectedButton.backgroundColor = self.tokenColor;
+		//self.selectedButton.backgroundColor = self.tokenColor;
+        // open up the person details.
+        PersonViewController *personViewController = [[PersonViewController alloc]init];
+        personViewController.dataObject = [self.mutablePeopleSet objectAtIndex:self.selectedButton.tag];
+        UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"Note"
+                                                                style: UIBarButtonItemStylePlain
+                                                                    target:nil
+                                                                    action:nil];
+        
+        [self.navigationItem setBackBarButtonItem:backItem];
+        [self.navigationController pushViewController:personViewController animated:YES];
     } else {
 		self.selectedButton.backgroundColor = self.selectedTokenColor;
     }
@@ -433,8 +443,6 @@ NSString *const kPlaceHolderText = @"Enter note";
 		[newNote setValue: self.notesTextView.text forKey: @"text"];
 		[newNote setValue: [NSDate date] forKey: @"lastUpdatedDate"];
 		newNote.peopleTagged = [[NSOrderedSet alloc] initWithSet:[self.mutablePeopleSet set]];
-
-
     }
 	if (![self.managedObjectContext save: &error]) {
 		NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
@@ -495,6 +503,8 @@ NSString *const kPlaceHolderText = @"Enter note";
 	self.tagFriendsPlaceholderText.hidden = YES;
 	[self.searchField becomeFirstResponder];
 	self.searchField.hidden = NO;
+    self.selectedButton = nil;
+    [self resetAppearanceOfPeopleTagged];
 }
 
 - (void) hideTagInput {
