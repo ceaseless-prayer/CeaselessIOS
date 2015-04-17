@@ -118,6 +118,11 @@ static NSString *kSMSMessage;
     [super viewWillAppear:animated];
 }
 
+- (void) viewWillDisappear:(BOOL)animated {
+	[self.personNotesViewController.tableView deselectRowAtIndexPath:[self.personNotesViewController.tableView indexPathForSelectedRow] animated:animated];
+	[super viewWillDisappear:animated];
+}
+
 - (void)setDynamicViewConstraintsToView: (UIView *) parentView forSubview: (UIView *) newSubview {
 	[newSubview setTranslatesAutoresizingMaskIntoConstraints:NO];
 
@@ -181,7 +186,7 @@ static NSString *kSMSMessage;
 - (void) performAnimationAndPushController: (NoteViewController *) noteViewController {
 
 	CATransition* transition = [CATransition animation];
-	transition.duration = 0.4f;
+	transition.duration = 0.3f;
 	transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
 	transition.type = kCATransitionMoveIn; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
 	transition.subtype = kCATransitionFromTop; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
@@ -206,7 +211,7 @@ static NSString *kSMSMessage;
 
 - (void) performDismissAnimationForController: (NoteViewController *)noteViewController {
 	CATransition* transition = [CATransition animation];
-	transition.duration = 0.4f;
+	transition.duration = 0.3f;
 	transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
 	transition.type = kCATransitionReveal; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
 	transition.subtype = kCATransitionFromBottom; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
