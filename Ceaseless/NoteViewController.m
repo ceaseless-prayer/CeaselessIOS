@@ -21,14 +21,13 @@
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) UINavigationItem *item;
 @property (strong, nonatomic) NSMutableOrderedSet *mutablePeopleSet;
-@property (nonatomic, strong) NSOrderedSet *abRecordIDs;
 @property (strong, nonatomic) UITapGestureRecognizer *singleTapGestureRecognizer;
 @property (nonatomic, strong) UIButton *selectedButton;
-@property (nonatomic, strong) NSMutableOrderedSet *group;
 @property (nonatomic, strong) NSArray *people;
-@property (nonatomic, strong) NSMutableArray *filteredPeople;
+@property (nonatomic, strong) NSArray *filteredPeople;
 @property (nonatomic, strong) UISearchBar *searchField;
 @property (nonatomic, strong) UIColor *appColor;
+@property (strong, nonatomic) NSFetchRequest *searchFetchRequest;
 
 @end
 
@@ -57,12 +56,6 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 	AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
 	self.managedObjectContext = appDelegate.managedObjectContext;
-
-	if (self.addressBook == NULL) {
-		self.addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
-	}
-    // Check whether we are authorized to access the user's address book data
-	[self checkAddressBookAccess];
 
 	self.namesArray = [NSMutableArray arrayWithCapacity: 1];
 	self.mutablePeopleSet = [[NSMutableOrderedSet alloc] initWithCapacity: 1];
@@ -124,7 +117,6 @@ NSString *const kPlaceHolderText = @"Enter note";
 //	[self listAll];
     
     //initialize
-	self.group = [NSMutableOrderedSet orderedSet];
 	NSOrderedSet *peopleTagged = [[NSOrderedSet alloc] init];
 
 
@@ -164,22 +156,14 @@ NSString *const kPlaceHolderText = @"Enter note";
         [self.notesTextView becomeFirstResponder];
 	}
 
-	for (PersonIdentifier *personTagged in peopleTagged) {
-        PersonInfo *info = personTagged.representativeInfo;
-		ABRecordID abRecordID = [info.primaryAddressBookId.recordId intValue];
-		NSNumber *number = [NSNumber numberWithInt:abRecordID];
-		[self.group addObject:number];
-	}
-    
-	self.abRecordIDs = [NSOrderedSet orderedSetWithOrderedSet: self.group];
-	if (self.abRecordIDs.count > 0) {
+	if (peopleTagged.count > 0) {
 		self.tagFriendsPlaceholderText.hidden = YES;
-		[self updatePersonInfo:self.abRecordIDs];
+		[self updatePersonInfo: peopleTagged];
 
 	} else  {
 		self.tagFriendsPlaceholderText.hidden = NO;
 	}
-	[self layoutScrollView: self.personsTaggedView forGroup: self.abRecordIDs];
+	[self layoutScrollView: self.personsTaggedView forGroup: self.mutablePeopleSet];
 }
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
@@ -200,72 +184,12 @@ NSString *const kPlaceHolderText = @"Enter note";
     }
 }
 
-#pragma mark - Address Book access
-
-	// Check the authorization status of our application for Address Book
-- (void)checkAddressBookAccess
-{
-	switch (ABAddressBookGetAuthorizationStatus())
-	{
-			// Update our UI if the user has granted access to their Contacts
-		case kABAuthorizationStatusAuthorized:
-		[self accessGrantedForAddressBook];
-		break;
-			// Prompt the user for access to Contacts if there is no definitive answer
-		case kABAuthorizationStatusNotDetermined :
-		[self requestAddressBookAccess];
-		break;
-			// Display a message if the user has denied or restricted access to Contacts
-		case kABAuthorizationStatusDenied:
-		case kABAuthorizationStatusRestricted:
-		{
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Privacy Warning", @"Privacy Warning")
-														message:NSLocalizedString(@"Permission was not granted for Contacts.", @"Permission was not granted for Contacts.")
-													   delegate:nil
-											  cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
-											  otherButtonTitles:nil];
-		[alert show];
-		}
-		break;
-		default:
-		break;
-	}
-}
-
-	// Prompt the user for access to their Address Book data
-- (void)requestAddressBookAccess
-{
-	NoteViewController* __weak weakSelf = self;
-
-	ABAddressBookRequestAccessWithCompletion(self.addressBook, ^(bool granted, CFErrorRef error)
-											 {
-											 if (granted)
-												 {
-												 dispatch_async(dispatch_get_main_queue(), ^{
-													 [weakSelf accessGrantedForAddressBook];
-
-												 });
-												 }
-											 });
-}
-
-	// This method is called when the user has granted access to their address book data.
-- (void)accessGrantedForAddressBook
-{
-	_people = (__bridge_transfer NSArray *)ABAddressBookCopyArrayOfAllPeople(self.addressBook);
-
-	self.group = [[NSMutableOrderedSet alloc] initWithOrderedSet:self.abRecordIDs];
-
-		// Create a filtered list that will contain people for the search results table.
-	self.filteredPeople = [NSMutableArray array];
-}
-
 #pragma mark - Update the displayed list of tagged people
-- (void) layoutScrollView: (UIScrollView *) scrollView forGroup: (NSOrderedSet *) abRecordIDs {
-    [self layoutScrollView:scrollView forGroup:abRecordIDs selectLast:NO];
+- (void) layoutScrollView: (UIScrollView *) scrollView forGroup: (NSOrderedSet *) mutablePeopleSet {
+    [self layoutScrollView:scrollView forGroup: mutablePeopleSet selectLast:NO];
 }
 
-- (void) layoutScrollView: (UIScrollView *) scrollView forGroup: (NSOrderedSet *) abRecordIDs selectLast: (BOOL) selectLast {
+- (void) layoutScrollView: (UIScrollView *) scrollView forGroup: (NSOrderedSet *) mutablePeopleSet selectLast: (BOOL) selectLast {
     // Remove existing buttons
     for (UIView *subview in scrollView.subviews) {
         if ([subview isKindOfClass:[UIButton class]]) {
@@ -276,14 +200,12 @@ NSString *const kPlaceHolderText = @"Enter note";
     CGFloat maxWidth = [[UIScreen mainScreen] bounds].size.width - 16 - kPadding;
     CGFloat xPosition = kPadding;
     CGFloat yPosition = kPadding;
+	int tagId = 0;
     
-    for (NSNumber *number in abRecordIDs) {
-        ABRecordID abRecordID = [number intValue];
-        ABRecordRef abPerson = ABAddressBookGetPersonWithRecordID(self.addressBook, abRecordID);
+    for (PersonIdentifier *person in mutablePeopleSet) {
         
         // Copy the name associated with this person record
-        NSString *name = (__bridge_transfer NSString *)ABRecordCopyCompositeName(abPerson);
-        
+		NSString *name = [[CeaselessLocalContacts sharedCeaselessLocalContacts ]compositeNameForPerson: person];
         UIFont *font = [UIFont fontWithName:@"AvenirNext-Medium" size:14.0f];
         
         // Create the button
@@ -292,7 +214,9 @@ NSString *const kPlaceHolderText = @"Enter note";
         [button.titleLabel setFont:font];
         [button setBackgroundColor:self.tokenColor];
         [button.layer setCornerRadius:4.0];
-        [button setTag:abRecordID];
+		[button setTag:tagId];
+		++tagId;
+		
         [button addTarget:self action:@selector(buttonSelected:) forControlEvents:UIControlEventTouchUpInside];
         
         // Get the width and height of the name string given a font size
@@ -466,28 +390,17 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 #pragma mark - Update Person info
 
-- (void)updatePersonInfo:(NSOrderedSet *)abRecordIDs
+- (void)updatePersonInfo:(NSOrderedSet *) peopleTagged
 {
-	ABAddressBookRef addressBook = [AppUtils getAddressBookRef];
+//	ABAddressBookRef addressBook = [AppUtils getAddressBookRef];
 
 		//reset mutablePeople set with no objects
 	self.mutablePeopleSet = [[NSMutableOrderedSet alloc] initWithCapacity: 1];
 
-	for (NSNumber *number in abRecordIDs)
+	for (PersonIdentifier * person in peopleTagged)
 		{
-		ABRecordID abRecordID = [number intValue];
-
-		ABRecordRef abPerson = ABAddressBookGetPersonWithRecordID(addressBook, abRecordID);
-
-        CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
-		[ceaselessContacts updateCeaselessContactFromABRecord: abPerson];
-		PersonIdentifier *person = [ceaselessContacts getCeaselessContactFromABRecord: abPerson];
-			//TODO crash here when no first name or last name (business) - got here when selected a business to tag, should not happen when selecting from Ceaseless Persons instead of ABRecords
-        [self.mutablePeopleSet addObject: person];
+		[self.mutablePeopleSet addObject: person];
 		}
-
-	CFRelease(addressBook);
-
 }
 
 #pragma mark - Target-action methods
@@ -606,41 +519,41 @@ NSString *const kPlaceHolderText = @"Enter note";
 - (void)insertText:(NSString *)text {}
 
 - (void) deleteBackward {
-    // Cast tag value to ABRecordID type
-	ABRecordID abRecordID = (ABRecordID)self.selectedButton.tag;
-	ABRecordRef abPerson = ABAddressBookGetPersonWithRecordID(self.addressBook, abRecordID);
-    
-	[self removePersonFromGroup:abPerson];
-}
 
-#pragma mark - Add and remove a person to/from the group of people tagged
+	[self.mutablePeopleSet removeObjectAtIndex: self.selectedButton.tag];
+	[self layoutScrollView: self.personsTaggedView forGroup: self.mutablePeopleSet selectLast: YES];
 
-- (void)addPersonToGroup:(ABRecordRef)abRecordRef {
-	ABRecordID abRecordID = ABRecordGetRecordID(abRecordRef);
-	NSNumber *number = [NSNumber numberWithInt:abRecordID];
-
-	[self.group addObject:number];
-	self.abRecordIDs = [NSOrderedSet orderedSetWithOrderedSet:self.group];
-	[self updatePersonInfo: self.abRecordIDs];
-	[self layoutScrollView: self.personsTaggedView forGroup: self.abRecordIDs];
-	[self.searchField becomeFirstResponder];
-}
-
-- (void)removePersonFromGroup:(ABRecordRef)abRecordRef {
-	ABRecordID abRecordID = ABRecordGetRecordID(abRecordRef);
-	NSNumber *number = [NSNumber numberWithInt:abRecordID];
-
-	[self.group removeObject:number];
-	self.abRecordIDs = [NSOrderedSet orderedSetWithOrderedSet:self.group];
-	[self updatePersonInfo: self.abRecordIDs];
-    [self layoutScrollView: self.personsTaggedView forGroup: self.abRecordIDs selectLast: YES];
-
-	if (self.abRecordIDs.count > 0) {
+	if (self.mutablePeopleSet.count > 0) {
 		self.tagFriendsPlaceholderText.hidden = YES;
 	} else  {
 		self.tagFriendsPlaceholderText.hidden = NO;
 	}
 
+}
+#pragma mark - Add and remove a person to/from the group of people tagged
+
+- (void)addABPersonToCeaseless:(ABRecordRef)abRecordRef {
+	ABRecordID abRecordID = ABRecordGetRecordID(abRecordRef);
+
+	ABAddressBookRef addressBook = [AppUtils getAddressBookRef];
+
+	ABRecordRef abPerson = ABAddressBookGetPersonWithRecordID(addressBook, abRecordID);
+
+	CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
+	[ceaselessContacts updateCeaselessContactFromABRecord: abPerson];
+	PersonIdentifier *person = [ceaselessContacts getCeaselessContactFromABRecord: abPerson];
+
+	CFRelease(addressBook);
+
+	[self addCeaselessPersonToGroup: person];
+
+}
+
+- (void)addCeaselessPersonToGroup:(PersonIdentifier *) person {
+	[self.mutablePeopleSet addObject: person];
+
+	[self layoutScrollView: self.personsTaggedView forGroup: self.mutablePeopleSet];
+	[self.searchField becomeFirstResponder];
 }
 
 #pragma mark - UITableViewDataSource protocol conformance
@@ -660,13 +573,10 @@ NSString *const kPlaceHolderText = @"Enter note";
 		// If this is the last row in filteredPeople, take special action
 	if (self.filteredPeople.count == indexPath.row) {
 		cell.textLabel.text	= @"Add new contact";
-		cell.detailTextLabel.text = nil;
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     } else {
-		ABRecordRef abPerson = (__bridge ABRecordRef)([self.filteredPeople objectAtIndex:indexPath.row]);
-
-		cell.textLabel.text = (__bridge_transfer NSString *)ABRecordCopyCompositeName(abPerson);
-		cell.detailTextLabel.text = (__bridge_transfer NSString *)ABRecordCopyValue(abPerson, kABPersonOrganizationProperty);
+		PersonIdentifier *person = [self.filteredPeople objectAtIndex:indexPath.row];
+		cell.textLabel.text = [[CeaselessLocalContacts sharedCeaselessLocalContacts ]compositeNameForPerson: person];
     }
 
 	return cell;
@@ -687,9 +597,8 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 		[self presentViewController:navController animated:YES completion:NULL];
 	} else {
-		ABRecordRef abRecordRef = (__bridge ABRecordRef)([self.filteredPeople objectAtIndex:indexPath.row]);
-
-		[self addPersonToGroup:abRecordRef];
+		PersonIdentifier *person = [self.filteredPeople objectAtIndex:indexPath.row];
+		[self addCeaselessPersonToGroup: person];
 	}
 
 	self.searchField.text = nil;
@@ -699,36 +608,32 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 - (void)filterContentForSearchText:(NSString *)searchText
 {
-		// First clear the filtered array.
-	[self.filteredPeople removeAllObjects];
 
-		// beginswith[cd] predicate
-	NSPredicate *beginsPredicate = [NSPredicate predicateWithFormat:@"(SELF beginswith[cd] %@)", searchText];
+	NSString *predicateFormat = @"(representativeInfo.primaryFirstName.name BEGINSWITH[cd] %@ OR representativeInfo.primaryLastName.name BEGINSWITH[cd] %@ OR  (representativeInfo.primaryFirstName.name BEGINSWITH[cd] %@ AND representativeInfo.primaryLastName.name BEGINSWITH[cd] %@))";
 
-	/*
-	 Search the main list for people whose name OR organization matches searchText;
-	 add items that match to the filtered array.
-	 */
+	NSString *searchFirst = searchText;
+	NSString *searchLast = searchText;
 
-	for (id record in self.people)
-		{
-		ABRecordRef person = (__bridge ABRecordRef)record;
-
-		NSString *compositeName = (__bridge_transfer NSString *)ABRecordCopyCompositeName(person);
-		NSString *firstName = (__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
-		NSString *lastName = (__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);
-		NSString *organization = (__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonOrganizationProperty);
-
-			// Match by name or organization
-		if ([beginsPredicate evaluateWithObject:compositeName] ||
-			[beginsPredicate evaluateWithObject:firstName] ||
-			[beginsPredicate evaluateWithObject:lastName] ||
-			[beginsPredicate evaluateWithObject:organization])
-			{
-				// Add the matching person to filteredPeople
-			[self.filteredPeople addObject:(__bridge id)person];
-			}
+	if ([searchText containsString: @" "]) {
+		NSArray *substrings = [searchText componentsSeparatedByString:@" "];
+		if ([searchText hasSuffix: @" "]) {
+			searchText = [substrings objectAtIndex:0];
+			searchFirst = [substrings objectAtIndex:0];
+			searchLast = searchFirst;
+		} else {
+			searchFirst = [substrings objectAtIndex:0];
+				//when there is a first name and last name change operator to "AND" to return just that person
+			searchLast = [substrings objectAtIndex:1];
 		}
+	}
+
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, searchText, searchText, searchFirst, searchLast];
+
+	[self.searchFetchRequest setPredicate:predicate];
+
+				// Add the matching person to filteredPeople
+	NSError *error = nil;
+	self.filteredPeople = [self.managedObjectContext executeFetchRequest:self.searchFetchRequest error:&error];
 }
 
 #pragma mark - UISearchBarDelegate protocol conformance
@@ -749,7 +654,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 - (void)newPersonViewController:(ABNewPersonViewController *)newPersonView didCompleteWithNewPerson:(ABRecordRef)person
 {
 	if (person != NULL) {
-		[self addPersonToGroup:person];
+		[self addABPersonToCeaseless: person];
     }
 
 	[newPersonView dismissViewControllerAnimated:YES completion:NULL];
@@ -785,4 +690,23 @@ NSString *const kPlaceHolderText = @"Enter note";
 	}
 }
 
+- (NSFetchRequest *)searchFetchRequest
+{
+	if (_searchFetchRequest != nil)
+  {
+  return _searchFetchRequest;
+  }
+
+	_searchFetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"PersonIdentifier" inManagedObjectContext:self.managedObjectContext];
+	[_searchFetchRequest setEntity:entity];
+
+		// Edit the sort key as appropriate.
+	NSSortDescriptor *sortDescriptor1 = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryLastName.name" ascending:YES selector: @selector(caseInsensitiveCompare:)];
+	NSSortDescriptor *sortDescriptor2 = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryFirstName.name" ascending:YES selector: @selector(caseInsensitiveCompare:)];
+	NSArray *sortDescriptors = @[sortDescriptor1, sortDescriptor2];
+	[_searchFetchRequest setSortDescriptors:sortDescriptors];
+
+	return _searchFetchRequest;
+}
 @end
