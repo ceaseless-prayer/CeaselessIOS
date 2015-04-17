@@ -158,11 +158,11 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 	if (peopleTagged.count > 0) {
 		self.tagFriendsPlaceholderText.hidden = YES;
-		[self updatePersonInfo: peopleTagged];
-
+		self.mutablePeopleSet = [[NSMutableOrderedSet alloc] initWithOrderedSet: peopleTagged];
 	} else  {
 		self.tagFriendsPlaceholderText.hidden = NO;
 	}
+	
 	[self layoutScrollView: self.personsTaggedView forGroup: self.mutablePeopleSet];
 }
 - (void)viewWillAppear:(BOOL)animated {
@@ -386,21 +386,6 @@ NSString *const kPlaceHolderText = @"Enter note";
     }
 
 	return shouldReceiveTouch;
-}
-
-#pragma mark - Update Person info
-
-- (void)updatePersonInfo:(NSOrderedSet *) peopleTagged
-{
-//	ABAddressBookRef addressBook = [AppUtils getAddressBookRef];
-
-		//reset mutablePeople set with no objects
-	self.mutablePeopleSet = [[NSMutableOrderedSet alloc] initWithCapacity: 1];
-
-	for (PersonIdentifier * person in peopleTagged)
-		{
-		[self.mutablePeopleSet addObject: person];
-		}
 }
 
 #pragma mark - Target-action methods
