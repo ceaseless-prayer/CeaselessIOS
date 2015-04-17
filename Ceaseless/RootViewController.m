@@ -11,6 +11,8 @@
 #import "DataViewController.h"
 #import "UIImageEffects.h"
 #import "AppUtils.h"
+#import "UIFont+FontAwesome.h"
+#import "NSString+FontAwesome.h"
 
 @interface RootViewController ()
 
@@ -33,6 +35,14 @@
     NSDictionary *opts = @{
                            @"UIPageViewControllerOptionInterPageSpacingKey": @20
                            };
+    
+    [self.prayerJournalButton setTitle:[NSString fontAwesomeIconStringForEnum:FABook]];
+    [self.prayerJournalButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                      [UIFont fontWithName:@"FontAwesome" size:26.0], NSFontAttributeName,
+                                                      [UIColor whiteColor], NSForegroundColorAttributeName,
+                                                      nil]
+                                            forState:UIControlStateNormal];
+
     
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:opts];
     self.pageViewController.delegate = self;
