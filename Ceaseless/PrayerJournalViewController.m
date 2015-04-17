@@ -55,12 +55,13 @@
 	self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
 	self.searchController.searchResultsUpdater = self;
 	self.searchController.dimsBackgroundDuringPresentation = NO;
-	self.searchController.searchBar.barTintColor = UIColorFromRGBWithAlpha(0x00012f , 0.4);
+    self.searchController.searchBar.barTintColor = UIColorFromRGBWithAlpha(0x00012f , 0.4);
+    self.searchController.searchBar.translucent = YES;
 	self.searchController.searchBar.tintColor = [UIColor lightGrayColor];
 	self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"",@"")];
 	self.searchController.searchBar.delegate = self;
 	self.searchController.delegate = self;
-		//		// Hide the search bar until user scrolls up
+	// Hide the search bar until user scrolls up
 	CGRect newBounds = self.tableView.bounds;
 	newBounds.origin.y = newBounds.origin.y + self.searchController.searchBar.bounds.size.height;
 	self.tableView.bounds = newBounds;
@@ -75,9 +76,11 @@
 }
 
 - (void)adjustSearchBar{
-		//if this isn't done, the textfield gets positioned to far left some of the time :(  Apple Bug
+    //if this isn't done, the textfield gets positioned to far left some of the time :(  Apple Bug
 	[self.searchController.searchBar setPositionAdjustment: UIOffsetMake (0.0, 0.0) forSearchBarIcon: UISearchBarIconSearch];
 	self.tableView.tableHeaderView = self.searchController.searchBar;
+    self.tableView.tableHeaderView.layer.cornerRadius = 6.0f;
+    self.tableView.tableHeaderView.clipsToBounds = YES;
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -363,8 +366,8 @@
 #pragma mark - Fetched results controller
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-		// In the simplest, most efficient, case, reload the table view.
- [self.tableView reloadData];
+    // In the simplest, most efficient, case, reload the table view.
+    [self.tableView reloadData];
 }
 - (NSFetchedResultsController *)fetchedResultsController
 {
