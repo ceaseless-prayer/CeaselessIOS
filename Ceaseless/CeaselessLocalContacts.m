@@ -261,6 +261,11 @@ void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictiona
     return [[NSSet alloc] initWithSet:contactSet];
 }
 
+- (NSArray *) getAllActiveCeaselessContacts {
+    NSPredicate *filterRemovedContacts = [NSPredicate predicateWithFormat: @"removedDate = nil"];
+    return [self fetchEntityForName:@"PersonIdentifier" withPredicate: filterRemovedContacts];
+}
+
 - (NSArray *) getAllCeaselessContacts {
     return [self fetchEntityForName:@"PersonIdentifier"];
 }

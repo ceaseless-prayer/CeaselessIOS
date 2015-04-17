@@ -75,7 +75,6 @@
         [defaults setObject:[NSDate date] forKey:kPrayerCycleStartDate];
         [defaults synchronize];
     }
-//            return [NSNumber numberWithDouble:[totalPeoplePrayedForThisCycle doubleValue] / [totalPeople doubleValue]];
     return @[totalPeoplePrayedForThisCycle, totalPeople];
 }
 
@@ -88,8 +87,7 @@
     // TODO switch ascending to YES for prod. NO makes the people we pick more stable on each run.
 
     // filter out removed contacts
-    NSPredicate *filterRemovedContacts = [NSPredicate predicateWithFormat: @"removedDate = nil"];
-    NSArray *ceaselessPeople = [[[_ceaselessContacts getAllCeaselessContacts] filteredArrayUsingPredicate:filterRemovedContacts] sortedArrayUsingDescriptors:[NSArray arrayWithObject:prayerRecordCountDescriptor]];
+    NSArray *ceaselessPeople = [[_ceaselessContacts getAllActiveCeaselessContacts] sortedArrayUsingDescriptors:[NSArray arrayWithObject:prayerRecordCountDescriptor]];
     NSLog(@"Total filtered Ceaseless contacts: %lu", (unsigned long)[ceaselessPeople count]);
     
     // first get at least one contact who has been favorited if any are available.
@@ -107,8 +105,6 @@
                 pickFavoriteContact = NO;
             }
         }
-        // TODO remove this override for prod. We always show favorites for test.
-        pickFavoriteContact = YES;
         
         // if only 1 has been favorite, don't just show it every single day...
         if(pickFavoriteContact && [self pickPersonIfPossible:favoriteContacts[0]]) {

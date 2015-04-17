@@ -35,6 +35,7 @@
 - (void) updateCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
 - (PrayerRecord *) createPrayerRecordForPerson: (PersonIdentifier *) person;
 - (PersonIdentifier *) createCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
+- (NSArray *) getAllActiveCeaselessContacts;
 - (NSArray *) getAllCeaselessContacts;
 - (ABRecordRef) getRepresentativeABPersonForCeaselessContact: (PersonIdentifier*) person;
 - (UIImage *) getImageForPersonIdentifier: (PersonIdentifier *) person;
