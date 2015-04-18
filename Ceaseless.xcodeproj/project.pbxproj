@@ -29,6 +29,7 @@
 		4270C3ED1AE1A87A00C83E01 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4270C3EC1AE1A87A00C83E01 /* libsqlite3.dylib */; };
 		4270C3EF1AE1A8CD00C83E01 /* libAdIdAccess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4270C3EE1AE1A8CD00C83E01 /* libAdIdAccess.a */; };
 		4270C3F11AE1A8E400C83E01 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4270C3F01AE1A8E400C83E01 /* AdSupport.framework */; };
+		4270C3F61AE1D9FE00C83E01 /* GTM-KP4WD6 in Resources */ = {isa = PBXBuildFile; fileRef = 4270C3F51AE1D9FD00C83E01 /* GTM-KP4WD6 */; };
 		42869B091AC9FC5100E612F7 /* AppConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 42869B081AC9FC5100E612F7 /* AppConstants.m */; };
 		429E60891AAA5FD8003F37BF /* ScriptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E60881AAA5FD7003F37BF /* ScriptureViewController.m */; };
 		429E608C1AAA61B1003F37BF /* PersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E608B1AAA61B1003F37BF /* PersonViewController.m */; };
@@ -134,7 +135,7 @@
 		4270C3EC1AE1A87A00C83E01 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		4270C3EE1AE1A8CD00C83E01 /* libAdIdAccess.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAdIdAccess.a; sourceTree = "<group>"; };
 		4270C3F01AE1A8E400C83E01 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
-		4270C3F41AE1CC8800C83E01 /* GTM-KP4WD6 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTM-KP4WD6"; sourceTree = "<group>"; };
+		4270C3F51AE1D9FD00C83E01 /* GTM-KP4WD6 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTM-KP4WD6"; sourceTree = "<group>"; };
 		42869B071AC9FC5100E612F7 /* AppConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstants.h; sourceTree = "<group>"; };
 		42869B081AC9FC5100E612F7 /* AppConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConstants.m; sourceTree = "<group>"; };
 		429E60871AAA5FD7003F37BF /* ScriptureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptureViewController.h; sourceTree = "<group>"; };
@@ -335,7 +336,7 @@
 		42F3AE1B1AA4DD7F003A88F5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				4270C3F41AE1CC8800C83E01 /* GTM-KP4WD6 */,
+				4270C3F51AE1D9FD00C83E01 /* GTM-KP4WD6 */,
 				424C5B311AE07B76005C4CFC /* FontAwesome.ttf */,
 				7083F7111AD4C474002D93AD /* at_the_beach.jpg */,
 				7075100D1ACB2B13006500A9 /* AppConstants.h */,
@@ -578,6 +579,7 @@
 				42E0F4A41AD6093D00CE64E3 /* ProgressView.xib in Resources */,
 				42F3AE321AA4DD80003A88F5 /* LaunchScreen.xib in Resources */,
 				42CBFBAE1ABBC9BA00F9FB1D /* WebCardView.xib in Resources */,
+				4270C3F61AE1D9FE00C83E01 /* GTM-KP4WD6 in Resources */,
 				42F3AE2F1AA4DD7F003A88F5 /* Images.xcassets in Resources */,
 				424C5B321AE08433005C4CFC /* FontAwesome.ttf in Resources */,
 				707BE2E61AAA1B1A0020FF29 /* Screen Shot 2015-02-17 at 9.05.16 PM.png in Resources */,
