@@ -9,6 +9,9 @@
 #import "CeaselessLocalContacts.h"
 #import "AppConstants.h"
 #import "AppUtils.h"
+#import "TAGContainer.h"
+#import "TAGDataLayer.h"
+#import "TAGManager.h"
 
 @implementation CeaselessLocalContacts
 
@@ -136,6 +139,11 @@ void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictiona
 			});
 
             _syncing = NO;
+            
+            // Push a "refresh" event. Tags that match that event will fire.
+            AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
+            [appDelegate.tagManager.dataLayer pushValue:@"addressBookSynced" forKey:@"event"];
+            
 			[[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
 			self.backgroundTask = UIBackgroundTaskInvalid;
         });

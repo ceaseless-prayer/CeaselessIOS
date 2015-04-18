@@ -11,6 +11,8 @@
 #import "AppConstants.h"
 #import "WebCardViewController.h"
 #import "CeaselessService.h"
+#import "TAGDataLayer.h"
+#import "TAGManager.h"
 
 @interface ProgressViewController ()
     @property (strong, nonatomic) NSArray *announcements;
@@ -46,6 +48,16 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
 
 - (IBAction)showMorePeople:(id)sender {
     self.progressView.showMoreButton.hidden = YES;
+    TAGDataLayer *dataLayer = [TAGManager instance].dataLayer;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    // This call assumes the container has already been opened, otherwise events
+    // pushed to the DataLayer will not fire tags in that container.
+    [dataLayer push:@{@"event": @"showMorePeopleEvent",
+                      @"action": @"request more people",
+                      @"showMorePeopleCount": [NSNumber numberWithLong:[defaults integerForKey: kDailyPersonCount]],
+                      @"screenName": @"ProgressView"}];
+    
     [self.progressView.loadingMore startAnimating];
     [[NSNotificationCenter defaultCenter] postNotificationName:kForceShowNewContent object:nil];
 }

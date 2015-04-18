@@ -8,14 +8,51 @@
 
 #import "AppDelegate.h"
 #import "AppConstants.h"
+#import "TAGContainer.h"
+#import "TAGContainerOpener.h"
+#import "TAGManager.h"
 
-@interface AppDelegate ()
-
+@interface AppDelegate ()<TAGContainerOpenerNotifier>
+// Used for sending traffic in the background.
+@property(nonatomic, assign) BOOL okToWait;
+@property(nonatomic, copy) void (^dispatchHandler)(TAGDispatchResult result);
 @end
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    // analytics
+    self.tagManager = [TAGManager instance];
+    
+    // Modify the log level of the logger to print out not only
+    // warning and error messages, but also verbose, debug, info messages.
+    
+    [self.tagManager.logger setLogLevel:kTAGLoggerLogLevelVerbose];
+    
+    // Following provides ability to support preview from Tag Manager.
+    // You need to make these calls before opening a container to make
+    // preview works.
+    NSURL *url = [launchOptions valueForKey:UIApplicationLaunchOptionsURLKey];
+    if (url != nil) {
+        [self.tagManager previewWithUrl:url];
+    }
+
+    /*
+     * Opens a container.
+     *
+     * @param containerId The ID of the container to load.
+     * @param tagManager The TAGManager instance for getting the container.
+     * @param openType The choice of how to open the container.
+     * @param timeout The timeout period (default is 2.0 seconds).
+     * @param notifier The notifier to inform on container load events.
+     */
+    [TAGContainerOpener openContainerWithId:@"GTM-KP4WD6"
+                                 tagManager:self.tagManager
+                                   openType:kTAGOpenTypePreferFresh
+                                    timeout:nil
+                                   notifier:self];
+    
     // Override point for customization after application launch.
 	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
@@ -34,6 +71,64 @@
     return YES;
 }
 
+// TAGContainerOpenerNotifier callback.
+- (void)containerAvailable:(TAGContainer *)container {
+    // Note that containerAvailable may be called on any thread, so you may need to dispatch back to
+    // your main thread.
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.container = container;
+    });
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    if ([self.tagManager previewWithUrl:url]) {
+        return YES;
+    }
+    
+    // Code to handle other urls.
+    
+    return NO;
+}
+
+// In case the app was sent into the background when there was no network connection, we will use
+// the background data fetching mechanism to send any pending Google Analytics data.  Note that
+// this app has turned on background data fetching in the capabilities section of the project.
+-(void)application:(UIApplication *)application
+performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    [self sendHitsInBackground];
+    completionHandler(UIBackgroundFetchResultNewData);
+}
+
+// This method sends hits in the background until either we're told to stop background processing,
+// we run into an error, or we run out of hits.
+- (void)sendHitsInBackground {
+    self.okToWait = YES;
+    __weak AppDelegate *weakSelf = self;
+    __block UIBackgroundTaskIdentifier backgroundTaskId =
+    [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        weakSelf.okToWait = NO;
+    }];
+    
+    if (backgroundTaskId == UIBackgroundTaskInvalid) {
+        return;
+    }
+    
+    self.dispatchHandler = ^(TAGDispatchResult result) {
+        // If the last dispatch succeeded, and we're still OK to stay in the background then kick off
+        // again.
+        if (result == kTAGDispatchGood && weakSelf.okToWait ) {
+            [[TAGManager instance] dispatchWithCompletionHandler:weakSelf.dispatchHandler];
+        } else {
+            [[UIApplication sharedApplication] endBackgroundTask:backgroundTaskId];
+        }
+    };
+    [[TAGManager instance] dispatchWithCompletionHandler:self.dispatchHandler];
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -42,7 +137,7 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    
+
     // scheduling local notifications
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     
@@ -72,6 +167,9 @@
     [notification setTimeZone:[NSTimeZone defaultTimeZone]];
 	[notification setSoundName: UILocalNotificationDefaultSoundName];
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+    
+    // We'll try to dispatch any hits queued for dispatch as the app goes into the background.
+    [self sendHitsInBackground];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {

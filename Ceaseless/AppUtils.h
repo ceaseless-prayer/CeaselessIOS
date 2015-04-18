@@ -25,4 +25,21 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 + (NSNumber *) daysWithinEraFromDate:(NSDate *) startDate toDate:(NSDate *) endDate;
 + (ABAddressBookRef) getAddressBookRef;
 + (void) bounceView: (UIView *) viewToAnimate distance: (CGFloat) toValue duration: (CGFloat) duration;
+/**
+ * Push an "openScreen" event with the given screen name. Tags that
+ * match that event will fire.
+ */
++ (void)pushOpenScreenEventWithScreenName:(NSString *)screenName;
+
+/**
+ * Push a "closeScreen" event with the given screen name. Tags that
+ * match that event will fire.
+ */
++ (void)pushCloseScreenEventWithScreenName:(NSString *)screenName;
+
+/**
+ * Refresh container manually
+ */
++ (void) refreshTagContainer;
+
 @end
