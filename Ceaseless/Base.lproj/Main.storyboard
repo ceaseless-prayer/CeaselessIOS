@@ -462,12 +462,12 @@
                                                 <action selector="contactsListSelector:" destination="Trs-Fq-LiS" eventType="valueChanged" id="CKd-mn-T99"/>
                                             </connections>
                                         </segmentedControl>
-                                        <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" sectionIndexMinimumDisplayRowCount="25" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="i0o-09-bgH">
+                                        <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" sectionIndexMinimumDisplayRowCount="25" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="i0o-09-bgH">
                                             <rect key="frame" x="0.0" y="29" width="600" height="507"/>
                                             <color key="backgroundColor" red="0.0" green="0.0039215686269999999" blue="0.1843137255" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="sectionIndexBackgroundColor" red="0.0" green="0.0039215686269999999" blue="0.1843137255" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                             <prototypes>
-                                                <tableViewCell opaque="NO" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" rowHeight="44" id="8Uh-s7-6nl" customClass="ContactsListTableViewCell">
+                                                <tableViewCell opaque="NO" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" rowHeight="44" id="8Uh-s7-6nl" customClass="ContactsListTableViewCell">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8Uh-s7-6nl" id="Rid-lh-ysD">
@@ -585,7 +585,6 @@
                                                         <outlet property="personImageView" destination="lpn-rt-0YU" id="Lzp-6Z-g52"/>
                                                         <outlet property="placeholderLabel" destination="Tzf-UG-h6t" id="1q5-fY-wtz"/>
                                                         <outlet property="rowSwitch" destination="cxT-HB-S1b" id="pbr-3x-2im"/>
-                                                        <segue destination="bHA-Mi-4gj" kind="show" identifier="ShowPerson" id="ytE-aM-znJ"/>
                                                     </connections>
                                                 </tableViewCell>
                                             </prototypes>
@@ -733,6 +732,7 @@
                         <outlet property="syncingOverlay" destination="qly-UT-DUY" id="yQO-ax-TMj"/>
                         <outlet property="tableView" destination="i0o-09-bgH" id="KMe-aT-lXP"/>
                         <outlet property="topToVisualEffectsViewConstraint" destination="CWr-7g-oL7" id="pi9-iX-Pz0"/>
+                        <segue destination="bHA-Mi-4gj" kind="show" identifier="ShowPerson" id="nk7-0g-d1c"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RVK-Lq-42w" userLabel="First Responder" sceneMemberID="firstResponder"/>

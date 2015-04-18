@@ -52,6 +52,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	self.tableView.dataSource = self;
 	self.tableView.delegate = self;
 
+	self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
 	UIImage *backgroundImage = [AppUtils getDynamicBackgroundImage];
 	if(backgroundImage != nil) {
@@ -172,6 +173,32 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 }
 #pragma mark - Table View
 
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+	[super setEditing:editing animated:animated];
+	if (editing) {
+		self.tableView.allowsMultipleSelectionDuringEditing = YES;
+		[self.tableView setEditing:editing animated:YES];
+		self.navigationItem.rightBarButtonItem.title = @"Remove";
+		NSLog(@"editMode on");
+	} else {
+		NSArray *selectedCells = [self.tableView indexPathsForSelectedRows];
+			//enumerate backwards so that the index does not get updated by previous removals
+		for (NSIndexPath *indexPath in [selectedCells reverseObjectEnumerator]) {
+			PersonIdentifier *person = [self.fetchedResultsController objectAtIndexPath:indexPath];
+			person.removedDate = [NSDate date];
+			[self save];
+		}
+
+		[self.tableView setEditing:editing animated:NO];
+		[self.tableView reloadData];
+		self.navigationItem.rightBarButtonItem.title = @"Edit";
+		NSLog(@"editmode off");
+	}
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+	return @"Remove";
+}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 	if (self.searchController.active) {
@@ -207,10 +234,22 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	}
 }
 
+//- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//	return YES;
+//}
 - (ContactsListTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     ContactsListTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    
+
+		//have to set background color programmatically here to allow checkboxes to function properly :P
+	static dispatch_once_t onceToken;
+	static UIView * selectedBackgroundView;
+	dispatch_once(&onceToken, ^{
+		selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+		selectedBackgroundView.backgroundColor = UIColorFromRGBWithAlpha(0x00012f , 0.4);
+	});
+	cell.selectedBackgroundView = selectedBackgroundView;
     [self configureCell:cell atIndexPath:indexPath];
     cell.onSwitchChange=^(UITableViewCell *cellAffected){
         PersonIdentifier *person = [self.fetchedResultsController objectAtIndexPath: indexPath];
@@ -273,7 +312,26 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
 		// Return NO if you do not want the specified item to be editable.
-	return NO;
+	return YES;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+		return UITableViewCellEditingStyleDelete;
+}
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (editingStyle == UITableViewCellEditingStyleDelete) {
+		PersonIdentifier *person = [self.fetchedResultsController objectAtIndexPath:indexPath];
+		person.removedDate = [NSDate date];
+		[self save];
+	}
+}
+
+- (void)tableView: (UITableView *)tableView didSelectRowAtIndexPath: (NSIndexPath *)indexPath {
+	if (tableView.isEditing) {
+			//do something
+	} else {
+		[self performSegueWithIdentifier: @"ShowPerson" sender: self];
+	}
 }
 
 #pragma mark -
@@ -309,14 +367,74 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	self.topToVisualEffectsViewConstraint.constant = 64;
 	[self searchControllerSetup];
 }
-#pragma mark - Fetched results controller
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+
+#pragma mark -
+#pragma mark === Fetched Controller Methods ===
+#pragma mark -
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
-		// reload the table if the contacts are not syncing, jittery otherwise
 	if (self.ceaselessContacts.syncing == NO) {
-		[self.tableView reloadData];
+		[self.tableView beginUpdates];
 	}
 }
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+		   atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
+{
+	switch(type) {
+		case NSFetchedResultsChangeInsert:
+			[self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+			break;
+
+		case NSFetchedResultsChangeDelete:
+			[self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+			break;
+
+		default:
+			return;
+	}
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+	   atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+	  newIndexPath:(NSIndexPath *)newIndexPath
+{
+	UITableView *tableView = self.tableView;
+
+	switch(type) {
+		case NSFetchedResultsChangeInsert:
+			[tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+			break;
+
+		case NSFetchedResultsChangeDelete:
+			[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+			break;
+
+		case NSFetchedResultsChangeUpdate:
+			[self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+			break;
+
+		case NSFetchedResultsChangeMove:
+			[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+			[tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+			break;
+	}
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+	[self.tableView endUpdates];
+}
+
+#pragma mark - Fetched results controller
+//- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+//{
+//		// reload the table if the contacts are not syncing, jittery otherwise
+//	if (self.ceaselessContacts.syncing == NO) {
+//		[self.tableView reloadData];
+//	}
+//}
 - (NSFetchedResultsController *)fetchedResultsController
 {
 	if (_fetchedResultsController != nil) {
@@ -400,6 +518,8 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 - (IBAction)contactsListSelector:(id)sender {
 	[self selectContactsPredicate];
+	self.tableView.editing = NO;
+	self.navigationItem.rightBarButtonItem.title = @"Edit";
 	[self.tableView reloadData];
 }
 

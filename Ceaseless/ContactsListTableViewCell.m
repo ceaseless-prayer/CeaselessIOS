@@ -17,12 +17,6 @@
 	self.placeholderLabel.layer.cornerRadius = 6.0f;
 	[self.placeholderLabel setClipsToBounds:YES];
 }
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-
-}
 
 - (IBAction)switchChanged:(id)sender {
 	self.onSwitchChange(self);
