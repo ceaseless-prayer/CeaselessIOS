@@ -9,13 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @interface ContactsListTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIButton *favButton;
 @property (weak, nonatomic) IBOutlet UIImageView *personImageView;
 @property (weak, nonatomic) IBOutlet UILabel *placeholderLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *nameLabelTrailingConstraint;
-@property (weak, nonatomic) IBOutlet UISwitch *rowSwitch;
-@property (nonatomic,copy) void (^onSwitchChange)(UITableViewCell *cell);
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewToImageViewConstraint;
+@property (nonatomic,copy) void (^onFavoriteChange)(UITableViewCell *cell);
 
-- (IBAction)switchChanged:(id)sender;
+- (IBAction)favoriteChanged:(id)sender;
 
 @end

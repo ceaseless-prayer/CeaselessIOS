@@ -18,7 +18,7 @@
 	[self.placeholderLabel setClipsToBounds:YES];
 }
 
-- (IBAction)switchChanged:(id)sender {
-	self.onSwitchChange(self);
+- (IBAction)favoriteChanged:(id)sender {
+	self.onFavoriteChange(self);
 }
 @end

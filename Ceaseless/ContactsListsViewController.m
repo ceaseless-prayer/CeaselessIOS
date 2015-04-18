@@ -15,12 +15,12 @@
 #import "PersonViewController.h"
 #import "PersonView.h"
 #import "AppUtils.h"
+#import "NSString+FontAwesome.h"
 
 typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 {
 	predicateScopeActive = 0,
-	predicateScopeFavorites = 1,
-	predicateScopeRemoved = 2
+	predicateScopeRemoved = 1
 };
 
 @interface ContactsListsViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UISearchControllerDelegate>
@@ -178,14 +178,33 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	if (editing) {
 		self.tableView.allowsMultipleSelectionDuringEditing = YES;
 		[self.tableView setEditing:editing animated:YES];
-		self.navigationItem.rightBarButtonItem.title = @"Remove";
+		switch (self.segment.selectedSegmentIndex){
+			case 0:
+				self.navigationItem.rightBarButtonItem.title = @"Remove";
+				break;
+			case 1:
+				self.navigationItem.rightBarButtonItem.title = @"Add";
+				break;
+			default:
+				break;
+		}
+
 		NSLog(@"editMode on");
 	} else {
 		NSArray *selectedCells = [self.tableView indexPathsForSelectedRows];
 			//enumerate backwards so that the index does not get updated by previous removals
 		for (NSIndexPath *indexPath in [selectedCells reverseObjectEnumerator]) {
 			PersonIdentifier *person = [self.fetchedResultsController objectAtIndexPath:indexPath];
-			person.removedDate = [NSDate date];
+			switch (self.segment.selectedSegmentIndex){
+				case 0:
+					person.removedDate = [NSDate date];
+					break;
+				case 1:
+					person.removedDate = nil;
+					break;
+				default:
+					break;
+			}
 			[self save];
 		}
 
@@ -197,7 +216,17 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return @"Remove";
+	switch (self.segment.selectedSegmentIndex){
+		case 0:
+			return @"Remove";
+			break;
+		case 1:
+			return @"Add to Ceaseless";
+			break;
+		default:
+			return @"Remove";
+			break;
+	}
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -234,10 +263,6 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	}
 }
 
-//- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//	return YES;
-//}
 - (ContactsListTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     ContactsListTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
@@ -251,24 +276,16 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	});
 	cell.selectedBackgroundView = selectedBackgroundView;
     [self configureCell:cell atIndexPath:indexPath];
-    cell.onSwitchChange=^(UITableViewCell *cellAffected){
+    cell.onFavoriteChange=^(UITableViewCell *cellAffected){
         PersonIdentifier *person = [self.fetchedResultsController objectAtIndexPath: indexPath];
-        
-        {
-            switch (self.selectedList){
-                case 0:
-                    break;
-                case 1:
-                    person.favoritedDate = nil;
-                    [self save];
-                    break;
-                case 2:
-                    person.removedDate = nil;
-                    [self save];
-                    break;
-                default:
-                    break;
-            }
+		if (self.selectedList == predicateScopeActive) {
+			if (person.favoritedDate == nil) {
+				person.favoritedDate = [NSDate date];
+				[self save];
+			} else {
+				person.favoritedDate = nil;
+				[self save];
+			}
         }
     };
     return cell;
@@ -281,6 +298,23 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 		person = [self.filteredList objectAtIndex:indexPath.row];
 	} else {
 		person = [self.fetchedResultsController objectAtIndexPath:indexPath];
+	}
+	switch (self.segment.selectedSegmentIndex){
+		case 0:
+			cell.favButton.hidden = NO;
+			cell.viewToImageViewConstraint.constant = 38;
+			if (person.favoritedDate) {
+				[cell.favButton setTitle: [NSString fontAwesomeIconStringForEnum:FAHeart] forState:UIControlStateNormal];
+			} else {
+				[cell.favButton setTitle: [NSString fontAwesomeIconStringForEnum:FAHeartO] forState:UIControlStateNormal];
+			}
+			break;
+		case 1:
+			cell.favButton.hidden = YES;
+			cell.viewToImageViewConstraint.constant = 0;
+			break;
+		default:
+			break;
 	}
 
     UIImage *profileImage = [_ceaselessContacts getImageForPersonIdentifier:person];
@@ -299,14 +333,6 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	NSString *personName = [_ceaselessContacts compositeNameForPerson:person];
 	cell.nameLabel.text = personName;
 
-	if (self.selectedList == predicateScopeActive) {
-		cell.rowSwitch.hidden = YES;
-		cell.nameLabelTrailingConstraint.constant = 0;
-	} else {
-		cell.rowSwitch.hidden = NO;
-		cell.rowSwitch.on = YES;
-		cell.nameLabelTrailingConstraint.constant = 49;
-	}
 	cell.backgroundColor = [UIColor clearColor];
 
 }
@@ -321,15 +347,22 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (editingStyle == UITableViewCellEditingStyleDelete) {
 		PersonIdentifier *person = [self.fetchedResultsController objectAtIndexPath:indexPath];
-		person.removedDate = [NSDate date];
+		switch (self.segment.selectedSegmentIndex){
+			case 0:
+				person.removedDate = [NSDate date];
+				break;
+			case 1:
+				person.removedDate = nil;
+				break;
+			default:
+				break;
+		}
 		[self save];
 	}
 }
 
 - (void)tableView: (UITableView *)tableView didSelectRowAtIndexPath: (NSIndexPath *)indexPath {
-	if (tableView.isEditing) {
-			//do something
-	} else {
+	if (!tableView.isEditing) {
 		[self performSegueWithIdentifier: @"ShowPerson" sender: self];
 	}
 }
@@ -374,9 +407,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
-	if (self.ceaselessContacts.syncing == NO) {
 		[self.tableView beginUpdates];
-	}
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
@@ -533,12 +564,6 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 			break;
 
 		case 1:
-			self.selectedListPredicate = @"favoritedDate != nil";
-			_fetchedResultsController = nil;
-			self.selectedList = self.segment.selectedSegmentIndex;
-			break;
-
-		case 2:
 			self.selectedListPredicate = @"removedDate != nil";
 			_fetchedResultsController = nil;
 			self.selectedList = self.segment.selectedSegmentIndex;
