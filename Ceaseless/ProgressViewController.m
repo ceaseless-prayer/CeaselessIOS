@@ -39,6 +39,11 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
     // Do any additional setup after loading the view.
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.screenName = @"ProgressViewScreen";
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

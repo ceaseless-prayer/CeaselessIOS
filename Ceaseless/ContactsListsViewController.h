@@ -9,13 +9,14 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 #import "CeaselessLocalContacts.h"
+#import "GAITrackedViewController.h"
 
 #define UIColorFromRGBWithAlpha(rgbValue,a) [UIColor \
 colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
 blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 
-@interface ContactsListsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface ContactsListsViewController : GAITrackedViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segment;

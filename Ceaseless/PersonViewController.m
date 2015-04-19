@@ -38,6 +38,11 @@ static NSString *kSMSMessage;
     kSMSMessage = NSLocalizedString(@"I prayed for you today when you came up in my Ceaseless app.", nil);
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.screenName = @"PersonViewScreen";
+}
+
 - (void)viewDidLoad {
 
     [super viewDidLoad];
@@ -113,9 +118,6 @@ static NSString *kSMSMessage;
 		return nil;
 	else
 		return [self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 2];
-}
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {

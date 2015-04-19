@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "TaggedPersonPicker.h"
+#import "GAITrackedViewController.h"
 
-@interface SettingsViewController : UIViewController <UIScrollViewDelegate, TaggedPersonPickerDelegate>
+@interface SettingsViewController : GAITrackedViewController <UIScrollViewDelegate, TaggedPersonPickerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
