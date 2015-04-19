@@ -92,7 +92,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 }
 
 - (void)adjustSearchBar{
-		//if this isn't done, the textfield gets positioned to far left some of the time :(  Apple Bug
+		//if this isn't done, the textfield gets positioned too far left some of the time :(  Apple Bug
 	[self.searchController.searchBar setPositionAdjustment: UIOffsetMake (0.0, 0.0) forSearchBarIcon: UISearchBarIconSearch];
 	self.tableView.tableHeaderView = self.searchController.searchBar;
 }
@@ -191,21 +191,24 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 		NSLog(@"editMode on");
 	} else {
-		NSArray *selectedCells = [self.tableView indexPathsForSelectedRows];
-			//enumerate backwards so that the index does not get updated by previous removals
-		for (NSIndexPath *indexPath in [selectedCells reverseObjectEnumerator]) {
-			PersonIdentifier *person = [self.fetchedResultsController objectAtIndexPath:indexPath];
-			switch (self.segment.selectedSegmentIndex){
-				case 0:
-					person.removedDate = [NSDate date];
-					break;
-				case 1:
-					person.removedDate = nil;
-					break;
-				default:
-					break;
+		if (!self.searchController.active) {
+
+			NSArray *selectedCells = [self.tableView indexPathsForSelectedRows];
+				//enumerate backwards so that the index does not get updated by previous removals
+			for (NSIndexPath *indexPath in [selectedCells reverseObjectEnumerator]) {
+				PersonIdentifier *person = [self.fetchedResultsController objectAtIndexPath:indexPath];
+				switch (self.segment.selectedSegmentIndex){
+					case 0:
+						person.removedDate = [NSDate date];
+						break;
+					case 1:
+						person.removedDate = nil;
+						break;
+					default:
+						break;
+				}
+				[self save];
 			}
-			[self save];
 		}
 
 		[self.tableView setEditing:editing animated:NO];
@@ -277,7 +280,12 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	cell.selectedBackgroundView = selectedBackgroundView;
     [self configureCell:cell atIndexPath:indexPath];
     cell.onFavoriteChange=^(UITableViewCell *cellAffected){
-        PersonIdentifier *person = [self.fetchedResultsController objectAtIndexPath: indexPath];
+		PersonIdentifier *person = nil;
+		if (self.searchController.active) {
+			person = [self.filteredList objectAtIndex:indexPath.row];
+		} else {
+			person = [self.fetchedResultsController objectAtIndexPath:indexPath];
+		}
 		if (self.selectedList == predicateScopeActive) {
 			if (person.favoritedDate == nil) {
 				person.favoritedDate = [NSDate date];
@@ -286,6 +294,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 				person.favoritedDate = nil;
 				[self save];
 			}
+		[self.tableView reloadData];
         }
     };
     return cell;
@@ -395,6 +404,11 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 - (void)willPresentSearchController:(UISearchController *)searchController {
 		//push the view up under status bar
 	self.topToVisualEffectsViewConstraint.constant = 34;
+
+}
+- (void)didPresentSearchController:(UISearchController *)searchController {
+	[self setEditing:NO animated:NO];
+
 }
 - (void)willDismissSearchController:(UISearchController *)searchController {
 	self.topToVisualEffectsViewConstraint.constant = 64;
