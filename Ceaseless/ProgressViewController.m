@@ -33,6 +33,9 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
     
     self.progressView.progressLabel.text = [NSString stringWithFormat: @"%@ / %@ people", totalPeoplePrayedForThisCycle, totalPeople];
     
+    [AppUtils postAnalyticsEventWithCategory:@"progress_view" andAction:@"reached_last_card" andLabel:@"people_prayed_for_this_cycle" andValue: totalPeoplePrayedForThisCycle];
+    [AppUtils postAnalyticsEventWithCategory:@"progress_view" andAction:@"reached_last_card" andLabel:@"total_active_ceaseless_contacts" andValue: totalPeople];
+    
     self.progressView.backgroundImageView.image = [AppUtils getDynamicBackgroundImage];
     [self.progressView.progressBar setProgress: progressPercentage animated:YES];
     [self formatCardView: self.progressView.cardView withShadowView:self.progressView.shadowView];
@@ -52,6 +55,9 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
 - (IBAction)showMorePeople:(id)sender {
     self.progressView.showMoreButton.hidden = YES;
     [self.progressView.loadingMore startAnimating];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *numberOfPeople = [NSNumber numberWithInteger:[defaults integerForKey:kDailyPersonCount]];
+    [AppUtils postAnalyticsEventWithCategory:@"progress_view" andAction:@"button_press" andLabel:@"show_more_people" andValue: numberOfPeople];
     [[NSNotificationCenter defaultCenter] postNotificationName:kForceShowNewContent object:nil];
 }
 
@@ -99,6 +105,7 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
     [defaults synchronize];
     NSLog(@"Latest announcement shown!");
     
+    [AppUtils postAnalyticsEventWithCategory:@"progress_view" andAction:@"button_press" andLabel:@"show_announcement"];
     WebCardViewController *webCard = [[WebCardViewController alloc] init];
     webCard.dataObject = _announcements[0][@"content"];
     [self.navigationController pushViewController:webCard animated:YES];

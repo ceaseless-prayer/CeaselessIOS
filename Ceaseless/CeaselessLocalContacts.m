@@ -165,6 +165,18 @@ void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictiona
     NSLog(@"Total Ceaseless contacts: %lu", (unsigned long)[allCeaselessContacts count]);
 }
 
+- (NSNumber*) totalActiveCeaselessContacts {
+    NSPredicate *filterRemovedContacts = [NSPredicate predicateWithFormat: @"removedDate = nil"];
+    return [NSNumber numberWithUnsignedInteger: [self countFetchResultForEntityName:@"PersonIdentifier" withPredicate: filterRemovedContacts]];
+}
+
+- (NSUInteger) countFetchResultForEntityName: (NSString*) entityName withPredicate: (NSPredicate *) predicate {
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
+    [fetchRequest setPredicate:predicate];
+    NSError *error = nil;
+    return [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+}
+
 - (void) initializeFirstContacts: (NSInteger) n {
     NSArray *allAddressBookContacts = [self getUnifiedAddressBookRecords:_addressBook];
     n = MIN(n, [allAddressBookContacts count]);
