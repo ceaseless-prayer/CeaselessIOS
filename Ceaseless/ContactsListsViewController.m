@@ -15,12 +15,12 @@
 #import "PersonViewController.h"
 #import "PersonView.h"
 #import "AppUtils.h"
+#import "NSString+FontAwesome.h"
 
 typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 {
 	predicateScopeActive = 0,
-	predicateScopeFavorites = 1,
-	predicateScopeRemoved = 2
+	predicateScopeRemoved = 1
 };
 
 @interface ContactsListsViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UISearchControllerDelegate>
@@ -52,6 +52,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	self.tableView.dataSource = self;
 	self.tableView.delegate = self;
 
+	self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
 	UIImage *backgroundImage = [AppUtils getDynamicBackgroundImage];
 	if(backgroundImage != nil) {
@@ -91,7 +92,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 }
 
 - (void)adjustSearchBar{
-		//if this isn't done, the textfield gets positioned to far left some of the time :(  Apple Bug
+		//if this isn't done, the textfield gets positioned too far left some of the time :(  Apple Bug
 	[self.searchController.searchBar setPositionAdjustment: UIOffsetMake (0.0, 0.0) forSearchBarIcon: UISearchBarIconSearch];
 	self.tableView.tableHeaderView = self.searchController.searchBar;
 }
@@ -172,6 +173,64 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 }
 #pragma mark - Table View
 
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+	[super setEditing:editing animated:animated];
+	if (editing) {
+		self.tableView.allowsMultipleSelectionDuringEditing = YES;
+		[self.tableView setEditing:editing animated:YES];
+		switch (self.segment.selectedSegmentIndex){
+			case 0:
+				self.navigationItem.rightBarButtonItem.title = @"Remove";
+				break;
+			case 1:
+				self.navigationItem.rightBarButtonItem.title = @"Add";
+				break;
+			default:
+				break;
+		}
+
+		NSLog(@"editMode on");
+	} else {
+		if (!self.searchController.active) {
+
+			NSArray *selectedCells = [self.tableView indexPathsForSelectedRows];
+				//enumerate backwards so that the index does not get updated by previous removals
+			for (NSIndexPath *indexPath in [selectedCells reverseObjectEnumerator]) {
+				PersonIdentifier *person = [self.fetchedResultsController objectAtIndexPath:indexPath];
+				switch (self.segment.selectedSegmentIndex){
+					case 0:
+						person.removedDate = [NSDate date];
+						break;
+					case 1:
+						person.removedDate = nil;
+						break;
+					default:
+						break;
+				}
+				[self save];
+			}
+		}
+
+		[self.tableView setEditing:editing animated:NO];
+		[self.tableView reloadData];
+		self.navigationItem.rightBarButtonItem.title = @"Edit";
+		NSLog(@"editmode off");
+	}
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+	switch (self.segment.selectedSegmentIndex){
+		case 0:
+			return @"Remove";
+			break;
+		case 1:
+			return @"Add to Ceaseless";
+			break;
+		default:
+			return @"Remove";
+			break;
+	}
+}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 	if (self.searchController.active) {
@@ -210,26 +269,32 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 - (ContactsListTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     ContactsListTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    
+
+		//have to set background color programmatically here to allow checkboxes to function properly :P
+	static dispatch_once_t onceToken;
+	static UIView * selectedBackgroundView;
+	dispatch_once(&onceToken, ^{
+		selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+		selectedBackgroundView.backgroundColor = UIColorFromRGBWithAlpha(0x00012f , 0.4);
+	});
+	cell.selectedBackgroundView = selectedBackgroundView;
     [self configureCell:cell atIndexPath:indexPath];
-    cell.onSwitchChange=^(UITableViewCell *cellAffected){
-        PersonIdentifier *person = [self.fetchedResultsController objectAtIndexPath: indexPath];
-        
-        {
-            switch (self.selectedList){
-                case 0:
-                    break;
-                case 1:
-                    person.favoritedDate = nil;
-                    [self save];
-                    break;
-                case 2:
-                    person.removedDate = nil;
-                    [self save];
-                    break;
-                default:
-                    break;
-            }
+    cell.onFavoriteChange=^(UITableViewCell *cellAffected){
+		PersonIdentifier *person = nil;
+		if (self.searchController.active) {
+			person = [self.filteredList objectAtIndex:indexPath.row];
+		} else {
+			person = [self.fetchedResultsController objectAtIndexPath:indexPath];
+		}
+		if (self.selectedList == predicateScopeActive) {
+			if (person.favoritedDate == nil) {
+				person.favoritedDate = [NSDate date];
+				[self save];
+			} else {
+				person.favoritedDate = nil;
+				[self save];
+			}
+		[self.tableView reloadData];
         }
     };
     return cell;
@@ -242,6 +307,23 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 		person = [self.filteredList objectAtIndex:indexPath.row];
 	} else {
 		person = [self.fetchedResultsController objectAtIndexPath:indexPath];
+	}
+	switch (self.segment.selectedSegmentIndex){
+		case 0:
+			cell.favButton.hidden = NO;
+			cell.viewToImageViewConstraint.constant = 38;
+			if (person.favoritedDate) {
+				[cell.favButton setTitle: [NSString fontAwesomeIconStringForEnum:FAHeart] forState:UIControlStateNormal];
+			} else {
+				[cell.favButton setTitle: [NSString fontAwesomeIconStringForEnum:FAHeartO] forState:UIControlStateNormal];
+			}
+			break;
+		case 1:
+			cell.favButton.hidden = YES;
+			cell.viewToImageViewConstraint.constant = 0;
+			break;
+		default:
+			break;
 	}
 
     UIImage *profileImage = [_ceaselessContacts getImageForPersonIdentifier:person];
@@ -260,20 +342,38 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	NSString *personName = [_ceaselessContacts compositeNameForPerson:person];
 	cell.nameLabel.text = personName;
 
-	if (self.selectedList == predicateScopeActive) {
-		cell.rowSwitch.hidden = YES;
-		cell.nameLabelTrailingConstraint.constant = 0;
-	} else {
-		cell.rowSwitch.hidden = NO;
-		cell.rowSwitch.on = YES;
-		cell.nameLabelTrailingConstraint.constant = 49;
-	}
 	cell.backgroundColor = [UIColor clearColor];
 
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
 		// Return NO if you do not want the specified item to be editable.
-	return NO;
+	return YES;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+		return UITableViewCellEditingStyleDelete;
+}
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (editingStyle == UITableViewCellEditingStyleDelete) {
+		PersonIdentifier *person = [self.fetchedResultsController objectAtIndexPath:indexPath];
+		switch (self.segment.selectedSegmentIndex){
+			case 0:
+				person.removedDate = [NSDate date];
+				break;
+			case 1:
+				person.removedDate = nil;
+				break;
+			default:
+				break;
+		}
+		[self save];
+	}
+}
+
+- (void)tableView: (UITableView *)tableView didSelectRowAtIndexPath: (NSIndexPath *)indexPath {
+	if (!tableView.isEditing) {
+		[self performSegueWithIdentifier: @"ShowPerson" sender: self];
+	}
 }
 
 #pragma mark -
@@ -304,19 +404,82 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 - (void)willPresentSearchController:(UISearchController *)searchController {
 		//push the view up under status bar
 	self.topToVisualEffectsViewConstraint.constant = 34;
+
+}
+- (void)didPresentSearchController:(UISearchController *)searchController {
+	[self setEditing:NO animated:NO];
+
 }
 - (void)willDismissSearchController:(UISearchController *)searchController {
 	self.topToVisualEffectsViewConstraint.constant = 64;
 	[self searchControllerSetup];
 }
-#pragma mark - Fetched results controller
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+
+#pragma mark -
+#pragma mark === Fetched Controller Methods ===
+#pragma mark -
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
-		// reload the table if the contacts are not syncing, jittery otherwise
-	if (self.ceaselessContacts.syncing == NO) {
-		[self.tableView reloadData];
+		[self.tableView beginUpdates];
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+		   atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
+{
+	switch(type) {
+		case NSFetchedResultsChangeInsert:
+			[self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+			break;
+
+		case NSFetchedResultsChangeDelete:
+			[self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+			break;
+
+		default:
+			return;
 	}
 }
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+	   atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+	  newIndexPath:(NSIndexPath *)newIndexPath
+{
+	UITableView *tableView = self.tableView;
+
+	switch(type) {
+		case NSFetchedResultsChangeInsert:
+			[tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+			break;
+
+		case NSFetchedResultsChangeDelete:
+			[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+			break;
+
+		case NSFetchedResultsChangeUpdate:
+			[self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+			break;
+
+		case NSFetchedResultsChangeMove:
+			[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+			[tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+			break;
+	}
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+	[self.tableView endUpdates];
+}
+
+#pragma mark - Fetched results controller
+//- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+//{
+//		// reload the table if the contacts are not syncing, jittery otherwise
+//	if (self.ceaselessContacts.syncing == NO) {
+//		[self.tableView reloadData];
+//	}
+//}
 - (NSFetchedResultsController *)fetchedResultsController
 {
 	if (_fetchedResultsController != nil) {
@@ -400,6 +563,8 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 - (IBAction)contactsListSelector:(id)sender {
 	[self selectContactsPredicate];
+	self.tableView.editing = NO;
+	self.navigationItem.rightBarButtonItem.title = @"Edit";
 	[self.tableView reloadData];
 }
 
@@ -413,12 +578,6 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 			break;
 
 		case 1:
-			self.selectedListPredicate = @"favoritedDate != nil";
-			_fetchedResultsController = nil;
-			self.selectedList = self.segment.selectedSegmentIndex;
-			break;
-
-		case 2:
 			self.selectedListPredicate = @"removedDate != nil";
 			_fetchedResultsController = nil;
 			self.selectedList = self.segment.selectedSegmentIndex;

@@ -279,6 +279,15 @@ static NSString *kSMSMessage;
                                             NSLog(@"Remove from Ceaseless");
                                         }];
     
+    UIAlertAction *addToCeaselessAction = [UIAlertAction
+                                                actionWithTitle:NSLocalizedString(@"Add to Ceaseless", @"Add to Ceaseless")
+                                                style:UIAlertActionStyleDefault
+                                                handler:^(UIAlertAction *action)
+                                                {
+                                                    [self addPersonToCeaseless];
+                                                    NSLog(@"Add to Ceaseless");
+                                                }];
+    
     UIAlertAction *viewContact = [UIAlertAction
                               actionWithTitle:NSLocalizedString(@"View in Contacts", @"View in Contacts")
                               style:UIAlertActionStyleDefault
@@ -289,7 +298,12 @@ static NSString *kSMSMessage;
                               }];
     
     [alertController addAction:cancelAction];
-    [alertController addAction:removeFromCeaselessAction];
+    if(self.person.removedDate == nil) {
+        [alertController addAction:removeFromCeaselessAction];
+    } else {
+        [alertController addAction:addToCeaselessAction];
+    }
+
     [alertController addAction:inviteAction];
     [alertController addAction:viewContact];
     
@@ -305,9 +319,16 @@ static NSString *kSMSMessage;
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
+- (void)addPersonToCeaseless {
+    self.person.removedDate = nil;
+    [self save];
+}
+
 - (void)removePersonFromCeaseless {
     self.person.removedDate = [NSDate date];
-    [self.managedObjectContext deleteObject: (NSManagedObject*)self.person.queued];
+    if(self.person.queued) {
+        [self.managedObjectContext deleteObject: (NSManagedObject*)self.person.queued];
+    }
     [self save];
     
     //if the card is in a pageController then its in the card deck, if its not then it was called by the contacts list
