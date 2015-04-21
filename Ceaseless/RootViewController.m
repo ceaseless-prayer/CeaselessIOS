@@ -13,6 +13,7 @@
 #import "AppUtils.h"
 #import "UIFont+FontAwesome.h"
 #import "NSString+FontAwesome.h"
+#import "MenuViewController.h"
 
 @interface RootViewController ()
 
@@ -196,5 +197,38 @@
 {
 		// Pull any data from the view controller which initiated the unwind segue.
 
+}
+- (IBAction)menuButtonPressed:(id)sender {
+
+	CATransition* transition = [CATransition animation];
+	transition.duration = 0.3f;
+	transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
+	transition.type = kCATransitionMoveIn; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
+	transition.subtype = kCATransitionFromTop; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
+
+	MenuViewController *menuViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MenuViewController"];
+	menuViewController.delegate = self;
+	[self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+	[self.navigationController pushViewController:menuViewController animated:NO];
+}
+
+#pragma mark - MenuViewControllerDelegate protocol conformance
+
+- (void)menuViewControllerDidFinish:(MenuViewController *)menuViewController
+{
+	[self performDismissAnimationForController:menuViewController];
+
+}
+
+- (void) performDismissAnimationForController: (MenuViewController *)menuViewController {
+	CATransition* transition = [CATransition animation];
+	transition.duration = 0.3f;
+	transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
+	transition.type = kCATransitionReveal; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
+	transition.subtype = kCATransitionFromBottom; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
+
+	[self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+	[self.navigationController popViewControllerAnimated:NO];
+	
 }
 @end
