@@ -42,6 +42,7 @@
 }
 - (void)viewWillAppear: (BOOL)animated {
     [super viewWillAppear:animated];
+    self.screenName = @"ScriptureViewScreen";
 }
 - (IBAction)share:(id)sender {
     NSString *contentToShare = [NSString stringWithFormat:@"%@ %@", [self.dataObject valueForKey: @"verse"], [self.dataObject valueForKey: @"shareLink"]];

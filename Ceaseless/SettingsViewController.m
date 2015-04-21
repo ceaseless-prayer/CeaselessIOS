@@ -25,6 +25,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.screenName = @"SettingsViewScreen";
     self.backgroundImageView.image = [AppUtils getDynamicBackgroundImage];
     self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
     

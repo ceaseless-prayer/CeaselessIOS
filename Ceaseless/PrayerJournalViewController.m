@@ -36,7 +36,8 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-		// Do any additional setup after loading the view, typically from a nib.
+    // Do any additional setup after loading the view, typically from a nib.
+    self.screenName = @"PrayerJournalScreen";
 	UIImageView *imageView = [[UIImageView alloc] initWithFrame: self.view.frame];
 	imageView.contentMode = UIViewContentModeScaleAspectFill;
 	UIImage *backgroundImage = [AppUtils getDynamicBackgroundImage];

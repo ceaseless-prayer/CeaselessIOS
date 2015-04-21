@@ -25,4 +25,5 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 + (NSNumber *) daysWithinEraFromDate:(NSDate *) startDate toDate:(NSDate *) endDate;
 + (ABAddressBookRef) getAddressBookRef;
 + (void) bounceView: (UIView *) viewToAnimate distance: (CGFloat) toValue duration: (CGFloat) duration;
++ (void) postTrackedTiming: (NSTimeInterval) timing withCategory: (NSString*) category andName: (NSString*) name;
 @end

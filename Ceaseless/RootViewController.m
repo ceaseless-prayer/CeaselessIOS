@@ -25,7 +25,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.screenName = @"MainScreen";
     // Do any additional setup after loading the view, typically from a nib.
 	UIImage *ceaselessImage = [UIImage imageNamed: @"logo_main"];
 	ceaselessImage = [ceaselessImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GAITrackedViewController.h"
 
-@interface DataViewController : UIViewController
+@interface DataViewController : GAITrackedViewController
 
 @property (strong, nonatomic) id dataObject;
 @property (nonatomic) NSUInteger index;

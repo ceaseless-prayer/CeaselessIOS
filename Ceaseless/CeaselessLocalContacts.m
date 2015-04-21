@@ -113,6 +113,7 @@ void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictiona
             self.backgroundTask = UIBackgroundTaskInvalid;
         }];
         
+        NSDate *syncStart = [NSDate date];
         _syncing = YES;
         // refresh address book in the background
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -134,7 +135,11 @@ void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictiona
 			dispatch_async(dispatch_get_main_queue(), ^(void) {
 				[[NSNotificationCenter defaultCenter] postNotificationName:kContactsSyncedNotification object:nil];
 			});
-
+            
+            NSDate *syncFinish = [NSDate date];
+            NSTimeInterval executionTime = [syncFinish timeIntervalSinceDate:syncStart];
+            NSLog(@"Address book sync executionTime = %f", executionTime);
+            [AppUtils postTrackedTiming:executionTime withCategory:@"resources" andName:@"address book sync timing"];
             _syncing = NO;
 			[[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
 			self.backgroundTask = UIBackgroundTaskInvalid;

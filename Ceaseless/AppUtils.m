@@ -7,6 +7,8 @@
 //
 
 #import "AppUtils.h"
+#import "GAI.h"
+#import "GAIDictionaryBuilder.h"
 
 @implementation AppUtils
 
@@ -151,4 +153,17 @@
     [viewToAnimate.layer addAnimation:hover forKey:@"myHoverAnimation"];
 }
 
++ (void) postTrackedTiming: (NSTimeInterval) timing withCategory: (NSString*) category andName: (NSString*) name {
+    [AppUtils postTrackedTiming:timing withCategory:category andName:name andLabel:nil];
+}
+
++ (void) postTrackedTiming: (NSTimeInterval) timing withCategory: (NSString*) category andName: (NSString*) name andLabel: (NSString*) label {
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    if(tracker) {
+        [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:category                      // Timing category (required)
+                                                         interval:@((NSUInteger)(timing * 1000))   // Timing interval (required)
+                                                            name:name                     // Timing name
+                                                            label:label] build]];                      // Timing label
+    }
+}
 @end
