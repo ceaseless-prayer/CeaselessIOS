@@ -10,6 +10,8 @@
 #import "AppConstants.h"
 #import "AppUtils.h"
 #import <MessageUI/MessageUI.h>
+#import "WebCardViewController.h"
+#import "CeaselessService.h"
 
 @interface MenuViewController () <MFMailComposeViewControllerDelegate>
 
@@ -102,6 +104,11 @@
 	if (indexPath.row == 1) {
 		[self performSegueWithIdentifier:@"ShowSettings" sender: self];
 	}
+    if (indexPath.row == 2) {
+        WebCardViewController *webView = [[WebCardViewController alloc]init];
+        webView.dataObject = [[CeaselessService sharedCeaselessService]getUrlForKey:kHelpURL];
+        [self.navigationController pushViewController:webView animated:YES];
+    }
     if (indexPath.row == 3) {
         [self showFeedbackForm];
     }

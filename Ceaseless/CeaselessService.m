@@ -9,11 +9,12 @@
 #import "CeaselessService.h"
 
 @implementation CeaselessService
- NSString *const kFetchNewScriptureImageURL = @"fetchScriptureImagesURL";
- NSString *const kFetchVerseOfTheDayURL = @"fetchVerseOfTheDayURL";
- NSString *const kFetchScriptureURL = @"fetchScriptureURL";
- NSString *const kFetchAnnouncementsURL = @"fetchAnnouncementsURL";
- NSString *const kDefaultScriptureShareURL = @"defaultScriptureShareURL";
+NSString *const kFetchNewScriptureImageURL = @"fetchScriptureImagesURL";
+NSString *const kFetchVerseOfTheDayURL = @"fetchVerseOfTheDayURL";
+NSString *const kFetchScriptureURL = @"fetchScriptureURL";
+NSString *const kFetchAnnouncementsURL = @"fetchAnnouncementsURL";
+NSString *const kDefaultScriptureShareURL = @"defaultScriptureShareURL";
+NSString *const kHelpURL = @"iosHelpURL";
 
 + (id) sharedCeaselessService {
     static CeaselessService *sharedCeaselessService = nil;
@@ -35,6 +36,7 @@
         [_defaultUrls setValue:@"http://api.ceaselessprayer.com/v1/getScripture" forKey:kFetchScriptureURL];
         [_defaultUrls setValue:@"http://www.ceaselessprayer.com/announcements/feed" forKey:kFetchAnnouncementsURL];
         [_defaultUrls setValue:@"http://api.ceaselessprayer.com/v1/getAScriptureImage" forKey:kFetchNewScriptureImageURL];
+        [_defaultUrls setValue:@"http://www.ceaselessprayer.com/ios_help.html" forKey:kHelpURL];
     }
     return self;
 }
