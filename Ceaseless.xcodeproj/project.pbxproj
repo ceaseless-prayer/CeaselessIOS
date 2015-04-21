@@ -46,7 +46,7 @@
 		42F505681AE42FCC00337A21 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F505671AE42FCC00337A21 /* SystemConfiguration.framework */; };
 		42F5056A1AE42FD600337A21 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F505691AE42FD600337A21 /* libz.dylib */; };
 		42F5056C1AE42FDF00337A21 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F5056B1AE42FDF00337A21 /* libsqlite3.dylib */; };
-		42F5056E1AE42FF200337A21 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F5056D1AE42FF200337A21 /* libGoogleAnalyticsServices.a */; };
+		42F5B8F51AE6112D00FA62B7 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F5B8F41AE6112D00FA62B7 /* libGoogleAnalyticsServices.a */; };
 		704D5CA11AAF6D5200BD48B3 /* PersonNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5C9F1AAF6D5200BD48B3 /* PersonNotesViewController.m */; };
 		704D5CA71AAF90A200BD48B3 /* Ceaseless.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CA51AAF90A200BD48B3 /* Ceaseless.xcdatamodeld */; };
 		704D5CE51AAFA96200BD48B3 /* PeopleQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CE41AAFA96200BD48B3 /* PeopleQueue.m */; };
@@ -166,7 +166,7 @@
 		42F505671AE42FCC00337A21 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		42F505691AE42FD600337A21 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		42F5056B1AE42FDF00337A21 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		42F5056D1AE42FF200337A21 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalyticsServices.a; path = ../../Downloads/GoogleAnalyticsServicesiOS_3.10/libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
+		42F5B8F41AE6112D00FA62B7 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
 		704D5C9E1AAF6D5200BD48B3 /* PersonNotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonNotesViewController.h; sourceTree = "<group>"; };
 		704D5C9F1AAF6D5200BD48B3 /* PersonNotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonNotesViewController.m; sourceTree = "<group>"; };
 		704D5CA61AAF90A200BD48B3 /* Ceaseless.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Ceaseless.xcdatamodel; sourceTree = "<group>"; };
@@ -225,6 +225,7 @@
 			files = (
 				42F5056C1AE42FDF00337A21 /* libsqlite3.dylib in Frameworks */,
 				42F5056A1AE42FD600337A21 /* libz.dylib in Frameworks */,
+				42F5B8F51AE6112D00FA62B7 /* libGoogleAnalyticsServices.a in Frameworks */,
 				42F505681AE42FCC00337A21 /* SystemConfiguration.framework in Frameworks */,
 				42F505661AE42FC300337A21 /* CoreData.framework in Frameworks */,
 				70F664091AA82B360073801E /* QuartzCore.framework in Frameworks */,
@@ -232,7 +233,6 @@
 				70F664021AA7E46C0073801E /* UIKit.framework in Frameworks */,
 				70F664001AA7E4470073801E /* Accelerate.framework in Frameworks */,
 				70F663FB1AA7E14F0073801E /* CoreGraphics.framework in Frameworks */,
-				42F5056E1AE42FF200337A21 /* libGoogleAnalyticsServices.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,6 +347,7 @@
 				42F505611AE42F9F00337A21 /* GAIFields.h */,
 				42F505621AE42F9F00337A21 /* GAILogger.h */,
 				42F505631AE42F9F00337A21 /* GAITrackedViewController.h */,
+				42F5B8F41AE6112D00FA62B7 /* libGoogleAnalyticsServices.a */,
 				42F505641AE42F9F00337A21 /* GAITracker.h */,
 			);
 			name = "GA Headers";
@@ -382,7 +383,6 @@
 		70F664051AA7E4840073801E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				42F5056D1AE42FF200337A21 /* libGoogleAnalyticsServices.a */,
 				42F5056B1AE42FDF00337A21 /* libsqlite3.dylib */,
 				42F505691AE42FD600337A21 /* libz.dylib */,
 				42F505671AE42FCC00337A21 /* SystemConfiguration.framework */,
@@ -771,6 +771,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/kirisu/Downloads/GoogleAnalyticsServicesiOS_3.10,
+					"$(PROJECT_DIR)/Ceaseless/Library",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -789,6 +790,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/kirisu/Downloads/GoogleAnalyticsServicesiOS_3.10,
+					"$(PROJECT_DIR)/Ceaseless/Library",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
