@@ -31,8 +31,6 @@
 	ceaselessImage = [ceaselessImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 	self.navigationItem.titleView = [[UIImageView alloc] initWithImage: ceaselessImage];
 
-	[self addBlurEffectToNavBar];
-
 	// Configure the page view controller and add it as a child view controller.
     NSDictionary *opts = @{
                            @"UIPageViewControllerOptionInterPageSpacingKey": @20
@@ -68,20 +66,6 @@
     self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
 }
 
-- (void) addBlurEffectToNavBar {
-		// Add blur view
-	CGRect bounds = self.navigationController.navigationBar.bounds;
-	UIVisualEffectView *visualEffectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
-		//pull it up behind the status bar
-	CGRect newRect = bounds;
-	newRect.origin.y = bounds.origin.y - 20.0;
-	newRect.size.height = bounds.size.height + 20;
-	visualEffectView.frame = newRect;
-	visualEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	[self.navigationController.navigationBar addSubview:visualEffectView];
-	[self.navigationController.navigationBar sendSubviewToBack:visualEffectView];
-
-}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
