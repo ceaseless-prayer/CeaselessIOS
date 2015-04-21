@@ -23,6 +23,9 @@ static NSString *const kAllowTracking = @"allowTracking";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+//	[[UINavigationBar appearance] setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+//	[[UINavigationBar appearance] setShadowImage:[UIImage new]];
+	[[UINavigationBar appearance] setBackgroundColor: UIColorFromRGBWithAlpha(0x00012f, 0.6)];
 	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
 	NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:

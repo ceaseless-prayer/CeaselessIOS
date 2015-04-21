@@ -40,7 +40,6 @@
 		self.placeholderText.hidden = NO;
 		self.nameLabel.hidden = YES;
 		self.profileImage.hidden = YES;
-		self.selectMeButton.hidden = NO;
 		self.profileImage.contentMode = UIViewContentModeScaleAspectFill;
 		self.placeholderText.layer.cornerRadius = 6.0f;
 	}
@@ -176,7 +175,6 @@
     if (fullName) {
         self.nameLabel.text = fullName;
         self.nameLabel.hidden = NO;
-        self.selectMeButton.hidden = YES;
     }
     
     if (self.profileImage.image) {
@@ -188,6 +186,9 @@
         self.profileImage.contentMode = UIViewContentModeScaleAspectFill;
         self.placeholderText.layer.cornerRadius = 6.0f;
     }
+
+	[self.selectMeButton setTitle: @"" forState: UIControlStateNormal];
+
 }
 
 - (void)taggedPersonPickerDidCancel:(TaggedPersonPicker *)taggedPersonPicker {

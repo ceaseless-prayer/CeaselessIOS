@@ -31,7 +31,7 @@
 	ceaselessImage = [ceaselessImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 	self.navigationItem.titleView = [[UIImageView alloc] initWithImage: ceaselessImage];
 
-    // Configure the page view controller and add it as a child view controller.
+	// Configure the page view controller and add it as a child view controller.
     NSDictionary *opts = @{
                            @"UIPageViewControllerOptionInterPageSpacingKey": @20
                            };
@@ -65,10 +65,7 @@
     // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
     self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
 }
-- (void) viewDidLayoutSubviews {
-	[super viewDidLayoutSubviews];
-	self.navigationController.navigationBar.translucent = NO;
-}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
