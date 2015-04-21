@@ -31,7 +31,9 @@
 	ceaselessImage = [ceaselessImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 	self.navigationItem.titleView = [[UIImageView alloc] initWithImage: ceaselessImage];
 
-    // Configure the page view controller and add it as a child view controller.
+	[self addBlurEffectToNavBar];
+
+	// Configure the page view controller and add it as a child view controller.
     NSDictionary *opts = @{
                            @"UIPageViewControllerOptionInterPageSpacingKey": @20
                            };
@@ -65,9 +67,20 @@
     // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
     self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
 }
-- (void) viewDidLayoutSubviews {
-	[super viewDidLayoutSubviews];
-	self.navigationController.navigationBar.translucent = NO;
+
+- (void) addBlurEffectToNavBar {
+		// Add blur view
+	CGRect bounds = self.navigationController.navigationBar.bounds;
+	UIVisualEffectView *visualEffectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+		//pull it up behind the status bar
+	CGRect newRect = bounds;
+	newRect.origin.y = bounds.origin.y - 20.0;
+	newRect.size.height = bounds.size.height + 20;
+	visualEffectView.frame = newRect;
+	visualEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+	[self.navigationController.navigationBar addSubview:visualEffectView];
+	[self.navigationController.navigationBar sendSubviewToBack:visualEffectView];
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -63,7 +63,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 	self.notesTextView.delegate = self;
 	self.contactsTableView.delegate = self;
-	self.appColor = UIColorFromRGBWithAlpha(0x24292f , 0.4);
+	self.appColor = UIColorFromRGBWithAlpha(0x00012f , 0.4);
 
 
     //Add a searchBar, it will get positioned in the scrollview just past the last name
