@@ -16,6 +16,7 @@ FOUNDATION_EXPORT NSString *const kFetchVerseOfTheDayURL;
 FOUNDATION_EXPORT NSString *const kFetchScriptureURL;
 FOUNDATION_EXPORT NSString *const kFetchAnnouncementsURL;
 FOUNDATION_EXPORT NSString *const kDefaultScriptureShareURL;
+FOUNDATION_EXPORT NSString *const kHelpURL;
 
 @property (strong, nonatomic) NSUserDefaults *defaults;
 @property (strong, nonatomic) NSMutableDictionary *defaultUrls;
