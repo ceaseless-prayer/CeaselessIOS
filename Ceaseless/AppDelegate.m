@@ -8,9 +8,15 @@
 
 #import "AppDelegate.h"
 #import "AppConstants.h"
+#import "GAI.h"
+
+static NSString *const kTrackingId = @"UA-44378341-2";
+static NSString *const kAllowTracking = @"allowTracking";
 
 @interface AppDelegate ()
-
+// Used for sending Google Analytics traffic in the background.
+@property(nonatomic, assign) BOOL okToWait;
+@property(nonatomic, copy) void (^dispatchHandler)(GAIDispatchResult result);
 @end
 
 @implementation AppDelegate
@@ -30,6 +36,24 @@
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
         [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound categories:nil]];
     }
+    
+    // Optional: automatically send uncaught exceptions to Google Analytics.
+    [GAI sharedInstance].trackUncaughtExceptions = YES;
+    
+    // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
+    [GAI sharedInstance].dispatchInterval = 20;
+    
+    // Optional: set Logger to VERBOSE for debug information.
+    [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
+    
+    // Initialize tracker. Replace with your tracking ID.
+    [[GAI sharedInstance] trackerWithTrackingId:kTrackingId];
+    
+    NSDictionary *appDefaults = @{kAllowTracking: @(YES)};
+    [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
+
+    // User must be able to opt out of tracking
+    [GAI sharedInstance].optOut = ![[NSUserDefaults standardUserDefaults] boolForKey:kAllowTracking];
 
     return YES;
 }
@@ -72,6 +96,19 @@
     [notification setTimeZone:[NSTimeZone defaultTimeZone]];
 	[notification setSoundName: UILocalNotificationDefaultSoundName];
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+    
+    // send analytics hits
+    [self sendHitsInBackground];
+}
+
+// In case the app was sent into the background when there was no network connection, we will use
+// the background data fetching mechanism to send any pending Google Analytics data.  Note that
+// this app has turned on background data fetching in the capabilities section of the project.
+-(void)application:(UIApplication *)application
+performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    [self sendHitsInBackground];
+    completionHandler(UIBackgroundFetchResultNewData);
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -80,10 +117,38 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [GAI sharedInstance].optOut = ![[NSUserDefaults standardUserDefaults] boolForKey:kAllowTracking];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+// This method sends hits in the background until either we're told to stop background processing,
+// we run into an error, or we run out of hits.  We use this to send any pending Google Analytics
+// data since the app won't get a chance once it's in the background.
+- (void)sendHitsInBackground {
+    self.okToWait = YES;
+    __weak AppDelegate *weakSelf = self;
+    __block UIBackgroundTaskIdentifier backgroundTaskId =
+    [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        weakSelf.okToWait = NO;
+    }];
+    
+    if (backgroundTaskId == UIBackgroundTaskInvalid) {
+        return;
+    }
+    
+    self.dispatchHandler = ^(GAIDispatchResult result) {
+        // If the last dispatch succeeded, and we're still OK to stay in the background then kick off
+        // again.
+        if (result == kGAIDispatchGood && weakSelf.okToWait ) {
+            [[GAI sharedInstance] dispatchWithCompletionHandler:weakSelf.dispatchHandler];
+        } else {
+            [[UIApplication sharedApplication] endBackgroundTask:backgroundTaskId];
+        }
+    };
+    [[GAI sharedInstance] dispatchWithCompletionHandler:self.dispatchHandler];
 }
 
 #pragma mark - Core Data stack

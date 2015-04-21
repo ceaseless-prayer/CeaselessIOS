@@ -40,7 +40,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-
+    self.screenName = @"NoteViewScreen";
 	UIImage *backgroundImage = [AppUtils getDynamicBackgroundImage];
 	if(backgroundImage != nil) {
 		self.backgroundImageView.image = backgroundImage;

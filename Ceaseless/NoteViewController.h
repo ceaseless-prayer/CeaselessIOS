@@ -10,6 +10,7 @@
 #import "TaggedPersonPicker.h"
 #import "Note.h"
 #import "PersonIdentifier.h"
+#import "GAITrackedViewController.h"
 
 #define UIColorFromRGBWithAlpha(rgbValue,a) [UIColor \
 colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
@@ -18,7 +19,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 
 @protocol NoteViewControllerDelegate;
 
-@interface NoteViewController : UIViewController < UITextViewDelegate, UIGestureRecognizerDelegate, UISearchBarDelegate, UIKeyInput, UITableViewDataSource, UITableViewDelegate, ABNewPersonViewControllerDelegate, ABPeoplePickerNavigationControllerDelegate>
+@interface NoteViewController : GAITrackedViewController < UITextViewDelegate, UIGestureRecognizerDelegate, UISearchBarDelegate, UIKeyInput, UITableViewDataSource, UITableViewDelegate, ABNewPersonViewControllerDelegate, ABPeoplePickerNavigationControllerDelegate>
 
 @property (nonatomic, weak) id<NoteViewControllerDelegate> delegate;
 

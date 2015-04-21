@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import "GAITrackedViewController.h"
 
 @class NoteViewController;
 
-@interface PrayerJournalViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface PrayerJournalViewController : GAITrackedViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
