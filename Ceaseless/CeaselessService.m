@@ -15,6 +15,7 @@ NSString *const kFetchScriptureURL = @"fetchScriptureURL";
 NSString *const kFetchAnnouncementsURL = @"fetchAnnouncementsURL";
 NSString *const kDefaultScriptureShareURL = @"defaultScriptureShareURL";
 NSString *const kHelpURL = @"iosHelpURL";
+NSString *const kSubscribeToMailingListURL = @"subscribeToMailingListURL";
 
 + (id) sharedCeaselessService {
     static CeaselessService *sharedCeaselessService = nil;
@@ -37,6 +38,7 @@ NSString *const kHelpURL = @"iosHelpURL";
         [_defaultUrls setValue:@"http://www.ceaselessprayer.com/announcements/feed" forKey:kFetchAnnouncementsURL];
         [_defaultUrls setValue:@"http://api.ceaselessprayer.com/v1/getAScriptureImage" forKey:kFetchNewScriptureImageURL];
         [_defaultUrls setValue:@"http://www.ceaselessprayer.com/ios_help.html" forKey:kHelpURL];
+        [_defaultUrls setValue:@"http://www.ceaselessprayer.com/ios_mailing_list.html" forKey:kSubscribeToMailingListURL];
     }
     return self;
 }

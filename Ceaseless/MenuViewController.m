@@ -12,8 +12,10 @@
 #import <MessageUI/MessageUI.h>
 #import "WebCardViewController.h"
 #import "CeaselessService.h"
+#import "AppConstants.h"
 
-@interface MenuViewController () <MFMailComposeViewControllerDelegate>
+@import StoreKit;
+@interface MenuViewController () <MFMailComposeViewControllerDelegate, SKStoreProductViewControllerDelegate>
 
 @end
 
@@ -32,7 +34,7 @@
 	
 	self.tableView.delegate = self;
 	self.tableView.dataSource = self;
-	self.menuInfoArray = [[NSMutableArray alloc] initWithObjects: @"People", @"Settings", @"Help", @"Feedback", nil];
+	self.menuInfoArray = [[NSMutableArray alloc] initWithObjects: @"People", @"Settings", @"Help", @"Feedback", @"About", @"Review Ceaseless", @"Subscribe to Newsletter", nil];
     [self.menuInfoArray addObject: @""]; // for the developer mode row
     UIImage *background = [AppUtils getDynamicBackgroundImage];
     if(background != nil) {
@@ -71,7 +73,7 @@
 	cell.textLabel.text = [self.menuInfoArray objectAtIndex: indexPath.row];
 	cell.backgroundColor = [UIColor clearColor];
 
-	if (indexPath.row == 4) {
+	if (indexPath.row == 7) {
         [cell setAccessoryType: UITableViewCellAccessoryNone];
         UITapGestureRecognizer *tripleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTripleTap:)];
         tripleTap.numberOfTapsRequired = 3;
@@ -101,17 +103,54 @@
 	if (indexPath.row == 0) {
 		[self performSegueWithIdentifier:@"ShowContactsLists" sender: self];
 	}
+    
 	if (indexPath.row == 1) {
 		[self performSegueWithIdentifier:@"ShowSettings" sender: self];
 	}
+    
     if (indexPath.row == 2) {
         WebCardViewController *webView = [[WebCardViewController alloc]init];
         webView.dataObject = [[CeaselessService sharedCeaselessService]getUrlForKey:kHelpURL];
         [self.navigationController pushViewController:webView animated:YES];
     }
+    
     if (indexPath.row == 3) {
         [self showFeedbackForm];
     }
+    
+    if (indexPath.row == 4) {
+        // TODO fill in this credits section
+        // should it be implemented in a webview or in code?
+        [self showFeedbackForm];
+    }
+
+    if (indexPath.row == 5) {
+        SKStoreProductViewController *productViewController = [[SKStoreProductViewController alloc]init];
+        productViewController.delegate = self;
+        // TODO why is the completionBlock not being called? Because the ID doesn't work yet.
+        [productViewController loadProductWithParameters:@{SKStoreProductParameterITunesItemIdentifier: [NSNumber numberWithInteger:[kCeaselessAppstoreAppId integerValue]]} completionBlock:^(BOOL result, NSError *error) {
+            if(result) {
+                [self presentViewController:productViewController animated:YES completion:nil];
+//                [self.navigationController pushViewController:productViewController animated:YES];
+            } else {
+                UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Could not show Ceaseless in App Store.", nil) delegate:nil
+                                                             cancelButtonTitle:@"OK"
+                                                             otherButtonTitles:nil];
+                [warningAlert show];
+            }
+        }];
+    }
+
+    if (indexPath.row == 6) {
+        WebCardViewController *webView = [[WebCardViewController alloc]init];
+        webView.dataObject = [[CeaselessService sharedCeaselessService]getUrlForKey:kSubscribeToMailingListURL];
+        [self.navigationController pushViewController:webView animated:YES];
+    }
+
+}
+
+- (void) productViewControllerDidFinish:(SKStoreProductViewController *)viewController {
+    [viewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void) switchChanged:(id)sender {
