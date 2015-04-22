@@ -135,9 +135,9 @@
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lYm-1X-Jgr" userLabel="CellBackground">
                                                                 <rect key="frame" x="0.0" y="4" width="584" height="122"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qzW-n0-SEK" userLabel="1 PlaceholderLabel">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.49999999999999961" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qzW-n0-SEK" userLabel="1 PlaceholderLabel">
                                                                         <rect key="frame" x="8" y="12" width="42" height="42"/>
-                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                                        <color key="backgroundColor" red="0.0" green="0.0039215686269999999" blue="0.1843137255" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="42" id="UD9-tP-sTT"/>
                                                                             <constraint firstAttribute="height" constant="42" id="sgv-uD-W6F"/>
@@ -166,9 +166,9 @@
                                                                             </mask>
                                                                         </variation>
                                                                     </imageView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n5X-4Y-pD2" userLabel="2 PlaceholderLabel">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.49999999999999961" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n5X-4Y-pD2" userLabel="2 PlaceholderLabel">
                                                                         <rect key="frame" x="8" y="58" width="42" height="42"/>
-                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                                        <color key="backgroundColor" red="0.0" green="0.0039215686269999999" blue="0.1843137255" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="42" id="pzU-VY-f2E"/>
                                                                             <constraint firstAttribute="height" constant="42" id="rTG-0l-7fP"/>
@@ -519,9 +519,9 @@
                                                                     </mask>
                                                                 </variation>
                                                             </imageView>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tzf-UG-h6t" userLabel="PlaceholderLabel">
+                                                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.49999999999999961" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tzf-UG-h6t" userLabel="PlaceholderLabel">
                                                                 <rect key="frame" x="46" y="1" width="41" height="41"/>
-                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                                <color key="backgroundColor" red="0.0" green="0.0039215686269999999" blue="0.1843137255" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="41" id="UXl-Kp-dS3"/>
                                                                     <constraint firstAttribute="width" constant="41" id="ZSp-iP-q8X"/>
