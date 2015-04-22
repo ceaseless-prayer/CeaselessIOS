@@ -60,6 +60,8 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 		self.backgroundView.contentMode = UIViewContentModeScaleAspectFill;
 	}
 
+    [self.moreButton setTitle:[NSString fontAwesomeIconStringForEnum:FAEllipsisH] forState:UIControlStateNormal];
+    [self.moreButton addTarget:self action:@selector(presentActionSheet:)forControlEvents:UIControlEventTouchUpInside];
 	[self searchControllerSetup];
 }
 
@@ -86,7 +88,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 - (void) viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	[self adjustSearchBar];
-		// make the model try to refresh whenever the app becomse active
+		// make the model try to refresh whenever the app becomes active
 	[[NSNotificationCenter defaultCenter] addObserver: self selector:@selector(handleSyncing) name:UIApplicationDidBecomeActiveNotification object:nil];
 	[self handleSyncing];
 }
@@ -599,4 +601,77 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	[self.tableView reloadData];
 
 }
+
+#pragma mark - Action Sheet
+
+-(void) presentActionSheet: (UIButton *) sender {
+    UIAlertController *alertController = [UIAlertController
+                                          alertControllerWithTitle:nil
+                                          message:nil
+                                          preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       NSLog(@"Cancel action");
+                                   }];
+    
+    
+    UIAlertAction *syncAddressBookAction = [UIAlertAction
+                                                actionWithTitle:NSLocalizedString(@"Sync with Contacts", @"Sync with Contacts")
+                                                style:UIAlertActionStyleDefault
+                                                handler:^(UIAlertAction *action)
+                                                {
+                                                    [self.ceaselessContacts ensureCeaselessContactsSynced];
+                                                    [self handleSyncing];
+                                                    NSLog(@"Sync with Contacts");
+                                                }];
+    
+    UIAlertAction *addContactAction = [UIAlertAction
+                                           actionWithTitle:NSLocalizedString(@"Add a person", @"Add a person")
+                                           style:UIAlertActionStyleDefault
+                                           handler:^(UIAlertAction *action)
+                                           {
+                                               ABNewPersonViewController *newPersonViewController = [[ABNewPersonViewController alloc] init];
+                                               newPersonViewController.newPersonViewDelegate = self;
+                                               UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:newPersonViewController];
+                                               [self presentViewController:navController animated:YES completion:nil];
+                                               NSLog(@"Add to Ceaseless");
+                                           }];
+    
+    [alertController addAction:syncAddressBookAction];
+    [alertController addAction:addContactAction];
+    [alertController addAction:cancelAction];
+
+    
+    //this prevents crash on iPad in iOS 8 - known Apple bug
+    UIPopoverPresentationController *popover = alertController.popoverPresentationController;
+    if (popover)
+    {
+        popover.sourceView = sender;
+        popover.sourceRect = sender.bounds;
+        popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    }
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+#pragma mark - ABNewPersonViewControllerDelegate protocol conformance
+- (void)newPersonViewController:(ABNewPersonViewController *)newPersonView didCompleteWithNewPerson:(ABRecordRef)person {
+    if (person != NULL) {
+        ABRecordID abRecordID = ABRecordGetRecordID(person);
+        
+        ABAddressBookRef addressBook = [AppUtils getAddressBookRef];
+        
+        ABRecordRef abPerson = ABAddressBookGetPersonWithRecordID(addressBook, abRecordID);
+        
+        CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
+        [ceaselessContacts updateCeaselessContactFromABRecord: abPerson];
+        CFRelease(addressBook);
+    }
+    
+    [newPersonView dismissViewControllerAnimated:YES completion:nil];
+}
+
 @end
