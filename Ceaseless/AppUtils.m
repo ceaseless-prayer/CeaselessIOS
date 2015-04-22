@@ -82,6 +82,9 @@
 // if we are in a view that can be updated after the user has set permissions.
 + (ABAddressBookRef) getAddressBookRef {
 
+    CFErrorRef error = NULL;
+    ABAddressBookRef addressBook = NULL;
+    
     // get address book authorization
     ABAuthorizationStatus status = ABAddressBookGetAuthorizationStatus();
     
@@ -90,11 +93,13 @@
         // app to access the contacts, and all you can do is handle this gracefully,
         // perhaps telling the user that they have to go to settings to grant access
         // to contacts
-        [[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit to the \"Privacy\" section in the iPhone Settings app." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            [[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit the \"Privacy\" section in the Settings app. Go to Contacts and enable Ceaseless." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        });
+        return addressBook;
     }
     
-    CFErrorRef error = NULL;
-    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, &error);
     // TODO figure out when we release the address book.
     //        if (_addressBook) CFRelease(_addressBook);
     
@@ -125,16 +130,18 @@
             // send out notification that permission is granted.
             // we can detect the notification, kick off ensureContactsAreInitializedAndRefreshed
             // and show the UI.
+            addressBook = ABAddressBookCreateWithOptions(NULL, &error);
             return addressBook;
         } else {
             // however, if they didn't give you permission, handle it gracefully, for example...
             dispatch_async(dispatch_get_main_queue(), ^{
                 // BTW, this is not on the main thread, so dispatch UI updates back to the main queue
-                [[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit to the \"Privacy\" section in the iPhone Settings app." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                [[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit the \"Privacy\" section in the Settings app. Go to Contacts and enable Ceaseless." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             });
         }
     } else if (status == kABAuthorizationStatusAuthorized) {
         NSLog(@"Address Book initialized");
+        addressBook = ABAddressBookCreateWithOptions(NULL, &error);
         return addressBook;
     }
     
