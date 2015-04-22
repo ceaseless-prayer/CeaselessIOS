@@ -119,9 +119,9 @@
     }
     
     if (indexPath.row == 4) {
-        // TODO fill in this credits section
-        // should it be implemented in a webview or in code?
-        [self showFeedbackForm];
+        WebCardViewController *webView = [[WebCardViewController alloc]init];
+        webView.dataObject = [[CeaselessService sharedCeaselessService]getUrlForKey:kCeaselessAboutURL];
+        [self.navigationController pushViewController:webView animated:YES];
     }
 
     if (indexPath.row == 5) {

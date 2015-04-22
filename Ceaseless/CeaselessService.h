@@ -18,6 +18,7 @@ FOUNDATION_EXPORT NSString *const kFetchAnnouncementsURL;
 FOUNDATION_EXPORT NSString *const kDefaultScriptureShareURL;
 FOUNDATION_EXPORT NSString *const kHelpURL;
 FOUNDATION_EXPORT NSString *const kSubscribeToMailingListURL;
+FOUNDATION_EXPORT NSString *const kCeaselessAboutURL;
 
 @property (strong, nonatomic) NSUserDefaults *defaults;
 @property (strong, nonatomic) NSMutableDictionary *defaultUrls;

@@ -10,6 +10,6 @@
 #import "DataViewController.h"
 #import "WebCardView.h"
 
-@interface WebCardViewController : DataViewController
+@interface WebCardViewController : DataViewController <UIWebViewDelegate>
     @property (strong, nonatomic) IBOutlet WebCardView *webCardView;
 @end
