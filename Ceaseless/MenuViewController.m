@@ -31,7 +31,8 @@
 											   nil];
 
 	[self.navigationController.navigationBar setTitleTextAttributes:navbarTitleTextAttributes];
-	
+	[self.navigationItem setHidesBackButton:YES];
+
 	self.tableView.delegate = self;
 	self.tableView.dataSource = self;
 	self.menuInfoArray = [[NSMutableArray alloc] initWithObjects: @"People", @"Settings", @"Help", @"Feedback", @"About", @"Review Ceaseless", @"Subscribe to Newsletter", nil];
@@ -165,18 +166,8 @@
 	// Action receiver for the clicking of Cancel button
 - (IBAction)menuDoneClicked:(id)sender
 {
-	[self performSegueWithIdentifier:@"UnwindToRootView" sender: self];
+	[self.delegate menuViewControllerDidFinish: self];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 #pragma mark - Give Feedback
 - (void)showFeedbackForm {

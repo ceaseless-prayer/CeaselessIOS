@@ -126,6 +126,13 @@ void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictiona
             [clc.managedObjectContext performBlockAndWait: ^{
                 [clc refreshCeaselessContacts];
             }];
+            
+            // ensure the context is fully saved.
+            NSError *error;
+            if (![self.managedObjectContext save:&error]) {
+                NSLog(@"%s: Problem saving: %@", __PRETTY_FUNCTION__, error);
+            }
+            
             if (addressBook2) CFRelease(addressBook2);
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             NSDate *now = [NSDate date];
@@ -166,12 +173,14 @@ void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictiona
 }
 
 - (void) initializeFirstContacts: (NSInteger) n {
-    NSArray *allAddressBookContacts = [self getUnifiedAddressBookRecords:_addressBook];
-    n = MIN(n, [allAddressBookContacts count]);
-    for(NSInteger i = 0; i < n; i++) {
-        ABRecordRef rawPerson = (__bridge ABRecordRef)([allAddressBookContacts[i] anyObject]);
-        [self updateCeaselessContactFromABRecord:rawPerson];
-        CFRelease(rawPerson);
+    if (_addressBook) {
+        NSArray *allAddressBookContacts = [self getUnifiedAddressBookRecords:_addressBook];
+        n = MIN(n, [allAddressBookContacts count]);
+        for(NSInteger i = 0; i < n; i++) {
+            ABRecordRef rawPerson = (__bridge ABRecordRef)([allAddressBookContacts[i] anyObject]);
+            [self updateCeaselessContactFromABRecord:rawPerson];
+            CFRelease(rawPerson);
+        }
     }
 }
 
@@ -269,6 +278,20 @@ void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictiona
 - (NSArray *) getAllActiveCeaselessContacts {
     NSPredicate *filterRemovedContacts = [NSPredicate predicateWithFormat: @"removedDate = nil"];
     return [self fetchEntityForName:@"PersonIdentifier" withPredicate: filterRemovedContacts];
+}
+
+- (NSInteger) numberOfActiveCeaselessContacts {
+    NSPredicate *filterRemovedContacts = [NSPredicate predicateWithFormat: @"removedDate = nil"];
+
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PersonIdentifier"
+                                              inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    [fetchRequest setPredicate:filterRemovedContacts];
+    NSError * error = nil;
+    NSInteger peopleCount = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+    
+    return peopleCount;
 }
 
 - (NSArray *) getAllCeaselessContacts {
