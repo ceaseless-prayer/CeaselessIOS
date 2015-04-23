@@ -10,6 +10,8 @@
 
 @implementation AppConstants
 
+    NSString *const kCeaselessAppstoreAppId = @"973610764";
+
     // this is the user default key for whether or not
     // the app is in developer mode
     NSString *const kDeveloperMode = @"developerMode";

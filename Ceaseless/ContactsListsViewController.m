@@ -60,7 +60,6 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 		self.backgroundView.contentMode = UIViewContentModeScaleAspectFill;
 	}
 
-    [self.moreButton setTitle:[NSString fontAwesomeIconStringForEnum:FAEllipsisH] forState:UIControlStateNormal];
     [self.moreButton addTarget:self action:@selector(presentActionSheet:)forControlEvents:UIControlEventTouchUpInside];
 	[self searchControllerSetup];
 }
@@ -91,6 +90,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 		// make the model try to refresh whenever the app becomes active
 	[[NSNotificationCenter defaultCenter] addObserver: self selector:@selector(handleSyncing) name:UIApplicationDidBecomeActiveNotification object:nil];
 	[self handleSyncing];
+    [self showInstructionsIfNeeded];
 }
 
 - (void)adjustSearchBar{
@@ -106,7 +106,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 		self.segment.enabled = NO;
 		self.tableView.userInteractionEnabled = NO;
 		self.tableView.sectionIndexMinimumDisplayRowCount = INT_MAX;
-
+        [self hideInstructions];
 		NSLog (@"syncing");
 		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 
@@ -256,7 +256,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 		return [self.filteredList count];
 	} else {
 		id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-		return [sectionInfo numberOfObjects];
+        return [sectionInfo numberOfObjects];
 	}
 }
 
@@ -281,7 +281,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
     ContactsListTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
-		//have to set background color programmatically here to allow checkboxes to function properly :P
+    //have to set background color programmatically here to allow checkboxes to function properly :P
 	static dispatch_once_t onceToken;
 	static UIView * selectedBackgroundView;
 	dispatch_once(&onceToken, ^{
@@ -632,9 +632,13 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
                                                 style:UIAlertActionStyleDefault
                                                 handler:^(UIAlertAction *action)
                                                 {
-                                                    [self.ceaselessContacts ensureCeaselessContactsSynced];
-                                                    [self handleSyncing];
-                                                    NSLog(@"Sync with Contacts");
+                                                    if(ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusDenied){
+                                                        [[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit the \"Privacy\" section in the Settings app. Go to Contacts and enable Ceaseless." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                                                    } else {
+                                                        [self.ceaselessContacts ensureCeaselessContactsSynced];
+                                                        [self handleSyncing];
+                                                        NSLog(@"Sync with Contacts");
+                                                    }
                                                 }];
     
     UIAlertAction *addContactAction = [UIAlertAction
@@ -669,6 +673,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 #pragma mark - ABNewPersonViewControllerDelegate protocol conformance
 - (void)newPersonViewController:(ABNewPersonViewController *)newPersonView didCompleteWithNewPerson:(ABRecordRef)person {
     if (person != NULL) {
+        [self hideInstructions];
         ABRecordID abRecordID = ABRecordGetRecordID(person);
         
         ABAddressBookRef addressBook = [AppUtils getAddressBookRef];
@@ -681,6 +686,20 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
     }
     
     [newPersonView dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Instructions
+- (void) showInstructionsIfNeeded {
+    NSInteger peopleCount = [[CeaselessLocalContacts sharedCeaselessLocalContacts] numberOfActiveCeaselessContacts];
+    if (peopleCount == 0) {
+        self.instructionBubble.layer.cornerRadius = 6.0f;
+        [AppUtils bounceView:self.instructionBubble distance: -6.0 duration: 0.4];
+        self.instructionBubble.hidden = NO;
+    }
+}
+
+- (void) hideInstructions {
+    self.instructionBubble.hidden = YES;
 }
 
 @end
