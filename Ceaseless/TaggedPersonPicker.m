@@ -20,7 +20,6 @@
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UITableView *contactsTableView;
 @property (nonatomic, weak) IBOutlet UISearchBar *searchField;
-@property (nonatomic, weak) IBOutlet UIBarButtonItem *doneButton;
 
 @property (nonatomic, strong) NSMutableArray *filteredPeople;
 @property (nonatomic, strong) NSMutableOrderedSet *group;
@@ -36,13 +35,7 @@ static CGFloat const kPadding = 5.0;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-											   [UIColor whiteColor], NSForegroundColorAttributeName,
-											   [UIFont fontWithName:@"AvenirNext-Medium" size:16.0f],NSFontAttributeName,
-											   nil];
 
-	[self.navigationController.navigationBar setTitleTextAttributes:navbarTitleTextAttributes];
-    
     if (!self.tokenColor) {
         self.tokenColor = self.view.tintColor;
         self.tokenColor = [UIColor lightGrayColor];
@@ -52,6 +45,9 @@ static CGFloat const kPadding = 5.0;
         self.selectedTokenColor = [UIColor darkGrayColor];
     }
 
+	UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle: @"Done" style: UIBarButtonItemStylePlain target:self action: @selector(doneClick:)];
+
+	self.navigationItem.rightBarButtonItem = doneButton;
     //Customized the searchBar
 	self.searchField.searchBarStyle = UISearchBarStyleMinimal;
 	self.searchField.backgroundColor = self.tokenColor;
@@ -432,11 +428,11 @@ static CGFloat const kPadding = 5.0;
     
     if (abRecordIDs.count > 0)
     {
-        [self.doneButton setEnabled:YES];
+        [self.navigationItem.rightBarButtonItem setEnabled:YES];
     }
     else
     {
-        [self.doneButton setEnabled:NO];
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
     }
 
 	// Set the content size so it can be scrollable

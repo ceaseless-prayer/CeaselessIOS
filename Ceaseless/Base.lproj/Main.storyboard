@@ -1437,15 +1437,9 @@
                                 <action selector="cancelClick:" destination="2Ov-uL-ZtG" id="r1F-6t-hKS"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="done" id="EbR-vb-u4a">
-                            <connections>
-                                <action selector="doneClick:" destination="2Ov-uL-ZtG" id="bYl-GV-hnl"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="contactsTableView" destination="GqF-eR-Tqv" id="9nd-2w-xmV"/>
-                        <outlet property="doneButton" destination="EbR-vb-u4a" id="jLH-9O-bqp"/>
                         <outlet property="scrollView" destination="5pi-zQ-hU6" id="672-CQ-Vnx"/>
                         <outlet property="searchField" destination="Kr6-SI-NOK" id="DWZ-2f-5jF"/>
                     </connections>

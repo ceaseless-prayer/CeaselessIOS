@@ -23,12 +23,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 
-	NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-											   [UIColor whiteColor], NSForegroundColorAttributeName,
-											   [UIFont fontWithName:@"AvenirNext-Medium" size:16.0f],NSFontAttributeName,
-											   nil];
-
-	[self.navigationController.navigationBar setTitleTextAttributes:navbarTitleTextAttributes];
 	[self.navigationItem setHidesBackButton:YES];
 
 	self.tableView.delegate = self;

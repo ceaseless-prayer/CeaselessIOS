@@ -30,7 +30,7 @@ static NSString *const kAllowTracking = @"allowTracking";
 
 	NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
 											   [UIColor whiteColor], NSForegroundColorAttributeName,
-											   [UIFont fontWithName:@"AvenirNext-Medium" size:16.0f],NSFontAttributeName,
+											   [UIFont fontWithName:@"AvenirNext-Medium" size:18.0f],NSFontAttributeName,
 											   nil];
 
 	[[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];

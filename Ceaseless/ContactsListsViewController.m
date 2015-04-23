@@ -181,12 +181,16 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 		self.tableView.allowsMultipleSelectionDuringEditing = YES;
 		[self.tableView setEditing:editing animated:YES];
 		switch (self.segment.selectedSegmentIndex){
-			case 0:
-				self.navigationItem.rightBarButtonItem.title = @"Remove";
+			case 0: { //can't just set the rightBarButtonItem title because it doesn't pick up font
+				UIBarButtonItem *removeButton = [[UIBarButtonItem alloc] initWithTitle: @"Remove" style: UIBarButtonItemStylePlain target:self action: @selector(editingDoneButtonPressed)];
+				self.navigationItem.rightBarButtonItem = removeButton;
 				break;
-			case 1:
-				self.navigationItem.rightBarButtonItem.title = @"Add";
+			}
+			case 1:{ //can't just set the rightBarButtonItem title because it doesn't pick up font
+				UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithTitle: @"Add" style: UIBarButtonItemStylePlain target:self action: @selector(editingDoneButtonPressed)];
+				self.navigationItem.rightBarButtonItem = addButton;
 				break;
+			}
 			default:
 				break;
 		}
@@ -215,11 +219,16 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 		[self.tableView setEditing:editing animated:NO];
 		[self.tableView reloadData];
-		self.navigationItem.rightBarButtonItem.title = @"Edit";
+			//can't just set the title because it won't be an editing button 
+		self.navigationItem.rightBarButtonItem = self.editButtonItem;
 		NSLog(@"editmode off");
 	}
 }
 
+- (void) editingDoneButtonPressed {
+		//Remove or Add button pressed
+	[self setEditing:NO animated:NO];
+}
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
 	switch (self.segment.selectedSegmentIndex){
 		case 0:

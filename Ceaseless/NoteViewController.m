@@ -85,8 +85,8 @@ NSString *const kPlaceHolderText = @"Enter note";
 	self.singleTapGestureRecognizer.cancelsTouchesInView = YES;
 	self.singleTapGestureRecognizer.delegate = self;
 	[self.personsTaggedView addGestureRecognizer:self.singleTapGestureRecognizer];
-
-	UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveButtonPressed:)];
+		//does not have correct font when init with system save button
+	UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle: @"Save" style: UIBarButtonItemStylePlain target:self action:@selector(saveButtonPressed:)];
 	self.navigationItem.rightBarButtonItem = saveButton;
 
 		// change the back button to cancel and add an event handler
