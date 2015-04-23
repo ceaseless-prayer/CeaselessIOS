@@ -22,10 +22,10 @@
                             <rect key="frame" x="0.0" y="2" width="600" height="596"/>
                             <subviews>
                                 <view opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="KWS-Ba-d4C">
-                                    <rect key="frame" x="0.0" y="64" width="600" height="532"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="596"/>
                                     <subviews>
                                         <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PiV-RI-TmQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="532"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="596"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </webView>
                                     </subviews>
@@ -48,7 +48,7 @@
                                 <constraint firstAttribute="trailing" secondItem="KWS-Ba-d4C" secondAttribute="trailing" id="PRT-ET-fgW"/>
                                 <constraint firstItem="KWS-Ba-d4C" firstAttribute="leading" secondItem="hEW-dC-O9l" secondAttribute="leading" id="eJI-uH-0PQ"/>
                                 <constraint firstAttribute="bottom" secondItem="KWS-Ba-d4C" secondAttribute="bottom" id="jmv-ci-Ws6"/>
-                                <constraint firstItem="KWS-Ba-d4C" firstAttribute="top" secondItem="hEW-dC-O9l" secondAttribute="top" constant="64" id="kjS-9R-1xn"/>
+                                <constraint firstItem="KWS-Ba-d4C" firstAttribute="top" secondItem="hEW-dC-O9l" secondAttribute="top" id="kjS-9R-1xn"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="INo-O8-ATa" userLabel="ShadowView">

@@ -29,7 +29,7 @@
 
 	self.tableView.delegate = self;
 	self.tableView.dataSource = self;
-	self.menuInfoArray = [[NSMutableArray alloc] initWithObjects: @"People", @"Settings", @"Help", @"Feedback", @"About", @"Review Ceaseless", @"Subscribe to Newsletter", nil];
+	self.menuInfoArray = [[NSMutableArray alloc] initWithObjects: @"People", @"Settings", @"Help", @"Contact Us", @"About", @"Review Ceaseless", @"Subscribe to Newsletter", nil];
     [self.menuInfoArray addObject: @""]; // for the developer mode row
     UIImage *background = [AppUtils getDynamicBackgroundImage];
     if(background != nil) {
