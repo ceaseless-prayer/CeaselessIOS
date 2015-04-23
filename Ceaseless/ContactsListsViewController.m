@@ -86,7 +86,6 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 - (void) viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	[self adjustSearchBar];
 		// make the model try to refresh whenever the app becomes active
 	[[NSNotificationCenter defaultCenter] addObserver: self selector:@selector(handleSyncing) name:UIApplicationDidBecomeActiveNotification object:nil];
 	[self handleSyncing];
@@ -397,7 +396,6 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 {
 	NSString *searchString = searchController.searchBar.text;
 	[self searchForText:searchString];
-	[self adjustSearchBar];
 	[self.tableView reloadData];
 }
 
@@ -432,7 +430,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 - (void)willPresentSearchController:(UISearchController *)searchController {
 		//push the view up under status bar
-	self.topToVisualEffectsViewConstraint.constant = 34;
+	self.topToVisualEffectsViewConstraint.constant = 0;
 
 }
 - (void)didPresentSearchController:(UISearchController *)searchController {
@@ -440,7 +438,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 }
 - (void)willDismissSearchController:(UISearchController *)searchController {
-	self.topToVisualEffectsViewConstraint.constant = 64;
+	self.topToVisualEffectsViewConstraint.constant = 40;
 	[self searchControllerSetup];
 }
 
