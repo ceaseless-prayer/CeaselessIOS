@@ -43,6 +43,13 @@
                                                       [UIColor whiteColor], NSForegroundColorAttributeName,
                                                       nil]
                                             forState:UIControlStateNormal];
+    
+    [self.menuButton setTitle:[NSString fontAwesomeIconStringForEnum:FABars]];
+    [self.menuButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                      [UIFont fontWithName:@"FontAwesome" size:26.0], NSFontAttributeName,
+                                                      [UIColor whiteColor], NSForegroundColorAttributeName,
+                                                      nil]
+                                            forState:UIControlStateNormal];
 
     
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:opts];
