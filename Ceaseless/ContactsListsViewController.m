@@ -404,9 +404,25 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 - (void)searchForText:(NSString *)searchText
 {
 	NSString *buildPredicateFormat = [NSString stringWithString: self.selectedListPredicate];
-	NSString *predicateFormat = [buildPredicateFormat stringByAppendingString: @" AND (representativeInfo.primaryFirstName.name BEGINSWITH[cd] %@ OR representativeInfo.primaryLastName.name BEGINSWITH[cd] %@)"];
+	NSString *predicateFormat = [buildPredicateFormat stringByAppendingString: @" AND (representativeInfo.primaryFirstName.name BEGINSWITH[cd] %@ OR representativeInfo.primaryLastName.name BEGINSWITH[cd] %@ OR  (representativeInfo.primaryFirstName.name BEGINSWITH[cd] %@ AND representativeInfo.primaryLastName.name BEGINSWITH[cd] %@))"];
 
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, searchText, searchText];
+	NSString *searchFirst = searchText;
+	NSString *searchLast = searchText;
+
+	if ([searchText containsString: @" "]) {
+		NSArray *substrings = [searchText componentsSeparatedByString:@" "];
+		if ([searchText hasSuffix: @" "]) {
+			searchText = [substrings objectAtIndex:0];
+			searchFirst = [substrings objectAtIndex:0];
+			searchLast = searchFirst;
+		} else {
+			searchFirst = [substrings objectAtIndex:0];
+				//when there is a first name and last name change operator to "AND" to return just that person
+			searchLast = [substrings objectAtIndex:1];
+		}
+	}
+
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, searchText, searchText, searchFirst, searchLast];
 
 	[self.searchFetchRequest setPredicate:predicate];
 

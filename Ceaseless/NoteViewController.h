@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TaggedPersonPicker.h"
+#import "UserIdentityPicker.h"
 #import "Note.h"
 #import "PersonIdentifier.h"
 #import "GAITrackedViewController.h"
