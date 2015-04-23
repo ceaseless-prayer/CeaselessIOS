@@ -23,5 +23,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 @property (weak, nonatomic) IBOutlet UILabel *loadingLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *prayerJournalButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *menuButton;
 @end
 

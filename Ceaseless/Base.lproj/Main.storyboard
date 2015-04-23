@@ -76,6 +76,7 @@
                         <outlet property="backgroundImageView" destination="rxH-h1-ZKU" id="cdk-J6-Cit"/>
                         <outlet property="loadingIndicator" destination="gEO-za-U7L" id="4zf-Q3-sdt"/>
                         <outlet property="loadingLabel" destination="VDk-V7-qRO" id="dND-l1-47Y"/>
+                        <outlet property="menuButton" destination="Guc-Qf-Mt0" id="TQj-AW-DVG"/>
                         <outlet property="prayerJournalButton" destination="KcV-zW-dSC" id="a4v-kI-qzT"/>
                     </connections>
                 </viewController>
@@ -1626,7 +1627,6 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="q31-s6-qWM"/>
                                 <exclude reference="0Nd-0J-Zqw"/>
                                 <exclude reference="361-hx-kE5"/>
                                 <exclude reference="8sb-Ux-BOA"/>
@@ -1637,6 +1637,7 @@
                                 <exclude reference="ebO-ia-kOJ"/>
                                 <exclude reference="fvl-zD-NwD"/>
                                 <exclude reference="gGS-ht-Krb"/>
+                                <exclude reference="q31-s6-qWM"/>
                             </mask>
                         </variation>
                     </view>
