@@ -104,6 +104,8 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 		self.syncingOverlay.hidden = NO;
 		[self.activityIndicator startAnimating];
 		self.segment.enabled = NO;
+		self.moreButton.enabled = NO;
+		self.navigationItem.rightBarButtonItem.enabled = NO;
 		self.tableView.userInteractionEnabled = NO;
 		self.tableView.sectionIndexMinimumDisplayRowCount = INT_MAX;
         [self hideInstructions];
@@ -605,6 +607,8 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	self.syncingOverlay.hidden = YES;
 	[self.activityIndicator stopAnimating];
 	self.segment.enabled = YES;
+	self.moreButton.enabled = YES;
+	self.navigationItem.rightBarButtonItem.enabled = YES;
 	self.tableView.userInteractionEnabled = YES;
 	self.tableView.sectionIndexMinimumDisplayRowCount = 20;
 	[self.tableView reloadData];

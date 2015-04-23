@@ -105,6 +105,7 @@
     
     if (indexPath.row == 2) {
         WebCardViewController *webView = [[WebCardViewController alloc]init];
+		webView.title = [self.menuInfoArray objectAtIndex: indexPath.row];
         webView.dataObject = [[CeaselessService sharedCeaselessService]getUrlForKey:kHelpURL];
         [self.navigationController pushViewController:webView animated:YES];
     }
@@ -115,6 +116,7 @@
     
     if (indexPath.row == 4) {
         WebCardViewController *webView = [[WebCardViewController alloc]init];
+		webView.title = [self.menuInfoArray objectAtIndex: indexPath.row];
         webView.dataObject = [[CeaselessService sharedCeaselessService]getUrlForKey:kCeaselessAboutURL];
         [self.navigationController pushViewController:webView animated:YES];
     }
@@ -138,6 +140,7 @@
 
     if (indexPath.row == 6) {
         WebCardViewController *webView = [[WebCardViewController alloc]init];
+		webView.title = [self.menuInfoArray objectAtIndex: indexPath.row];
         webView.dataObject = [[CeaselessService sharedCeaselessService]getUrlForKey:kSubscribeToMailingListURL];
         [self.navigationController pushViewController:webView animated:YES];
     }
