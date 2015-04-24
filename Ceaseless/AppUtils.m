@@ -173,4 +173,18 @@
                                                             label:label] build]];                      // Timing label
     }
 }
+
++ (void) postAnalyticsEventWithCategory: (NSString*) category andAction: (NSString*) action andLabel: (NSString*) label {
+    [AppUtils postAnalyticsEventWithCategory:category andAction:action andLabel:label andValue:nil];
+}
+
++ (void) postAnalyticsEventWithCategory: (NSString*) category andAction: (NSString*) action andLabel: (NSString*) label andValue: (NSNumber*) value {
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    if(tracker) {
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:category     // Event category (required)
+                                                          action:action  // Event action (required)
+                                                           label:label          // Event label
+                                                           value:value] build]];    // Event value
+    }
+}
 @end
