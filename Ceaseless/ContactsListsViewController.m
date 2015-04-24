@@ -705,10 +705,17 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
         
         CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
         [ceaselessContacts updateCeaselessContactFromABRecord: abPerson];
+        PersonIdentifier *ceaselessPerson = [ceaselessContacts getCeaselessContactFromABRecord:abPerson];
+        
         CFRelease(addressBook);
+        
+        PersonViewController *personViewController = [[PersonViewController alloc]init];
+        personViewController.dataObject = ceaselessPerson;
+        [newPersonView dismissViewControllerAnimated:YES completion:nil];
+        [self.navigationController pushViewController:personViewController animated:YES];
+    } else {
+        [newPersonView dismissViewControllerAnimated:YES completion:nil];
     }
-    
-    [newPersonView dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Instructions
