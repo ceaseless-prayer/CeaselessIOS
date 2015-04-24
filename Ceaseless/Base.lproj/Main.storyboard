@@ -76,6 +76,7 @@
                         <outlet property="backgroundImageView" destination="rxH-h1-ZKU" id="cdk-J6-Cit"/>
                         <outlet property="loadingIndicator" destination="gEO-za-U7L" id="4zf-Q3-sdt"/>
                         <outlet property="loadingLabel" destination="VDk-V7-qRO" id="dND-l1-47Y"/>
+                        <outlet property="menuButton" destination="Guc-Qf-Mt0" id="TQj-AW-DVG"/>
                         <outlet property="prayerJournalButton" destination="KcV-zW-dSC" id="a4v-kI-qzT"/>
                     </connections>
                 </viewController>
