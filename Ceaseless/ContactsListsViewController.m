@@ -94,7 +94,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 - (void)adjustSearchBar{
 		//if this isn't done, the textfield gets positioned too far left some of the time :(  Apple Bug
-	[self.searchController.searchBar setPositionAdjustment: UIOffsetMake (0.0, 0.0) forSearchBarIcon: UISearchBarIconSearch];
+//	[self.searchController.searchBar setPositionAdjustment: UIOffsetMake (0.0, 0.0) forSearchBarIcon: UISearchBarIconSearch];
 	self.tableView.tableHeaderView = self.searchController.searchBar;
 }
 
@@ -396,6 +396,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 {
 	NSString *searchString = searchController.searchBar.text;
 	[self searchForText:searchString];
+	self.tableView.tableHeaderView = self.searchController.searchBar;
 	[self.tableView reloadData];
 }
 
@@ -430,7 +431,9 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 - (void)willPresentSearchController:(UISearchController *)searchController {
 		//push the view up under status bar
-	self.topToVisualEffectsViewConstraint.constant = 0;
+	self.segment.hidden = YES;
+	self.moreButton.hidden = YES;
+	self.topToVisualEffectsViewConstraint.constant = -20;
 
 }
 - (void)didPresentSearchController:(UISearchController *)searchController {
@@ -438,7 +441,9 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 }
 - (void)willDismissSearchController:(UISearchController *)searchController {
-	self.topToVisualEffectsViewConstraint.constant = 40;
+	self.segment.hidden = NO;
+	self.moreButton.hidden = NO;
+	self.topToVisualEffectsViewConstraint.constant = 0;
 	[self searchControllerSetup];
 }
 
