@@ -45,6 +45,7 @@
     self.screenName = @"ScriptureViewScreen";
 }
 - (IBAction)share:(id)sender {
+    [AppUtils postAnalyticsEventWithCategory:@"scripture_card_action" andAction:@"share_scripture" andLabel:[self.dataObject valueForKey:@"citation"]];
     NSString *contentToShare = [NSString stringWithFormat:@"%@ %@", [self.dataObject valueForKey: @"verse"], [self.dataObject valueForKey: @"shareLink"]];
     
     NSArray *objectsToShare = @[contentToShare]; // string and url is what we need to show.
