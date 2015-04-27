@@ -294,12 +294,24 @@ void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictiona
 
 - (NSInteger) numberOfActiveCeaselessContacts {
     NSPredicate *filterRemovedContacts = [NSPredicate predicateWithFormat: @"removedDate = nil"];
+    return [self numberOfContactsForPredicate:filterRemovedContacts];
+}
+- (NSInteger) numberOfFavoritedCeaselessContacts {
+    NSPredicate *favoritedContacts = [NSPredicate predicateWithFormat: @"favoritedDate != nil"];
+    return [self numberOfContactsForPredicate:favoritedContacts];
+}
 
+- (NSInteger) numberOfRemovedCeaselessContacts {
+    NSPredicate *favoritedContacts = [NSPredicate predicateWithFormat: @"removedDate != nil"];
+    return [self numberOfContactsForPredicate:favoritedContacts];
+}
+
+- (NSInteger) numberOfContactsForPredicate: (NSPredicate *) predicate {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"PersonIdentifier"
                                               inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
-    [fetchRequest setPredicate:filterRemovedContacts];
+    [fetchRequest setPredicate:predicate];
     NSError * error = nil;
     NSInteger peopleCount = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
     
