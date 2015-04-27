@@ -26,6 +26,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 + (ABAddressBookRef) getAddressBookRef;
 + (void) bounceView: (UIView *) viewToAnimate distance: (CGFloat) toValue duration: (CGFloat) duration;
 + (void) postTrackedTiming: (NSTimeInterval) timing withCategory: (NSString*) category andName: (NSString*) name;
++ (void) postTrackedTiming: (NSTimeInterval) timing withCategory: (NSString*) category andName: (NSString*) name andLabel: (NSString*) label;
 + (void) postAnalyticsEventWithCategory: (NSString*) category andAction: (NSString*) action andLabel: (NSString*) label;
 + (void) postAnalyticsEventWithCategory: (NSString*) category andAction: (NSString*) action andLabel: (NSString*) label andValue: (NSNumber*) value;
 + (NSString*) localInstallationId;

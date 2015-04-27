@@ -146,7 +146,13 @@ void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictiona
             NSDate *syncFinish = [NSDate date];
             NSTimeInterval executionTime = [syncFinish timeIntervalSinceDate:syncStart];
             NSLog(@"Address book sync executionTime = %f", executionTime);
-            [AppUtils postTrackedTiming:executionTime withCategory:@"resources" andName:@"address book sync timing"];
+            
+            NSString *localInstallationId = [AppUtils localInstallationId];
+            [AppUtils postTrackedTiming:executionTime withCategory:@"resources" andName:@"address book sync timing" andLabel:localInstallationId];
+            [AppUtils postAnalyticsEventWithCategory:@"address_book_sync" andAction:@"post_total_favorited_ceaseless_contacts" andLabel:localInstallationId andValue: [NSNumber numberWithInteger:clc.numberOfFavoritedCeaselessContacts]];
+            [AppUtils postAnalyticsEventWithCategory:@"address_book_sync" andAction:@"post_total_active_ceaseless_contacts" andLabel:localInstallationId andValue: [NSNumber numberWithInteger:clc.numberOfActiveCeaselessContacts]];
+            [AppUtils postAnalyticsEventWithCategory:@"address_book_sync" andAction:@"post_total_removed_ceaseless_contacts" andLabel:localInstallationId andValue: [NSNumber numberWithInteger:clc.numberOfRemovedCeaselessContacts]];
+            
             _syncing = NO;
 			[[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
 			self.backgroundTask = UIBackgroundTaskInvalid;
