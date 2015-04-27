@@ -252,8 +252,10 @@ static NSString *kSMSMessage;
                                    {
                                        PersonInfo *info = self.person.representativeInfo;
                                        if(info.primaryPhoneNumber) {
+                                           [AppUtils postAnalyticsEventWithCategory:@"person_card_actions" andAction:@"tapped_invite" andLabel:@"sms"];
                                            [self showSMS: kInviteMessage];
                                        } else if(info.primaryEmail) {
+                                           [AppUtils postAnalyticsEventWithCategory:@"person_card_actions" andAction:@"tapped_invite" andLabel:@"email"];
                                            [self showEmailForm];
                                        } else {
                                            UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
@@ -295,6 +297,7 @@ static NSString *kSMSMessage;
                               style:UIAlertActionStyleDefault
                               handler:^(UIAlertAction *action)
                               {
+                                  [AppUtils postAnalyticsEventWithCategory:@"person_card_actions" andAction:@"tapped_view_contact" andLabel:@""];
                                   [self showABPerson];
                                   NSLog(@"Showing contact");
                               }];
@@ -377,7 +380,7 @@ static NSString *kSMSMessage;
 
 }
 - (IBAction) addNote: (id) sender {
-
+    [AppUtils postAnalyticsEventWithCategory:@"person_card_actions" andAction:@"tapped_add_note" andLabel:@""];
 	NoteViewController *noteViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"NoteViewController"];
 	noteViewController.delegate = self;
 	noteViewController.personForNewNote = self.personNotesViewController.person;
@@ -393,8 +396,10 @@ static NSString *kSMSMessage;
     PersonInfo *info = self.person.representativeInfo;
     // TODO should we switch the order?
     if(info.primaryPhoneNumber) {
+        [AppUtils postAnalyticsEventWithCategory:@"person_card_actions" andAction:@"tapped_send_message" andLabel:@"sms"];
         [self showSMS: kSMSMessage];
     } else if(info.primaryEmail) {
+        [AppUtils postAnalyticsEventWithCategory:@"person_card_actions" andAction:@"tapped_send_message" andLabel:@"email"];
         [self showEmailForm];
     } else {
         UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
