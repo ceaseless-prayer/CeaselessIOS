@@ -62,6 +62,7 @@ static NSString *kSMSMessage;
     UIImage *profileImage = [ceaselessContacts getImageForPersonIdentifier:self.person];
 	if (profileImage) {
 		self.personView.personImageView.image = profileImage;
+		self.personView.personImageView.contentMode = UIViewContentModeScaleAspectFill;
 		self.personView.personImageView.hidden = NO;
 		self.personView.placeholderText.hidden = YES;
 		self.personView.personImageView.layer.cornerRadius = 6.0f;

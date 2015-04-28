@@ -341,7 +341,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
     UIImage *profileImage = [_ceaselessContacts getImageForPersonIdentifier:person];
 	if (profileImage) {
 		cell.personImageView.image = profileImage;
-		cell.personImageView.contentMode = UIViewContentModeScaleAspectFit;
+		cell.personImageView.contentMode = UIViewContentModeScaleAspectFill;
 		cell.placeholderLabel.hidden = YES;
 
 	} else {
