@@ -564,7 +564,14 @@ NSString *const kPlaceHolderText = @"Enter note";
 	if (indexPath.row == self.filteredPeople.count) {
 		ABNewPersonViewController *newPersonViewController = [[ABNewPersonViewController alloc] init];
 		newPersonViewController.newPersonViewDelegate = self;
-
+        
+        
+        // mark that we're making an addressbook change in app
+        // so when the external change callback happens
+        // it won't kick off an unnecessary sync.
+        CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
+        ceaselessContacts.internalAddressBookChange = YES;
+        
 		UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:newPersonViewController];
 
 		[self presentViewController:navController animated:YES completion:NULL];
@@ -627,6 +634,9 @@ NSString *const kPlaceHolderText = @"Enter note";
 {
 	if (person != NULL) {
 		[self addABPersonToCeaseless: person];
+    } else {
+        CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
+        ceaselessContacts.internalAddressBookChange = NO;
     }
 
 	[newPersonView dismissViewControllerAnimated:YES completion:NULL];

@@ -23,6 +23,8 @@
 @property (nonatomic) ABAddressBookRef addressBook;
 @property (nonatomic) UIBackgroundTaskIdentifier backgroundTask;
 @property (atomic) BOOL syncing;
+@property (atomic) BOOL internalAddressBookChange;
+@property (atomic) NSTimer *addressBookChangeNotificationTimer;
 
 + (id) sharedCeaselessLocalContacts;
 - (instancetype) initWithManagedObjectContext: (NSManagedObjectContext *) context andAddressBook: (ABAddressBookRef) addressBook;
@@ -37,6 +39,8 @@
 - (PersonIdentifier *) createCeaselessContactFromABRecord: (ABRecordRef) rawPerson;
 - (NSArray *) getAllActiveCeaselessContacts;
 - (NSInteger) numberOfActiveCeaselessContacts;
+- (NSInteger) numberOfFavoritedCeaselessContacts;
+- (NSInteger) numberOfRemovedCeaselessContacts;
 - (NSArray *) getAllCeaselessContacts;
 - (ABRecordRef) getRepresentativeABPersonForCeaselessContact: (PersonIdentifier*) person;
 - (UIImage *) getImageForPersonIdentifier: (PersonIdentifier *) person;

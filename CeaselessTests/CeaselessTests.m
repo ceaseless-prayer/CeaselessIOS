@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 #import "AppUtils.h"
+#import "CeaselessLocalContacts.h"
 
 @interface CeaselessTests : XCTestCase
 
@@ -51,6 +52,14 @@
 
     NSNumber *days = [AppUtils daysWithinEraFromDate:start toDate:end];
     XCTAssert([days isEqual: [NSNumber numberWithInt: 1]], @"Pass");
+}
+
+- (void) testAddressBookCounts {
+    CeaselessLocalContacts *clc = [CeaselessLocalContacts sharedCeaselessLocalContacts];
+    NSLog(@"Active: %@", [NSNumber numberWithInteger: clc.numberOfActiveCeaselessContacts]);
+    NSLog(@"Favorited: %@", [NSNumber numberWithInteger: clc.numberOfFavoritedCeaselessContacts]);
+    NSLog(@"Removed: %@", [NSNumber numberWithInteger: clc.numberOfRemovedCeaselessContacts]);
+    XCTAssert(clc.numberOfActiveCeaselessContacts > 0, @"Pass");
 }
 
 - (void)testPerformanceExample {

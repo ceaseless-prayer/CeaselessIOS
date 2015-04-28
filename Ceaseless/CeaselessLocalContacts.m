@@ -36,6 +36,7 @@
 - (instancetype) initWithManagedObjectContext: (NSManagedObjectContext *) context andAddressBook:(ABAddressBookRef)addressBook {
     self = [super init];
     if (self) {
+        self.internalAddressBookChange = NO;
         self.syncing = NO;
         self.backgroundTask = UIBackgroundTaskInvalid;
         self.addressBook = addressBook;
@@ -101,7 +102,30 @@
 
 #pragma mark - Keeping Ceaseless and the address book in sync
 void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictionaryRef info, void *context) {
-    [((__bridge CeaselessLocalContacts *) context) ensureCeaselessContactsSynced];
+    CeaselessLocalContacts *clc = (__bridge CeaselessLocalContacts *) context;
+    // we need to use this timer because
+    // the OS sends us multiple notifications when the address book changes
+    // this way we can pretend that any notifications that come within 4 seconds of one another
+    // are actually one notification
+    // and that means when we set internalAddressBookChange = NO in the selector
+    // it will only happen one time instead of going into the method again and
+    // doing a sync when we don't want it to (since the address book change came from within the app itself)
+    // http://stackoverflow.com/questions/10096480/abaddressbookregisterexternalchangecallback-called-several-times
+    [clc.addressBookChangeNotificationTimer invalidate];
+    clc.addressBookChangeNotificationTimer = nil;
+    clc.addressBookChangeNotificationTimer = [NSTimer scheduledTimerWithTimeInterval:4.0
+                                                        target:clc
+                                                      selector:@selector(handleAddressBookChanges)
+                                                      userInfo:nil
+                                                       repeats:NO];
+}
+
+- (void) handleAddressBookChanges {
+    if(self.internalAddressBookChange) {
+        self.internalAddressBookChange = NO;
+    } else {
+        [self ensureCeaselessContactsSynced];
+    }
 }
 
 - (void) ensureCeaselessContactsSynced {
@@ -146,7 +170,13 @@ void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictiona
             NSDate *syncFinish = [NSDate date];
             NSTimeInterval executionTime = [syncFinish timeIntervalSinceDate:syncStart];
             NSLog(@"Address book sync executionTime = %f", executionTime);
-            [AppUtils postTrackedTiming:executionTime withCategory:@"resources" andName:@"address book sync timing"];
+            
+            NSString *localInstallationId = [AppUtils localInstallationId];
+            [AppUtils postTrackedTiming:executionTime withCategory:@"resources" andName:@"address book sync timing" andLabel:localInstallationId];
+            [AppUtils postAnalyticsEventWithCategory:@"address_book_sync" andAction:@"post_total_favorited_ceaseless_contacts" andLabel:localInstallationId andValue: [NSNumber numberWithInteger:clc.numberOfFavoritedCeaselessContacts]];
+            [AppUtils postAnalyticsEventWithCategory:@"address_book_sync" andAction:@"post_total_active_ceaseless_contacts" andLabel:localInstallationId andValue: [NSNumber numberWithInteger:clc.numberOfActiveCeaselessContacts]];
+            [AppUtils postAnalyticsEventWithCategory:@"address_book_sync" andAction:@"post_total_removed_ceaseless_contacts" andLabel:localInstallationId andValue: [NSNumber numberWithInteger:clc.numberOfRemovedCeaselessContacts]];
+            
             _syncing = NO;
 			[[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
 			self.backgroundTask = UIBackgroundTaskInvalid;
@@ -294,12 +324,24 @@ void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictiona
 
 - (NSInteger) numberOfActiveCeaselessContacts {
     NSPredicate *filterRemovedContacts = [NSPredicate predicateWithFormat: @"removedDate = nil"];
+    return [self numberOfContactsForPredicate:filterRemovedContacts];
+}
+- (NSInteger) numberOfFavoritedCeaselessContacts {
+    NSPredicate *favoritedContacts = [NSPredicate predicateWithFormat: @"favoritedDate != nil"];
+    return [self numberOfContactsForPredicate:favoritedContacts];
+}
 
+- (NSInteger) numberOfRemovedCeaselessContacts {
+    NSPredicate *favoritedContacts = [NSPredicate predicateWithFormat: @"removedDate != nil"];
+    return [self numberOfContactsForPredicate:favoritedContacts];
+}
+
+- (NSInteger) numberOfContactsForPredicate: (NSPredicate *) predicate {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"PersonIdentifier"
                                               inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
-    [fetchRequest setPredicate:filterRemovedContacts];
+    [fetchRequest setPredicate:predicate];
     NSError * error = nil;
     NSInteger peopleCount = [self.managedObjectContext countForFetchRequest:fetchRequest error:&error];
     
