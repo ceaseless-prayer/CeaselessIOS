@@ -105,7 +105,7 @@ void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictiona
     CeaselessLocalContacts *clc = (__bridge CeaselessLocalContacts *) context;
     // we need to use this timer because
     // the OS sends us multiple notifications when the address book changes
-    // this way we can pretend that any notifications that come within 3 seconds of one another
+    // this way we can pretend that any notifications that come within 4 seconds of one another
     // are actually one notification
     // and that means when we set internalAddressBookChange = NO in the selector
     // it will only happen one time instead of going into the method again and
@@ -113,7 +113,7 @@ void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictiona
     // http://stackoverflow.com/questions/10096480/abaddressbookregisterexternalchangecallback-called-several-times
     [clc.addressBookChangeNotificationTimer invalidate];
     clc.addressBookChangeNotificationTimer = nil;
-    clc.addressBookChangeNotificationTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
+    clc.addressBookChangeNotificationTimer = [NSTimer scheduledTimerWithTimeInterval:4.0
                                                         target:clc
                                                       selector:@selector(handleAddressBookChanges)
                                                       userInfo:nil
