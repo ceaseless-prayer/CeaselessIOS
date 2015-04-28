@@ -33,8 +33,9 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
     
     self.progressView.progressLabel.text = [NSString stringWithFormat: @"%@ / %@ people", totalPeoplePrayedForThisCycle, totalPeople];
     
-    [AppUtils postAnalyticsEventWithCategory:@"progress_view" andAction:@"reached_last_card" andLabel:@"people_prayed_for_this_cycle" andValue: totalPeoplePrayedForThisCycle];
-    [AppUtils postAnalyticsEventWithCategory:@"progress_view" andAction:@"reached_last_card" andLabel:@"total_active_ceaseless_contacts" andValue: totalPeople];
+    NSString *localInstallationId = [AppUtils localInstallationId];
+    [AppUtils postAnalyticsEventWithCategory:@"progress_view" andAction:@"post_people_prayed_for_this_cycle" andLabel:localInstallationId andValue: totalPeoplePrayedForThisCycle];
+    [AppUtils postAnalyticsEventWithCategory:@"progress_view" andAction:@"post_total_active_ceaseless_contacts" andLabel:localInstallationId andValue: totalPeople];
     
     self.progressView.backgroundImageView.image = [AppUtils getDynamicBackgroundImage];
     [self.progressView.progressBar setProgress: progressPercentage animated:YES];

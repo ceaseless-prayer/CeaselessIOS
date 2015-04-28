@@ -10,7 +10,11 @@
 
 @implementation AppConstants
 
+    // id in the app store
     NSString *const kCeaselessAppstoreAppId = @"973610764";
+
+    // user default key for storing the installation id
+    NSString *const kLocalInstallationId = @"localInstallationId";
 
     // this is the user default key for whether or not
     // the app is in developer mode

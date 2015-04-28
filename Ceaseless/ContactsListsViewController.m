@@ -641,6 +641,10 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
                                                newPersonViewController.newPersonViewDelegate = self;
                                                UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:newPersonViewController];
                                                [self presentViewController:navController animated:YES completion:nil];
+                                               
+                                               CeaselessLocalContacts *clc = [CeaselessLocalContacts sharedCeaselessLocalContacts];
+                                               clc.internalAddressBookChange = YES;
+                                               
                                                NSLog(@"Add to Ceaseless");
                                            }];
     
@@ -663,6 +667,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 #pragma mark - ABNewPersonViewControllerDelegate protocol conformance
 - (void)newPersonViewController:(ABNewPersonViewController *)newPersonView didCompleteWithNewPerson:(ABRecordRef)person {
+    CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
     if (person != NULL) {
         [self hideInstructions];
         ABRecordID abRecordID = ABRecordGetRecordID(person);
@@ -670,10 +675,10 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
         ABAddressBookRef addressBook = [AppUtils getAddressBookRef];
         
         ABRecordRef abPerson = ABAddressBookGetPersonWithRecordID(addressBook, abRecordID);
-        
-        CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
         [ceaselessContacts updateCeaselessContactFromABRecord: abPerson];
         CFRelease(addressBook);
+    } else {
+        ceaselessContacts.internalAddressBookChange = NO;
     }
     
     [newPersonView dismissViewControllerAnimated:YES completion:nil];

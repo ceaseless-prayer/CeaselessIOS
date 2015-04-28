@@ -187,4 +187,17 @@
                                                            value:value] build]];    // Event value
     }
 }
+
++ (NSString*) localInstallationId {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if (![defaults objectForKey:kLocalInstallationId]) {
+        NSUUID  *UUID = [NSUUID UUID];
+        NSString *localInstallationId = [UUID UUIDString];
+        [defaults setObject:localInstallationId forKey:kLocalInstallationId];
+        [defaults synchronize];
+        return localInstallationId;
+    } else {
+        return [defaults objectForKey:kLocalInstallationId];
+    }
+}
 @end
