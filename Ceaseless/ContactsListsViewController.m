@@ -711,8 +711,8 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
         
         PersonViewController *personViewController = [[PersonViewController alloc]init];
         personViewController.dataObject = ceaselessPerson;
+		[self.navigationController pushViewController:personViewController animated:YES];
         [newPersonView dismissViewControllerAnimated:YES completion:nil];
-        [self.navigationController pushViewController:personViewController animated:YES];
     } else {
         [newPersonView dismissViewControllerAnimated:YES completion:nil];
     }

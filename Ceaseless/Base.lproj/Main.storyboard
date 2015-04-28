@@ -620,7 +620,7 @@
                                             <rect key="frame" x="0.0" y="-40" width="600" height="640"/>
                                             <subviews>
                                                 <activityIndicatorView opaque="NO" userInteractionEnabled="NO" alpha="0.39999999999999963" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" verticalCompressionResistancePriority="749" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="uTW-aS-DVe">
-                                                    <rect key="frame" x="223" y="311" width="20" height="20"/>
+                                                    <rect key="frame" x="223" y="310" width="20" height="20"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="uTW-aS-DVe" secondAttribute="height" multiplier="3:3" id="FWz-Ze-lmv"/>
