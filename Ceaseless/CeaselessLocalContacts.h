@@ -23,6 +23,8 @@
 @property (nonatomic) ABAddressBookRef addressBook;
 @property (nonatomic) UIBackgroundTaskIdentifier backgroundTask;
 @property (atomic) BOOL syncing;
+@property (atomic) BOOL internalAddressBookChange;
+@property (atomic) NSTimer *addressBookChangeNotificationTimer;
 
 + (id) sharedCeaselessLocalContacts;
 - (instancetype) initWithManagedObjectContext: (NSManagedObjectContext *) context andAddressBook: (ABAddressBookRef) addressBook;

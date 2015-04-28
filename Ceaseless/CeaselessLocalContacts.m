@@ -36,6 +36,7 @@
 - (instancetype) initWithManagedObjectContext: (NSManagedObjectContext *) context andAddressBook:(ABAddressBookRef)addressBook {
     self = [super init];
     if (self) {
+        self.internalAddressBookChange = NO;
         self.syncing = NO;
         self.backgroundTask = UIBackgroundTaskInvalid;
         self.addressBook = addressBook;
@@ -101,7 +102,30 @@
 
 #pragma mark - Keeping Ceaseless and the address book in sync
 void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictionaryRef info, void *context) {
-    [((__bridge CeaselessLocalContacts *) context) ensureCeaselessContactsSynced];
+    CeaselessLocalContacts *clc = (__bridge CeaselessLocalContacts *) context;
+    // we need to use this timer because
+    // the OS sends us multiple notifications when the address book changes
+    // this way we can pretend that any notifications that come within 3 seconds of one another
+    // are actually one notification
+    // and that means when we set internalAddressBookChange = NO in the selector
+    // it will only happen one time instead of going into the method again and
+    // doing a sync when we don't want it to (since the address book change came from within the app itself)
+    // http://stackoverflow.com/questions/10096480/abaddressbookregisterexternalchangecallback-called-several-times
+    [clc.addressBookChangeNotificationTimer invalidate];
+    clc.addressBookChangeNotificationTimer = nil;
+    clc.addressBookChangeNotificationTimer = [NSTimer scheduledTimerWithTimeInterval:3.0
+                                                        target:clc
+                                                      selector:@selector(handleAddressBookChanges)
+                                                      userInfo:nil
+                                                       repeats:NO];
+}
+
+- (void) handleAddressBookChanges {
+    if(self.internalAddressBookChange) {
+        self.internalAddressBookChange = NO;
+    } else {
+        [self ensureCeaselessContactsSynced];
+    }
 }
 
 - (void) ensureCeaselessContactsSynced {
