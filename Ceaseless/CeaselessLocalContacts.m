@@ -404,7 +404,7 @@ void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictiona
         // Check for contact picture
         if (rawPerson != nil && ABPersonHasImageData(rawPerson)) {
             if ( &ABPersonCopyImageDataWithFormat != nil ) {
-                return [UIImage imageWithData:(__bridge NSData *)ABPersonCopyImageDataWithFormat(rawPerson, kABPersonImageFormatOriginalSize)];
+                return [UIImage imageWithData:(__bridge NSData *)ABPersonCopyImageDataWithFormat(rawPerson, kABPersonImageFormatThumbnail)];
             }
         }
     }
