@@ -75,8 +75,16 @@
     // filter out removed contacts
     NSPredicate *filterRemovedContacts = [NSPredicate predicateWithFormat: @"removedDate = nil"];
     NSPredicate *peoplePrayedForThisCycle = [NSPredicate predicateWithFormat:@"prayerRecords.@max.createDate > %@", cycleStartDate];
-    NSNumber *totalPeople = [NSNumber numberWithUnsignedInteger: [self countFetchResultForEntityName:@"PersonIdentifier" withPredicate: filterRemovedContacts]];
-    NSNumber *totalPeoplePrayedForThisCycle = [NSNumber numberWithUnsignedInteger:[self countFetchResultForEntityName:@"PersonIdentifier" withPredicate: peoplePrayedForThisCycle]];
+    
+    NSUInteger rawTotalPeople = [self countFetchResultForEntityName:@"PersonIdentifier" withPredicate: filterRemovedContacts];
+    NSUInteger rawTotalPeoplePrayedForThisCycle = [self countFetchResultForEntityName:@"PersonIdentifier" withPredicate: peoplePrayedForThisCycle];
+    if(rawTotalPeoplePrayedForThisCycle > rawTotalPeople) {
+        // numerator should never exceed denominator
+        rawTotalPeoplePrayedForThisCycle = rawTotalPeople;
+    }
+    
+    NSNumber *totalPeople = [NSNumber numberWithUnsignedInteger: rawTotalPeople];
+    NSNumber *totalPeoplePrayedForThisCycle = [NSNumber numberWithUnsignedInteger: rawTotalPeoplePrayedForThisCycle];
     NSLog(@"Prayer cycle progress: %@/%@", totalPeoplePrayedForThisCycle, totalPeople);
     
     // when everyone is prayed for restart the cycle.
