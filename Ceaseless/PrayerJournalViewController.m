@@ -175,8 +175,12 @@
 		if (profileImage) {
 			cell.topImageView.hidden = NO;
 			cell.topImageView.image = profileImage;
-			cell.topImageView.contentMode = UIViewContentModeScaleAspectFill;
-			cell.topPlaceholderLabel.hidden = YES;
+			if (cell.topImageView.image.size.height > cell.topImageView.image.size.width) {
+				cell.topImageView.contentMode = UIViewContentModeScaleAspectFit;
+			} else {
+				cell.topImageView.contentMode = UIViewContentModeScaleAspectFill;
+			}
+			cell.topPlaceholderLabel.hidden = NO;
 			cell.topPlaceholderLabel.text = nil;
 		} else {
 			cell.topPlaceholderLabel.hidden = NO;
@@ -199,8 +203,12 @@
 		if (profileImage) {
 			cell.bottomImageView.hidden = NO;
 			cell.bottomImageView.image = profileImage;
-			cell.bottomImageView.contentMode = UIViewContentModeScaleAspectFill;
-			cell.bottomPlaceholderLabel.hidden = YES;
+			if (cell.bottomImageView.image.size.height > cell.bottomImageView.image.size.width) {
+				cell.bottomImageView.contentMode = UIViewContentModeScaleAspectFit;
+			} else {
+				cell.bottomImageView.contentMode = UIViewContentModeScaleAspectFill;
+			}
+			cell.bottomPlaceholderLabel.hidden = NO;
 			cell.bottomPlaceholderLabel.text = nil;
 		} else {
 			cell.bottomPlaceholderLabel.hidden = NO;

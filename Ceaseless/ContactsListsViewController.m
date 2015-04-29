@@ -341,13 +341,16 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
     UIImage *profileImage = [_ceaselessContacts getImageForPersonIdentifier:person];
 	if (profileImage) {
 		cell.personImageView.image = profileImage;
-		cell.personImageView.contentMode = UIViewContentModeScaleAspectFill;
-		cell.placeholderLabel.hidden = YES;
+		if (cell.personImageView.image.size.height > cell.personImageView.image.size.width) {
+			cell.personImageView.contentMode = UIViewContentModeScaleAspectFit;
+		} else {
+			cell.personImageView.contentMode = UIViewContentModeScaleAspectFill;
+		}
+		cell.placeholderLabel.text = nil;
 
 	} else {
 		cell.personImageView.image = nil;
 		cell.placeholderLabel.text = [_ceaselessContacts initialsForPerson:person];
-		cell.placeholderLabel.hidden = NO;
 
 	}
 
@@ -489,8 +492,8 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 			break;
 
 		case NSFetchedResultsChangeUpdate:
-			[self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
-			break;
+			[tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+			break;		
 
 		case NSFetchedResultsChangeMove:
 			[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -715,10 +718,11 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
         PersonViewController *personViewController = [[PersonViewController alloc]init];
         personViewController.dataObject = ceaselessPerson;
 		[self.navigationController pushViewController:personViewController animated:YES];
-        [newPersonView dismissViewControllerAnimated:YES completion:nil];
     } else {
-        [newPersonView dismissViewControllerAnimated:YES completion:nil];
+        ceaselessContacts.internalAddressBookChange = NO;
     }
+	[newPersonView dismissViewControllerAnimated:YES completion:nil];
+
 }
 
 #pragma mark - Instructions
