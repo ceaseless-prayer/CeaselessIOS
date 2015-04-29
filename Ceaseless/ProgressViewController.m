@@ -21,26 +21,35 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIImage *backgroundImage = [AppUtils getDynamicBackgroundImage];
+    if(backgroundImage != nil) {
+        self.progressView.backgroundImageView.image = backgroundImage;
+    }
+
+    [self formatCardView: self.progressView.cardView withShadowView:self.progressView.shadowView];
+    
     [self showAnnouncementButtonIfNeeded];
     NSArray *progress = (NSArray *) self.dataObject;
     NSNumber *totalPeoplePrayedForThisCycle = progress[0];
     NSNumber *totalPeople = progress[1];
     
     float progressPercentage = 0;
-    if(totalPeople > 0) {
+    if([totalPeople intValue] > 0) {
         progressPercentage = [[NSNumber numberWithDouble:[totalPeoplePrayedForThisCycle doubleValue] / [totalPeople doubleValue]]floatValue];
+        self.progressView.progressLabel.text = [NSString stringWithFormat: @"%@ / %@ people", totalPeoplePrayedForThisCycle, totalPeople];
+        NSString *localInstallationId = [AppUtils localInstallationId];
+        [AppUtils postAnalyticsEventWithCategory:@"progress_view" andAction:@"post_people_prayed_for_this_cycle" andLabel:localInstallationId andValue: totalPeoplePrayedForThisCycle];
+        [AppUtils postAnalyticsEventWithCategory:@"progress_view" andAction:@"post_total_active_ceaseless_contacts" andLabel:localInstallationId andValue: totalPeople];
+    } else {
+        // when totalPeople == -1, this is the initial load, show the mailing list subscribe instead.
+        self.progressView.progressLabel.hidden = YES;
+        self.progressView.progressCaption.hidden = YES;
+        self.progressView.subscribeToMailingListButton.hidden = NO;
     }
     
-    self.progressView.progressLabel.text = [NSString stringWithFormat: @"%@ / %@ people", totalPeoplePrayedForThisCycle, totalPeople];
-    
-    NSString *localInstallationId = [AppUtils localInstallationId];
-    [AppUtils postAnalyticsEventWithCategory:@"progress_view" andAction:@"post_people_prayed_for_this_cycle" andLabel:localInstallationId andValue: totalPeoplePrayedForThisCycle];
-    [AppUtils postAnalyticsEventWithCategory:@"progress_view" andAction:@"post_total_active_ceaseless_contacts" andLabel:localInstallationId andValue: totalPeople];
-    
-    self.progressView.backgroundImageView.image = [AppUtils getDynamicBackgroundImage];
     [self.progressView.progressBar setProgress: progressPercentage animated:YES];
-    [self formatCardView: self.progressView.cardView withShadowView:self.progressView.shadowView];
-    // Do any additional setup after loading the view.
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -51,6 +60,12 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)showSubscribeToMailingList:(id)sender {
+    WebCardViewController *webView = [[WebCardViewController alloc]init];
+    webView.dataObject = [[CeaselessService sharedCeaselessService]getUrlForKey:kSubscribeToMailingListURL];
+    [self.navigationController pushViewController:webView animated:YES];
 }
 
 - (IBAction)showMorePeople:(id)sender {
@@ -78,6 +93,13 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
             _announcements = [[NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error] sortedArrayUsingDescriptors:@[sortByDate]];
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             NSDate *lastAnnouncementDate = [defaults objectForKey:kLastAnnouncementDate];
+            
+            if(!lastAnnouncementDate) {
+                // this is the initial announcement in the feed.
+                // we're not going to show the initial test entry in the feed.
+                lastAnnouncementDate = [NSDate dateWithTimeIntervalSince1970: 1427432891];
+            }
+            
             if([_announcements count] > 0) {
                 // get last announcement refresh date
                 // compare to the date of the announcement in the array

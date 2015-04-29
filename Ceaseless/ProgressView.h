@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *showMoreButton;
 @property (weak, nonatomic) IBOutlet UIButton *announcementButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingMore;
+@property (weak, nonatomic) IBOutlet UILabel *progressCaption;
+@property (weak, nonatomic) IBOutlet UIButton *subscribeToMailingListButton;
 @property (weak, nonatomic) IBOutlet UILabel *progressLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @end

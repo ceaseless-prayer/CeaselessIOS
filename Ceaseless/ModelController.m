@@ -102,7 +102,7 @@ NSString *const kLocalLastRefreshDate = @"localLastRefreshDate";
     NSDate *now = [NSDate date];
     CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
     if (lastRefreshDate == nil) {
-        [ceaselessContacts initializeFirstContacts:5];
+        [ceaselessContacts initializeFirstContacts: 10];
     }
     
     BOOL developerMode = [defaults boolForKey:kDeveloperMode];

@@ -35,7 +35,7 @@
 
         if(![defaults integerForKey: kDailyPersonCount]) {
             // set default daily count
-            [defaults setInteger:5 forKey: kDailyPersonCount];
+            [defaults setInteger:3 forKey: kDailyPersonCount];
             [defaults synchronize];
         }
         dailyPersonCount = [defaults integerForKey:kDailyPersonCount];
@@ -58,9 +58,18 @@
 - (NSArray *) computePrayerCycleProgress {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if(![defaults objectForKey:kPrayerCycleStartDate]) {
-        [defaults setObject:[NSDate date] forKey:kPrayerCycleStartDate];
+        // we set it to the past so the first run will still show progress.
+        // the people have already been picked so the records would be prior
+        // to the cycle start date otherwise.
+        NSDate *oneHourAgo = [[NSDate date] dateByAddingTimeInterval:-60*60];
+        [defaults setObject:oneHourAgo forKey:kPrayerCycleStartDate];
         [defaults synchronize];
+        // this is the first time a cycle has started
+        // the progress card needs to show something special in this case
+        // because the contacts are probably not all synced yet.
+        return @[[NSNumber numberWithInt:-1], [NSNumber numberWithInt: -1]];
     }
+    
     NSDate *cycleStartDate = [defaults objectForKey:kPrayerCycleStartDate];
     
     // filter out removed contacts

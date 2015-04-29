@@ -13,4 +13,5 @@
     @property (strong, nonatomic) IBOutlet ProgressView *progressView;
     - (IBAction)showMorePeople:(id)sender;
     - (IBAction) showAnnouncement:(id)sender;
+    - (IBAction)showSubscribeToMailingList:(id)sender;
 @end
