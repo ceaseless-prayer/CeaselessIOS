@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "DataViewController.h"
 #import "WebCardView.h"
+#import "Reachability.h"
 
-@interface WebCardViewController : DataViewController <UIWebViewDelegate>
+@interface WebCardViewController : DataViewController
     @property (strong, nonatomic) IBOutlet WebCardView *webCardView;
 @end
