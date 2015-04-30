@@ -95,7 +95,7 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             NSDate *lastAnnouncementDate = [defaults objectForKey:kLastAnnouncementDate];
             
-            if(!lastAnnouncementDate) {
+            if(lastAnnouncementDate == nil) {
                 // this is the initial announcement in the feed.
                 // we're not going to show the initial test entry in the feed.
                 lastAnnouncementDate = [NSDate dateWithTimeIntervalSince1970: 1427432895];
@@ -109,7 +109,7 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
                                                   [[_announcements[0] objectForKey:@"date"] doubleValue]];
                 
                 BOOL developerMode = [defaults boolForKey:kDeveloperMode];
-                if(developerMode || latestAnnouncementDate > lastAnnouncementDate) {
+                if(developerMode || lastAnnouncementDate.timeIntervalSinceReferenceDate < latestAnnouncementDate.timeIntervalSinceReferenceDate) {
                     NSLog(@"Latest %@ Last %@", latestAnnouncementDate, lastAnnouncementDate);
                     NSString *headline = [NSString stringWithFormat: @"Announcement: %@", _announcements[0][@"headline"]];
                     [self.progressView.announcementButton setTitle: headline forState: UIControlStateNormal];
