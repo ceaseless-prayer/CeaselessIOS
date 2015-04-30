@@ -26,7 +26,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.screenName = @"SettingsViewScreen";
-    self.backgroundImageView.image = [AppUtils getDynamicBackgroundImage];
+    
+    UIImage *backgroundImage = [AppUtils getDynamicBackgroundImage];
+    if(backgroundImage != nil) {
+        self.backgroundImageView.image = backgroundImage;
+    }
+    
     self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
     
 	self.scrollView.delegate = self;
