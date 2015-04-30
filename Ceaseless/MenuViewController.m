@@ -25,17 +25,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 
-	NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-											   [UIColor whiteColor], NSForegroundColorAttributeName,
-											   [UIFont fontWithName:@"AvenirNext-Medium" size:16.0f],NSFontAttributeName,
-											   nil];
-
-	[self.navigationController.navigationBar setTitleTextAttributes:navbarTitleTextAttributes];
 	[self.navigationItem setHidesBackButton:YES];
 
 	self.tableView.delegate = self;
 	self.tableView.dataSource = self;
-	self.menuInfoArray = [[NSMutableArray alloc] initWithObjects: @"People", @"Settings", @"Help", @"Feedback", @"About", @"Review Ceaseless", @"Subscribe to Newsletter", nil];
+	self.menuInfoArray = [[NSMutableArray alloc] initWithObjects: @"People", @"Settings", @"Help", @"Contact Us", @"About", @"Review Ceaseless", @"Subscribe to Newsletter", nil];
     [self.menuInfoArray addObject: @""]; // for the developer mode row
     UIImage *background = [AppUtils getDynamicBackgroundImage];
     if(background != nil) {
@@ -111,6 +105,7 @@
     
     if (indexPath.row == 2) {
         WebCardViewController *webView = [[WebCardViewController alloc]init];
+		webView.title = [self.menuInfoArray objectAtIndex: indexPath.row];
         webView.dataObject = [[CeaselessService sharedCeaselessService]getUrlForKey:kHelpURL];
         [self.navigationController pushViewController:webView animated:YES];
     }
@@ -121,6 +116,7 @@
     
     if (indexPath.row == 4) {
         WebCardViewController *webView = [[WebCardViewController alloc]init];
+		webView.title = [self.menuInfoArray objectAtIndex: indexPath.row];
         webView.dataObject = [[CeaselessService sharedCeaselessService]getUrlForKey:kCeaselessAboutURL];
         [self.navigationController pushViewController:webView animated:YES];
     }
@@ -144,6 +140,7 @@
 
     if (indexPath.row == 6) {
         WebCardViewController *webView = [[WebCardViewController alloc]init];
+		webView.title = [self.menuInfoArray objectAtIndex: indexPath.row];
         webView.dataObject = [[CeaselessService sharedCeaselessService]getUrlForKey:kSubscribeToMailingListURL];
         [self.navigationController pushViewController:webView animated:YES];
     }

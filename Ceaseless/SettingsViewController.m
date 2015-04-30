@@ -7,7 +7,7 @@
 //
 
 #import "SettingsViewController.h"
-#import "TaggedPersonPicker.h"
+#import "UserIdentityPicker.h"
 #import "CeaselessLocalContacts.h"
 #import "PersonIdentifier.h"
 #import "PersonInfo.h"
@@ -129,39 +129,19 @@
 {
 		// Check the segue identifier
 	if ([[segue identifier] isEqualToString:@"ShowSelectContact"]) {
-		UINavigationController *navController = segue.destinationViewController;
-		TaggedPersonPicker *picker = (TaggedPersonPicker *)navController.topViewController;
+		UserIdentityPicker *picker = segue.destinationViewController;
 		picker.title = @"Select yourself";
-		picker.maxCount = 1;
 		picker.delegate = self;
 	}
 }
 
-#pragma mark - TaggedPersonPickerDelegate protocol conformance
+#pragma mark - UserIdentityPickerDelegate protocol conformance
 
-- (void)taggedPersonPickerDidFinish:(TaggedPersonPicker *)taggedPersonPicker
-					withABRecordIDs:(NSOrderedSet *)abRecordIDs {
-
-	ABAddressBookRef addressBook = [AppUtils getAddressBookRef];
-
-
-	NSNumber *number = [abRecordIDs firstObject];
-	ABRecordID abRecordID = [number intValue];
-
-	ABRecordRef abPerson = ABAddressBookGetPersonWithRecordID(addressBook, abRecordID);
-
-
-	[_ceaselessContacts updateCeaselessContactFromABRecord: abPerson];
-	PersonIdentifier *person = [_ceaselessContacts getCeaselessContactFromABRecord: abPerson];
-
-	CFRelease(addressBook);
-
+- (void)userIdentityPickerDidFinish:(UserIdentityPicker *)userIdentityPicker
+					withPerson:(PersonIdentifier *)person {
+	[self.navigationController popViewControllerAnimated:YES];
 	[self formatProfileForPerson: person];
-
 	[[NSUserDefaults standardUserDefaults] setObject: person.ceaselessId forKey: @"CeaselessId"];
-
-	[taggedPersonPicker dismissViewControllerAnimated:YES completion:NULL];
-
 }
 
 - (void) formatProfileForPerson: (PersonIdentifier *) person {
@@ -191,8 +171,8 @@
 
 }
 
-- (void)taggedPersonPickerDidCancel:(TaggedPersonPicker *)taggedPersonPicker {
-	[taggedPersonPicker dismissViewControllerAnimated:YES completion:NULL];
+- (void)userIdentityPickerDidCancel:(UserIdentityPicker *)userIdentityPicker {
+	[self.navigationController popViewControllerAnimated:YES];
 
 }
 

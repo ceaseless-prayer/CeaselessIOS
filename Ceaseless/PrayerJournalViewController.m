@@ -175,8 +175,8 @@
 		if (profileImage) {
 			cell.topImageView.hidden = NO;
 			cell.topImageView.image = profileImage;
-			cell.topImageView.contentMode = UIViewContentModeScaleAspectFit;
-			cell.topPlaceholderLabel.hidden = YES;
+			cell.topImageView.contentMode = UIViewContentModeScaleAspectFill;
+			cell.topPlaceholderLabel.hidden = NO;
 			cell.topPlaceholderLabel.text = nil;
 		} else {
 			cell.topPlaceholderLabel.hidden = NO;
@@ -199,8 +199,8 @@
 		if (profileImage) {
 			cell.bottomImageView.hidden = NO;
 			cell.bottomImageView.image = profileImage;
-			cell.bottomImageView.contentMode = UIViewContentModeScaleAspectFit;
-			cell.bottomPlaceholderLabel.hidden = YES;
+			cell.bottomImageView.contentMode = UIViewContentModeScaleAspectFill;
+			cell.bottomPlaceholderLabel.hidden = NO;
 			cell.bottomPlaceholderLabel.text = nil;
 		} else {
 			cell.bottomPlaceholderLabel.hidden = NO;

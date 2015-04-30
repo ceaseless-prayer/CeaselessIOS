@@ -62,6 +62,7 @@ static NSString *kSMSMessage;
     UIImage *profileImage = [ceaselessContacts getImageForPersonIdentifier:self.person];
 	if (profileImage) {
 		self.personView.personImageView.image = profileImage;
+		self.personView.personImageView.contentMode = UIViewContentModeScaleAspectFill;
 		self.personView.personImageView.hidden = NO;
 		self.personView.placeholderText.hidden = YES;
 		self.personView.personImageView.layer.cornerRadius = 6.0f;
@@ -104,11 +105,6 @@ static NSString *kSMSMessage;
     if(UIAccessibilityIsReduceTransparencyEnabled()) {
         ((UIView *) self.personView.blurEffect.subviews[0]).backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:0.5f];
     }
-		//force the view down below the navigation bar is segued from People Table
-	if ([[self backViewController] isMemberOfClass:[ContactsListsViewController class]]) {
-		self.personView.topToCardViewConstraint.constant = 64;
-	}
-
 }
 - (UIViewController *)backViewController
 {

@@ -86,7 +86,6 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 - (void) viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	[self adjustSearchBar];
 		// make the model try to refresh whenever the app becomes active
 	[[NSNotificationCenter defaultCenter] addObserver: self selector:@selector(handleSyncing) name:UIApplicationDidBecomeActiveNotification object:nil];
 	[self handleSyncing];
@@ -95,7 +94,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 - (void)adjustSearchBar{
 		//if this isn't done, the textfield gets positioned too far left some of the time :(  Apple Bug
-	[self.searchController.searchBar setPositionAdjustment: UIOffsetMake (0.0, 0.0) forSearchBarIcon: UISearchBarIconSearch];
+//	[self.searchController.searchBar setPositionAdjustment: UIOffsetMake (0.0, 0.0) forSearchBarIcon: UISearchBarIconSearch];
 	self.tableView.tableHeaderView = self.searchController.searchBar;
 }
 
@@ -104,6 +103,8 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 		self.syncingOverlay.hidden = NO;
 		[self.activityIndicator startAnimating];
 		self.segment.enabled = NO;
+		self.moreButton.enabled = NO;
+		self.navigationItem.rightBarButtonItem.enabled = NO;
 		self.tableView.userInteractionEnabled = NO;
 		self.tableView.sectionIndexMinimumDisplayRowCount = INT_MAX;
         [self hideInstructions];
@@ -181,12 +182,16 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 		self.tableView.allowsMultipleSelectionDuringEditing = YES;
 		[self.tableView setEditing:editing animated:YES];
 		switch (self.segment.selectedSegmentIndex){
-			case 0:
-				self.navigationItem.rightBarButtonItem.title = @"Remove";
+			case 0: { //can't just set the rightBarButtonItem title because it doesn't pick up font
+				UIBarButtonItem *removeButton = [[UIBarButtonItem alloc] initWithTitle: @"Remove" style: UIBarButtonItemStylePlain target:self action: @selector(editingDoneButtonPressed)];
+				self.navigationItem.rightBarButtonItem = removeButton;
 				break;
-			case 1:
-				self.navigationItem.rightBarButtonItem.title = @"Add";
+			}
+			case 1:{ //can't just set the rightBarButtonItem title because it doesn't pick up font
+				UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithTitle: @"Add" style: UIBarButtonItemStylePlain target:self action: @selector(editingDoneButtonPressed)];
+				self.navigationItem.rightBarButtonItem = addButton;
 				break;
+			}
 			default:
 				break;
 		}
@@ -215,11 +220,16 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 		[self.tableView setEditing:editing animated:NO];
 		[self.tableView reloadData];
-		self.navigationItem.rightBarButtonItem.title = @"Edit";
+			//can't just set the title because it won't be an editing button 
+		self.navigationItem.rightBarButtonItem = self.editButtonItem;
 		NSLog(@"editmode off");
 	}
 }
 
+- (void) editingDoneButtonPressed {
+		//Remove or Add button pressed
+	[self setEditing:NO animated:NO];
+}
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
 	switch (self.segment.selectedSegmentIndex){
 		case 0:
@@ -331,13 +341,12 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
     UIImage *profileImage = [_ceaselessContacts getImageForPersonIdentifier:person];
 	if (profileImage) {
 		cell.personImageView.image = profileImage;
-		cell.personImageView.contentMode = UIViewContentModeScaleAspectFit;
-		cell.placeholderLabel.hidden = YES;
+		cell.personImageView.contentMode = UIViewContentModeScaleAspectFill;
+		cell.placeholderLabel.text = nil;
 
 	} else {
 		cell.personImageView.image = nil;
 		cell.placeholderLabel.text = [_ceaselessContacts initialsForPerson:person];
-		cell.placeholderLabel.hidden = NO;
 
 	}
 
@@ -386,16 +395,32 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 {
 	NSString *searchString = searchController.searchBar.text;
 	[self searchForText:searchString];
-	[self adjustSearchBar];
+	self.tableView.tableHeaderView = self.searchController.searchBar;
 	[self.tableView reloadData];
 }
 
 - (void)searchForText:(NSString *)searchText
 {
 	NSString *buildPredicateFormat = [NSString stringWithString: self.selectedListPredicate];
-	NSString *predicateFormat = [buildPredicateFormat stringByAppendingString: @" AND (representativeInfo.primaryFirstName.name BEGINSWITH[cd] %@ OR representativeInfo.primaryLastName.name BEGINSWITH[cd] %@)"];
+	NSString *predicateFormat = [buildPredicateFormat stringByAppendingString: @" AND (representativeInfo.primaryFirstName.name BEGINSWITH[cd] %@ OR representativeInfo.primaryLastName.name BEGINSWITH[cd] %@ OR  (representativeInfo.primaryFirstName.name BEGINSWITH[cd] %@ AND representativeInfo.primaryLastName.name BEGINSWITH[cd] %@))"];
 
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, searchText, searchText];
+	NSString *searchFirst = searchText;
+	NSString *searchLast = searchText;
+
+	if ([searchText containsString: @" "]) {
+		NSArray *substrings = [searchText componentsSeparatedByString:@" "];
+		if ([searchText hasSuffix: @" "]) {
+			searchText = [substrings objectAtIndex:0];
+			searchFirst = [substrings objectAtIndex:0];
+			searchLast = searchFirst;
+		} else {
+			searchFirst = [substrings objectAtIndex:0];
+				//when there is a first name and last name change operator to "AND" to return just that person
+			searchLast = [substrings objectAtIndex:1];
+		}
+	}
+
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, searchText, searchText, searchFirst, searchLast];
 
 	[self.searchFetchRequest setPredicate:predicate];
 
@@ -405,7 +430,9 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 - (void)willPresentSearchController:(UISearchController *)searchController {
 		//push the view up under status bar
-	self.topToVisualEffectsViewConstraint.constant = 34;
+	self.segment.hidden = YES;
+	self.moreButton.hidden = YES;
+	self.topToVisualEffectsViewConstraint.constant = -20;
 
 }
 - (void)didPresentSearchController:(UISearchController *)searchController {
@@ -413,7 +440,9 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 }
 - (void)willDismissSearchController:(UISearchController *)searchController {
-	self.topToVisualEffectsViewConstraint.constant = 64;
+	self.segment.hidden = NO;
+	self.moreButton.hidden = NO;
+	self.topToVisualEffectsViewConstraint.constant = 0;
 	[self searchControllerSetup];
 }
 
@@ -459,8 +488,8 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 			break;
 
 		case NSFetchedResultsChangeUpdate:
-			[self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
-			break;
+			[tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+			break;		
 
 		case NSFetchedResultsChangeMove:
 			[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -596,6 +625,8 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	self.syncingOverlay.hidden = YES;
 	[self.activityIndicator stopAnimating];
 	self.segment.enabled = YES;
+	self.moreButton.enabled = YES;
+	self.navigationItem.rightBarButtonItem.enabled = YES;
 	self.tableView.userInteractionEnabled = YES;
 	self.tableView.sectionIndexMinimumDisplayRowCount = 20;
 	[self.tableView reloadData];
@@ -676,12 +707,18 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
         
         ABRecordRef abPerson = ABAddressBookGetPersonWithRecordID(addressBook, abRecordID);
         [ceaselessContacts updateCeaselessContactFromABRecord: abPerson];
+        PersonIdentifier *ceaselessPerson = [ceaselessContacts getCeaselessContactFromABRecord:abPerson];
+        
         CFRelease(addressBook);
+        
+        PersonViewController *personViewController = [[PersonViewController alloc]init];
+        personViewController.dataObject = ceaselessPerson;
+		[self.navigationController pushViewController:personViewController animated:YES];
     } else {
         ceaselessContacts.internalAddressBookChange = NO;
     }
-    
-    [newPersonView dismissViewControllerAnimated:YES completion:nil];
+	[newPersonView dismissViewControllerAnimated:YES completion:nil];
+
 }
 
 #pragma mark - Instructions

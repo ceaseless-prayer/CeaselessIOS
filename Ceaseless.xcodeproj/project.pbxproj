@@ -66,7 +66,7 @@
 		70D51C161AA6800D00FA7CDC /* PersonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D51C151AA6800D00FA7CDC /* PersonView.m */; };
 		70F12B841AB208000090F47A /* PrayerJournalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F12B831AB208000090F47A /* PrayerJournalViewController.m */; };
 		70F12B871AB2082B0090F47A /* NoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F12B861AB2082B0090F47A /* NoteViewController.m */; };
-		70F12B8A1AB231DF0090F47A /* TaggedPersonPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F12B891AB231DF0090F47A /* TaggedPersonPicker.m */; };
+		70F12B8A1AB231DF0090F47A /* UserIdentityPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F12B891AB231DF0090F47A /* UserIdentityPicker.m */; };
 		70F12B901AB396590090F47A /* PrayerJournalTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F12B8F1AB396590090F47A /* PrayerJournalTableViewCell.m */; };
 		70F663FB1AA7E14F0073801E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F663FA1AA7E14F0073801E /* CoreGraphics.framework */; };
 		70F663FE1AA7E30F0073801E /* UIImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F663FD1AA7E30F0073801E /* UIImageEffects.m */; };
@@ -204,8 +204,8 @@
 		70F12B831AB208000090F47A /* PrayerJournalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrayerJournalViewController.m; sourceTree = "<group>"; };
 		70F12B851AB2082B0090F47A /* NoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteViewController.h; sourceTree = "<group>"; };
 		70F12B861AB2082B0090F47A /* NoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteViewController.m; sourceTree = "<group>"; };
-		70F12B881AB231DF0090F47A /* TaggedPersonPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaggedPersonPicker.h; sourceTree = "<group>"; };
-		70F12B891AB231DF0090F47A /* TaggedPersonPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaggedPersonPicker.m; sourceTree = "<group>"; };
+		70F12B881AB231DF0090F47A /* UserIdentityPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserIdentityPicker.h; sourceTree = "<group>"; };
+		70F12B891AB231DF0090F47A /* UserIdentityPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserIdentityPicker.m; sourceTree = "<group>"; };
 		70F12B8E1AB396590090F47A /* PrayerJournalTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrayerJournalTableViewCell.h; sourceTree = "<group>"; };
 		70F12B8F1AB396590090F47A /* PrayerJournalTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrayerJournalTableViewCell.m; sourceTree = "<group>"; };
 		70F663FA1AA7E14F0073801E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -453,8 +453,8 @@
 				70F12B831AB208000090F47A /* PrayerJournalViewController.m */,
 				70F12B851AB2082B0090F47A /* NoteViewController.h */,
 				70F12B861AB2082B0090F47A /* NoteViewController.m */,
-				70F12B881AB231DF0090F47A /* TaggedPersonPicker.h */,
-				70F12B891AB231DF0090F47A /* TaggedPersonPicker.m */,
+				70F12B881AB231DF0090F47A /* UserIdentityPicker.h */,
+				70F12B891AB231DF0090F47A /* UserIdentityPicker.m */,
 				70BFCAFD1ABCA78B0014C4BC /* MenuViewController.h */,
 				70BFCAFE1ABCA78B0014C4BC /* MenuViewController.m */,
 				70BFCB001AC070C50014C4BC /* ContactsListsViewController.h */,
@@ -517,7 +517,7 @@
 				TargetAttributes = {
 					42F3AE171AA4DD7F003A88F5 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 28DYBASY7W;
+						DevelopmentTeam = 98FUBN4YVB;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -526,7 +526,7 @@
 					};
 					42F3AE361AA4DD80003A88F5 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 28DYBASY7W;
+						DevelopmentTeam = 98FUBN4YVB;
 						TestTargetID = 42F3AE171AA4DD7F003A88F5;
 					};
 				};
@@ -643,7 +643,7 @@
 				42F3AE241AA4DD7F003A88F5 /* RootViewController.m in Sources */,
 				70F12B841AB208000090F47A /* PrayerJournalViewController.m in Sources */,
 				70BFCAFF1ABCA78B0014C4BC /* MenuViewController.m in Sources */,
-				70F12B8A1AB231DF0090F47A /* TaggedPersonPicker.m in Sources */,
+				70F12B8A1AB231DF0090F47A /* UserIdentityPicker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

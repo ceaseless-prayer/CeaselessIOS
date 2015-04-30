@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TaggedPersonPicker.h"
+#import "UserIdentityPicker.h"
 #import "GAITrackedViewController.h"
 
-@interface SettingsViewController : GAITrackedViewController <UIScrollViewDelegate, TaggedPersonPickerDelegate>
+@interface SettingsViewController : GAITrackedViewController <UIScrollViewDelegate, UserIdentityPickerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
