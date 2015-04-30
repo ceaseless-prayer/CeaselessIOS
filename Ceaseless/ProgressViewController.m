@@ -45,6 +45,7 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
         // when totalPeople == -1, this is the initial load, show the mailing list subscribe instead.
         self.progressView.progressLabel.hidden = YES;
         self.progressView.progressCaption.hidden = YES;
+        self.progressView.subscribeToMailingListButton.titleLabel.textAlignment = NSTextAlignmentCenter;
         self.progressView.subscribeToMailingListButton.hidden = NO;
     }
     
@@ -97,7 +98,7 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
             if(!lastAnnouncementDate) {
                 // this is the initial announcement in the feed.
                 // we're not going to show the initial test entry in the feed.
-                lastAnnouncementDate = [NSDate dateWithTimeIntervalSince1970: 1427432891];
+                lastAnnouncementDate = [NSDate dateWithTimeIntervalSince1970: 1427432895];
             }
             
             if([_announcements count] > 0) {

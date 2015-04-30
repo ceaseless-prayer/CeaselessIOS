@@ -30,12 +30,14 @@
     self.scriptureView.scriptureTextView.text = [self.dataObject valueForKey: @"verse"];
     
     UIImage *scriptureImage = [AppUtils getDynamicBackgroundImage];
-    if(scriptureImage != nil) {
-        self.scriptureView.scriptureImageView.image = scriptureImage;
-        self.scriptureView.reflectedScriptureImageView.transform = CGAffineTransformMake(1, 0, 0, -1, 0, 0);
-        self.scriptureView.reflectedScriptureImageView.image = scriptureImage;
+    if(scriptureImage == nil) {
+        // default image
+        scriptureImage = self.scriptureView.scriptureImageView.image;
     }
-
+    
+    self.scriptureView.scriptureImageView.image = scriptureImage;
+    self.scriptureView.reflectedScriptureImageView.transform = CGAffineTransformMake(1, 0, 0, -1, 0, 0);
+    self.scriptureView.reflectedScriptureImageView.image = scriptureImage;
     
     //scroll text to top of view
     [self.scriptureView.scriptureTextView scrollRangeToVisible: (NSMakeRange(0, 0))];
