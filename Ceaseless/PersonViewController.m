@@ -20,6 +20,8 @@
 #import "ContactsListsViewController.h"
 #import "UIFont+FontAwesome.h"
 #import "NSString+FontAwesome.h"
+#import "PhoneNumber.h"
+#import "Email.h"
 
 @interface PersonViewController () <MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate, ABPersonViewControllerDelegate>
 
@@ -30,12 +32,18 @@
 
 static NSString *kInviteMessage;
 static NSString *kSMSMessage;
+static NSString *kMessageError;
+static NSString *kInvitationError;
 
 
 +(void)initialize
 {
-    kInviteMessage =  NSLocalizedString(@"I prayed for you using the Ceaseless app today. You would like it. Visit http://www.ceaselessprayer.com", nil);
-    kSMSMessage = NSLocalizedString(@"I prayed for you today when you came up in my Ceaseless app.", nil);
+    kInviteMessage =  NSLocalizedString(@"I prayed for you using the Ceaseless app today. You would like it. https://appsto.re/us/m8bc6.i", nil);
+    kSMSMessage = NSLocalizedString(@"I prayed for you today when you came up in my Ceaseless app. https://appsto.re/us/m8bc6.i", nil);
+	kMessageError = NSLocalizedString(@"Could not send a message because this person is missing contact information.", nil);
+	kInvitationError = NSLocalizedString(@"Could not send an invitation because this person is missing contact information.", nil);
+
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -90,6 +98,10 @@ static NSString *kSMSMessage;
 
 	[self.personView.moreButton addTarget:self
 								   action:@selector(presentActionSheet:)forControlEvents:UIControlEventTouchUpInside];
+
+	[self.personView.personButton addTarget:self
+								   action:@selector(presentActionSheet:)forControlEvents:UIControlEventTouchUpInside];
+
 	UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 	self.personNotesViewController = [sb instantiateViewControllerWithIdentifier:@"PersonNotesViewController"];
     self.personNotesViewController.person = self.person;
@@ -246,25 +258,8 @@ static NSString *kSMSMessage;
                                    style:UIAlertActionStyleDefault
                                    handler:^(UIAlertAction *action)
                                    {
-                                       PersonInfo *info = self.person.representativeInfo;
-                                       if(info.primaryPhoneNumber) {
-                                           [AppUtils postAnalyticsEventWithCategory:@"person_card_actions" andAction:@"tapped_invite" andLabel:@"sms"];
-                                           [self showSMS: kInviteMessage];
-                                       } else if(info.primaryEmail) {
-                                           [AppUtils postAnalyticsEventWithCategory:@"person_card_actions" andAction:@"tapped_invite" andLabel:@"email"];
-                                           [self showEmailForm];
-                                       } else {
-                                           UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
-                                                                                                  message:NSLocalizedString(@"Could not send an invitation because this person is missing contact information.", nil)
-                                                                                                 delegate:nil
-                                                                                        cancelButtonTitle:@"OK"
-                                                                                        otherButtonTitles:nil];
-                                           
-                                           [warningAlert show];
-                                       }
-                                       
-                                       self.person.lastInvitedDate = [NSDate date];
-                                       [self save];
+								   [self presentMessageActionSheetWithMessage: kInviteMessage];
+								   [AppUtils postAnalyticsEventWithCategory:@"person_card_actions" andAction:@"tapped_invite" andLabel:@""];
 
                                        NSLog(@"Invite to Ceaseless");
                                        
@@ -297,8 +292,49 @@ static NSString *kSMSMessage;
                                   [self showABPerson];
                                   NSLog(@"Showing contact");
                               }];
-    
+
+	NSString *favoriteTitleString;
+	if (self.person.favoritedDate) {
+		favoriteTitleString = @"Unfavorite Contact";
+	} else {
+		favoriteTitleString = @"Favorite Contact";
+
+	}
+	UIAlertAction *favoriteContact = [UIAlertAction
+								  actionWithTitle:NSLocalizedString(favoriteTitleString, favoriteTitleString)
+								  style:UIAlertActionStyleDefault
+								  handler:^(UIAlertAction *action)
+								  {
+								  [AppUtils postAnalyticsEventWithCategory:@"person_card_actions" andAction:@"tapped_view_contact" andLabel:@""];
+								  [self toggleFavorite: self];
+								  NSLog(@"Favorite/Unfavorite from menu");
+								  }];
+
+	UIAlertAction *sendMessage = [UIAlertAction
+									  actionWithTitle:NSLocalizedString(@"Send Message to Contact", @"Send Message To Contact")
+									  style:UIAlertActionStyleDefault
+									  handler:^(UIAlertAction *action)
+									  {
+									  [AppUtils postAnalyticsEventWithCategory:@"person_card_actions" andAction:@"tapped_send_message" andLabel:@""];
+									  [self presentMessageActionSheetWithMessage: kSMSMessage];
+									  NSLog(@"Send message from menu");
+									  }];
+
+	UIAlertAction *addNote = [UIAlertAction
+								  actionWithTitle:NSLocalizedString(@"Add a New Note", @"Add a New Note")
+								  style:UIAlertActionStyleDefault
+								  handler:^(UIAlertAction *action)
+								  {
+								  [AppUtils postAnalyticsEventWithCategory:@"person_card_actions" andAction:@"tapped_add_note" andLabel:@""];
+								  [self addNote: self];
+								  NSLog(@"Add note from menu");
+								  }];
+
     [alertController addAction:cancelAction];
+	[alertController addAction:favoriteContact];
+	[alertController addAction:sendMessage];
+	[alertController addAction:addNote];
+
     if(self.person.removedDate == nil) {
         [alertController addAction:removeFromCeaselessAction];
     } else {
@@ -384,28 +420,86 @@ static NSString *kSMSMessage;
 	[self performAnimationAndPushController: noteViewController];
 }
 - (IBAction) sendMessage: (id) sender {
-    [self sendMessageAction];
+	[self presentMessageActionSheetWithMessage: kSMSMessage];
 }
-// TODO enable for ceaseless as well when you reach this view not from the pageviewcontroller
+// TODO enable for ceaseless as well when you reach this view not from the pageviewcontroller??
 
-- (void)sendMessageAction {
-    PersonInfo *info = self.person.representativeInfo;
-    // TODO should we switch the order?
-    if(info.primaryPhoneNumber) {
-        [AppUtils postAnalyticsEventWithCategory:@"person_card_actions" andAction:@"tapped_send_message" andLabel:@"sms"];
-        [self showSMS: kSMSMessage];
-    } else if(info.primaryEmail) {
-        [AppUtils postAnalyticsEventWithCategory:@"person_card_actions" andAction:@"tapped_send_message" andLabel:@"email"];
-        [self showEmailForm];
-    } else {
-        UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
-                                                               message:NSLocalizedString(@"Could not send a message because this person is missing contact information.", nil)
-                                                              delegate:nil
-                                                     cancelButtonTitle:@"OK"
-                                                     otherButtonTitles:nil];
-        
-        [warningAlert show];
-    }
+
+-(void) presentMessageActionSheetWithMessage: (NSString*) message {
+	UIAlertController *alertController = [UIAlertController
+											  alertControllerWithTitle:nil
+											  message:nil
+											  preferredStyle:UIAlertControllerStyleActionSheet];
+	UIAlertAction *cancelAction = [UIAlertAction
+									   actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
+									   style:UIAlertActionStyleCancel
+									   handler:^(UIAlertAction *action)
+									   {
+									   NSLog(@"Cancel action");
+									   }];
+
+	[alertController addAction:cancelAction];
+
+	PersonInfo *info = self.person.representativeInfo;
+	for (PhoneNumber *phoneNumber in self.person.phoneNumbers) {
+		[AppUtils postAnalyticsEventWithCategory:@"person_card_actions" andAction:@"tapped_send_message" andLabel:@"sms"];
+		UIAlertAction *phoneNumberAction = [UIAlertAction
+					actionWithTitle:NSLocalizedString(phoneNumber.number, phoneNumber.number)
+					style:UIAlertActionStyleDefault
+					handler:^(UIAlertAction *action)
+					{
+					[self showSMSFormForPhoneNumber: phoneNumber withMessage: message];
+					}];
+		[alertController addAction:phoneNumberAction];
+
+	}
+
+
+	for (Email *email in self.person.emails) {
+		[AppUtils postAnalyticsEventWithCategory:@"person_card_actions" andAction:@"tapped_send_message" andLabel:@"email"];
+		UIAlertAction *emailAction = [UIAlertAction
+					actionWithTitle:NSLocalizedString(email.address, email.address)
+					style:UIAlertActionStyleDefault
+					handler:^(UIAlertAction *action)
+					{
+					[self showFormForEmail: email withMessage: message];
+					}];
+		[alertController addAction:emailAction];
+
+
+	}
+
+	if (info.primaryPhoneNumber || info.primaryEmail) { //there is at least one valid way to contact
+
+			//this prevents crash on iPad in iOS 8 - known Apple bug
+		UIPopoverPresentationController *popover = alertController.popoverPresentationController;
+		if (popover)
+			{
+			popover.sourceView = self.view;
+			popover.sourceRect = self.view.frame;
+			popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+			}
+
+		[self presentViewController:alertController animated:YES completion:nil];
+
+	} else {
+		NSString *errorMessage;
+		if (message == kSMSMessage) {
+			errorMessage = kMessageError;
+		} else {
+			errorMessage = kInvitationError;
+		}
+
+		UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
+															   message: errorMessage
+															  delegate:nil
+													 cancelButtonTitle:@"OK"
+													 otherButtonTitles:nil];
+
+		[warningAlert show];
+
+	}
+
 }
 
 
@@ -436,7 +530,7 @@ static NSString *kSMSMessage;
 }
 
 #pragma mark - Direct contact methods
-- (void)showSMS:(NSString*)file {
+- (void)showSMSFormForPhoneNumber: (PhoneNumber*) phoneNumber withMessage: (NSString *) message {
     
     if(![MFMessageComposeViewController canSendText]) {
         UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
@@ -448,24 +542,37 @@ static NSString *kSMSMessage;
         [warningAlert show];
         return;
     }
-    NSArray *recipents = [NSArray arrayWithObjects:self.person.representativeInfo.primaryPhoneNumber.number, nil];
-    NSString *message = [NSString stringWithFormat: @"%@", file];
-    
+    NSArray *recipents = [NSArray arrayWithObjects:phoneNumber.number, nil];
+
     MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
     messageController.messageComposeDelegate = self;
     [messageController setRecipients:recipents];
     [messageController setBody:message];
-    
+
+		//if this is an invitation, save the invite date
+	if (message == kInviteMessage) {
+		self.person.lastInvitedDate = [NSDate date];
+		[self save];
+	}
+
     // Present message view controller on screen
     [self presentViewController:messageController animated:YES completion:nil];
 }
 
-- (void)showEmailForm {
-    NSArray *recipents = [NSArray arrayWithObjects:self.person.representativeInfo.primaryEmail.address, nil];
+- (void) showFormForEmail: (Email*) email withMessage: (NSString *) message {
+    NSArray *recipents = [NSArray arrayWithObjects:email.address, nil];
     MFMailComposeViewController *mailController = [[MFMailComposeViewController alloc] init];
     mailController.mailComposeDelegate = self;
     [mailController setToRecipients: recipents];
-    
+	[mailController setSubject: @"Ceaseless Prayer"];
+	NSString *emailBody = [NSString stringWithFormat: @"%@,\n\n%@",self.person.representativeInfo.primaryFirstName.name, message];
+	[mailController setMessageBody: emailBody  isHTML: NO];
+
+		//if this is an invitation, save the invite date
+	if (message == kInviteMessage) {
+		self.person.lastInvitedDate = [NSDate date];
+		[self save];
+	}
     // Present mail view controller on screen
     [self presentViewController:mailController animated:YES completion:nil];
 }

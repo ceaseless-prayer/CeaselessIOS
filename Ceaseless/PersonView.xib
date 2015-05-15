@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -250,6 +250,13 @@
                                         </mask>
                                     </variation>
                                 </textField>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fYg-nb-MfT" userLabel="PersonButton">
+                                    <rect key="frame" x="217" y="88" width="150" height="150"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <state key="normal">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                </button>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vUc-Xs-Ucw" userLabel="MiddlePlaceholderView">
                                     <rect key="frame" x="270" y="238" width="44" height="44"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -286,16 +293,20 @@
                                 <constraint firstItem="vUc-Xs-Ucw" firstAttribute="top" secondItem="eF7-HN-urH" secondAttribute="bottom" id="9Tp-QI-85w"/>
                                 <constraint firstAttribute="centerX" secondItem="vUc-Xs-Ucw" secondAttribute="centerX" id="9ns-VK-0z0"/>
                                 <constraint firstItem="1uu-zD-zYL" firstAttribute="top" secondItem="CVR-nv-9Et" secondAttribute="top" id="9zP-at-9b0"/>
+                                <constraint firstItem="fYg-nb-MfT" firstAttribute="trailing" secondItem="vRz-LA-Wxx" secondAttribute="trailing" id="B9m-uE-PX2"/>
                                 <constraint firstItem="vRz-LA-Wxx" firstAttribute="top" secondItem="CVR-nv-9Et" secondAttribute="top" id="Cia-MV-7a3"/>
                                 <constraint firstAttribute="centerY" secondItem="vRz-LA-Wxx" secondAttribute="centerY" id="Ewd-Om-5ad"/>
                                 <constraint firstItem="1uu-zD-zYL" firstAttribute="leading" secondItem="CVR-nv-9Et" secondAttribute="leading" id="Jus-aN-rDj"/>
                                 <constraint firstItem="eF7-HN-urH" firstAttribute="height" secondItem="vRz-LA-Wxx" secondAttribute="height" id="Lwn-ya-RyH"/>
                                 <constraint firstItem="vUc-Xs-Ucw" firstAttribute="top" secondItem="vRz-LA-Wxx" secondAttribute="bottom" id="MJ6-Dl-pwz"/>
                                 <constraint firstItem="ofI-30-Sup" firstAttribute="top" secondItem="CVR-nv-9Et" secondAttribute="top" id="Ndt-uo-ySn"/>
+                                <constraint firstItem="fYg-nb-MfT" firstAttribute="leading" secondItem="vRz-LA-Wxx" secondAttribute="leading" id="SXN-6R-RIu"/>
                                 <constraint firstItem="ofI-30-Sup" firstAttribute="leading" secondItem="CVR-nv-9Et" secondAttribute="leading" id="TLw-v6-zD7"/>
                                 <constraint firstAttribute="trailing" secondItem="zHl-KV-Ywy" secondAttribute="trailing" id="Tiq-ZA-xLj"/>
                                 <constraint firstItem="yRE-GT-fO6" firstAttribute="top" secondItem="1uu-zD-zYL" secondAttribute="top" id="Uw5-Yr-R7E"/>
                                 <constraint firstAttribute="trailing" secondItem="gWq-sw-mnH" secondAttribute="trailing" id="Vjb-2G-d2S"/>
+                                <constraint firstItem="fYg-nb-MfT" firstAttribute="top" secondItem="vRz-LA-Wxx" secondAttribute="top" id="VuP-Aw-jcd"/>
+                                <constraint firstItem="fYg-nb-MfT" firstAttribute="bottom" secondItem="vRz-LA-Wxx" secondAttribute="bottom" id="Vxr-xl-LkB"/>
                                 <constraint firstItem="gWq-sw-mnH" firstAttribute="top" secondItem="zHl-KV-Ywy" secondAttribute="bottom" id="XS3-oM-dzN"/>
                                 <constraint firstAttribute="trailing" secondItem="yRE-GT-fO6" secondAttribute="trailing" id="Y0I-Z5-dUS"/>
                                 <constraint firstItem="yRE-GT-fO6" firstAttribute="top" secondItem="gWq-sw-mnH" secondAttribute="bottom" id="a5e-6P-m7O"/>
@@ -408,6 +419,7 @@
                 <outlet property="moreButton" destination="qaX-ht-K8v" id="Le3-KC-TG5"/>
                 <outlet property="nameLabel" destination="29f-oR-vIq" id="2Sr-5j-cHx"/>
                 <outlet property="notesView" destination="yRE-GT-fO6" id="4kv-2F-xMc"/>
+                <outlet property="personButton" destination="fYg-nb-MfT" id="CUo-xP-QzT"/>
                 <outlet property="personCardBackground" destination="ofI-30-Sup" id="ZBM-7h-mDo"/>
                 <outlet property="personImageView" destination="vRz-LA-Wxx" id="qEU-mH-kAb"/>
                 <outlet property="placeholderText" destination="eF7-HN-urH" id="Qeq-K7-9Su"/>
