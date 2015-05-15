@@ -14,7 +14,7 @@
 #import "PersonIdentifier.h"
 #import "Name.h"
 #import "AppUtils.h"
-#import "UIImageEffects.h"
+//#import "UIImageEffects.h"
 
 @interface PrayerJournalViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UISearchControllerDelegate>
 
