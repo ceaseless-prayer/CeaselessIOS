@@ -234,7 +234,7 @@ static NSString *kInvitationError;
 
 -(void) presentActionSheet: (UIButton *) sender {
     UIAlertController *alertController = [UIAlertController
-                                          alertControllerWithTitle:nil
+                                          alertControllerWithTitle:NSLocalizedString(@"More actions", @"More actions")
                                           message:nil
                                           preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *cancelAction = [UIAlertAction
@@ -267,7 +267,7 @@ static NSString *kInvitationError;
     
     UIAlertAction *removeFromCeaselessAction = [UIAlertAction
                                         actionWithTitle:NSLocalizedString(@"Remove from Ceaseless", @"Remove from Ceaseless")
-                                        style:UIAlertActionStyleDefault
+                                        style:UIAlertActionStyleDestructive
                                         handler:^(UIAlertAction *action)
                                         {
                                             [self removePersonFromCeaseless];
