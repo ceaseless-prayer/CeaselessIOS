@@ -258,7 +258,7 @@ static NSString *kInvitationError;
                                    style:UIAlertActionStyleDefault
                                    handler:^(UIAlertAction *action)
                                    {
-								   [self presentMessageActionSheetWithMessage: kInviteMessage];
+								   [self presentMessageActionSheet: sender WithMessage: kInviteMessage];
 								   [AppUtils postAnalyticsEventWithCategory:@"person_card_actions" andAction:@"tapped_invite" andLabel:@""];
 
                                        NSLog(@"Invite to Ceaseless");
@@ -316,7 +316,7 @@ static NSString *kInvitationError;
 									  handler:^(UIAlertAction *action)
 									  {
 									  [AppUtils postAnalyticsEventWithCategory:@"person_card_actions" andAction:@"tapped_send_message" andLabel:@""];
-									  [self presentMessageActionSheetWithMessage: kSMSMessage];
+									  [self presentMessageActionSheet: sender WithMessage: kSMSMessage];
 									  NSLog(@"Send message from menu");
 									  }];
 
@@ -419,13 +419,13 @@ static NSString *kInvitationError;
 
 	[self performAnimationAndPushController: noteViewController];
 }
-- (IBAction) sendMessage: (id) sender {
-	[self presentMessageActionSheetWithMessage: kSMSMessage];
+- (IBAction) sendMessage: (UIButton *) sender {
+	[self presentMessageActionSheet: sender WithMessage: kSMSMessage];
 }
 // TODO enable for ceaseless as well when you reach this view not from the pageviewcontroller??
 
 
--(void) presentMessageActionSheetWithMessage: (NSString*) message {
+-(void) presentMessageActionSheet: (UIButton *) sender WithMessage: (NSString*) message {
 	UIAlertController *alertController = [UIAlertController
 											  alertControllerWithTitle:nil
 											  message:nil
@@ -475,8 +475,8 @@ static NSString *kInvitationError;
 		UIPopoverPresentationController *popover = alertController.popoverPresentationController;
 		if (popover)
 			{
-			popover.sourceView = self.view;
-			popover.sourceRect = self.view.frame;
+			popover.sourceView = sender;
+			popover.sourceRect = sender.frame;
 			popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
 			}
 
