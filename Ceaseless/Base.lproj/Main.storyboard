@@ -28,7 +28,11 @@
                                 <rect key="frame" x="0.0" y="-64" width="600" height="664"/>
                                 <color key="tintColor" red="0.0" green="0.0039215686274509803" blue="0.18431372549019609" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ubo-4I-IzI">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nPv-fT-7LE">
+                                <rect key="frame" x="0.0" y="-64" width="600" height="664"/>
+                                <color key="backgroundColor" red="0.0" green="0.0039215686269999999" blue="0.1843137255" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ubo-4I-IzI">
                                 <rect key="frame" x="0.0" y="-64" width="600" height="664"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Sn1-RR-9as">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="664"/>
@@ -52,15 +56,19 @@
                             <constraint firstItem="rxH-h1-ZKU" firstAttribute="leading" secondItem="502-Ir-ELC" secondAttribute="leading" id="2GC-Tn-0gq"/>
                             <constraint firstItem="VDk-V7-qRO" firstAttribute="centerY" secondItem="gEO-za-U7L" secondAttribute="centerY" id="9CY-tR-JfR"/>
                             <constraint firstItem="rxH-h1-ZKU" firstAttribute="top" secondItem="Ubo-4I-IzI" secondAttribute="top" id="Cgd-pe-Ef8"/>
+                            <constraint firstItem="rxH-h1-ZKU" firstAttribute="trailing" secondItem="nPv-fT-7LE" secondAttribute="trailing" id="D6W-JL-0jK"/>
                             <constraint firstItem="rxH-h1-ZKU" firstAttribute="top" secondItem="502-Ir-ELC" secondAttribute="top" constant="-64" id="Hrs-zr-Qa6"/>
                             <constraint firstItem="IfR-02-kHw" firstAttribute="top" secondItem="rxH-h1-ZKU" secondAttribute="bottom" id="KOb-Ub-UOv"/>
                             <constraint firstItem="rxH-h1-ZKU" firstAttribute="trailing" secondItem="Ubo-4I-IzI" secondAttribute="trailing" id="Lbo-qS-QiV"/>
                             <constraint firstItem="rxH-h1-ZKU" firstAttribute="bottom" secondItem="Ubo-4I-IzI" secondAttribute="bottom" id="MpA-Dj-9QI"/>
                             <constraint firstItem="rxH-h1-ZKU" firstAttribute="centerY" secondItem="VDk-V7-qRO" secondAttribute="centerY" id="V6Z-lr-qTR"/>
                             <constraint firstItem="rxH-h1-ZKU" firstAttribute="bottom" secondItem="502-Ir-ELC" secondAttribute="bottomMargin" constant="64" id="jLJ-7L-NNL"/>
+                            <constraint firstItem="rxH-h1-ZKU" firstAttribute="top" secondItem="nPv-fT-7LE" secondAttribute="top" id="jl6-a2-0jO"/>
                             <constraint firstItem="rxH-h1-ZKU" firstAttribute="leading" secondItem="Ubo-4I-IzI" secondAttribute="leading" id="kRs-7A-Czt"/>
                             <constraint firstAttribute="trailing" secondItem="rxH-h1-ZKU" secondAttribute="trailing" id="l1O-Je-Lax"/>
                             <constraint firstItem="VDk-V7-qRO" firstAttribute="leading" secondItem="gEO-za-U7L" secondAttribute="leading" constant="24" id="mnf-g8-kAa"/>
+                            <constraint firstItem="rxH-h1-ZKU" firstAttribute="leading" secondItem="nPv-fT-7LE" secondAttribute="leading" id="qGI-4F-HK5"/>
+                            <constraint firstItem="rxH-h1-ZKU" firstAttribute="bottom" secondItem="nPv-fT-7LE" secondAttribute="bottom" id="uTt-br-dPU"/>
                             <constraint firstItem="rxH-h1-ZKU" firstAttribute="centerX" secondItem="VDk-V7-qRO" secondAttribute="centerX" id="v3F-Pf-bz6"/>
                         </constraints>
                         <variation key="default">

@@ -27,6 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.screenName = @"MainScreen";
+    [self setBlurredBackground];
     // Do any additional setup after loading the view, typically from a nib.
 	UIImage *ceaselessImage = [UIImage imageNamed: @"logo_main"];
 	ceaselessImage = [ceaselessImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
