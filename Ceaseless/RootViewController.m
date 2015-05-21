@@ -9,7 +9,6 @@
 #import "RootViewController.h"
 #import "ModelController.h"
 #import "DataViewController.h"
-//#import "UIImageEffects.h"
 #import "AppUtils.h"
 #import "UIFont+FontAwesome.h"
 #import "NSString+FontAwesome.h"

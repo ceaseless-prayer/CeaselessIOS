@@ -69,7 +69,6 @@
 		70F12B8A1AB231DF0090F47A /* UserIdentityPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F12B891AB231DF0090F47A /* UserIdentityPicker.m */; };
 		70F12B901AB396590090F47A /* PrayerJournalTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F12B8F1AB396590090F47A /* PrayerJournalTableViewCell.m */; };
 		70F663FB1AA7E14F0073801E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F663FA1AA7E14F0073801E /* CoreGraphics.framework */; };
-		70F663FE1AA7E30F0073801E /* UIImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F663FD1AA7E30F0073801E /* UIImageEffects.m */; };
 		70F664001AA7E4470073801E /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F663FF1AA7E4470073801E /* Accelerate.framework */; };
 		70F664021AA7E46C0073801E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F664011AA7E46C0073801E /* UIKit.framework */; };
 		70F664041AA7E4780073801E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F664031AA7E4780073801E /* Foundation.framework */; };
@@ -209,8 +208,6 @@
 		70F12B8E1AB396590090F47A /* PrayerJournalTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrayerJournalTableViewCell.h; sourceTree = "<group>"; };
 		70F12B8F1AB396590090F47A /* PrayerJournalTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrayerJournalTableViewCell.m; sourceTree = "<group>"; };
 		70F663FA1AA7E14F0073801E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		70F663FC1AA7E30F0073801E /* UIImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageEffects.h; sourceTree = "<group>"; };
-		70F663FD1AA7E30F0073801E /* UIImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageEffects.m; sourceTree = "<group>"; };
 		70F663FF1AA7E4470073801E /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		70F664011AA7E46C0073801E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		70F664031AA7E4780073801E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -277,8 +274,6 @@
 				70F664171AA8B9260073801E /* ScripturePicker.m */,
 				70D51C091AA6222700FA7CDC /* PersonPicker.h */,
 				70D51C0A1AA6222700FA7CDC /* PersonPicker.m */,
-				70F663FC1AA7E30F0073801E /* UIImageEffects.h */,
-				70F663FD1AA7E30F0073801E /* UIImageEffects.m */,
 				429094D81AF29F7A009ABC3E /* Reachability.h */,
 				429094D91AF29F7A009ABC3E /* Reachability.m */,
 				424C5B211ADF1137005C4CFC /* CeaselessService.h */,
@@ -517,7 +512,7 @@
 				TargetAttributes = {
 					42F3AE171AA4DD7F003A88F5 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 28DYBASY7W;
+						DevelopmentTeam = 98FUBN4YVB;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -526,7 +521,7 @@
 					};
 					42F3AE361AA4DD80003A88F5 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 28DYBASY7W;
+						DevelopmentTeam = 98FUBN4YVB;
 						TestTargetID = 42F3AE171AA4DD7F003A88F5;
 					};
 				};
@@ -628,7 +623,6 @@
 				42E0F4A71AD60C6200CE64E3 /* ProgressView.m in Sources */,
 				70F664181AA8B9260073801E /* ScripturePicker.m in Sources */,
 				704D5CF11AAFA96200BD48B3 /* ScriptureQueue.m in Sources */,
-				70F663FE1AA7E30F0073801E /* UIImageEffects.m in Sources */,
 				42458BF01ACF1FEC00C48830 /* PhoneNumber.m in Sources */,
 				70F12B901AB396590090F47A /* PrayerJournalTableViewCell.m in Sources */,
 				70D51C0B1AA6222700FA7CDC /* PersonPicker.m in Sources */,
