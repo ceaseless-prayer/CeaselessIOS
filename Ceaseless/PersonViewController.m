@@ -96,9 +96,6 @@ static NSString *kInvitationError;
         self.personView.personCardBackground.image = backgroundImage;
     }
 
-	[self.personView.moreButton addTarget:self
-								   action:@selector(presentActionSheet:)forControlEvents:UIControlEventTouchUpInside];
-
 	[self.personView.personButton addTarget:self
 								   action:@selector(presentActionSheet:)forControlEvents:UIControlEventTouchUpInside];
 
@@ -334,16 +331,14 @@ static NSString *kInvitationError;
 	[alertController addAction:favoriteContact];
 	[alertController addAction:sendMessage];
 	[alertController addAction:addNote];
-
-    if(self.person.removedDate == nil) {
-        [alertController addAction:removeFromCeaselessAction];
-    } else {
-        [alertController addAction:addToCeaselessAction];
-    }
-
     [alertController addAction:inviteAction];
     [alertController addAction:viewContact];
-    
+	if(self.person.removedDate == nil) {
+		[alertController addAction:removeFromCeaselessAction];
+	} else {
+		[alertController addAction:addToCeaselessAction];
+	}
+
     //this prevents crash on iPad in iOS 8 - known Apple bug
     UIPopoverPresentationController *popover = alertController.popoverPresentationController;
     if (popover)
@@ -427,8 +422,15 @@ static NSString *kInvitationError;
 
 -(void) presentMessageActionSheet: (UIButton *) sender WithMessage: (NSString*) message {
 
+	NSString *messageTitle;
+	if (message == kInviteMessage) {
+		messageTitle = @"Send Invite";
+	} else {
+		messageTitle = @"Send Message";
+	}
+
 	UIAlertController *alertController = [UIAlertController
-											  alertControllerWithTitle:NSLocalizedString(@"Send Message", @"Send Message")
+											  alertControllerWithTitle:NSLocalizedString(messageTitle, messageTitle)
 											  message:nil
 											  preferredStyle:UIAlertControllerStyleActionSheet];
 	UIAlertAction *cancelAction = [UIAlertAction
