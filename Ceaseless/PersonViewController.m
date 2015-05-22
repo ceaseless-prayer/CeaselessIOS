@@ -38,8 +38,8 @@ static NSString *kInvitationError;
 
 +(void)initialize
 {
-    kInviteMessage =  NSLocalizedString(@"I prayed for you using the Ceaseless app today. You would like it. https://appsto.re/us/m8bc6.i", nil);
-    kSMSMessage = NSLocalizedString(@"I prayed for you today when you came up in my Ceaseless app. https://appsto.re/us/m8bc6.i", nil);
+    kInviteMessage =  NSLocalizedString(@"I prayed for you using the Ceaseless app today. You would like it. \n\nhttps://appsto.re/us/m8bc6.i", nil);
+    kSMSMessage = NSLocalizedString(@"I prayed for you today when you came up in my Ceaseless app. How are you doing?  \n\nhttps://appsto.re/us/m8bc6.i", nil);
 	kMessageError = NSLocalizedString(@"Could not send a message because this person is missing contact information.", nil);
 	kInvitationError = NSLocalizedString(@"Could not send an invitation because this person is missing contact information.", nil);
 
@@ -476,7 +476,7 @@ static NSString *kInvitationError;
 		if (popover)
 			{
 			popover.sourceView = sender;
-			popover.sourceRect = sender.frame;
+			popover.sourceRect = sender.bounds;
 			popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
 			}
 
