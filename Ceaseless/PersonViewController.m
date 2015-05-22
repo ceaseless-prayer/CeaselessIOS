@@ -234,7 +234,7 @@ static NSString *kInvitationError;
 
 -(void) presentActionSheet: (UIButton *) sender {
     UIAlertController *alertController = [UIAlertController
-                                          alertControllerWithTitle:NSLocalizedString(@"More actions", @"More actions")
+                                          alertControllerWithTitle:nil
                                           message:nil
                                           preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *cancelAction = [UIAlertAction
@@ -311,7 +311,7 @@ static NSString *kInvitationError;
 								  }];
 
 	UIAlertAction *sendMessage = [UIAlertAction
-									  actionWithTitle:NSLocalizedString(@"Send Message to Contact", @"Send Message To Contact")
+									  actionWithTitle:NSLocalizedString(@"Send Message", @"Send Message")
 									  style:UIAlertActionStyleDefault
 									  handler:^(UIAlertAction *action)
 									  {
@@ -426,8 +426,9 @@ static NSString *kInvitationError;
 
 
 -(void) presentMessageActionSheet: (UIButton *) sender WithMessage: (NSString*) message {
+
 	UIAlertController *alertController = [UIAlertController
-											  alertControllerWithTitle:nil
+											  alertControllerWithTitle:NSLocalizedString(@"Send Message", @"Send Message")
 											  message:nil
 											  preferredStyle:UIAlertControllerStyleActionSheet];
 	UIAlertAction *cancelAction = [UIAlertAction
