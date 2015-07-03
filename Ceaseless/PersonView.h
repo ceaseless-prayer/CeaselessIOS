@@ -14,8 +14,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *personCardBackground;
 @property (weak, nonatomic) IBOutlet UIImageView *personImageView;
 @property (weak, nonatomic) IBOutlet UITextField *placeholderText;
+@property (weak, nonatomic) IBOutlet UIButton *personButton;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UIButton *moreButton;
 @property (weak, nonatomic) IBOutlet UIView *notesView;
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *blurEffect;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topToCardViewConstraint;
