@@ -710,10 +710,13 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
         PersonIdentifier *ceaselessPerson = [ceaselessContacts getCeaselessContactFromABRecord:abPerson];
         
         CFRelease(addressBook);
-        
-        PersonViewController *personViewController = [[PersonViewController alloc]init];
-        personViewController.dataObject = ceaselessPerson;
-		[self.navigationController pushViewController:personViewController animated:YES];
+        if (ceaselessPerson != nil) {
+            PersonViewController *personViewController = [[PersonViewController alloc]init];
+            personViewController.dataObject = ceaselessPerson;
+            [self.navigationController pushViewController:personViewController animated:YES];
+        } else {
+            [[[UIAlertView alloc] initWithTitle:nil message:@"Ceaseless only syncs contacts that have at least a first name." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        }
     } else {
         ceaselessContacts.internalAddressBookChange = NO;
     }
