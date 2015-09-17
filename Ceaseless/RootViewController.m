@@ -91,9 +91,11 @@
             //prepare the model
             _modelController = [[ModelController alloc] init];
             
-            // make the model try to refresh whenever the app becomse active
+            // make the model try to refresh whenever the app becomes active in the future
             [[NSNotificationCenter defaultCenter] addObserver:_modelController selector:@selector(runIfNewDay) name:UIApplicationDidBecomeActiveNotification object:nil];
-            
+            // load it manually for this initialization // needed for ios9 ipad it seems...
+            [_modelController runIfNewDay];
+
             // make the model show new content when forced by the user
             [[NSNotificationCenter defaultCenter] addObserver:_modelController selector:@selector(showNewContent) name:kForceShowNewContent object:nil];
             
