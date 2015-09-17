@@ -128,6 +128,9 @@
                             <constraints>
                                 <constraint firstItem="xeq-iM-Snz" firstAttribute="top" secondItem="ayC-9B-Mxc" secondAttribute="top" id="3Rz-fG-acl"/>
                                 <constraint firstAttribute="bottom" secondItem="h1U-rN-1q2" secondAttribute="bottom" id="52w-vh-65A"/>
+                                <constraint firstItem="xeq-iM-Snz" firstAttribute="top" secondItem="ayC-9B-Mxc" secondAttribute="top" constant="198" id="9QD-Hr-hne">
+                                    <variation key="heightClass=compact" constant="0.0"/>
+                                </constraint>
                                 <constraint firstItem="h1U-rN-1q2" firstAttribute="top" secondItem="mnf-Gd-yPc" secondAttribute="bottom" id="CJm-bW-m75"/>
                                 <constraint firstAttribute="trailing" secondItem="h1U-rN-1q2" secondAttribute="trailing" id="HR7-jC-B51"/>
                                 <constraint firstItem="xeq-iM-Snz" firstAttribute="centerY" secondItem="ayC-9B-Mxc" secondAttribute="centerY" id="HyT-rN-JXz"/>
@@ -149,8 +152,18 @@
                                     <exclude reference="hlK-pn-f7H"/>
                                     <exclude reference="ri9-i7-luV"/>
                                     <exclude reference="3Rz-fG-acl"/>
+                                    <exclude reference="9QD-Hr-hne"/>
                                     <exclude reference="HyT-rN-JXz"/>
                                     <exclude reference="ufM-wx-HXr"/>
+                                </mask>
+                            </variation>
+                            <variation key="heightClass=compact">
+                                <mask key="subviews">
+                                    <exclude reference="mnf-Gd-yPc"/>
+                                </mask>
+                                <mask key="constraints">
+                                    <include reference="9QD-Hr-hne"/>
+                                    <exclude reference="zcx-fC-2ke"/>
                                 </mask>
                             </variation>
                         </view>
