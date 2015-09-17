@@ -155,6 +155,12 @@
                                             <mask key="subviews">
                                                 <exclude reference="6Rj-CP-8zw"/>
                                             </mask>
+                                            <mask key="constraints">
+                                                <exclude reference="5bq-AJ-FB9"/>
+                                                <exclude reference="AaN-xK-DsB"/>
+                                                <exclude reference="IJ8-2l-S1N"/>
+                                                <exclude reference="icI-LK-GvU"/>
+                                            </mask>
                                         </variation>
                                     </view>
                                     <blurEffect style="light"/>
