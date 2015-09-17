@@ -1235,21 +1235,9 @@
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KIQ-5b-M78" userLabel="NotesTextView">
                                             <rect key="frame" x="8" y="69" width="584" height="423"/>
                                             <color key="backgroundColor" red="0.0" green="0.0039215686269999999" blue="0.1843137255" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="441" id="CRx-dG-hmS"/>
-                                                <constraint firstAttribute="height" constant="262" id="eMr-1d-lSB"/>
-                                                <constraint firstAttribute="height" constant="300" id="gED-0F-noc"/>
-                                            </constraints>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="CRx-dG-hmS"/>
-                                                    <exclude reference="eMr-1d-lSB"/>
-                                                    <exclude reference="gED-0F-noc"/>
-                                                </mask>
-                                            </variation>
                                         </textView>
                                         <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i8i-7S-RMd" userLabel="ContactSearchResultsView">
                                             <rect key="frame" x="8" y="68" width="584" height="424"/>
@@ -1327,7 +1315,7 @@
                                         <constraint firstItem="i8i-7S-RMd" firstAttribute="leading" secondItem="3vN-me-vXK" secondAttribute="leading" constant="8" id="er7-x3-csy"/>
                                         <constraint firstAttribute="trailing" secondItem="2FU-BX-0hG" secondAttribute="trailing" constant="16" id="fk6-RN-YCw"/>
                                         <constraint firstItem="2FU-BX-0hG" firstAttribute="leading" secondItem="3vN-me-vXK" secondAttribute="leadingMargin" id="kLx-Ps-GQe"/>
-                                        <constraint firstItem="KIQ-5b-M78" firstAttribute="top" secondItem="2FU-BX-0hG" secondAttribute="bottom" constant="1" id="ndA-Lp-1sF"/>
+                                        <constraint firstItem="KIQ-5b-M78" firstAttribute="top" secondItem="2FU-BX-0hG" secondAttribute="bottom" priority="900" constant="1" id="ndA-Lp-1sF"/>
                                         <constraint firstItem="i8i-7S-RMd" firstAttribute="top" secondItem="2FU-BX-0hG" secondAttribute="bottom" id="piV-UY-GKW"/>
                                         <constraint firstItem="KIQ-5b-M78" firstAttribute="leading" secondItem="3vN-me-vXK" secondAttribute="leading" constant="8" id="tlr-23-cfH"/>
                                         <constraint firstAttribute="trailing" secondItem="Ltb-c7-ldM" secondAttribute="trailing" id="wUK-P9-ITS"/>
