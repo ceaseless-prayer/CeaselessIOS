@@ -124,7 +124,7 @@
                                     </variation>
                                 </visualEffectView>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="xeq-iM-Snz" firstAttribute="top" secondItem="ayC-9B-Mxc" secondAttribute="top" id="3Rz-fG-acl"/>
                                 <constraint firstAttribute="bottom" secondItem="h1U-rN-1q2" secondAttribute="bottom" id="52w-vh-65A"/>
@@ -162,6 +162,10 @@
                                     <exclude reference="mnf-Gd-yPc"/>
                                 </mask>
                                 <mask key="constraints">
+                                    <exclude reference="eVf-2B-Jb7"/>
+                                    <exclude reference="nO6-9t-hUN"/>
+                                    <exclude reference="utP-Iw-Ylz"/>
+                                    <exclude reference="CJm-bW-m75"/>
                                     <include reference="9QD-Hr-hne"/>
                                     <exclude reference="zcx-fC-2ke"/>
                                 </mask>
