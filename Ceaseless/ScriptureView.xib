@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ScriptureViewController">
@@ -23,7 +23,7 @@
                             <rect key="frame" x="8" y="2" width="584" height="596"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="at_the_beach.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="mnf-Gd-yPc" userLabel="ScriptureImage">
-                                    <rect key="frame" x="0.0" y="0.0" width="584" height="168"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="584" height="298"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="a36-58-Uf6"/>
                                     </constraints>
@@ -33,35 +33,17 @@
                                         </mask>
                                     </variation>
                                 </imageView>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DL6-Do-MjI" userLabel="ClearTopView">
-                                    <rect key="frame" x="0.0" y="0.0" width="584" height="168"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="200" id="jHZ-pb-A62"/>
-                                        <constraint firstAttribute="height" constant="243" id="jrI-yP-ps7"/>
-                                        <constraint firstAttribute="height" constant="250" id="kus-gf-oy5"/>
-                                        <constraint firstAttribute="height" constant="150" id="unw-kS-j2a"/>
-                                    </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="jHZ-pb-A62"/>
-                                            <exclude reference="jrI-yP-ps7"/>
-                                            <exclude reference="kus-gf-oy5"/>
-                                            <exclude reference="unw-kS-j2a"/>
-                                        </mask>
-                                    </variation>
-                                </view>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xeq-iM-Snz" userLabel="ScriptureImageReflection">
-                                    <rect key="frame" x="0.0" y="168" width="584" height="428"/>
+                                    <rect key="frame" x="0.0" y="298" width="584" height="298"/>
                                 </imageView>
                                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h1U-rN-1q2">
-                                    <rect key="frame" x="0.0" y="168" width="584" height="428"/>
+                                    <rect key="frame" x="0.0" y="298" width="584" height="298"/>
                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="MVu-Vi-9iM">
-                                        <rect key="frame" x="0.0" y="0.0" width="584" height="428"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="584" height="298"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="8Wq-k1-EVN">
-                                                <rect key="frame" x="0.0" y="0.0" width="584" height="376"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="584" height="246"/>
                                                 <color key="backgroundColor" red="0.0" green="0.0039215686274509803" blue="0.18431372549019609" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="262" id="1ef-dE-bGI"/>
@@ -79,7 +61,7 @@
                                                 </variation>
                                             </textView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scripture reference" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="240-mT-dOI">
-                                                <rect key="frame" x="0.0" y="376" width="584" height="52"/>
+                                                <rect key="frame" x="0.0" y="246" width="584" height="52"/>
                                                 <color key="backgroundColor" red="0.0" green="0.0039215686269999999" blue="0.1843137255" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="52" id="poh-AP-6v3"/>
@@ -89,7 +71,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K9c-0F-rJa" userLabel="ShareButton">
-                                                <rect key="frame" x="534" y="387" width="30" height="30"/>
+                                                <rect key="frame" x="534" y="257" width="30" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="2CX-Hq-7Pw"/>
                                                     <constraint firstAttribute="width" constant="30" id="ZmR-Hq-fGN"/>
@@ -144,29 +126,31 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
+                                <constraint firstItem="xeq-iM-Snz" firstAttribute="top" secondItem="ayC-9B-Mxc" secondAttribute="top" id="3Rz-fG-acl"/>
                                 <constraint firstAttribute="bottom" secondItem="h1U-rN-1q2" secondAttribute="bottom" id="52w-vh-65A"/>
                                 <constraint firstItem="h1U-rN-1q2" firstAttribute="top" secondItem="mnf-Gd-yPc" secondAttribute="bottom" id="CJm-bW-m75"/>
-                                <constraint firstAttribute="trailing" secondItem="DL6-Do-MjI" secondAttribute="trailing" id="DrH-bw-CfI"/>
                                 <constraint firstAttribute="trailing" secondItem="h1U-rN-1q2" secondAttribute="trailing" id="HR7-jC-B51"/>
+                                <constraint firstItem="xeq-iM-Snz" firstAttribute="centerY" secondItem="ayC-9B-Mxc" secondAttribute="centerY" id="HyT-rN-JXz"/>
                                 <constraint firstAttribute="trailing" secondItem="xeq-iM-Snz" secondAttribute="trailing" id="L3r-Vt-5kF"/>
-                                <constraint firstItem="DL6-Do-MjI" firstAttribute="top" secondItem="ayC-9B-Mxc" secondAttribute="top" id="POi-To-WBF"/>
                                 <constraint firstItem="h1U-rN-1q2" firstAttribute="leading" secondItem="ayC-9B-Mxc" secondAttribute="leading" id="S6q-Qh-pMF"/>
-                                <constraint firstItem="xeq-iM-Snz" firstAttribute="top" secondItem="DL6-Do-MjI" secondAttribute="bottom" id="a22-IT-iGM"/>
-                                <constraint firstItem="DL6-Do-MjI" firstAttribute="width" secondItem="h1U-rN-1q2" secondAttribute="height" multiplier="600:440" id="dNk-ET-sHa"/>
+                                <constraint firstItem="xeq-iM-Snz" firstAttribute="top" secondItem="h1U-rN-1q2" secondAttribute="top" id="WHJ-bZ-ZaC"/>
                                 <constraint firstItem="mnf-Gd-yPc" firstAttribute="leading" secondItem="ayC-9B-Mxc" secondAttribute="leading" id="eVf-2B-Jb7"/>
-                                <constraint firstItem="h1U-rN-1q2" firstAttribute="top" secondItem="DL6-Do-MjI" secondAttribute="bottom" id="flQ-fe-MDC"/>
                                 <constraint firstItem="xeq-iM-Snz" firstAttribute="leading" secondItem="ayC-9B-Mxc" secondAttribute="leading" id="g49-9B-utC"/>
                                 <constraint firstAttribute="bottom" secondItem="mnf-Gd-yPc" secondAttribute="bottom" id="hlK-pn-f7H"/>
                                 <constraint firstAttribute="bottom" secondItem="xeq-iM-Snz" secondAttribute="bottom" id="ki6-P7-gYL"/>
                                 <constraint firstAttribute="trailing" secondItem="mnf-Gd-yPc" secondAttribute="trailing" id="nO6-9t-hUN"/>
                                 <constraint firstAttribute="bottom" secondItem="mnf-Gd-yPc" secondAttribute="bottom" id="ri9-i7-luV"/>
+                                <constraint firstItem="xeq-iM-Snz" firstAttribute="top" secondItem="ayC-9B-Mxc" secondAttribute="top" id="ufM-wx-HXr"/>
                                 <constraint firstItem="mnf-Gd-yPc" firstAttribute="top" secondItem="ayC-9B-Mxc" secondAttribute="top" id="utP-Iw-Ylz"/>
-                                <constraint firstItem="DL6-Do-MjI" firstAttribute="leading" secondItem="ayC-9B-Mxc" secondAttribute="leading" id="xao-gw-oHY"/>
+                                <constraint firstItem="xeq-iM-Snz" firstAttribute="height" secondItem="mnf-Gd-yPc" secondAttribute="height" id="zcx-fC-2ke"/>
                             </constraints>
                             <variation key="default">
                                 <mask key="constraints">
                                     <exclude reference="hlK-pn-f7H"/>
                                     <exclude reference="ri9-i7-luV"/>
+                                    <exclude reference="3Rz-fG-acl"/>
+                                    <exclude reference="HyT-rN-JXz"/>
+                                    <exclude reference="ufM-wx-HXr"/>
                                 </mask>
                             </variation>
                         </view>
