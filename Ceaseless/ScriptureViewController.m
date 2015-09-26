@@ -40,12 +40,20 @@
     self.scriptureView.reflectedScriptureImageView.image = scriptureImage;
     
     //scroll text to top of view
+    // afterdelay needed to deal with ont being able to get in after the runloop
+    // see http://stackoverflow.com/questions/21434651/uiscrollview-scrollrecttovisibleanimated-not-taking-rect-into-account-on-ios7
+    [self performSelector:@selector(showTopOfScripture) withObject:nil afterDelay:0.1];
+    
+}
+- (void)showTopOfScripture {
     [self.scriptureView.scriptureTextView scrollRangeToVisible: (NSMakeRange(0, 0))];
 }
+
 - (void)viewWillAppear: (BOOL)animated {
     [super viewWillAppear:animated];
     self.screenName = @"ScriptureViewScreen";
 }
+
 - (IBAction)share:(id)sender {
     [AppUtils postAnalyticsEventWithCategory:@"scripture_card_action" andAction:@"share_scripture" andLabel:[self.dataObject valueForKey:@"citation"]];
     NSString *contentToShare = [NSString stringWithFormat:@"%@ %@", [self.dataObject valueForKey: @"verse"], [self.dataObject valueForKey: @"shareLink"]];
