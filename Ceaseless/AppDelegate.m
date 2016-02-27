@@ -23,9 +23,15 @@ static NSString *const kAllowTracking = @"allowTracking";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-//	[[UINavigationBar appearance] setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-//	[[UINavigationBar appearance] setShadowImage:[UIImage new]];
 	[[UINavigationBar appearance] setBackgroundColor: UIColorFromRGBWithAlpha(0x00012f, 0.6)];
+    // doing this to make status bar text white according to trick here:
+    // http://stackoverflow.com/questions/19108513/uistatusbarstyle-preferredstatusbarstyle-does-not-work-on-ios-7
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackTranslucent];
+    
+    // this is deprecated in iOS9 and eventually this in conjunction with the not setting style from view controller was
+    // causing error messages according to
+    // https://forums.developer.apple.com/thread/13683
+    // so we did the trick with the navigation bar appearance.
 	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
 	NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
