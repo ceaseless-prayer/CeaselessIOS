@@ -24,6 +24,10 @@
     // to pray for each day
     NSString *const kDailyPersonCount = @"DailyPersonCount";
 
+	// this is the user default key for the first person
+	// to pray for on the next day
+	NSString *const kPersonForNextDay = @"PersonForNextDay";
+
     // this is the name of the file that will be the background image
     NSString *const kDynamicBackgroundImage = @"dynamicBackgroundImage";
 
