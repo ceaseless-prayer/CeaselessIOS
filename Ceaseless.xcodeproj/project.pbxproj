@@ -75,6 +75,11 @@
 		70F664091AA82B360073801E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F664081AA82B360073801E /* QuartzCore.framework */; };
 		70F6640C1AA83CC60073801E /* ScriptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F6640B1AA83CC60073801E /* ScriptureView.m */; };
 		70F664181AA8B9260073801E /* ScripturePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F664171AA8B9260073801E /* ScripturePicker.m */; };
+		CF4F6D0B1C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4F6D091C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift */; };
+		CF4F6D0C1C96AB57002EA9C5 /* BWWalkthroughViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4F6D0A1C96AB57002EA9C5 /* BWWalkthroughViewController.swift */; };
+		CF4F6D0E1C96AFE8002EA9C5 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF4F6D0D1C96AFE8002EA9C5 /* Onboarding.storyboard */; };
+		CF4F6D111C97C55B002EA9C5 /* OnboardingContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4F6D101C97C55B002EA9C5 /* OnboardingContactViewController.m */; };
+		CFD132631C97FAC2004CAA79 /* OnboardingNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFD132621C97FAC2004CAA79 /* OnboardingNotificationViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -216,6 +221,14 @@
 		70F6640B1AA83CC60073801E /* ScriptureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptureView.m; sourceTree = "<group>"; };
 		70F664161AA8B9260073801E /* ScripturePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScripturePicker.h; sourceTree = "<group>"; };
 		70F664171AA8B9260073801E /* ScripturePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScripturePicker.m; sourceTree = "<group>"; };
+		CF4F6D081C96AB57002EA9C5 /* Ceaseless-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ceaseless-Bridging-Header.h"; sourceTree = "<group>"; };
+		CF4F6D091C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BWWalkthroughPageViewController.swift; sourceTree = "<group>"; };
+		CF4F6D0A1C96AB57002EA9C5 /* BWWalkthroughViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BWWalkthroughViewController.swift; sourceTree = "<group>"; };
+		CF4F6D0D1C96AFE8002EA9C5 /* Onboarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
+		CF4F6D0F1C97C55B002EA9C5 /* OnboardingContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnboardingContactViewController.h; sourceTree = "<group>"; };
+		CF4F6D101C97C55B002EA9C5 /* OnboardingContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnboardingContactViewController.m; sourceTree = "<group>"; };
+		CFD132611C97FAC2004CAA79 /* OnboardingNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnboardingNotificationViewController.h; sourceTree = "<group>"; };
+		CFD132621C97FAC2004CAA79 /* OnboardingNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnboardingNotificationViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,6 +280,7 @@
 		42F3AE1A1AA4DD7F003A88F5 /* Ceaseless */ = {
 			isa = PBXGroup;
 			children = (
+				CF4F6D071C96AB26002EA9C5 /* BWWalkthrough */,
 				42F5055A1AE42F9F00337A21 /* GA Headers */,
 				42F3AE1F1AA4DD7F003A88F5 /* AppDelegate.h */,
 				42F3AE201AA4DD7F003A88F5 /* AppDelegate.m */,
@@ -288,6 +302,7 @@
 				424C5B2D1AE073D5005C4CFC /* FAImageView.m */,
 				424C5B291AE073BE005C4CFC /* UIFont+FontAwesome.h */,
 				424C5B2A1AE073BE005C4CFC /* UIFont+FontAwesome.m */,
+				CF4F6D081C96AB57002EA9C5 /* Ceaseless-Bridging-Header.h */,
 				70F664071AA7EAB20073801E /* Controllers */,
 				70F664061AA7EA990073801E /* Model */,
 				70D51C0F1AA668AA00FA7CDC /* View */,
@@ -358,6 +373,7 @@
 			isa = PBXGroup;
 			children = (
 				42F3AE2B1AA4DD7F003A88F5 /* Main.storyboard */,
+				CF4F6D0D1C96AFE8002EA9C5 /* Onboarding.storyboard */,
 				70F12B8E1AB396590090F47A /* PrayerJournalTableViewCell.h */,
 				70F12B8F1AB396590090F47A /* PrayerJournalTableViewCell.m */,
 				70BCCC1F1ABB768F00386D51 /* PersonNotesTableViewCell.h */,
@@ -458,8 +474,21 @@
 				70BBEDC21ABC768400D446AF /* SettingsViewController.m */,
 				42F3AE281AA4DD7F003A88F5 /* ModelController.h */,
 				42F3AE291AA4DD7F003A88F5 /* ModelController.m */,
+				CF4F6D0F1C97C55B002EA9C5 /* OnboardingContactViewController.h */,
+				CF4F6D101C97C55B002EA9C5 /* OnboardingContactViewController.m */,
+				CFD132611C97FAC2004CAA79 /* OnboardingNotificationViewController.h */,
+				CFD132621C97FAC2004CAA79 /* OnboardingNotificationViewController.m */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		CF4F6D071C96AB26002EA9C5 /* BWWalkthrough */ = {
+			isa = PBXGroup;
+			children = (
+				CF4F6D091C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift */,
+				CF4F6D0A1C96AB57002EA9C5 /* BWWalkthroughViewController.swift */,
+			);
+			name = BWWalkthrough;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -507,6 +536,7 @@
 		42F3AE101AA4DD7F003A88F5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Christopher Lim";
 				TargetAttributes = {
@@ -551,6 +581,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				70D51C111AA6694400FA7CDC /* ScriptureView.xib in Resources */,
+				CF4F6D0E1C96AFE8002EA9C5 /* Onboarding.storyboard in Resources */,
 				7083F7121AD4C474002D93AD /* at_the_beach.jpg in Resources */,
 				42F3AE2D1AA4DD7F003A88F5 /* Main.storyboard in Resources */,
 				42E0F4A41AD6093D00CE64E3 /* ProgressView.xib in Resources */,
@@ -599,6 +630,7 @@
 				424C5B281AE0734F005C4CFC /* NSString+FontAwesome.m in Sources */,
 				42A5AF881AB9497F00F209B8 /* PrayerRecordConstants.m in Sources */,
 				70BBEDC31ABC768400D446AF /* SettingsViewController.m in Sources */,
+				CF4F6D0C1C96AB57002EA9C5 /* BWWalkthroughViewController.swift in Sources */,
 				70D51C161AA6800D00FA7CDC /* PersonView.m in Sources */,
 				424C5B2B1AE073BE005C4CFC /* UIFont+FontAwesome.m in Sources */,
 				429094DA1AF29F7A009ABC3E /* Reachability.m in Sources */,
@@ -617,12 +649,14 @@
 				42458C021ACF32FD00C48830 /* PersonInfo.m in Sources */,
 				42E0F4AA1AD60D1000CE64E3 /* ProgressViewController.m in Sources */,
 				704D5CA11AAF6D5200BD48B3 /* PersonNotesViewController.m in Sources */,
+				CF4F6D0B1C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift in Sources */,
 				42C13BB11ABCC074000D5C08 /* WebCardViewController.m in Sources */,
 				42F3AE2A1AA4DD7F003A88F5 /* ModelController.m in Sources */,
 				704D5CA71AAF90A200BD48B3 /* Ceaseless.xcdatamodeld in Sources */,
 				42E0F4A71AD60C6200CE64E3 /* ProgressView.m in Sources */,
 				70F664181AA8B9260073801E /* ScripturePicker.m in Sources */,
 				704D5CF11AAFA96200BD48B3 /* ScriptureQueue.m in Sources */,
+				CF4F6D111C97C55B002EA9C5 /* OnboardingContactViewController.m in Sources */,
 				42458BF01ACF1FEC00C48830 /* PhoneNumber.m in Sources */,
 				70F12B901AB396590090F47A /* PrayerJournalTableViewCell.m in Sources */,
 				70D51C0B1AA6222700FA7CDC /* PersonPicker.m in Sources */,
@@ -631,6 +665,7 @@
 				70BCCC211ABB768F00386D51 /* PersonNotesTableViewCell.m in Sources */,
 				7083F7181AD5EEC6002D93AD /* NSString+FetchedGroupByString.m in Sources */,
 				70BFCB021AC070C50014C4BC /* ContactsListsViewController.m in Sources */,
+				CFD132631C97FAC2004CAA79 /* OnboardingNotificationViewController.m in Sources */,
 				42869B091AC9FC5100E612F7 /* AppConstants.m in Sources */,
 				42F3AE1E1AA4DD7F003A88F5 /* main.m in Sources */,
 				42458BF61ACF1FEC00C48830 /* AddressBookId.m in Sources */,
@@ -766,6 +801,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Ceaseless/Info.plist;
@@ -778,6 +814,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ceaselessprayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Ceaseless/Ceaseless-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -785,6 +823,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Ceaseless/Info.plist;
@@ -797,6 +836,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ceaselessprayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Ceaseless/Ceaseless-Bridging-Header.h";
 			};
 			name = Release;
 		};

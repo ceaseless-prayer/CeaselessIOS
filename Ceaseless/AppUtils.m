@@ -193,4 +193,15 @@
         return @"Remember to pray for others today.";
     }
 }
++ (void)setupCardView:(UIView *)cardView withShadowView:(UIView *)shadowView {
+    cardView.layer.cornerRadius = 24.0;
+    cardView.clipsToBounds = YES;
+
+    shadowView.layer.shadowColor = [UIColor blackColor].CGColor;
+    shadowView.layer.shadowOffset = CGSizeMake(1, 1);
+    shadowView.layer.shadowRadius = 4.0;
+    shadowView.layer.cornerRadius = 24.0;
+    shadowView.layer.shadowOpacity = 0.8;
+}
+
 @end

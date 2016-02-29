@@ -13,10 +13,15 @@
 #import "UIFont+FontAwesome.h"
 #import "NSString+FontAwesome.h"
 #import "MenuViewController.h"
+#import "OnboardingNotificationViewController.h"
+#import "Ceaseless-Swift.h"
 
-@interface RootViewController ()
+@interface RootViewController () <OnboardingDelegate>
 
 @property (readonly, strong, nonatomic) ModelController *modelController;
+@property (assign, nonatomic) BOOL needToShowOnboarding;
+@property (assign, nonatomic) BOOL hasOnboardingShown;
+
 @end
 
 @implementation RootViewController
@@ -55,28 +60,97 @@
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:opts];
     self.pageViewController.delegate = self;
 
-    DataViewController *startingViewController = [self.modelController viewControllerAtIndex:0 storyboard:self.storyboard];
-    if(startingViewController == nil) {
-        startingViewController = [[DataViewController alloc]init];
-    }
-    NSArray *viewControllers = @[startingViewController];
-    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-
-    self.pageViewController.dataSource = self.modelController;
-
     [self addChildViewController:self.pageViewController];
     [self.view addSubview:self.pageViewController.view];
-
 
     [self.pageViewController didMoveToParentViewController:self];
 
     // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
     self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
+
+#ifndef DEBUG
+    NSDictionary *infoPlist = [[NSBundle mainBundle] infoDictionary];
+
+    NSInteger onboardingQuietTimeInSeconds = [infoPlist[@"Onboarding Quiet Time"] integerValue];
+
+    NSString *onboardingLastOpenedDateInString = [[NSUserDefaults standardUserDefaults] stringForKey:kOnboardingLastOpenedDate];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"dd-MM-yyyy HH:mm:ss ZZZ";
+    NSDate *onboardingLastOpenedDate = [formatter dateFromString:onboardingLastOpenedDateInString];
+
+    if (!onboardingLastOpenedDate) {
+        self.needToShowOnboarding = YES;
+    } else {
+        NSDate *onboardingQuiteTimeLimit = [onboardingLastOpenedDate dateByAddingTimeInterval:onboardingQuietTimeInSeconds];
+        self.needToShowOnboarding = [[NSDate date] compare:onboardingQuiteTimeLimit] == NSOrderedDescending;
+    }
+
+    if (!self.needToShowOnboarding) {
+        [self doAdditionalViewSetup];
+    }
+#endif
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+
+    // Setup onboarding
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Onboarding"
+                                                         bundle:[NSBundle mainBundle]];
+
+    BWWalkthroughViewController *onboardingContainer = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingContainer"];
+    onboardingContainer.scrollview.bounces = NO;
+
+    UIViewController *welcomeController = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingWelcome"];
+    UIViewController *contactController = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingContact"];
+    OnboardingNotificationViewController *notificationController = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingNotification"];
+
+    notificationController.delegate = self;
+
+    [onboardingContainer addViewController:welcomeController];
+    [onboardingContainer addViewController:contactController];
+    [onboardingContainer addViewController:notificationController];
+
+#ifdef DEBUG
+    if (!self.hasOnboardingShown) {
+        self.hasOnboardingShown = YES;
+        [self presentViewController:onboardingContainer animated:YES completion:nil];
+    }
+#else
+    if (self.needToShowOnboarding && !self.hasOnboardingShown) {
+        [self presentViewController:onboardingContainer animated:YES completion:nil];
+
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"dd-MM-yyyy HH:mm:ss ZZZ";
+        NSString *onboardingLastOpenedDateInString = [formatter stringFromDate:[NSDate date]];
+
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:onboardingLastOpenedDateInString forKey:kOnboardingLastOpenedDate];
+        [defaults synchronize];
+
+        self.hasOnboardingShown = YES;
+    }
+#endif
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Helper
+
+- (void)doAdditionalViewSetup {
+    DataViewController *startingViewController = [self.modelController viewControllerAtIndex:0 storyboard:self.storyboard];
+
+    if(startingViewController == nil) {
+        startingViewController = [[DataViewController alloc]init];
+    }
+
+    NSArray *viewControllers = @[startingViewController];
+    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+
+    self.pageViewController.dataSource = self.modelController;
 }
 
 - (ModelController *)modelController {
@@ -218,4 +292,16 @@
 	[self.navigationController popViewControllerAnimated:NO];
 	
 }
+
+#pragma mark - Onboarding Delegate
+
+- (void)onboardingHasFinished {
+    [self doAdditionalViewSetup];
+
+    // Need to give timeout to let additional view setup finished first
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    });
+}
+
 @end
