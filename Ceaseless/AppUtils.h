@@ -29,4 +29,5 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 + (void) postAnalyticsEventWithCategory: (NSString*) category andAction: (NSString*) action andLabel: (NSString*) label;
 + (void) postAnalyticsEventWithCategory: (NSString*) category andAction: (NSString*) action andLabel: (NSString*) label andValue: (NSNumber*) value;
 + (NSString*) localInstallationId;
++ (void)setupCardView:(UIView *)cardView withShadowView:(UIView *)shadowView;
 @end

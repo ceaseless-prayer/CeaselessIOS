@@ -7,6 +7,7 @@
 //
 
 #import "WelcomeCollectionViewCell.h"
+#import "AppUtils.h"
 
 @interface WelcomeCollectionViewCell ()
 
@@ -18,14 +19,7 @@
 @implementation WelcomeCollectionViewCell
 
 - (void)awakeFromNib {
-    self.cardView.layer.cornerRadius = 24.0;
-    self.cardView.clipsToBounds = YES;
-
-    self.shadowCardView.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.shadowCardView.layer.shadowOffset = CGSizeMake(1, 1);
-    self.shadowCardView.layer.shadowRadius = 4.0;
-    self.shadowCardView.layer.cornerRadius = 24.0;
-    self.shadowCardView.layer.shadowOpacity = 0.8;
+    [AppUtils setupCardView:self.cardView withShadowView:self.shadowCardView];
 }
 
 @end
