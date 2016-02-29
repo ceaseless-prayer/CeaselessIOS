@@ -75,6 +75,8 @@
 		70F664091AA82B360073801E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F664081AA82B360073801E /* QuartzCore.framework */; };
 		70F6640C1AA83CC60073801E /* ScriptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F6640B1AA83CC60073801E /* ScriptureView.m */; };
 		70F664181AA8B9260073801E /* ScripturePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F664171AA8B9260073801E /* ScripturePicker.m */; };
+		CFCC4C791C842ED600E8AF01 /* SetupContactCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CFCC4C771C842ED600E8AF01 /* SetupContactCollectionViewCell.m */; };
+		CFCC4C7A1C842ED600E8AF01 /* SetupContactCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CFCC4C781C842ED600E8AF01 /* SetupContactCollectionViewCell.xib */; };
 		CFFC68D01C805CA900E4FCD5 /* OnboardingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFFC68CF1C805CA900E4FCD5 /* OnboardingViewController.m */; };
 		CFFC68D41C80624200E4FCD5 /* WelcomeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CFFC68D21C80624200E4FCD5 /* WelcomeCollectionViewCell.m */; };
 		CFFC68D71C80628C00E4FCD5 /* WelcomeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CFFC68D61C80628C00E4FCD5 /* WelcomeCollectionViewCell.xib */; };
@@ -219,6 +221,9 @@
 		70F6640B1AA83CC60073801E /* ScriptureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptureView.m; sourceTree = "<group>"; };
 		70F664161AA8B9260073801E /* ScripturePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScripturePicker.h; sourceTree = "<group>"; };
 		70F664171AA8B9260073801E /* ScripturePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScripturePicker.m; sourceTree = "<group>"; };
+		CFCC4C761C842ED600E8AF01 /* SetupContactCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupContactCollectionViewCell.h; sourceTree = "<group>"; };
+		CFCC4C771C842ED600E8AF01 /* SetupContactCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupContactCollectionViewCell.m; sourceTree = "<group>"; };
+		CFCC4C781C842ED600E8AF01 /* SetupContactCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetupContactCollectionViewCell.xib; sourceTree = "<group>"; };
 		CFFC68CE1C805CA900E4FCD5 /* OnboardingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnboardingViewController.h; sourceTree = "<group>"; };
 		CFFC68CF1C805CA900E4FCD5 /* OnboardingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnboardingViewController.m; sourceTree = "<group>"; };
 		CFFC68D11C80624200E4FCD5 /* WelcomeCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeCollectionViewCell.h; sourceTree = "<group>"; };
@@ -387,6 +392,9 @@
 				CFFC68D11C80624200E4FCD5 /* WelcomeCollectionViewCell.h */,
 				CFFC68D21C80624200E4FCD5 /* WelcomeCollectionViewCell.m */,
 				CFFC68D61C80628C00E4FCD5 /* WelcomeCollectionViewCell.xib */,
+				CFCC4C761C842ED600E8AF01 /* SetupContactCollectionViewCell.h */,
+				CFCC4C771C842ED600E8AF01 /* SetupContactCollectionViewCell.m */,
+				CFCC4C781C842ED600E8AF01 /* SetupContactCollectionViewCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -563,6 +571,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFCC4C7A1C842ED600E8AF01 /* SetupContactCollectionViewCell.xib in Resources */,
 				70D51C111AA6694400FA7CDC /* ScriptureView.xib in Resources */,
 				CFFC68D71C80628C00E4FCD5 /* WelcomeCollectionViewCell.xib in Resources */,
 				7083F7121AD4C474002D93AD /* at_the_beach.jpg in Resources */,
@@ -617,6 +626,7 @@
 				424C5B2B1AE073BE005C4CFC /* UIFont+FontAwesome.m in Sources */,
 				429094DA1AF29F7A009ABC3E /* Reachability.m in Sources */,
 				42DFFCCB1AD8666B0053DAAD /* PersonIdentifier.m in Sources */,
+				CFCC4C791C842ED600E8AF01 /* SetupContactCollectionViewCell.m in Sources */,
 				429E60891AAA5FD8003F37BF /* ScriptureViewController.m in Sources */,
 				425271B01AB37F29005098F6 /* CeaselessLocalContacts.m in Sources */,
 				704D5CE51AAFA96200BD48B3 /* PeopleQueue.m in Sources */,

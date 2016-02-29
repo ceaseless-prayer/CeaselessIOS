@@ -69,5 +69,7 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSContactsUsageDescription</key>
+	<string>Would you like to grant &apos;Ceaseless&apos; access to your address book?</string>
 </dict>
 </plist>

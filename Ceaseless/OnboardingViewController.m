@@ -8,9 +8,10 @@
 
 #import "OnboardingViewController.h"
 #import "WelcomeCollectionViewCell.h"
+#import "SetupContactCollectionViewCell.h"
 #import "AppUtils.h"
 
-@interface OnboardingViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface OnboardingViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SetupContactDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
@@ -27,6 +28,7 @@
     self.navigationItem.titleView = [[UIImageView alloc] initWithImage:ceaselessImage];
 
     [self.collectionView registerNib:[UINib nibWithNibName:@"WelcomeCollectionViewCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"welcomeCell"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"SetupContactCollectionViewCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"setupContactCell"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -36,13 +38,14 @@
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
 
+    // Easy way to adjust layout if user change the device orientation
     [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
 #pragma mark - Collection View Data Source
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 1;
+    return 2;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -53,6 +56,13 @@
         return cell;
     }
 
+    // Setup contact
+    if (indexPath.row == 1) {
+        SetupContactCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"setupContactCell" forIndexPath:indexPath];
+        cell.delegate = self;
+        return cell;
+    }
+
     return nil;
 }
 
@@ -60,6 +70,31 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return self.collectionView.frame.size;
+}
+
+#pragma mark - Scroll View Delegate
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    NSInteger currentIndex = scrollView.contentOffset.x / scrollView.frame.size.width;
+
+    // Disable scroll when reaching step 1 of 2, and so on
+    if (currentIndex > 0) {
+        self.collectionView.scrollEnabled = NO;
+    }
+
+    // Update page control
+    self.pageControl.currentPage = currentIndex;
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    [self scrollViewDidEndDecelerating:scrollView];
+}
+
+#pragma mark - Setup Contact Delegate
+
+- (void)setupContactFinished {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:2 inSection:0];
+    [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
 }
 
 @end

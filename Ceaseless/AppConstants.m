@@ -52,4 +52,7 @@
 	// this is the name of the notification that the the Loading... label should be hidden
 	NSString *const kHideLoadingNotification = @"hideLoadingNotification";
 
+    // this is determining whether contact permission needs to ask later or not
+    NSString *const kDoesSetupContactNeedToAskLater = @"doesSetupContactNeedToAskLater";
+
 @end
