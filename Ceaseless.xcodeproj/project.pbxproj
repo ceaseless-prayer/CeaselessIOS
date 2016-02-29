@@ -75,6 +75,9 @@
 		70F664091AA82B360073801E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F664081AA82B360073801E /* QuartzCore.framework */; };
 		70F6640C1AA83CC60073801E /* ScriptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F6640B1AA83CC60073801E /* ScriptureView.m */; };
 		70F664181AA8B9260073801E /* ScripturePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F664171AA8B9260073801E /* ScripturePicker.m */; };
+		CFFC68D01C805CA900E4FCD5 /* OnboardingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFFC68CF1C805CA900E4FCD5 /* OnboardingViewController.m */; };
+		CFFC68D41C80624200E4FCD5 /* WelcomeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CFFC68D21C80624200E4FCD5 /* WelcomeCollectionViewCell.m */; };
+		CFFC68D71C80628C00E4FCD5 /* WelcomeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CFFC68D61C80628C00E4FCD5 /* WelcomeCollectionViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -216,6 +219,11 @@
 		70F6640B1AA83CC60073801E /* ScriptureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptureView.m; sourceTree = "<group>"; };
 		70F664161AA8B9260073801E /* ScripturePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScripturePicker.h; sourceTree = "<group>"; };
 		70F664171AA8B9260073801E /* ScripturePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScripturePicker.m; sourceTree = "<group>"; };
+		CFFC68CE1C805CA900E4FCD5 /* OnboardingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnboardingViewController.h; sourceTree = "<group>"; };
+		CFFC68CF1C805CA900E4FCD5 /* OnboardingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnboardingViewController.m; sourceTree = "<group>"; };
+		CFFC68D11C80624200E4FCD5 /* WelcomeCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeCollectionViewCell.h; sourceTree = "<group>"; };
+		CFFC68D21C80624200E4FCD5 /* WelcomeCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeCollectionViewCell.m; sourceTree = "<group>"; };
+		CFFC68D61C80628C00E4FCD5 /* WelcomeCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeCollectionViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -376,6 +384,9 @@
 				70D51C141AA6800D00FA7CDC /* PersonView.h */,
 				70D51C151AA6800D00FA7CDC /* PersonView.m */,
 				70D51C121AA66F5100FA7CDC /* PersonView.xib */,
+				CFFC68D11C80624200E4FCD5 /* WelcomeCollectionViewCell.h */,
+				CFFC68D21C80624200E4FCD5 /* WelcomeCollectionViewCell.m */,
+				CFFC68D61C80628C00E4FCD5 /* WelcomeCollectionViewCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -458,6 +469,8 @@
 				70BBEDC21ABC768400D446AF /* SettingsViewController.m */,
 				42F3AE281AA4DD7F003A88F5 /* ModelController.h */,
 				42F3AE291AA4DD7F003A88F5 /* ModelController.m */,
+				CFFC68CE1C805CA900E4FCD5 /* OnboardingViewController.h */,
+				CFFC68CF1C805CA900E4FCD5 /* OnboardingViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -551,6 +564,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				70D51C111AA6694400FA7CDC /* ScriptureView.xib in Resources */,
+				CFFC68D71C80628C00E4FCD5 /* WelcomeCollectionViewCell.xib in Resources */,
 				7083F7121AD4C474002D93AD /* at_the_beach.jpg in Resources */,
 				42F3AE2D1AA4DD7F003A88F5 /* Main.storyboard in Resources */,
 				42E0F4A41AD6093D00CE64E3 /* ProgressView.xib in Resources */,
@@ -617,10 +631,12 @@
 				42458C021ACF32FD00C48830 /* PersonInfo.m in Sources */,
 				42E0F4AA1AD60D1000CE64E3 /* ProgressViewController.m in Sources */,
 				704D5CA11AAF6D5200BD48B3 /* PersonNotesViewController.m in Sources */,
+				CFFC68D41C80624200E4FCD5 /* WelcomeCollectionViewCell.m in Sources */,
 				42C13BB11ABCC074000D5C08 /* WebCardViewController.m in Sources */,
 				42F3AE2A1AA4DD7F003A88F5 /* ModelController.m in Sources */,
 				704D5CA71AAF90A200BD48B3 /* Ceaseless.xcdatamodeld in Sources */,
 				42E0F4A71AD60C6200CE64E3 /* ProgressView.m in Sources */,
+				CFFC68D01C805CA900E4FCD5 /* OnboardingViewController.m in Sources */,
 				70F664181AA8B9260073801E /* ScripturePicker.m in Sources */,
 				704D5CF11AAFA96200BD48B3 /* ScriptureQueue.m in Sources */,
 				42458BF01ACF1FEC00C48830 /* PhoneNumber.m in Sources */,

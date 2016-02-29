@@ -36,10 +36,10 @@ static NSString *const kAllowTracking = @"allowTracking";
 	[[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
 
     // TODO we may want to re-think if we want to ask for local notification permission when the app opens.
-    if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
-        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound categories:nil]];
-    }
-    
+//    if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
+//        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound categories:nil]];
+//    }
+
     // Optional: automatically send uncaught exceptions to Google Analytics.
     [GAI sharedInstance].trackUncaughtExceptions = YES;
     
