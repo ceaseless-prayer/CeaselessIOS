@@ -55,4 +55,7 @@
     // this is determining whether contact permission needs to ask later or not
     NSString *const kDoesSetupContactNeedToAskLater = @"doesSetupContactNeedToAskLater";
 
+    // this is determining whether notification permission needs to ask later or not
+    NSString *const kDoesSetupNotificationNeedToAskLater = @"doesSetupNotificationNeedToAskLater";
+
 @end

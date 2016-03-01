@@ -22,4 +22,5 @@
     FOUNDATION_EXPORT NSString *const kForceShowNewContent;
 	FOUNDATION_EXPORT NSString *const kHideLoadingNotification;
     FOUNDATION_EXPORT NSString *const kDoesSetupContactNeedToAskLater;
+    FOUNDATION_EXPORT NSString *const kDoesSetupNotificationNeedToAskLater;
 @end

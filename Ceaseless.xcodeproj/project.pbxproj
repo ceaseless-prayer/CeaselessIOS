@@ -77,6 +77,8 @@
 		70F664181AA8B9260073801E /* ScripturePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F664171AA8B9260073801E /* ScripturePicker.m */; };
 		CFCC4C791C842ED600E8AF01 /* SetupContactCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CFCC4C771C842ED600E8AF01 /* SetupContactCollectionViewCell.m */; };
 		CFCC4C7A1C842ED600E8AF01 /* SetupContactCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CFCC4C781C842ED600E8AF01 /* SetupContactCollectionViewCell.xib */; };
+		CFCC4C7E1C845BEC00E8AF01 /* SetupNotificationCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CFCC4C7C1C845BEC00E8AF01 /* SetupNotificationCollectionViewCell.m */; };
+		CFCC4C7F1C845BEC00E8AF01 /* SetupNotificationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CFCC4C7D1C845BEC00E8AF01 /* SetupNotificationCollectionViewCell.xib */; };
 		CFFC68D01C805CA900E4FCD5 /* OnboardingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFFC68CF1C805CA900E4FCD5 /* OnboardingViewController.m */; };
 		CFFC68D41C80624200E4FCD5 /* WelcomeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CFFC68D21C80624200E4FCD5 /* WelcomeCollectionViewCell.m */; };
 		CFFC68D71C80628C00E4FCD5 /* WelcomeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CFFC68D61C80628C00E4FCD5 /* WelcomeCollectionViewCell.xib */; };
@@ -224,6 +226,9 @@
 		CFCC4C761C842ED600E8AF01 /* SetupContactCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupContactCollectionViewCell.h; sourceTree = "<group>"; };
 		CFCC4C771C842ED600E8AF01 /* SetupContactCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupContactCollectionViewCell.m; sourceTree = "<group>"; };
 		CFCC4C781C842ED600E8AF01 /* SetupContactCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetupContactCollectionViewCell.xib; sourceTree = "<group>"; };
+		CFCC4C7B1C845BEC00E8AF01 /* SetupNotificationCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupNotificationCollectionViewCell.h; sourceTree = "<group>"; };
+		CFCC4C7C1C845BEC00E8AF01 /* SetupNotificationCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupNotificationCollectionViewCell.m; sourceTree = "<group>"; };
+		CFCC4C7D1C845BEC00E8AF01 /* SetupNotificationCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetupNotificationCollectionViewCell.xib; sourceTree = "<group>"; };
 		CFFC68CE1C805CA900E4FCD5 /* OnboardingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnboardingViewController.h; sourceTree = "<group>"; };
 		CFFC68CF1C805CA900E4FCD5 /* OnboardingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnboardingViewController.m; sourceTree = "<group>"; };
 		CFFC68D11C80624200E4FCD5 /* WelcomeCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeCollectionViewCell.h; sourceTree = "<group>"; };
@@ -395,6 +400,9 @@
 				CFCC4C761C842ED600E8AF01 /* SetupContactCollectionViewCell.h */,
 				CFCC4C771C842ED600E8AF01 /* SetupContactCollectionViewCell.m */,
 				CFCC4C781C842ED600E8AF01 /* SetupContactCollectionViewCell.xib */,
+				CFCC4C7B1C845BEC00E8AF01 /* SetupNotificationCollectionViewCell.h */,
+				CFCC4C7C1C845BEC00E8AF01 /* SetupNotificationCollectionViewCell.m */,
+				CFCC4C7D1C845BEC00E8AF01 /* SetupNotificationCollectionViewCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -574,6 +582,7 @@
 				CFCC4C7A1C842ED600E8AF01 /* SetupContactCollectionViewCell.xib in Resources */,
 				70D51C111AA6694400FA7CDC /* ScriptureView.xib in Resources */,
 				CFFC68D71C80628C00E4FCD5 /* WelcomeCollectionViewCell.xib in Resources */,
+				CFCC4C7F1C845BEC00E8AF01 /* SetupNotificationCollectionViewCell.xib in Resources */,
 				7083F7121AD4C474002D93AD /* at_the_beach.jpg in Resources */,
 				42F3AE2D1AA4DD7F003A88F5 /* Main.storyboard in Resources */,
 				42E0F4A41AD6093D00CE64E3 /* ProgressView.xib in Resources */,
@@ -616,6 +625,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42AA9BF81ACCBF6300C4896B /* Note.m in Sources */,
+				CFCC4C7E1C845BEC00E8AF01 /* SetupNotificationCollectionViewCell.m in Sources */,
 				42C13BB41ABCC285000D5C08 /* WebCardView.m in Sources */,
 				42F3AE271AA4DD7F003A88F5 /* DataViewController.m in Sources */,
 				422DDD391ACBBD3400409001 /* AppUtils.m in Sources */,

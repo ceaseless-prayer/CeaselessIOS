@@ -9,9 +9,10 @@
 #import "OnboardingViewController.h"
 #import "WelcomeCollectionViewCell.h"
 #import "SetupContactCollectionViewCell.h"
+#import "SetupNotificationCollectionViewCell.h"
 #import "AppUtils.h"
 
-@interface OnboardingViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SetupContactDelegate>
+@interface OnboardingViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SetupContactDelegate, SetupNotificationDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
@@ -29,6 +30,7 @@
 
     [self.collectionView registerNib:[UINib nibWithNibName:@"WelcomeCollectionViewCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"welcomeCell"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"SetupContactCollectionViewCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"setupContactCell"];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"SetupNotificationCollectionViewCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"setupNotificationCell"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,7 +47,7 @@
 #pragma mark - Collection View Data Source
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 2;
+    return 3;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -59,6 +61,13 @@
     // Setup contact
     if (indexPath.row == 1) {
         SetupContactCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"setupContactCell" forIndexPath:indexPath];
+        cell.delegate = self;
+        return cell;
+    }
+
+    // Setup notification
+    if (indexPath.row == 2) {
+        SetupNotificationCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"setupNotificationCell" forIndexPath:indexPath];
         cell.delegate = self;
         return cell;
     }
@@ -95,6 +104,34 @@
 - (void)setupContactFinished {
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:2 inSection:0];
     [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
+}
+
+#pragma mark - Setup Notification Delegate
+
+- (void)setupNotificationFinished {
+    UIViewController *rootViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"RootViewController"];
+
+    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+
+    [UIView transitionWithView:window
+                      duration:0.25
+                       options:UIViewAnimationOptionCurveEaseOut
+                    animations:^{
+                        window.alpha = 0.0;
+                    }
+                    completion:^(BOOL finished) {
+                        [self.navigationController setViewControllers:@[rootViewController] animated:NO];
+
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.75 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            [UIView transitionWithView:window
+                                              duration:0.25
+                                               options:UIViewAnimationOptionCurveEaseIn
+                                            animations:^{
+                                                window.alpha = 1.0;
+                                            }
+                                            completion:nil];
+                        });
+                    }];
 }
 
 @end
