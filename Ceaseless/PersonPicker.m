@@ -238,7 +238,7 @@
     NSArray *queuedPeople = [self queuedPeople];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:
                               @"person = %@", personToPick];
-    if([[queuedPeople filteredArrayUsingPredicate:predicate] count] > 0) {
+    if(!self.pickForNotification && [[queuedPeople filteredArrayUsingPredicate:predicate] count] > 0) {
         return NO;
     }
     
@@ -256,7 +256,9 @@
                     // save it for showing in the notification
                     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                     [defaults setObject: personToPick.ceaselessId forKey:kPersonForNextDay];
-                    [defaults setObject: [_ceaselessContacts compositeNameForPerson:personToPick] forKey:kPersonNameForNextDay];
+                    NSString *personName = [_ceaselessContacts compositeNameForPerson:personToPick];
+                    [defaults setObject: personName forKey:kPersonNameForNextDay];
+                    [defaults synchronize];
 				} else {
                     // save it for showing today
 					[self queuePerson:personToPick];

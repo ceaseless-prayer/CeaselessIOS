@@ -181,7 +181,7 @@
 
 + (NSString*) getDailyNotificationMessage {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:kPersonNameForNextDay]) {
+    if ([defaults objectForKey:kPersonNameForNextDay] != nil) {
         NSString *personName = [defaults objectForKey:kPersonNameForNextDay];
         return [NSString stringWithFormat:@"Pray for %@ and others today.", personName];
     } else {
