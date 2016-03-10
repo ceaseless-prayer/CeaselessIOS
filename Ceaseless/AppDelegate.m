@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "AppConstants.h"
 #import "GAI.h"
-#import "CeaselessLocalContacts.h"
+#import "AppUtils.h"
 
 static NSString *const kTrackingId = @"UA-44378341-2";
 static NSString *const kAllowTracking = @"allowTracking";
@@ -80,45 +80,12 @@ static NSString *const kAllowTracking = @"allowTracking";
     // scheduling local notifications
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     
-    NSCalendar *gregorian = [[NSCalendar alloc]
-                             initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-
-	NSDate *notificationDate;
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	if (![defaults objectForKey:kNotificationDate]) {
-        NSDate *now = [NSDate date];
-        NSDateComponents *dateComponent = [gregorian components:NSCalendarUnitYear | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitWeekday | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour fromDate: now];
-        
-        dateComponent.hour = 8; // the default notification time is 8am.
-        dateComponent.minute = 0;
-        dateComponent.second = 0;
-        notificationDate = [[NSCalendar currentCalendar] dateFromComponents:dateComponent];
-        [defaults setObject:notificationDate forKey:kNotificationDate];
-        [defaults synchronize];
-    } else {
-        notificationDate = [defaults objectForKey:kNotificationDate];
-    }
-	CeaselessLocalContacts *ceaselessContacts =  [CeaselessLocalContacts sharedCeaselessLocalContacts];
-	NSString *ceaselessId = [defaults objectForKey:kPersonForNextDay];
-	PersonIdentifier *person = [ceaselessContacts getCeaselessContactFromCeaselessId:ceaselessId];
-	NSString *personName = [ceaselessContacts compositeNameForPerson:person];
-
-	if (personName) {
-		//notification for tomorrow
-		UILocalNotification *notification = [[UILocalNotification alloc] init];
-		[notification setAlertBody:[NSString stringWithFormat:@"Pray for %@ and others today.", personName]];
-		[notification setFireDate:notificationDate];
-		notification.repeatInterval = 0;
-		[notification setTimeZone:[NSTimeZone defaultTimeZone]];
-		[notification setSoundName: UILocalNotificationDefaultSoundName];
-		[[UIApplication sharedApplication] scheduleLocalNotification:notification];
-			//add 1 day to the notification date
-		NSDate *newNotificationDate = [notificationDate dateByAddingTimeInterval:60*60*24];
-		notificationDate = newNotificationDate;
-	}
-		//this is the default message
+	NSDate *notificationDate = [AppUtils getDailyNotificationDate];
+    NSString *notificationMessage = [AppUtils getDailyNotificationMessage];
+    
+    //this is the default message
     UILocalNotification *notification = [[UILocalNotification alloc] init];
-    [notification setAlertBody:@"Remember to pray for others today."];
+    [notification setAlertBody:notificationMessage];
     [notification setFireDate:notificationDate];
     notification.repeatInterval = NSCalendarUnitWeekday;
     [notification setTimeZone:[NSTimeZone defaultTimeZone]];

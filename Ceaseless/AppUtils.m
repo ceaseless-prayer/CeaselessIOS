@@ -157,4 +157,35 @@
         return [defaults objectForKey:kLocalInstallationId];
     }
 }
+
++ (NSDate*) getDailyNotificationDate {
+    NSDate *notificationDate;
+    NSCalendar *gregorian = [[NSCalendar alloc]
+                             initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if (![defaults objectForKey:kNotificationDate]) {
+        NSDate *now = [NSDate date];
+        NSDateComponents *dateComponent = [gregorian components:NSCalendarUnitYear | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitWeekday | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour fromDate: now];
+        
+        dateComponent.hour = 8; // the default notification time is 8am.
+        dateComponent.minute = 0;
+        dateComponent.second = 0;
+        notificationDate = [[NSCalendar currentCalendar] dateFromComponents:dateComponent];
+        [defaults setObject:notificationDate forKey:kNotificationDate];
+        [defaults synchronize];
+    } else {
+        notificationDate = [defaults objectForKey:kNotificationDate];
+    }
+    return notificationDate;
+}
+
++ (NSString*) getDailyNotificationMessage {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:kPersonNameForNextDay]) {
+        NSString *personName = [defaults objectForKey:kPersonNameForNextDay];
+        return [NSString stringWithFormat:@"Pray for %@ and others today.", personName];
+    } else {
+        return @"Remember to pray for others today.";
+    }
+}
 @end
