@@ -56,6 +56,42 @@
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:opts];
     self.pageViewController.delegate = self;
 
+#ifndef DEBUG
+    // TODO: Decide whether to call the [self additionalViewSetup] or not through onboarding opened date time
+#endif
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+
+    // Setup onboarding
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Onboarding"
+                                                         bundle:[NSBundle mainBundle]];
+
+    BWWalkthroughViewController *onboardingContainer = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingContainer"];
+    onboardingContainer.scrollview.bounces = NO;
+
+    UIViewController *welcomeController = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingWelcome"];
+    UIViewController *contactController = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingContact"];
+
+    [onboardingContainer addViewController:welcomeController];
+    [onboardingContainer addViewController:contactController];
+
+#ifdef DEBUG
+    [self presentViewController:onboardingContainer animated:YES completion:nil];
+#else
+    // TODO: Decide whether to call the [self additionalViewSetup] or not through onboarding opened date time
+#endif
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Helper
+
+- (void)doAdditionalViewSetup {
     DataViewController *startingViewController = [self.modelController viewControllerAtIndex:0 storyboard:self.storyboard];
     if(startingViewController == nil) {
         startingViewController = [[DataViewController alloc]init];
@@ -73,29 +109,6 @@
 
     // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
     self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-
-    // Setup onboarding
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Onboarding"
-                                                         bundle:[NSBundle mainBundle]];
-    BWWalkthroughViewController *onboardingContainer = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingContainer"];
-    UIViewController *welcomeController = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingWelcome"];
-
-    [onboardingContainer addViewController:welcomeController];
-
-#ifdef DEBUG
-    [self presentViewController:onboardingContainer animated:YES completion:nil];
-#else
-    // TODO: Last opened time checking
-#endif
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (ModelController *)modelController {

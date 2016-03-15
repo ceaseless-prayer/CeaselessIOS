@@ -78,6 +78,7 @@
 		CF4F6D0B1C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4F6D091C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift */; };
 		CF4F6D0C1C96AB57002EA9C5 /* BWWalkthroughViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4F6D0A1C96AB57002EA9C5 /* BWWalkthroughViewController.swift */; };
 		CF4F6D0E1C96AFE8002EA9C5 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF4F6D0D1C96AFE8002EA9C5 /* Onboarding.storyboard */; };
+		CF4F6D111C97C55B002EA9C5 /* OnboardingContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4F6D101C97C55B002EA9C5 /* OnboardingContactViewController.m */; };
 		CFCC4C791C842ED600E8AF01 /* SetupContactCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CFCC4C771C842ED600E8AF01 /* SetupContactCollectionViewCell.m */; };
 		CFCC4C7A1C842ED600E8AF01 /* SetupContactCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CFCC4C781C842ED600E8AF01 /* SetupContactCollectionViewCell.xib */; };
 		CFCC4C7E1C845BEC00E8AF01 /* SetupNotificationCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CFCC4C7C1C845BEC00E8AF01 /* SetupNotificationCollectionViewCell.m */; };
@@ -230,6 +231,8 @@
 		CF4F6D091C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BWWalkthroughPageViewController.swift; sourceTree = "<group>"; };
 		CF4F6D0A1C96AB57002EA9C5 /* BWWalkthroughViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BWWalkthroughViewController.swift; sourceTree = "<group>"; };
 		CF4F6D0D1C96AFE8002EA9C5 /* Onboarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
+		CF4F6D0F1C97C55B002EA9C5 /* OnboardingContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnboardingContactViewController.h; sourceTree = "<group>"; };
+		CF4F6D101C97C55B002EA9C5 /* OnboardingContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnboardingContactViewController.m; sourceTree = "<group>"; };
 		CFCC4C761C842ED600E8AF01 /* SetupContactCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupContactCollectionViewCell.h; sourceTree = "<group>"; };
 		CFCC4C771C842ED600E8AF01 /* SetupContactCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupContactCollectionViewCell.m; sourceTree = "<group>"; };
 		CFCC4C781C842ED600E8AF01 /* SetupContactCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetupContactCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -497,6 +500,8 @@
 				42F3AE291AA4DD7F003A88F5 /* ModelController.m */,
 				CFFC68CE1C805CA900E4FCD5 /* OnboardingViewController.h */,
 				CFFC68CF1C805CA900E4FCD5 /* OnboardingViewController.m */,
+				CF4F6D0F1C97C55B002EA9C5 /* OnboardingContactViewController.h */,
+				CF4F6D101C97C55B002EA9C5 /* OnboardingContactViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -682,6 +687,7 @@
 				CFFC68D01C805CA900E4FCD5 /* OnboardingViewController.m in Sources */,
 				70F664181AA8B9260073801E /* ScripturePicker.m in Sources */,
 				704D5CF11AAFA96200BD48B3 /* ScriptureQueue.m in Sources */,
+				CF4F6D111C97C55B002EA9C5 /* OnboardingContactViewController.m in Sources */,
 				42458BF01ACF1FEC00C48830 /* PhoneNumber.m in Sources */,
 				70F12B901AB396590090F47A /* PrayerJournalTableViewCell.m in Sources */,
 				70D51C0B1AA6222700FA7CDC /* PersonPicker.m in Sources */,
