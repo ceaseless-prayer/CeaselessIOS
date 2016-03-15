@@ -183,7 +183,12 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults objectForKey:kPersonNameForNextDay] != nil) {
         NSString *personName = [defaults objectForKey:kPersonNameForNextDay];
-        return [NSString stringWithFormat:@"Pray for %@ and others today.", personName];
+        NSInteger othersCount = [defaults integerForKey:kDailyPersonCount] - 1;
+        if (othersCount > 1) {
+            return [NSString stringWithFormat:@"Pray for %@ and %@ others today.", personName, [NSNumber numberWithInteger:othersCount]];
+        } else {
+            return [NSString stringWithFormat:@"Pray for %@ and others today.", personName];
+        }
     } else {
         return @"Remember to pray for others today.";
     }

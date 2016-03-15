@@ -238,7 +238,7 @@
     NSArray *queuedPeople = [self queuedPeople];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:
                               @"person = %@", personToPick];
-    if(!self.pickForNotification && [[queuedPeople filteredArrayUsingPredicate:predicate] count] > 0) {
+    if([[queuedPeople filteredArrayUsingPredicate:predicate] count] > 0) {
         return NO;
     }
     
