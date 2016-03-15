@@ -13,6 +13,7 @@
 #import "UIFont+FontAwesome.h"
 #import "NSString+FontAwesome.h"
 #import "MenuViewController.h"
+#import "Ceaseless-Swift.h"
 
 @interface RootViewController ()
 
@@ -72,6 +73,24 @@
 
     // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
     self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+
+    // Setup onboarding
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Onboarding"
+                                                         bundle:[NSBundle mainBundle]];
+    BWWalkthroughViewController *onboardingContainer = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingContainer"];
+    UIViewController *welcomeController = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingWelcome"];
+
+    [onboardingContainer addViewController:welcomeController];
+
+#ifdef DEBUG
+    [self presentViewController:onboardingContainer animated:YES completion:nil];
+#else
+    // TODO: Last opened time checking
+#endif
 }
 
 - (void)didReceiveMemoryWarning {

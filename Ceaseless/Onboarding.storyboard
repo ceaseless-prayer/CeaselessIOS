@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <scenes>
+        <!--Walkthrough View Controller-->
+        <scene sceneID="MFG-xe-iN0">
+            <objects>
+                <viewController storyboardIdentifier="OnboardingContainer" id="t6h-f3-gKD" customClass="BWWalkthroughViewController" customModule="Ceaseless" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="OSm-z7-RiP"/>
+                        <viewControllerLayoutGuide type="bottom" id="BrH-Rm-9Nq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="XZv-ZU-kPK">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YJQ-kz-tab" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="220" y="383"/>
+        </scene>
+        <!--Walkthrough Page View Controller-->
+        <scene sceneID="BdJ-d3-EXA">
+            <objects>
+                <viewController storyboardIdentifier="OnboardingWelcome" id="4Pe-ch-VFR" customClass="BWWalkthroughPageViewController" customModule="Ceaseless" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="686-aC-wyn"/>
+                        <viewControllerLayoutGuide type="bottom" id="pCc-Vc-fyG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pMv-va-oHo">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="at_the_beach.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Fdl-57-btj">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7b3-wX-85i">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="CYc-uE-1nU">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_friends" translatesAutoresizingMaskIntoConstraints="NO" id="NvP-I1-RoT">
+                                            <rect key="frame" x="212" y="80" width="175" height="175"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Ceaseless" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pkH-0y-hPL">
+                                            <rect key="frame" x="170" y="279" width="259" height="33"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="259" id="KBX-XN-MiL"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="24"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pray for three contacts each day and together we can pray for everyone on earth." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qlw-yn-zGs">
+                                            <rect key="frame" x="170" y="336" width="259" height="70"/>
+                                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swipe to start" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6LQ-it-R8r">
+                                            <rect key="frame" x="324" y="496.5" width="105" height="23.5"/>
+                                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="NvP-I1-RoT" firstAttribute="top" secondItem="CYc-uE-1nU" secondAttribute="top" constant="80" id="1CQ-Tc-MRp"/>
+                                        <constraint firstItem="Qlw-yn-zGs" firstAttribute="leading" secondItem="pkH-0y-hPL" secondAttribute="leading" id="29w-Cx-e66"/>
+                                        <constraint firstItem="NvP-I1-RoT" firstAttribute="centerX" secondItem="CYc-uE-1nU" secondAttribute="centerX" id="5Le-WL-7SA"/>
+                                        <constraint firstItem="pkH-0y-hPL" firstAttribute="centerX" secondItem="NvP-I1-RoT" secondAttribute="centerX" id="8Ym-ni-kOd"/>
+                                        <constraint firstItem="Qlw-yn-zGs" firstAttribute="top" secondItem="pkH-0y-hPL" secondAttribute="bottom" constant="24" id="BIe-ZJ-m7W"/>
+                                        <constraint firstAttribute="trailing" secondItem="Qlw-yn-zGs" secondAttribute="trailing" constant="24" id="Gmp-fi-iuz"/>
+                                        <constraint firstItem="6LQ-it-R8r" firstAttribute="trailing" secondItem="Qlw-yn-zGs" secondAttribute="trailing" id="LDL-T4-JRH"/>
+                                        <constraint firstItem="Qlw-yn-zGs" firstAttribute="leading" secondItem="pkH-0y-hPL" secondAttribute="leading" id="MUd-fb-88E"/>
+                                        <constraint firstItem="pkH-0y-hPL" firstAttribute="top" secondItem="NvP-I1-RoT" secondAttribute="bottom" constant="24" id="Mtb-3n-xsF"/>
+                                        <constraint firstItem="Qlw-yn-zGs" firstAttribute="trailing" secondItem="pkH-0y-hPL" secondAttribute="trailing" id="NYo-9X-1GF"/>
+                                        <constraint firstItem="Qlw-yn-zGs" firstAttribute="leading" secondItem="CYc-uE-1nU" secondAttribute="leading" constant="24" id="O7q-BQ-Kt0"/>
+                                        <constraint firstItem="Qlw-yn-zGs" firstAttribute="trailing" secondItem="pkH-0y-hPL" secondAttribute="trailing" id="a6b-fx-vae"/>
+                                        <constraint firstItem="Qlw-yn-zGs" firstAttribute="leading" secondItem="CYc-uE-1nU" secondAttribute="leading" constant="24" id="cxW-Te-p8Z"/>
+                                        <constraint firstAttribute="trailing" secondItem="Qlw-yn-zGs" secondAttribute="trailing" constant="24" id="sN5-3Y-G9R"/>
+                                        <constraint firstAttribute="bottom" secondItem="6LQ-it-R8r" secondAttribute="bottom" constant="80" id="wfb-Yv-Swl"/>
+                                        <constraint firstItem="Qlw-yn-zGs" firstAttribute="centerX" secondItem="pkH-0y-hPL" secondAttribute="centerX" id="yRv-jI-lla"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="Gmp-fi-iuz"/>
+                                            <exclude reference="MUd-fb-88E"/>
+                                            <exclude reference="O7q-BQ-Kt0"/>
+                                            <exclude reference="a6b-fx-vae"/>
+                                            <exclude reference="cxW-Te-p8Z"/>
+                                            <exclude reference="sN5-3Y-G9R"/>
+                                            <exclude reference="yRv-jI-lla"/>
+                                        </mask>
+                                    </variation>
+                                </view>
+                                <blurEffect style="light"/>
+                            </visualEffectView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="7b3-wX-85i" firstAttribute="trailing" secondItem="Fdl-57-btj" secondAttribute="trailing" id="AwB-Hy-XXH"/>
+                            <constraint firstItem="Fdl-57-btj" firstAttribute="leading" secondItem="pMv-va-oHo" secondAttribute="leading" id="K1V-RJ-bQ3"/>
+                            <constraint firstItem="7b3-wX-85i" firstAttribute="bottom" secondItem="Fdl-57-btj" secondAttribute="bottom" id="OJq-od-JwJ"/>
+                            <constraint firstItem="pCc-Vc-fyG" firstAttribute="top" secondItem="Fdl-57-btj" secondAttribute="bottom" id="OYw-As-yYh"/>
+                            <constraint firstAttribute="trailing" secondItem="Fdl-57-btj" secondAttribute="trailing" id="Tma-uR-kzz"/>
+                            <constraint firstItem="7b3-wX-85i" firstAttribute="top" secondItem="686-aC-wyn" secondAttribute="bottom" id="ZN4-xE-Gwo"/>
+                            <constraint firstItem="Fdl-57-btj" firstAttribute="top" secondItem="pMv-va-oHo" secondAttribute="top" id="b43-7n-Hix"/>
+                            <constraint firstItem="7b3-wX-85i" firstAttribute="leading" secondItem="Fdl-57-btj" secondAttribute="leading" id="fEd-oV-U0d"/>
+                            <constraint firstItem="7b3-wX-85i" firstAttribute="top" secondItem="Fdl-57-btj" secondAttribute="top" id="lCq-Bi-egy"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="ZN4-xE-Gwo"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vLn-C3-zPh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="916" y="383"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="at_the_beach.jpg" width="3264" height="2448"/>
+        <image name="icon_friends" width="175" height="175"/>
+    </resources>
+</document>
