@@ -83,6 +83,7 @@
 		CFCC4C7A1C842ED600E8AF01 /* SetupContactCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CFCC4C781C842ED600E8AF01 /* SetupContactCollectionViewCell.xib */; };
 		CFCC4C7E1C845BEC00E8AF01 /* SetupNotificationCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CFCC4C7C1C845BEC00E8AF01 /* SetupNotificationCollectionViewCell.m */; };
 		CFCC4C7F1C845BEC00E8AF01 /* SetupNotificationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CFCC4C7D1C845BEC00E8AF01 /* SetupNotificationCollectionViewCell.xib */; };
+		CFD132631C97FAC2004CAA79 /* OnboardingNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFD132621C97FAC2004CAA79 /* OnboardingNotificationViewController.m */; };
 		CFFC68D01C805CA900E4FCD5 /* OnboardingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFFC68CF1C805CA900E4FCD5 /* OnboardingViewController.m */; };
 		CFFC68D41C80624200E4FCD5 /* WelcomeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CFFC68D21C80624200E4FCD5 /* WelcomeCollectionViewCell.m */; };
 		CFFC68D71C80628C00E4FCD5 /* WelcomeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CFFC68D61C80628C00E4FCD5 /* WelcomeCollectionViewCell.xib */; };
@@ -239,6 +240,8 @@
 		CFCC4C7B1C845BEC00E8AF01 /* SetupNotificationCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupNotificationCollectionViewCell.h; sourceTree = "<group>"; };
 		CFCC4C7C1C845BEC00E8AF01 /* SetupNotificationCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupNotificationCollectionViewCell.m; sourceTree = "<group>"; };
 		CFCC4C7D1C845BEC00E8AF01 /* SetupNotificationCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetupNotificationCollectionViewCell.xib; sourceTree = "<group>"; };
+		CFD132611C97FAC2004CAA79 /* OnboardingNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnboardingNotificationViewController.h; sourceTree = "<group>"; };
+		CFD132621C97FAC2004CAA79 /* OnboardingNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnboardingNotificationViewController.m; sourceTree = "<group>"; };
 		CFFC68CE1C805CA900E4FCD5 /* OnboardingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnboardingViewController.h; sourceTree = "<group>"; };
 		CFFC68CF1C805CA900E4FCD5 /* OnboardingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnboardingViewController.m; sourceTree = "<group>"; };
 		CFFC68D11C80624200E4FCD5 /* WelcomeCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeCollectionViewCell.h; sourceTree = "<group>"; };
@@ -502,6 +505,8 @@
 				CFFC68CF1C805CA900E4FCD5 /* OnboardingViewController.m */,
 				CF4F6D0F1C97C55B002EA9C5 /* OnboardingContactViewController.h */,
 				CF4F6D101C97C55B002EA9C5 /* OnboardingContactViewController.m */,
+				CFD132611C97FAC2004CAA79 /* OnboardingNotificationViewController.h */,
+				CFD132621C97FAC2004CAA79 /* OnboardingNotificationViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -696,6 +701,7 @@
 				70BCCC211ABB768F00386D51 /* PersonNotesTableViewCell.m in Sources */,
 				7083F7181AD5EEC6002D93AD /* NSString+FetchedGroupByString.m in Sources */,
 				70BFCB021AC070C50014C4BC /* ContactsListsViewController.m in Sources */,
+				CFD132631C97FAC2004CAA79 /* OnboardingNotificationViewController.m in Sources */,
 				42869B091AC9FC5100E612F7 /* AppConstants.m in Sources */,
 				42F3AE1E1AA4DD7F003A88F5 /* main.m in Sources */,
 				42458BF61ACF1FEC00C48830 /* AddressBookId.m in Sources */,

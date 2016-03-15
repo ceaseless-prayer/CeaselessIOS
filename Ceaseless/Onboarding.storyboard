@@ -48,7 +48,7 @@
                                             <rect key="frame" x="212" y="80" width="175" height="175"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Ceaseless" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pkH-0y-hPL">
-                                            <rect key="frame" x="170" y="279" width="259" height="33"/>
+                                            <rect key="frame" x="170" y="295" width="259" height="33"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="259" id="KBX-XN-MiL"/>
                                             </constraints>
@@ -57,7 +57,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pray for three contacts each day and together we can pray for everyone on earth." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qlw-yn-zGs">
-                                            <rect key="frame" x="170" y="336" width="259" height="70"/>
+                                            <rect key="frame" x="170" y="368" width="259" height="70"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -74,11 +74,11 @@
                                         <constraint firstItem="Qlw-yn-zGs" firstAttribute="leading" secondItem="pkH-0y-hPL" secondAttribute="leading" id="29w-Cx-e66"/>
                                         <constraint firstItem="NvP-I1-RoT" firstAttribute="centerX" secondItem="CYc-uE-1nU" secondAttribute="centerX" id="5Le-WL-7SA"/>
                                         <constraint firstItem="pkH-0y-hPL" firstAttribute="centerX" secondItem="NvP-I1-RoT" secondAttribute="centerX" id="8Ym-ni-kOd"/>
-                                        <constraint firstItem="Qlw-yn-zGs" firstAttribute="top" secondItem="pkH-0y-hPL" secondAttribute="bottom" constant="24" id="BIe-ZJ-m7W"/>
+                                        <constraint firstItem="Qlw-yn-zGs" firstAttribute="top" secondItem="pkH-0y-hPL" secondAttribute="bottom" constant="40" id="BIe-ZJ-m7W"/>
                                         <constraint firstAttribute="trailing" secondItem="Qlw-yn-zGs" secondAttribute="trailing" constant="24" id="Gmp-fi-iuz"/>
                                         <constraint firstItem="6LQ-it-R8r" firstAttribute="trailing" secondItem="Qlw-yn-zGs" secondAttribute="trailing" id="LDL-T4-JRH"/>
                                         <constraint firstItem="Qlw-yn-zGs" firstAttribute="leading" secondItem="pkH-0y-hPL" secondAttribute="leading" id="MUd-fb-88E"/>
-                                        <constraint firstItem="pkH-0y-hPL" firstAttribute="top" secondItem="NvP-I1-RoT" secondAttribute="bottom" constant="24" id="Mtb-3n-xsF"/>
+                                        <constraint firstItem="pkH-0y-hPL" firstAttribute="top" secondItem="NvP-I1-RoT" secondAttribute="bottom" constant="40" id="Mtb-3n-xsF"/>
                                         <constraint firstItem="Qlw-yn-zGs" firstAttribute="trailing" secondItem="pkH-0y-hPL" secondAttribute="trailing" id="NYo-9X-1GF"/>
                                         <constraint firstItem="Qlw-yn-zGs" firstAttribute="leading" secondItem="CYc-uE-1nU" secondAttribute="leading" constant="24" id="O7q-BQ-Kt0"/>
                                         <constraint firstItem="Qlw-yn-zGs" firstAttribute="trailing" secondItem="pkH-0y-hPL" secondAttribute="trailing" id="a6b-fx-vae"/>
@@ -99,7 +99,7 @@
                                         </mask>
                                     </variation>
                                 </view>
-                                <blurEffect style="light"/>
+                                <blurEffect style="dark"/>
                             </visualEffectView>
                         </subviews>
                         <constraints>
@@ -149,7 +149,7 @@
                                             <rect key="frame" x="212" y="80" width="175" height="175"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pray for Contacts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ptw-Xe-efg">
-                                            <rect key="frame" x="170" y="279" width="259" height="33"/>
+                                            <rect key="frame" x="170" y="295" width="259" height="33"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="259" id="RdO-yt-KCi"/>
                                                 <constraint firstAttribute="width" constant="259" id="fJq-h7-zTa"/>
@@ -163,14 +163,14 @@
                                                 </mask>
                                             </variation>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow access to contacts so you know who to pray for each day." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dlF-q2-6zg">
-                                            <rect key="frame" x="170" y="336" width="259" height="46.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow access to contacts so you know who to pray for each day." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dlF-q2-6zg">
+                                            <rect key="frame" x="170" y="368" width="259" height="46.5"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ij8-an-A3o">
-                                            <rect key="frame" x="197" y="422.5" width="206" height="40"/>
+                                            <rect key="frame" x="197" y="438.5" width="206" height="40"/>
                                             <color key="backgroundColor" red="0.0" green="0.0039215686269999999" blue="0.1843137255" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                             <inset key="contentEdgeInsets" minX="16" minY="8" maxX="16" maxY="8"/>
@@ -180,7 +180,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="at8-TQ-D0R">
-                                            <rect key="frame" x="253.5" y="502.5" width="93" height="36"/>
+                                            <rect key="frame" x="253.5" y="494.5" width="93" height="36"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                             <state key="normal" title="Not now =&gt;">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -198,18 +198,18 @@
                                         <constraint firstItem="dlF-q2-6zg" firstAttribute="leading" secondItem="ptw-Xe-efg" secondAttribute="leading" id="Ibe-e5-d7a"/>
                                         <constraint firstItem="dlF-q2-6zg" firstAttribute="leading" secondItem="tIj-rj-00h" secondAttribute="leading" constant="24" id="KIN-S9-FKN"/>
                                         <constraint firstAttribute="trailing" secondItem="dlF-q2-6zg" secondAttribute="trailing" constant="24" id="RsB-7o-nrt"/>
-                                        <constraint firstItem="dlF-q2-6zg" firstAttribute="top" secondItem="ptw-Xe-efg" secondAttribute="bottom" constant="24" id="UMV-tk-r0h"/>
+                                        <constraint firstItem="dlF-q2-6zg" firstAttribute="top" secondItem="ptw-Xe-efg" secondAttribute="bottom" constant="40" id="UMV-tk-r0h"/>
                                         <constraint firstItem="dlF-q2-6zg" firstAttribute="trailing" secondItem="ptw-Xe-efg" secondAttribute="trailing" id="W7e-dg-kdJ"/>
                                         <constraint firstItem="ZAc-iz-YhM" firstAttribute="top" secondItem="tIj-rj-00h" secondAttribute="top" constant="80" id="WMd-lJ-IrH"/>
                                         <constraint firstItem="at8-TQ-D0R" firstAttribute="centerX" secondItem="ij8-an-A3o" secondAttribute="centerX" id="Wzt-91-MPp"/>
                                         <constraint firstItem="dlF-q2-6zg" firstAttribute="trailing" secondItem="ptw-Xe-efg" secondAttribute="trailing" id="aCr-kc-UKg"/>
                                         <constraint firstItem="dlF-q2-6zg" firstAttribute="leading" secondItem="tIj-rj-00h" secondAttribute="leading" constant="24" id="bBK-I6-gYD"/>
-                                        <constraint firstItem="at8-TQ-D0R" firstAttribute="top" secondItem="ij8-an-A3o" secondAttribute="bottom" constant="40" id="eoi-9T-ngK"/>
+                                        <constraint firstItem="at8-TQ-D0R" firstAttribute="top" secondItem="ij8-an-A3o" secondAttribute="bottom" constant="16" id="eoi-9T-ngK"/>
                                         <constraint firstItem="ZAc-iz-YhM" firstAttribute="centerX" secondItem="tIj-rj-00h" secondAttribute="centerX" id="gwf-KI-cx3"/>
                                         <constraint firstItem="ij8-an-A3o" firstAttribute="centerX" secondItem="dlF-q2-6zg" secondAttribute="centerX" id="ijR-gX-cYr"/>
                                         <constraint firstItem="ptw-Xe-efg" firstAttribute="centerX" secondItem="ZAc-iz-YhM" secondAttribute="centerX" id="oI9-O4-Hpr"/>
-                                        <constraint firstItem="ij8-an-A3o" firstAttribute="top" secondItem="dlF-q2-6zg" secondAttribute="bottom" constant="40" id="qT4-9D-lfr"/>
-                                        <constraint firstItem="ptw-Xe-efg" firstAttribute="top" secondItem="ZAc-iz-YhM" secondAttribute="bottom" constant="24" id="wJW-xV-aiB"/>
+                                        <constraint firstItem="ij8-an-A3o" firstAttribute="top" secondItem="dlF-q2-6zg" secondAttribute="bottom" constant="24" id="qT4-9D-lfr"/>
+                                        <constraint firstItem="ptw-Xe-efg" firstAttribute="top" secondItem="ZAc-iz-YhM" secondAttribute="bottom" constant="40" id="wJW-xV-aiB"/>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
@@ -224,7 +224,7 @@
                                         </mask>
                                     </variation>
                                 </view>
-                                <blurEffect style="light"/>
+                                <blurEffect style="dark"/>
                             </visualEffectView>
                         </subviews>
                         <constraints>
@@ -252,9 +252,138 @@
             </objects>
             <point key="canvasLocation" x="1614" y="383"/>
         </scene>
+        <!--Onboarding Notification View Controller-->
+        <scene sceneID="yFb-9p-g58">
+            <objects>
+                <viewController storyboardIdentifier="OnboardingNotification" id="3nf-rd-m6Z" customClass="OnboardingNotificationViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9st-IG-Muh"/>
+                        <viewControllerLayoutGuide type="bottom" id="v5e-Fy-MKe"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zZK-Jm-upW">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="at_the_beach.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="crO-xC-TIz">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zIH-ED-wKW">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="xXA-5G-dLa">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_chat" translatesAutoresizingMaskIntoConstraints="NO" id="0qm-SA-ptf">
+                                            <rect key="frame" x="212" y="80" width="175" height="175"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remember to Pray" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5m-Oa-Taf">
+                                            <rect key="frame" x="170" y="295" width="259" height="33"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="259" id="Tkp-5q-fZf"/>
+                                                <constraint firstAttribute="width" constant="259" id="VIx-it-Pr5"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="24"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="VIx-it-Pr5"/>
+                                                </mask>
+                                            </variation>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Turn on notifications so you remember to pray for others" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hd1-Jz-EBT">
+                                            <rect key="frame" x="170" y="368" width="259" height="46.5"/>
+                                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mGP-IK-v4v">
+                                            <rect key="frame" x="202" y="438.5" width="196" height="40"/>
+                                            <color key="backgroundColor" red="0.0" green="0.0039215686269999999" blue="0.1843137255" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                            <inset key="contentEdgeInsets" minX="16" minY="8" maxX="16" maxY="8"/>
+                                            <state key="normal" title="Turn On Notifications"/>
+                                            <connections>
+                                                <action selector="turnOnNotificationsTouched:" destination="3nf-rd-m6Z" eventType="touchUpInside" id="jqe-fS-996"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R3Y-cc-BkK">
+                                            <rect key="frame" x="253" y="494.5" width="93" height="36"/>
+                                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                            <state key="normal" title="Not now =&gt;">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="notNowTouched:" destination="3nf-rd-m6Z" eventType="touchUpInside" id="TMV-xw-voh"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Hd1-Jz-EBT" firstAttribute="leading" secondItem="q5m-Oa-Taf" secondAttribute="leading" id="07N-Ic-Ax2"/>
+                                        <constraint firstItem="R3Y-cc-BkK" firstAttribute="top" secondItem="mGP-IK-v4v" secondAttribute="bottom" constant="16" id="BBp-aJ-80m"/>
+                                        <constraint firstItem="Hd1-Jz-EBT" firstAttribute="centerX" secondItem="q5m-Oa-Taf" secondAttribute="centerX" id="DE5-QZ-KVP"/>
+                                        <constraint firstItem="q5m-Oa-Taf" firstAttribute="centerX" secondItem="0qm-SA-ptf" secondAttribute="centerX" id="DHQ-1X-LVW"/>
+                                        <constraint firstItem="Hd1-Jz-EBT" firstAttribute="trailing" secondItem="q5m-Oa-Taf" secondAttribute="trailing" id="Ehm-hm-5Fh"/>
+                                        <constraint firstItem="R3Y-cc-BkK" firstAttribute="centerX" secondItem="mGP-IK-v4v" secondAttribute="centerX" id="Fkm-B6-6DC"/>
+                                        <constraint firstItem="Hd1-Jz-EBT" firstAttribute="trailing" secondItem="q5m-Oa-Taf" secondAttribute="trailing" id="Goo-gZ-I9N"/>
+                                        <constraint firstAttribute="trailing" secondItem="Hd1-Jz-EBT" secondAttribute="trailing" constant="24" id="O6p-Qf-4ZB"/>
+                                        <constraint firstItem="mGP-IK-v4v" firstAttribute="top" secondItem="Hd1-Jz-EBT" secondAttribute="bottom" constant="24" id="Rla-RV-yAo"/>
+                                        <constraint firstItem="mGP-IK-v4v" firstAttribute="centerX" secondItem="Hd1-Jz-EBT" secondAttribute="centerX" id="Uvi-Is-c6A"/>
+                                        <constraint firstAttribute="trailing" secondItem="Hd1-Jz-EBT" secondAttribute="trailing" constant="24" id="X11-Bm-YhW"/>
+                                        <constraint firstItem="Hd1-Jz-EBT" firstAttribute="top" secondItem="q5m-Oa-Taf" secondAttribute="bottom" constant="40" id="X7S-zx-c13"/>
+                                        <constraint firstItem="Hd1-Jz-EBT" firstAttribute="leading" secondItem="xXA-5G-dLa" secondAttribute="leading" constant="24" id="Yza-fi-KTZ"/>
+                                        <constraint firstItem="0qm-SA-ptf" firstAttribute="centerX" secondItem="xXA-5G-dLa" secondAttribute="centerX" id="cQJ-UW-4qD"/>
+                                        <constraint firstItem="Hd1-Jz-EBT" firstAttribute="leading" secondItem="q5m-Oa-Taf" secondAttribute="leading" id="g1J-UZ-l13"/>
+                                        <constraint firstItem="0qm-SA-ptf" firstAttribute="top" secondItem="xXA-5G-dLa" secondAttribute="top" constant="80" id="jWf-q5-5P0"/>
+                                        <constraint firstItem="Hd1-Jz-EBT" firstAttribute="leading" secondItem="q5m-Oa-Taf" secondAttribute="leading" id="qnJ-Id-3gH"/>
+                                        <constraint firstItem="Hd1-Jz-EBT" firstAttribute="leading" secondItem="xXA-5G-dLa" secondAttribute="leading" constant="24" id="rkw-fs-g7T"/>
+                                        <constraint firstItem="q5m-Oa-Taf" firstAttribute="top" secondItem="0qm-SA-ptf" secondAttribute="bottom" constant="40" id="rtF-65-orL"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="DE5-QZ-KVP"/>
+                                            <exclude reference="Ehm-hm-5Fh"/>
+                                            <exclude reference="O6p-Qf-4ZB"/>
+                                            <exclude reference="X11-Bm-YhW"/>
+                                            <exclude reference="Yza-fi-KTZ"/>
+                                            <exclude reference="g1J-UZ-l13"/>
+                                            <exclude reference="qnJ-Id-3gH"/>
+                                            <exclude reference="rkw-fs-g7T"/>
+                                        </mask>
+                                    </variation>
+                                </view>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="zIH-ED-wKW" firstAttribute="trailing" secondItem="crO-xC-TIz" secondAttribute="trailing" id="CDc-9w-EeC"/>
+                            <constraint firstItem="zIH-ED-wKW" firstAttribute="top" secondItem="9st-IG-Muh" secondAttribute="bottom" id="DDG-9R-wiR"/>
+                            <constraint firstItem="v5e-Fy-MKe" firstAttribute="top" secondItem="crO-xC-TIz" secondAttribute="bottom" id="Jat-bO-Y2j"/>
+                            <constraint firstItem="crO-xC-TIz" firstAttribute="leading" secondItem="zZK-Jm-upW" secondAttribute="leading" id="KSn-dC-rC5"/>
+                            <constraint firstItem="zIH-ED-wKW" firstAttribute="leading" secondItem="crO-xC-TIz" secondAttribute="leading" id="Mbk-z5-w8d"/>
+                            <constraint firstItem="zIH-ED-wKW" firstAttribute="top" secondItem="crO-xC-TIz" secondAttribute="top" id="RdB-ht-RZ0"/>
+                            <constraint firstItem="zIH-ED-wKW" firstAttribute="bottom" secondItem="crO-xC-TIz" secondAttribute="bottom" id="XlM-Ks-a7Y"/>
+                            <constraint firstAttribute="trailing" secondItem="crO-xC-TIz" secondAttribute="trailing" id="eKx-UX-Sjs"/>
+                            <constraint firstItem="crO-xC-TIz" firstAttribute="top" secondItem="zZK-Jm-upW" secondAttribute="top" id="uOW-wP-bwE"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="DDG-9R-wiR"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="turnOnNotificationsButton" destination="mGP-IK-v4v" id="5zf-xv-xlN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="r6D-o6-bNZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2310" y="383"/>
+        </scene>
     </scenes>
     <resources>
         <image name="at_the_beach.jpg" width="3264" height="2448"/>
+        <image name="icon_chat" width="175" height="175"/>
         <image name="icon_friends" width="175" height="175"/>
         <image name="icon_head" width="175" height="175"/>
     </resources>

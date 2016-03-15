@@ -13,9 +13,10 @@
 #import "UIFont+FontAwesome.h"
 #import "NSString+FontAwesome.h"
 #import "MenuViewController.h"
+#import "OnboardingNotificationViewController.h"
 #import "Ceaseless-Swift.h"
 
-@interface RootViewController ()
+@interface RootViewController () <OnboardingDelegate>
 
 @property (readonly, strong, nonatomic) ModelController *modelController;
 @end
@@ -56,6 +57,14 @@
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:opts];
     self.pageViewController.delegate = self;
 
+    [self addChildViewController:self.pageViewController];
+    [self.view addSubview:self.pageViewController.view];
+
+    [self.pageViewController didMoveToParentViewController:self];
+
+    // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
+    self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
+
 #ifndef DEBUG
     // TODO: Decide whether to call the [self additionalViewSetup] or not through onboarding opened date time
 #endif
@@ -73,12 +82,21 @@
 
     UIViewController *welcomeController = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingWelcome"];
     UIViewController *contactController = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingContact"];
+    OnboardingNotificationViewController *notificationController = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingNotification"];
+
+    notificationController.delegate = self;
 
     [onboardingContainer addViewController:welcomeController];
     [onboardingContainer addViewController:contactController];
+    [onboardingContainer addViewController:notificationController];
 
 #ifdef DEBUG
-    [self presentViewController:onboardingContainer animated:YES completion:nil];
+    static BOOL hasOnboardingShown = NO;
+
+    if (!hasOnboardingShown) {
+        hasOnboardingShown = YES;
+        [self presentViewController:onboardingContainer animated:YES completion:nil];
+    }
 #else
     // TODO: Decide whether to call the [self additionalViewSetup] or not through onboarding opened date time
 #endif
@@ -93,22 +111,15 @@
 
 - (void)doAdditionalViewSetup {
     DataViewController *startingViewController = [self.modelController viewControllerAtIndex:0 storyboard:self.storyboard];
+
     if(startingViewController == nil) {
         startingViewController = [[DataViewController alloc]init];
     }
+
     NSArray *viewControllers = @[startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
 
     self.pageViewController.dataSource = self.modelController;
-
-    [self addChildViewController:self.pageViewController];
-    [self.view addSubview:self.pageViewController.view];
-
-
-    [self.pageViewController didMoveToParentViewController:self];
-
-    // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
-    self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
 }
 
 - (ModelController *)modelController {
@@ -250,4 +261,16 @@
 	[self.navigationController popViewControllerAnimated:NO];
 	
 }
+
+#pragma mark - Onboarding Delegate
+
+- (void)onboardingHasFinished {
+    [self doAdditionalViewSetup];
+
+    // Need to give timeout to let additional view setup finished first
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    });
+}
+
 @end
