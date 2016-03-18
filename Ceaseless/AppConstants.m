@@ -58,4 +58,7 @@
     // this is determining whether notification permission needs to ask later or not
     NSString *const kDoesSetupNotificationNeedToAskLater = @"doesSetupNotificationNeedToAskLater";
 
+    // this is the date of onboarding last opened date
+    NSString *const kOnboardingLastOpenedDate = @"onboardingLastOpenedDate";
+
 @end

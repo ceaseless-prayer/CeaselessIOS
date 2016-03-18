@@ -19,6 +19,9 @@
 @interface RootViewController () <OnboardingDelegate>
 
 @property (readonly, strong, nonatomic) ModelController *modelController;
+@property (assign, nonatomic) BOOL needToShowOnboarding;
+@property (assign, nonatomic) BOOL hasOnboardingShown;
+
 @end
 
 @implementation RootViewController
@@ -66,7 +69,25 @@
     self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
 
 #ifndef DEBUG
-    // TODO: Decide whether to call the [self additionalViewSetup] or not through onboarding opened date time
+    NSDictionary *infoPlist = [[NSBundle mainBundle] infoDictionary];
+
+    NSInteger onboardingQuietTimeInSeconds = [infoPlist[@"Onboarding Quiet Time"] integerValue];
+
+    NSString *onboardingLastOpenedDateInString = [[NSUserDefaults standardUserDefaults] stringForKey:kOnboardingLastOpenedDate];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"dd-MM-yyyy HH:mm:ss ZZZ";
+    NSDate *onboardingLastOpenedDate = [formatter dateFromString:onboardingLastOpenedDateInString];
+
+    if (!onboardingLastOpenedDate) {
+        self.needToShowOnboarding = YES;
+    } else {
+        NSDate *onboardingQuiteTimeLimit = [onboardingLastOpenedDate dateByAddingTimeInterval:onboardingQuietTimeInSeconds];
+        self.needToShowOnboarding = [[NSDate date] compare:onboardingQuiteTimeLimit] == NSOrderedDescending;
+    }
+
+    if (!self.needToShowOnboarding) {
+        [self doAdditionalViewSetup];
+    }
 #endif
 }
 
@@ -91,14 +112,24 @@
     [onboardingContainer addViewController:notificationController];
 
 #ifdef DEBUG
-    static BOOL hasOnboardingShown = NO;
-
-    if (!hasOnboardingShown) {
-        hasOnboardingShown = YES;
+    if (!self.hasOnboardingShown) {
+        self.hasOnboardingShown = YES;
         [self presentViewController:onboardingContainer animated:YES completion:nil];
     }
 #else
-    // TODO: Decide whether to call the [self additionalViewSetup] or not through onboarding opened date time
+    if (self.needToShowOnboarding && !self.hasOnboardingShown) {
+        [self presentViewController:onboardingContainer animated:YES completion:nil];
+
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"dd-MM-yyyy HH:mm:ss ZZZ";
+        NSString *onboardingLastOpenedDateInString = [formatter stringFromDate:[NSDate date]];
+
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:onboardingLastOpenedDateInString forKey:kOnboardingLastOpenedDate];
+        [defaults synchronize];
+
+        self.hasOnboardingShown = YES;
+    }
 #endif
 }
 
