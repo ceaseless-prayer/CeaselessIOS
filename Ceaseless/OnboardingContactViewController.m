@@ -14,6 +14,7 @@
 @interface OnboardingContactViewController () <BWWalkthroughPage>
 
 @property (weak, nonatomic) IBOutlet UIButton *allowContactsAccessButton;
+@property (weak, nonatomic) IBOutlet UIButton *notNowButton;
 
 @end
 
@@ -56,6 +57,9 @@
 
 - (IBAction)allowContactsAccessTouched:(id)sender {
     [AppUtils getAddressBookRef];
+
+    self.allowContactsAccessButton.enabled = NO;
+    self.notNowButton.enabled = NO;
 
     // Need to give timeout to make the animation smoother
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

@@ -246,6 +246,7 @@
                     </view>
                     <connections>
                         <outlet property="allowContactsAccessButton" destination="ij8-an-A3o" id="G3Z-ek-7H5"/>
+                        <outlet property="notNowButton" destination="at8-TQ-D0R" id="fKT-Nz-A6H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T7A-He-tpt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -373,6 +374,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="notNowButton" destination="R3Y-cc-BkK" id="7sk-Hp-aJu"/>
                         <outlet property="turnOnNotificationsButton" destination="mGP-IK-v4v" id="5zf-xv-xlN"/>
                     </connections>
                 </viewController>

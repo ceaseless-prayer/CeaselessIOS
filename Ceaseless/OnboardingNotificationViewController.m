@@ -12,6 +12,7 @@
 @interface OnboardingNotificationViewController ()
 
 @property (weak, nonatomic) IBOutlet UIButton *turnOnNotificationsButton;
+@property (weak, nonatomic) IBOutlet UIButton *notNowButton;
 
 @end
 
@@ -34,8 +35,14 @@
 
 #pragma mark - Helper
 
+- (void)disableButtons {
+    self.turnOnNotificationsButton.enabled = NO;
+    self.notNowButton.enabled = NO;
+}
+
 - (void)registerUserNotificationFinished {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self disableButtons];
     [self.delegate onboardingHasFinished];
 }
 
@@ -57,6 +64,7 @@
     [defaults setObject:@(YES) forKey:kDoesSetupNotificationNeedToAskLater];
     [defaults synchronize];
 
+    [self disableButtons];
     [self.delegate onboardingHasFinished];
 }
 
