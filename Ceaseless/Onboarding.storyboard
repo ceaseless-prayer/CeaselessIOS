@@ -45,10 +45,10 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_friends" translatesAutoresizingMaskIntoConstraints="NO" id="NvP-I1-RoT">
-                                            <rect key="frame" x="212" y="80" width="175" height="175"/>
+                                            <rect key="frame" x="229.5" y="80" width="140" height="133"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Ceaseless" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pkH-0y-hPL">
-                                            <rect key="frame" x="170" y="295" width="259" height="33"/>
+                                            <rect key="frame" x="170" y="253" width="259" height="33"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="259" id="KBX-XN-MiL"/>
                                             </constraints>
@@ -57,13 +57,13 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pray for three contacts each day and together we can pray for everyone on earth." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qlw-yn-zGs">
-                                            <rect key="frame" x="170" y="368" width="259" height="70"/>
+                                            <rect key="frame" x="170" y="326" width="259" height="70"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swipe to start" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6LQ-it-R8r">
-                                            <rect key="frame" x="324" y="496.5" width="105" height="23.5"/>
+                                            <rect key="frame" x="324" y="496" width="105" height="23.5"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -146,10 +146,10 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_head" translatesAutoresizingMaskIntoConstraints="NO" id="ZAc-iz-YhM">
-                                            <rect key="frame" x="212" y="80" width="175" height="175"/>
+                                            <rect key="frame" x="229.5" y="80" width="140" height="140"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pray for Contacts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ptw-Xe-efg">
-                                            <rect key="frame" x="170" y="295" width="259" height="33"/>
+                                            <rect key="frame" x="170" y="260" width="259" height="33"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="259" id="RdO-yt-KCi"/>
                                                 <constraint firstAttribute="width" constant="259" id="fJq-h7-zTa"/>
@@ -164,13 +164,13 @@
                                             </variation>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow access to contacts so you know who to pray for each day." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dlF-q2-6zg">
-                                            <rect key="frame" x="170" y="368" width="259" height="46.5"/>
+                                            <rect key="frame" x="170" y="333" width="259" height="46.5"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ij8-an-A3o">
-                                            <rect key="frame" x="197" y="438.5" width="206" height="40"/>
+                                            <rect key="frame" x="197" y="403.5" width="206" height="40"/>
                                             <color key="backgroundColor" red="0.0" green="0.0039215686269999999" blue="0.1843137255" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                             <inset key="contentEdgeInsets" minX="16" minY="8" maxX="16" maxY="8"/>
@@ -180,7 +180,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="at8-TQ-D0R">
-                                            <rect key="frame" x="253.5" y="494.5" width="93" height="36"/>
+                                            <rect key="frame" x="253.5" y="459.5" width="93" height="36"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                             <state key="normal" title="Not now =&gt;">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -275,10 +275,10 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_chat" translatesAutoresizingMaskIntoConstraints="NO" id="0qm-SA-ptf">
-                                            <rect key="frame" x="212" y="80" width="175" height="175"/>
+                                            <rect key="frame" x="229.5" y="80" width="140" height="138"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remember to Pray" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5m-Oa-Taf">
-                                            <rect key="frame" x="170" y="295" width="259" height="33"/>
+                                            <rect key="frame" x="170" y="258" width="259" height="33"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="259" id="Tkp-5q-fZf"/>
                                                 <constraint firstAttribute="width" constant="259" id="VIx-it-Pr5"/>
@@ -293,13 +293,13 @@
                                             </variation>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Turn on notifications so you remember to pray for others" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hd1-Jz-EBT">
-                                            <rect key="frame" x="170" y="368" width="259" height="46.5"/>
+                                            <rect key="frame" x="170" y="331" width="259" height="46.5"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mGP-IK-v4v">
-                                            <rect key="frame" x="202" y="438.5" width="196" height="40"/>
+                                            <rect key="frame" x="202" y="401.5" width="196" height="40"/>
                                             <color key="backgroundColor" red="0.0" green="0.0039215686269999999" blue="0.1843137255" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                             <inset key="contentEdgeInsets" minX="16" minY="8" maxX="16" maxY="8"/>
@@ -309,7 +309,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R3Y-cc-BkK">
-                                            <rect key="frame" x="253" y="494.5" width="93" height="36"/>
+                                            <rect key="frame" x="253" y="457.5" width="93" height="36"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                             <state key="normal" title="Not now =&gt;">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -385,8 +385,8 @@
     </scenes>
     <resources>
         <image name="at_the_beach.jpg" width="3264" height="2448"/>
-        <image name="icon_chat" width="175" height="175"/>
-        <image name="icon_friends" width="175" height="175"/>
-        <image name="icon_head" width="175" height="175"/>
+        <image name="icon_chat" width="140" height="138"/>
+        <image name="icon_friends" width="140" height="133"/>
+        <image name="icon_head" width="140" height="140"/>
     </resources>
 </document>
