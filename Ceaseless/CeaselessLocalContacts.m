@@ -433,6 +433,7 @@ void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictiona
 - (NSString*) compositeNameForPerson: (PersonIdentifier *) person {
     NSString *firstName = @" ";
     NSString *lastName = @" ";
+    NSString *spacer = @"";
     
     PersonInfo *info = person.representativeInfo;
     if([info.primaryFirstName.name length] > 0) {
@@ -440,9 +441,10 @@ void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictiona
     }
     if([info.primaryLastName.name length] > 0) {
         lastName = info.primaryLastName.name;
+        spacer = @" ";
     }
     
-    return [NSString stringWithFormat: @"%@ %@", firstName, lastName];
+    return [NSString stringWithFormat: @"%@%@%@", firstName, spacer, lastName];
 }
 
 - (void) createPersonInfoForCeaselessContact: (PersonIdentifier*) person {

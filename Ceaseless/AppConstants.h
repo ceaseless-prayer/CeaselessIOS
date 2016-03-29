@@ -13,6 +13,8 @@
     FOUNDATION_EXPORT NSString *const kCeaselessAppstoreAppId;
     FOUNDATION_EXPORT NSString *const kDeveloperMode;
     FOUNDATION_EXPORT NSString *const kDailyPersonCount;
+	FOUNDATION_EXPORT NSString *const kPersonForNextDay;
+	FOUNDATION_EXPORT NSString *const kPersonNameForNextDay;
     FOUNDATION_EXPORT NSString *const kDynamicBackgroundImage;
     FOUNDATION_EXPORT NSString *const kNextDynamicBackgroundImage;
     FOUNDATION_EXPORT NSString *const kNotificationDate;
