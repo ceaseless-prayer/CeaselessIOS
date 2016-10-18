@@ -12,6 +12,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    [super awakeFromNib];
 	self.personImageView.layer.cornerRadius = 6.0f;
 	[self.personImageView setClipsToBounds:YES];
 	self.placeholderLabel.layer.cornerRadius = 6.0f;
