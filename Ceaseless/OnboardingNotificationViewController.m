@@ -23,6 +23,8 @@
 
     self.turnOnNotificationsButton.layer.cornerRadius = 5;
     self.turnOnNotificationsButton.layer.masksToBounds = YES;
+    self.turnOnNotificationsButton.layer.borderWidth = 1;
+    self.turnOnNotificationsButton.layer.borderColor = UIColor.whiteColor.CGColor;
 }
 
 - (void)didReceiveMemoryWarning {

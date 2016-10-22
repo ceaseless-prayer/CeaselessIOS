@@ -75,6 +75,7 @@
 		70F664091AA82B360073801E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F664081AA82B360073801E /* QuartzCore.framework */; };
 		70F6640C1AA83CC60073801E /* ScriptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F6640B1AA83CC60073801E /* ScriptureView.m */; };
 		70F664181AA8B9260073801E /* ScripturePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F664171AA8B9260073801E /* ScripturePicker.m */; };
+		8A9D9DD01DBC29A90056CB8C /* CelebrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A9D9DCF1DBC29A90056CB8C /* CelebrationViewController.m */; };
 		CF4F6D0B1C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4F6D091C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift */; };
 		CF4F6D0C1C96AB57002EA9C5 /* BWWalkthroughViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4F6D0A1C96AB57002EA9C5 /* BWWalkthroughViewController.swift */; };
 		CF4F6D0E1C96AFE8002EA9C5 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF4F6D0D1C96AFE8002EA9C5 /* Onboarding.storyboard */; };
@@ -221,6 +222,8 @@
 		70F6640B1AA83CC60073801E /* ScriptureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptureView.m; sourceTree = "<group>"; };
 		70F664161AA8B9260073801E /* ScripturePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScripturePicker.h; sourceTree = "<group>"; };
 		70F664171AA8B9260073801E /* ScripturePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScripturePicker.m; sourceTree = "<group>"; };
+		8A9D9DCE1DBC29A90056CB8C /* CelebrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CelebrationViewController.h; sourceTree = "<group>"; };
+		8A9D9DCF1DBC29A90056CB8C /* CelebrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CelebrationViewController.m; sourceTree = "<group>"; };
 		CF4F6D081C96AB57002EA9C5 /* Ceaseless-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ceaseless-Bridging-Header.h"; sourceTree = "<group>"; };
 		CF4F6D091C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BWWalkthroughPageViewController.swift; sourceTree = "<group>"; };
 		CF4F6D0A1C96AB57002EA9C5 /* BWWalkthroughViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BWWalkthroughViewController.swift; sourceTree = "<group>"; };
@@ -478,6 +481,8 @@
 				CF4F6D101C97C55B002EA9C5 /* OnboardingContactViewController.m */,
 				CFD132611C97FAC2004CAA79 /* OnboardingNotificationViewController.h */,
 				CFD132621C97FAC2004CAA79 /* OnboardingNotificationViewController.m */,
+				8A9D9DCE1DBC29A90056CB8C /* CelebrationViewController.h */,
+				8A9D9DCF1DBC29A90056CB8C /* CelebrationViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -643,6 +648,7 @@
 				42458BED1ACF1FEC00C48830 /* Name.m in Sources */,
 				70D155D61AC1BC1700FB9486 /* ContactsListTableViewCell.m in Sources */,
 				429E608C1AAA61B1003F37BF /* PersonViewController.m in Sources */,
+				8A9D9DD01DBC29A90056CB8C /* CelebrationViewController.m in Sources */,
 				704D5CF41AAFA96200BD48B3 /* PrayerRecord.m in Sources */,
 				70F6640C1AA83CC60073801E /* ScriptureView.m in Sources */,
 				42F3AE211AA4DD7F003A88F5 /* AppDelegate.m in Sources */,
