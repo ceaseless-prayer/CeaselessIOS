@@ -158,39 +158,15 @@
     }
 }
 
-+ (NSDate*) getDailyNotificationDate {
-    NSDate *notificationDate;
-    NSCalendar *gregorian = [[NSCalendar alloc]
-                             initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if (![defaults objectForKey:kNotificationDate]) {
-        NSDate *now = [NSDate date];
-        NSDateComponents *dateComponent = [gregorian components:NSCalendarUnitYear | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitWeekday | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour fromDate: now];
-        
-        dateComponent.hour = 8; // the default notification time is 8am.
-        dateComponent.minute = 0;
-        dateComponent.second = 0;
-        notificationDate = [[NSCalendar currentCalendar] dateFromComponents:dateComponent];
-        [defaults setObject:notificationDate forKey:kNotificationDate];
-        [defaults synchronize];
-    } else {
-        notificationDate = [defaults objectForKey:kNotificationDate];
-    }
-    return notificationDate;
++ (void)setupCardView:(UIView *)cardView withShadowView:(UIView *)shadowView {
+    cardView.layer.cornerRadius = 24.0;
+    cardView.clipsToBounds = YES;
+
+    shadowView.layer.shadowColor = [UIColor blackColor].CGColor;
+    shadowView.layer.shadowOffset = CGSizeMake(1, 1);
+    shadowView.layer.shadowRadius = 4.0;
+    shadowView.layer.cornerRadius = 24.0;
+    shadowView.layer.shadowOpacity = 0.8;
 }
 
-+ (NSString*) getDailyNotificationMessage {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:kPersonNameForNextDay] != nil) {
-        NSString *personName = [defaults objectForKey:kPersonNameForNextDay];
-        NSInteger othersCount = [defaults integerForKey:kDailyPersonCount] - 1;
-        if (othersCount > 1) {
-            return [NSString stringWithFormat:@"Pray for %@ and %@ others today.", personName, [NSNumber numberWithInteger:othersCount]];
-        } else {
-            return [NSString stringWithFormat:@"Pray for %@ and others today.", personName];
-        }
-    } else {
-        return @"Remember to pray for others today.";
-    }
-}
 @end

@@ -12,6 +12,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    [super awakeFromNib];
 	self.cellBackground.layer.cornerRadius = 6.0f;
 	self.topImageView.layer.cornerRadius = 6.0f;
 	[self.topImageView setClipsToBounds:YES];

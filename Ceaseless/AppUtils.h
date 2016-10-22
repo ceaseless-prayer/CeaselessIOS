@@ -31,4 +31,5 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 + (NSString*) localInstallationId;
 + (NSDate*) getDailyNotificationDate;
 + (NSString*) getDailyNotificationMessage;
++ (void)setupCardView:(UIView *)cardView withShadowView:(UIView *)shadowView;
 @end

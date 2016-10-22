@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="mXJ-JJ-gyu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="mXJ-JJ-gyu">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -16,7 +16,7 @@
         <!--Root View Controller-->
         <scene sceneID="clB-vc-fyl">
             <objects>
-                <viewController extendedLayoutIncludesOpaqueBars="YES" id="703-4V-yAM" customClass="RootViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RootViewController" extendedLayoutIncludesOpaqueBars="YES" id="703-4V-yAM" customClass="RootViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="I7W-xW-C47"/>
                         <viewControllerLayoutGuide type="bottom" id="IfR-02-kHw"/>
@@ -43,7 +43,7 @@
                                 <blurEffect style="light"/>
                             </visualEffectView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VDk-V7-qRO">
-                                <rect key="frame" x="246" y="252" width="109" height="33"/>
+                                <rect key="frame" x="246" y="252" width="108.5" height="33"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="24"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -369,7 +369,7 @@
                                 <rect key="frame" x="395" y="4" width="185" height="32"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to create a note. ^ " textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vaC-PW-6Xb">
-                                        <rect key="frame" x="4" y="4" width="177" height="24"/>
+                                        <rect key="frame" x="4" y="4" width="177" height="23.5"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -506,7 +506,7 @@
                                                     <rect key="frame" x="0.0" y="22" width="600" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8Uh-s7-6nl" id="Rid-lh-ysD">
-                                                        <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gvb-YA-f3g">
@@ -715,9 +715,9 @@
                                             <exclude reference="1nk-1g-Kwm"/>
                                             <exclude reference="2xu-lr-XjW"/>
                                             <exclude reference="7hB-Bn-2Wi"/>
-                                            <exclude reference="GnB-Ie-FiJ"/>
                                             <exclude reference="c4C-iM-MfA"/>
                                             <exclude reference="jwN-gO-HVw"/>
+                                            <exclude reference="GnB-Ie-FiJ"/>
                                         </mask>
                                     </variation>
                                 </view>
@@ -1232,18 +1232,18 @@
                                                                 <rect key="frame" x="0.0" y="22" width="584" height="44"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BFO-Ux-rQC" id="Y5U-dY-hbR">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="584" height="43"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="584" height="43.5"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                     <subviews>
                                                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LY4-xh-BrB">
-                                                                            <rect key="frame" x="15" y="-1" width="47" height="24"/>
+                                                                            <rect key="frame" x="15" y="0.0" width="47" height="23.5"/>
                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                         </label>
                                                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2CT-aj-1vf">
-                                                                            <rect key="frame" x="15" y="23" width="53" height="21"/>
+                                                                            <rect key="frame" x="15" y="23.5" width="52.5" height="20.5"/>
                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
                                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -1394,11 +1394,11 @@
                                                     <rect key="frame" x="0.0" y="22" width="600" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GYz-VX-CJA" id="Q81-DG-POI">
-                                                        <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UtU-Y1-H5l">
-                                                                <rect key="frame" x="15" y="0.0" width="570" height="43"/>
+                                                                <rect key="frame" x="15" y="0.0" width="570" height="43.5"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
@@ -1508,12 +1508,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="703-4V-yAM" kind="relationship" relationship="rootViewController" id="2uD-04-XhW"/>
+                        <segue destination="703-4V-yAM" kind="relationship" relationship="rootViewController" id="RhP-Jk-IDP"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pjs-nJ-d0G" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-101" y="-243"/>
+            <point key="canvasLocation" x="-197" y="-243"/>
         </scene>
         <!--Menu-->
         <scene sceneID="J7c-Lw-7UR">
@@ -1549,11 +1549,11 @@
                                                     <rect key="frame" x="0.0" y="22" width="600" height="55"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sFb-kK-41i" id="uiQ-ke-TAH">
-                                                        <rect key="frame" x="0.0" y="0.0" width="567" height="54"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="567" height="54.5"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MJp-9E-fuh">
-                                                                <rect key="frame" x="15" y="0.0" width="550" height="54"/>
+                                                                <rect key="frame" x="15" y="0.0" width="550" height="54.5"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
@@ -1666,7 +1666,7 @@
                                 <rect key="frame" x="0.0" y="1" width="600" height="130"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uaU-3M-91U" id="Xtl-89-38X">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="129"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="129.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" restorationIdentifier="date" text="date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lT7-VO-9HM" userLabel="date">
