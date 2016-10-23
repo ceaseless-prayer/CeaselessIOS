@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4227F7831DBC6B0900015654 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4227F7821DBC6B0900015654 /* Localizable.strings */; };
+		4227F7861DBCBB3B00015654 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4227F7881DBCBB3B00015654 /* Localizable.strings */; };
 		422DDD391ACBBD3400409001 /* AppUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 422DDD381ACBBD3400409001 /* AppUtils.m */; };
 		42458BEA1ACF1FEB00C48830 /* Email.m in Sources */ = {isa = PBXBuildFile; fileRef = 42458BE91ACF1FEB00C48830 /* Email.m */; };
 		42458BED1ACF1FEC00C48830 /* Name.m in Sources */ = {isa = PBXBuildFile; fileRef = 42458BEC1ACF1FEC00C48830 /* Name.m */; };
@@ -94,7 +94,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4227F7821DBC6B0900015654 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		4227F7841DBCBAB300015654 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Main.strings; sourceTree = "<group>"; };
+		4227F7851DBCBAB300015654 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		4227F7871DBCBB3B00015654 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4227F7891DBCBB5300015654 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
 		422DDD371ACBBD3400409001 /* AppUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppUtils.h; sourceTree = "<group>"; };
 		422DDD381ACBBD3400409001 /* AppUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppUtils.m; sourceTree = "<group>"; };
 		42458BE81ACF1FEB00C48830 /* Email.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Email.h; sourceTree = "<group>"; };
@@ -264,7 +267,7 @@
 		42F3AE0F1AA4DD7F003A88F5 = {
 			isa = PBXGroup;
 			children = (
-				4227F7821DBC6B0900015654 /* Localizable.strings */,
+				4227F7881DBCBB3B00015654 /* Localizable.strings */,
 				42F3AE1A1AA4DD7F003A88F5 /* Ceaseless */,
 				42F3AE3A1AA4DD80003A88F5 /* CeaselessTests */,
 				42F3AE191AA4DD7F003A88F5 /* Products */,
@@ -567,6 +570,7 @@
 			knownRegions = (
 				en,
 				Base,
+				id,
 			);
 			mainGroup = 42F3AE0F1AA4DD7F003A88F5;
 			productRefGroup = 42F3AE191AA4DD7F003A88F5 /* Products */;
@@ -586,7 +590,7 @@
 			files = (
 				70D51C111AA6694400FA7CDC /* ScriptureView.xib in Resources */,
 				CF4F6D0E1C96AFE8002EA9C5 /* Onboarding.storyboard in Resources */,
-				4227F7831DBC6B0900015654 /* Localizable.strings in Resources */,
+				4227F7861DBCBB3B00015654 /* Localizable.strings in Resources */,
 				7083F7121AD4C474002D93AD /* at_the_beach.jpg in Resources */,
 				42F3AE2D1AA4DD7F003A88F5 /* Main.storyboard in Resources */,
 				42E0F4A41AD6093D00CE64E3 /* ProgressView.xib in Resources */,
@@ -702,10 +706,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		4227F7881DBCBB3B00015654 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4227F7871DBCBB3B00015654 /* en */,
+				4227F7891DBCBB5300015654 /* id */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		42F3AE2B1AA4DD7F003A88F5 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				42F3AE2C1AA4DD7F003A88F5 /* Base */,
+				4227F7841DBCBAB300015654 /* id */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -714,6 +728,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				42F3AE311AA4DD80003A88F5 /* Base */,
+				4227F7851DBCBAB300015654 /* id */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";
@@ -725,6 +740,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -769,6 +785,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
