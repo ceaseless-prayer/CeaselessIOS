@@ -113,6 +113,8 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
                     NSLog(@"Latest %@ Last %@", latestAnnouncementDate, lastAnnouncementDate);
                     NSString *headline = [NSString stringWithFormat: @"Announcement: %@", _announcements[0][@"headline"]];
                     [self.progressView.announcementButton setTitle: headline forState: UIControlStateNormal];
+                    [self.progressView.announcementButton.titleLabel setTextAlignment: NSTextAlignmentCenter];
+
                     self.progressView.announcementButton.hidden = NO;
                 }
             }

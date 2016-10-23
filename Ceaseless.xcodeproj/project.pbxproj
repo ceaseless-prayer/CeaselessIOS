@@ -77,6 +77,9 @@
 		70F6640C1AA83CC60073801E /* ScriptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F6640B1AA83CC60073801E /* ScriptureView.m */; };
 		70F664181AA8B9260073801E /* ScripturePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F664171AA8B9260073801E /* ScripturePicker.m */; };
 		8A9D9DD01DBC29A90056CB8C /* CelebrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A9D9DCF1DBC29A90056CB8C /* CelebrationViewController.m */; };
+		8A9D9DD31DBC31000056CB8C /* UIView+Glow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A9D9DD21DBC31000056CB8C /* UIView+Glow.m */; };
+		8A9D9DD61DBC5F3F0056CB8C /* CelebrationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A9D9DD51DBC5F3F0056CB8C /* CelebrationView.m */; };
+		8A9D9DD81DBC5FA40056CB8C /* CelebrationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A9D9DD71DBC5FA40056CB8C /* CelebrationView.xib */; };
 		CF4F6D0B1C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4F6D091C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift */; };
 		CF4F6D0C1C96AB57002EA9C5 /* BWWalkthroughViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4F6D0A1C96AB57002EA9C5 /* BWWalkthroughViewController.swift */; };
 		CF4F6D0E1C96AFE8002EA9C5 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF4F6D0D1C96AFE8002EA9C5 /* Onboarding.storyboard */; };
@@ -229,6 +232,11 @@
 		70F664171AA8B9260073801E /* ScripturePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScripturePicker.m; sourceTree = "<group>"; };
 		8A9D9DCE1DBC29A90056CB8C /* CelebrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CelebrationViewController.h; sourceTree = "<group>"; };
 		8A9D9DCF1DBC29A90056CB8C /* CelebrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CelebrationViewController.m; sourceTree = "<group>"; };
+		8A9D9DD11DBC31000056CB8C /* UIView+Glow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Glow.h"; sourceTree = "<group>"; };
+		8A9D9DD21DBC31000056CB8C /* UIView+Glow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Glow.m"; sourceTree = "<group>"; };
+		8A9D9DD41DBC5F3F0056CB8C /* CelebrationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CelebrationView.h; sourceTree = "<group>"; };
+		8A9D9DD51DBC5F3F0056CB8C /* CelebrationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CelebrationView.m; sourceTree = "<group>"; };
+		8A9D9DD71DBC5FA40056CB8C /* CelebrationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CelebrationView.xib; sourceTree = "<group>"; };
 		CF4F6D081C96AB57002EA9C5 /* Ceaseless-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ceaseless-Bridging-Header.h"; sourceTree = "<group>"; };
 		CF4F6D091C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BWWalkthroughPageViewController.swift; sourceTree = "<group>"; };
 		CF4F6D0A1C96AB57002EA9C5 /* BWWalkthroughViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BWWalkthroughViewController.swift; sourceTree = "<group>"; };
@@ -330,6 +338,8 @@
 		42F3AE1B1AA4DD7F003A88F5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8A9D9DD11DBC31000056CB8C /* UIView+Glow.h */,
+				8A9D9DD21DBC31000056CB8C /* UIView+Glow.m */,
 				424C5B311AE07B76005C4CFC /* FontAwesome.ttf */,
 				7083F7111AD4C474002D93AD /* at_the_beach.jpg */,
 				7075100D1ACB2B13006500A9 /* AppConstants.h */,
@@ -398,6 +408,9 @@
 				42E0F4A31AD6093D00CE64E3 /* ProgressView.xib */,
 				42E0F4A51AD60C6200CE64E3 /* ProgressView.h */,
 				42E0F4A61AD60C6200CE64E3 /* ProgressView.m */,
+				8A9D9DD41DBC5F3F0056CB8C /* CelebrationView.h */,
+				8A9D9DD51DBC5F3F0056CB8C /* CelebrationView.m */,
+				8A9D9DD71DBC5FA40056CB8C /* CelebrationView.xib */,
 				70D51C141AA6800D00FA7CDC /* PersonView.h */,
 				70D51C151AA6800D00FA7CDC /* PersonView.m */,
 				70D51C121AA66F5100FA7CDC /* PersonView.xib */,
@@ -600,6 +613,7 @@
 				42F3AE2D1AA4DD7F003A88F5 /* Main.storyboard in Resources */,
 				42E0F4A41AD6093D00CE64E3 /* ProgressView.xib in Resources */,
 				42F3AE321AA4DD80003A88F5 /* LaunchScreen.xib in Resources */,
+				8A9D9DD81DBC5FA40056CB8C /* CelebrationView.xib in Resources */,
 				42CBFBAE1ABBC9BA00F9FB1D /* WebCardView.xib in Resources */,
 				42F3AE2F1AA4DD7F003A88F5 /* Images.xcassets in Resources */,
 				424C5B321AE08433005C4CFC /* FontAwesome.ttf in Resources */,
@@ -674,8 +688,10 @@
 				CF4F6D111C97C55B002EA9C5 /* OnboardingContactViewController.m in Sources */,
 				42458BF01ACF1FEC00C48830 /* PhoneNumber.m in Sources */,
 				70F12B901AB396590090F47A /* PrayerJournalTableViewCell.m in Sources */,
+				8A9D9DD31DBC31000056CB8C /* UIView+Glow.m in Sources */,
 				70D51C0B1AA6222700FA7CDC /* PersonPicker.m in Sources */,
 				70F12B871AB2082B0090F47A /* NoteViewController.m in Sources */,
+				8A9D9DD61DBC5F3F0056CB8C /* CelebrationView.m in Sources */,
 				424C5B231ADF1137005C4CFC /* CeaselessService.m in Sources */,
 				70BCCC211ABB768F00386D51 /* PersonNotesTableViewCell.m in Sources */,
 				7083F7181AD5EEC6002D93AD /* NSString+FetchedGroupByString.m in Sources */,

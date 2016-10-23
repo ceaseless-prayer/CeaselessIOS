@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DataViewController.h"
+#import "CelebrationView.h"
 
-@interface CelebrationViewController : UIViewController
+@interface CelebrationViewController : DataViewController
+@property (strong, nonatomic) IBOutlet CelebrationView *celebrationView;
+- (IBAction)showMorePeople:(id)sender;
 
 @end

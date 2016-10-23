@@ -7,6 +7,9 @@
 //
 
 #import "CelebrationViewController.h"
+#import <QuartzCore/QuartzCore.h>
+#import "UIView+Glow.h"
+#import "AppUtils.h"
 
 @interface CelebrationViewController ()
 
@@ -16,22 +19,46 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    UIImage *backgroundImage = [AppUtils getDynamicBackgroundImage];
+    if(backgroundImage != nil) {
+        self.celebrationView.backgroundImageView.image = backgroundImage;
+    }
+    
+    [self formatCardView: self.celebrationView.cardView withShadowView:self.celebrationView.shadowView];
+    
+    self.celebrationView.showMoreButton.layer.cornerRadius = 2.0f;
+    self.celebrationView.showMoreButton.layer.borderWidth = 1.0f;
+    self.celebrationView.showMoreButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    
+    NSArray *progress = (NSArray *) self.dataObject;
+    NSNumber *totalPeople = progress[1];
+    self.celebrationView.peopleCount.text = [NSString stringWithFormat: @"%@", totalPeople];
+    
+    NSString *localInstallationId = [AppUtils localInstallationId];
+
+    [AppUtils postAnalyticsEventWithCategory:@"celebration_view" andAction:@"post_total_active_ceaseless_contacts" andLabel:localInstallationId andValue: totalPeople];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.screenName = @"CelebrationViewScreen";
+    CGPoint crownViewCenter = CGPointMake(CGRectGetMidX(self.celebrationView.crownView.bounds),
+                                        CGRectGetMidY(self.celebrationView.crownView.bounds));
+    [self.celebrationView.crownView glowOnceAtLocation:crownViewCenter inView:self.celebrationView.crownView];
+
+//    [self.celebrationView startGlowingWithColor:[UIColor whiteColor] intensity:.08f];
+//    [self.celebrationView.crownView startGlowing];
+    self.celebrationView.loadingMore.hidden=YES;
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (IBAction)showMorePeople:(id)sender {
+    self.celebrationView.showMoreButton.hidden = YES;
+    [self.celebrationView.loadingMore startAnimating];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *numberOfPeople = [NSNumber numberWithInteger:[defaults integerForKey:kDailyPersonCount]];
+    [AppUtils postAnalyticsEventWithCategory:@"celebration_view" andAction:@"button_press" andLabel:@"show_more_people" andValue: numberOfPeople];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kForceShowNewContent object:nil];
 }
-*/
 
 @end
