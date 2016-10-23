@@ -21,40 +21,40 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A8i-8l-8LP">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A8i-8l-8LP">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
-                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hEW-dC-O9l" userLabel="CardView">
-                            <rect key="frame" x="8" y="2" width="584" height="596"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hEW-dC-O9l" userLabel="CardView">
+                            <rect key="frame" x="8" y="2" width="359" height="663"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="at_the_beach.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="7NO-1f-oWc">
-                                    <rect key="frame" x="0.0" y="0.0" width="584" height="596"/>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="at_the_beach.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="7NO-1f-oWc">
+                                    <rect key="frame" x="0.0" y="0.0" width="359" height="663"/>
                                 </imageView>
-                                <visualEffectView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rrs-Df-SJZ">
-                                    <rect key="frame" x="0.0" y="0.0" width="584" height="596"/>
+                                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rrs-Df-SJZ">
+                                    <rect key="frame" x="0.0" y="0.0" width="359" height="663"/>
                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Hsk-Xf-eDg">
-                                        <rect key="frame" x="0.0" y="0.0" width="584" height="596"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="359" height="663"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F6m-KB-emB">
-                                                <rect key="frame" x="0.0" y="0.0" width="584" height="596"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F6m-KB-emB">
+                                                <rect key="frame" x="0.0" y="0.0" width="359" height="663"/>
                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.13809257745742798" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                             </view>
-                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="xiT-Sk-r1h">
-                                                <rect key="frame" x="30" y="208" width="524" height="30"/>
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="xiT-Sk-r1h">
+                                                <rect key="frame" x="30" y="241" width="299" height="30"/>
                                                 <state key="normal" title="Announcement:"/>
                                                 <connections>
                                                     <action selector="showAnnouncement:" destination="-1" eventType="touchUpInside" id="nK2-1p-dAU"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="You have prayed for:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fi9-Vk-ecV">
-                                                <rect key="frame" x="212" y="248" width="160" height="24"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have prayed for:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fi9-Vk-ecV">
+                                                <rect key="frame" x="100" y="281" width="160" height="24"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="UxO-qy-ABq">
-                                                <rect key="frame" x="129" y="274" width="327" height="38"/>
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="UxO-qy-ABq">
+                                                <rect key="frame" x="17" y="307" width="326" height="38"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="19"/>
                                                 <state key="normal" title="Subscribe to the Ceaseless newsletter">
                                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -63,19 +63,22 @@
                                                     <action selector="showSubscribeToMailingList:" destination="-1" eventType="touchUpInside" id="THc-af-9YR"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Thanks for Praying!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecU-u3-d6X">
-                                                <rect key="frame" x="188" y="282" width="208" height="33"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thanks for Praying!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecU-u3-d6X">
+                                                <rect key="frame" x="76" y="315" width="208" height="33"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="24"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <progressView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="23m-e6-afm">
-                                                <rect key="frame" x="205" y="328" width="174" height="2"/>
+                                            <progressView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="23m-e6-afm">
+                                                <rect key="frame" x="120" y="361" width="120" height="2"/>
                                             </progressView>
-                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xyC-Sa-Zer">
-                                                <rect key="frame" x="205" y="340" width="174" height="40"/>
-                                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
-                                                <state key="normal" title="Show more people">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xyC-Sa-Zer">
+                                                <rect key="frame" x="120" y="373" width="120" height="36"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="120" id="JNH-mU-W1s"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                                <state key="normal" title="Keep praying">
                                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
@@ -83,11 +86,11 @@
                                                     <action selector="showMorePeople:" destination="-1" eventType="touchUpInside" id="Aqe-lN-JoD"/>
                                                 </connections>
                                             </button>
-                                            <activityIndicatorView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="wPs-Xv-DFK">
-                                                <rect key="frame" x="282" y="350" width="20" height="20"/>
+                                            <activityIndicatorView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="wPs-Xv-DFK">
+                                                <rect key="frame" x="170" y="381" width="20" height="20"/>
                                             </activityIndicatorView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Rj-CP-8zw" userLabel="&quot;Rejoice always,  pray without ceasing, give thanks in all circumstances, for this is God's will for you in Christ Jesus.&quot;">
-                                                <rect key="frame" x="16" y="459" width="552" height="117"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Rj-CP-8zw" userLabel="&quot;Rejoice always,  pray without ceasing, give thanks in all circumstances, for this is God's will for you in Christ Jesus.&quot;">
+                                                <rect key="frame" x="16" y="503.5" width="327" height="139.5"/>
                                                 <string key="text">"Rejoice always,  pray without ceasing, give thanks in all circumstances; for this is the will of God in Christ Jesus for you." (1 Thessalonians 5:16-18, ESV)</string>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -198,8 +201,8 @@
                                 </mask>
                             </variation>
                         </view>
-                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="INo-O8-ATa" userLabel="ShadowView">
-                            <rect key="frame" x="8" y="2" width="584" height="596"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="INo-O8-ATa" userLabel="ShadowView">
+                            <rect key="frame" x="8" y="2" width="359" height="663"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </view>
                     </subviews>

@@ -5,7 +5,7 @@
   Created by Christopher Lim on 10/22/16.
   Copyright © 2016 Christopher Lim. All rights reserved.
 */
-"contactsPermissionRequired" = "This app requires access to your contacts to function properly. Please visit the \"Privacy\" section in the Settings app. Go to Contacts and enable Ceaseless.";
+"contactsPermissionRequired" = "This app requires access to your contacts to function properly. Would you like to enable access?";
 
 "I prayed for you using the Ceaseless app today." = "I prayed for you using the Ceaseless app today. You would like it. \n\nhttp://ceaselessprayer.com";
 
@@ -16,6 +16,8 @@
 "Could not send an invitation because this person is missing contact information." = "Could not send an invitation because this person is missing contact information.";
 
 "Cancel action" = "Cancel";
+
+"Allow access action" = "Allow access";
 
 "Invite to Ceaseless" = "Invite to Ceaseless";
 
@@ -82,3 +84,4 @@
 "Ceaseless only syncs contacts that have at least a first name." = "Ceaseless only syncs contacts that have at least a first name.";
 
 "Select yourself" = "Select yourself";
+

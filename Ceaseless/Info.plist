@@ -44,9 +44,7 @@
 		</dict>
 	</dict>
 	<key>NSContactsUsageDescription</key>
-	<string>Would you like to grant 'Ceaseless' access to your address book?</string>
-	<key>Onboarding Quiet Time</key>
-	<integer>86400</integer>
+	<string>Ceaseless shows you three contacts to pray for each day.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
@@ -75,7 +73,5 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSContactsUsageDescription</key>
-	<string>Would you like to grant &apos;Ceaseless&apos; access to your address book?</string>
 </dict>
 </plist>

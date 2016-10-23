@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11535.1" systemVersion="15G1104" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11535.1" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -183,6 +183,16 @@
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9g4-Jz-U9l">
+                                            <rect key="frame" x="160" y="382" width="55" height="30"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                            <state key="normal" title="not now">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="notNowTouched:" destination="tGy-8b-21i" eventType="touchUpInside" id="1hs-FI-2EH"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="dlF-q2-6zg" firstAttribute="leading" secondItem="ptw-Xe-efg" secondAttribute="leading" id="2Ta-Ni-kEd"/>
@@ -198,8 +208,10 @@
                                         <constraint firstItem="dlF-q2-6zg" firstAttribute="trailing" secondItem="ptw-Xe-efg" secondAttribute="trailing" id="aCr-kc-UKg"/>
                                         <constraint firstItem="ptw-Xe-efg" firstAttribute="centerX" secondItem="tIj-rj-00h" secondAttribute="centerX" id="apx-Ua-ZFf"/>
                                         <constraint firstItem="dlF-q2-6zg" firstAttribute="leading" secondItem="tIj-rj-00h" secondAttribute="leading" constant="24" id="bBK-I6-gYD"/>
+                                        <constraint firstItem="ij8-an-A3o" firstAttribute="top" secondItem="ptw-Xe-efg" secondAttribute="bottom" constant="127" id="i1F-k9-3ty"/>
                                         <constraint firstItem="ij8-an-A3o" firstAttribute="centerX" secondItem="dlF-q2-6zg" secondAttribute="centerX" id="ijR-gX-cYr"/>
-                                        <constraint firstItem="ij8-an-A3o" firstAttribute="top" secondItem="dlF-q2-6zg" secondAttribute="bottom" constant="24" id="qT4-9D-lfr"/>
+                                        <constraint firstItem="9g4-Jz-U9l" firstAttribute="centerX" secondItem="tIj-rj-00h" secondAttribute="centerX" id="lPX-8T-9lf"/>
+                                        <constraint firstItem="9g4-Jz-U9l" firstAttribute="top" secondItem="ij8-an-A3o" secondAttribute="bottom" constant="22" id="mwK-wO-9Lt"/>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
@@ -236,6 +248,7 @@
                     </view>
                     <connections>
                         <outlet property="allowContactsAccessButton" destination="ij8-an-A3o" id="G3Z-ek-7H5"/>
+                        <outlet property="notNowButton" destination="9g4-Jz-U9l" id="70F-lT-oFu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T7A-He-tpt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -285,13 +298,23 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mGP-IK-v4v">
-                                            <rect key="frame" x="90" y="273.5" width="196" height="40"/>
+                                            <rect key="frame" x="90" y="320" width="196" height="40"/>
                                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.13809257745742798" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                             <inset key="contentEdgeInsets" minX="16" minY="8" maxX="16" maxY="8"/>
                                             <state key="normal" title="Turn On Notifications"/>
                                             <connections>
                                                 <action selector="turnOnNotificationsTouched:" destination="3nf-rd-m6Z" eventType="touchUpInside" id="jqe-fS-996"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5TV-sD-Td2">
+                                            <rect key="frame" x="160" y="382" width="55" height="30"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                            <state key="normal" title="not now">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="notNowTouched:" destination="3nf-rd-m6Z" eventType="touchUpInside" id="RSX-sI-ddo"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -301,16 +324,18 @@
                                         <constraint firstItem="Hd1-Jz-EBT" firstAttribute="centerX" secondItem="q5m-Oa-Taf" secondAttribute="centerX" id="DE5-QZ-KVP"/>
                                         <constraint firstItem="Hd1-Jz-EBT" firstAttribute="trailing" secondItem="q5m-Oa-Taf" secondAttribute="trailing" id="Ehm-hm-5Fh"/>
                                         <constraint firstItem="Hd1-Jz-EBT" firstAttribute="trailing" secondItem="q5m-Oa-Taf" secondAttribute="trailing" id="Goo-gZ-I9N"/>
+                                        <constraint firstItem="mGP-IK-v4v" firstAttribute="top" secondItem="q5m-Oa-Taf" secondAttribute="bottom" constant="127" id="MuT-pJ-jRv"/>
                                         <constraint firstAttribute="trailing" secondItem="Hd1-Jz-EBT" secondAttribute="trailing" constant="24" id="O6p-Qf-4ZB"/>
                                         <constraint firstItem="q5m-Oa-Taf" firstAttribute="top" secondItem="xXA-5G-dLa" secondAttribute="top" constant="160" id="RMU-HD-mxr"/>
-                                        <constraint firstItem="mGP-IK-v4v" firstAttribute="top" secondItem="Hd1-Jz-EBT" secondAttribute="bottom" constant="24" id="Rla-RV-yAo"/>
                                         <constraint firstItem="mGP-IK-v4v" firstAttribute="centerX" secondItem="Hd1-Jz-EBT" secondAttribute="centerX" id="Uvi-Is-c6A"/>
                                         <constraint firstAttribute="trailing" secondItem="Hd1-Jz-EBT" secondAttribute="trailing" constant="24" id="X11-Bm-YhW"/>
                                         <constraint firstItem="Hd1-Jz-EBT" firstAttribute="top" secondItem="q5m-Oa-Taf" secondAttribute="bottom" constant="10" id="X7S-zx-c13"/>
                                         <constraint firstItem="Hd1-Jz-EBT" firstAttribute="leading" secondItem="xXA-5G-dLa" secondAttribute="leading" constant="24" id="Yza-fi-KTZ"/>
                                         <constraint firstItem="Hd1-Jz-EBT" firstAttribute="leading" secondItem="q5m-Oa-Taf" secondAttribute="leading" id="g1J-UZ-l13"/>
+                                        <constraint firstItem="5TV-sD-Td2" firstAttribute="top" secondItem="mGP-IK-v4v" secondAttribute="bottom" constant="22" id="gds-qL-iXN"/>
                                         <constraint firstItem="Hd1-Jz-EBT" firstAttribute="leading" secondItem="q5m-Oa-Taf" secondAttribute="leading" id="qnJ-Id-3gH"/>
                                         <constraint firstItem="Hd1-Jz-EBT" firstAttribute="leading" secondItem="xXA-5G-dLa" secondAttribute="leading" constant="24" id="rkw-fs-g7T"/>
+                                        <constraint firstItem="5TV-sD-Td2" firstAttribute="centerX" secondItem="xXA-5G-dLa" secondAttribute="centerX" id="wMx-yr-YL4"/>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
@@ -346,6 +371,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="notNowButton" destination="5TV-sD-Td2" id="iDX-jI-ykL"/>
                         <outlet property="turnOnNotificationsButton" destination="mGP-IK-v4v" id="5zf-xv-xlN"/>
                     </connections>
                 </viewController>

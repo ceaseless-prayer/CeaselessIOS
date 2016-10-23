@@ -20,6 +20,7 @@ green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
 blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 
 @interface AppUtils : NSObject
++ (void) showAlert;
 + (UIImage *) getDynamicBackgroundImage;
 + (NSNumber *) daysWithinEraFromDate:(NSDate *) startDate toDate:(NSDate *) endDate;
 + (ABAddressBookRef) getAddressBookRef;

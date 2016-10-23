@@ -655,7 +655,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
                                                 handler:^(UIAlertAction *action)
                                                 {
                                                     if(ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusDenied){
-                                                        [[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit the \"Privacy\" section in the Settings app. Go to Contacts and enable Ceaseless." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                                                        [AppUtils showAlert];
                                                     } else {
                                                         [self.ceaselessContacts ensureCeaselessContactsSynced];
                                                         [self handleSyncing];

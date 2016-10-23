@@ -9,6 +9,7 @@
 #import "AppUtils.h"
 #import "GAI.h"
 #import "GAIDictionaryBuilder.h"
+#import "CeaselessLocalContacts.h"
 
 @implementation AppUtils
 
@@ -52,7 +53,7 @@
         // to contacts
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            [[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit the \"Privacy\" section in the Settings app. Go to Contacts and enable Ceaseless." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            [self.class showAlert];
         });
         return addressBook;
     }
@@ -93,7 +94,7 @@
             // however, if they didn't give you permission, handle it gracefully, for example...
             dispatch_async(dispatch_get_main_queue(), ^{
                 // BTW, this is not on the main thread, so dispatch UI updates back to the main queue
-                [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"contactsPermissionRequired", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                [self.class showAlert];
             });
         }
     } else if (status == kABAuthorizationStatusAuthorized) {
@@ -103,6 +104,57 @@
     }
     
     return addressBook;
+}
+
+#pragma mark - Alert View Controller
+
++ (void) showAlert {
+    UIAlertController *alertController = [UIAlertController
+                                          alertControllerWithTitle:nil
+                                          message:NSLocalizedString(@"contactsPermissionRequired", nil)
+                                          preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       NSLog(@"Cancel action");
+                                   }];
+    
+    
+    UIAlertAction *enableContacts = [UIAlertAction
+                                     actionWithTitle:NSLocalizedString(@"OK", @"OK")
+                                     style:UIAlertActionStyleDefault
+                                     handler:^(UIAlertAction *action)
+                                     {
+                                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                                         NSLog(@"Allow action");
+                                     }];
+    
+    [alertController addAction:enableContacts];
+    [alertController addAction:cancelAction];
+    
+    UIViewController *presentingViewController = [self.class topMostController];
+    //this prevents crash on iPad in iOS 8 - known Apple bug
+    UIPopoverPresentationController *popover = alertController.popoverPresentationController;
+    if (popover)
+    {
+        popover.sourceRect = presentingViewController.view.bounds;
+        popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    }
+    
+    [presentingViewController presentViewController:alertController animated:YES completion:nil];
+}
+
++ (UIViewController*) topMostController
+{
+    UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    
+    while (topController.presentedViewController) {
+        topController = topController.presentedViewController;
+    }
+    
+    return topController;
 }
 
 #pragma mark - Animation

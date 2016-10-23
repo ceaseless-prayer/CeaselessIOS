@@ -1,0 +1,50 @@
+{
+  "stickers" : [
+    {
+      "filename" : "iOS sticker_ceaseless-dove-icon-circle.sticker"
+    },
+    {
+      "filename" : "iOS sticker_ceaseless-dove-logo-transparent_300x300.sticker"
+    },
+    {
+      "filename" : "iOS sticker_i-prayed-for-you-ceaseless_300x300.sticker"
+    },
+    {
+      "filename" : "iOS sticker_ceaseless-dove-icon_withbg_300x300 copy.sticker"
+    },
+    {
+      "filename" : "praycontinually.sticker"
+    },
+    {
+      "filename" : "iOS sticker_i-forgive-you.sticker"
+    },
+    {
+      "filename" : "ios sticker_praise-the-lord.sticker"
+    },
+    {
+      "filename" : "ios sticker_how-can-i-pray-for-you.sticker"
+    },
+    {
+      "filename" : "iOS sticker_ceaseless-dove-icon-shaded_transparent_300x300-v3.sticker"
+    },
+    {
+      "filename" : "ios sticker_praise-the-lord_darkbg.sticker"
+    },
+    {
+      "filename" : "iOS sticker_im-praying-for-you.sticker"
+    },
+    {
+      "filename" : "ios sticker_please-pray.sticker"
+    },
+    {
+      "filename" : "Sticker.sticker"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  },
+  "properties" : {
+    "grid-size" : "regular"
+  }
+}

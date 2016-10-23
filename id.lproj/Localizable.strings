@@ -5,7 +5,7 @@
   Created by Christopher Lim on 10/22/16.
   Copyright © 2016 Christopher Lim. All rights reserved.
 */
-"contactsPermissionRequired" = "Aplikasi ini membutuhkan akses ke kontak Anda untuk berfungsi dengan baik. Silakan kunjungi bagian \"Privasi\" di aplikasi Pengaturan. Buka Kontak dan membolehkan Ceaseless.";
+"contactsPermissionRequired" = "Aplikasi ini membutuhkan akses ke kontak Anda untuk berfungsi dengan baik. ****Needs translation******";
 
 "I prayed for you using the Ceaseless app today." = "Saya berdoa untuk Anda menggunakan aplikasi Ceaseless hari ini. Anda akan menyukainya. \n\nhttp://ceaselessprayer.com";
 
@@ -16,6 +16,8 @@
 "Could not send an invitation because this person is missing contact information." = "Tidak bisa mengirim undangan karena orang ini tidak ada informasi kontak.";
 
 "Cancel action" = "Batal";
+
+"Allow access action" = "** needs translation **";
 
 "Invite to Ceaseless" = "Undang ke Ceaseless";
 
@@ -82,3 +84,4 @@
 "Ceaseless only syncs contacts that have at least a first name." = "Ceaseless hanya menggunakan kontak yang memiliki nama pertama.";
 
 "Select yourself" = "Pilih sendiri";
+

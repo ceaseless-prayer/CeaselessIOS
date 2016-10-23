@@ -15,6 +15,7 @@
 #import "ScriptureQueue.h"
 #import "ScriptureViewController.h"
 #import "ProgressViewController.h"
+#import "CelebrationViewController.h"
 #import "PersonViewController.h"
 #import "WebCardViewController.h"
 #import "CeaselessLocalContacts.h"
@@ -198,7 +199,7 @@ NSString *const kLocalLastRefreshDate = @"localLastRefreshDate";
         contentViewController = [[WebCardViewController alloc] init];
         contentViewController.mainStoryboard = self.mainStoryboard;
     } else if ([self.cardArray[index] isKindOfClass:[NSArray class]]) {
-        contentViewController = [[ProgressViewController alloc] init];
+        contentViewController = [self chooseProgressControllerForIndex:index];
         contentViewController.mainStoryboard = self.mainStoryboard;
     } else {
         contentViewController = [[PersonViewController alloc] init];
@@ -210,6 +211,28 @@ NSString *const kLocalLastRefreshDate = @"localLastRefreshDate";
     _index = index;
     
     return contentViewController;
+}
+    
+- (DataViewController*)chooseProgressControllerForIndex:(NSInteger)index {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL developerMode = [defaults boolForKey:kDeveloperMode];
+    
+    if(developerMode) {
+        NSInteger count = [self.cardArray[index][0] intValue];
+        if (count % 2) {
+            return [[CelebrationViewController alloc] init];
+        } else {
+            return [[ProgressViewController alloc] init];
+        }
+    } else {
+        NSNumber *contactsSeenCount = self.cardArray[index][0];
+        NSNumber *contactsTotalCount = self.cardArray[index][1];
+        if (contactsSeenCount.intValue > 0 && contactsSeenCount.intValue == contactsTotalCount.intValue) {
+            return [[CelebrationViewController alloc] init];
+        } else {
+            return [[ProgressViewController alloc] init];
+        }
+    }
 }
 
 - (NSUInteger)indexOfViewController:(DataViewController *)viewController {

@@ -22,7 +22,6 @@
 		425271A81AB1FA9A005098F6 /* ScripturePickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271A71AB1FA9A005098F6 /* ScripturePickerTests.m */; };
 		425271AA1AB1FF1C005098F6 /* PersonPickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271A91AB1FF1C005098F6 /* PersonPickerTests.m */; };
 		425271B01AB37F29005098F6 /* CeaselessLocalContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271AF1AB37F29005098F6 /* CeaselessLocalContacts.m */; };
-		42869B091AC9FC5100E612F7 /* AppConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 42869B081AC9FC5100E612F7 /* AppConstants.m */; };
 		429094DA1AF29F7A009ABC3E /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 429094D91AF29F7A009ABC3E /* Reachability.m */; };
 		429E60891AAA5FD8003F37BF /* ScriptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E60881AAA5FD7003F37BF /* ScriptureViewController.m */; };
 		429E608C1AAA61B1003F37BF /* PersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E608B1AAA61B1003F37BF /* PersonViewController.m */; };
@@ -76,7 +75,13 @@
 		70F664091AA82B360073801E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F664081AA82B360073801E /* QuartzCore.framework */; };
 		70F6640C1AA83CC60073801E /* ScriptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F6640B1AA83CC60073801E /* ScriptureView.m */; };
 		70F664181AA8B9260073801E /* ScripturePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F664171AA8B9260073801E /* ScripturePicker.m */; };
+		8A6AA2311DBD9EE500DB0346 /* Stickers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A6AA2301DBD9EE500DB0346 /* Stickers.xcassets */; };
+		8A6AA2351DBD9EE500DB0346 /* CeaselessPack.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8A6AA22E1DBD9EE500DB0346 /* CeaselessPack.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8A9D9DD01DBC29A90056CB8C /* CelebrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A9D9DCF1DBC29A90056CB8C /* CelebrationViewController.m */; };
+		8A9D9DD31DBC31000056CB8C /* UIView+Glow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A9D9DD21DBC31000056CB8C /* UIView+Glow.m */; };
+		8A9D9DD61DBC5F3F0056CB8C /* CelebrationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A9D9DD51DBC5F3F0056CB8C /* CelebrationView.m */; };
+		8A9D9DD81DBC5FA40056CB8C /* CelebrationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A9D9DD71DBC5FA40056CB8C /* CelebrationView.xib */; };
+		8AA6D2481DC56DAA0068AAD6 /* AppConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA6D2471DC56DAA0068AAD6 /* AppConstants.m */; };
 		CF4F6D0B1C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4F6D091C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift */; };
 		CF4F6D0C1C96AB57002EA9C5 /* BWWalkthroughViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4F6D0A1C96AB57002EA9C5 /* BWWalkthroughViewController.swift */; };
 		CF4F6D0E1C96AFE8002EA9C5 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF4F6D0D1C96AFE8002EA9C5 /* Onboarding.storyboard */; };
@@ -92,7 +97,28 @@
 			remoteGlobalIDString = 42F3AE171AA4DD7F003A88F5;
 			remoteInfo = Ceaseless;
 		};
+		8A6AA2331DBD9EE500DB0346 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 42F3AE101AA4DD7F003A88F5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8A6AA22D1DBD9EE500DB0346;
+			remoteInfo = CeaselessPack;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8A6AA2391DBD9EE500DB0346 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				8A6AA2351DBD9EE500DB0346 /* CeaselessPack.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4227F7841DBCBAB300015654 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Main.strings; sourceTree = "<group>"; };
@@ -124,8 +150,6 @@
 		425271A91AB1FF1C005098F6 /* PersonPickerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonPickerTests.m; sourceTree = "<group>"; };
 		425271AE1AB37F29005098F6 /* CeaselessLocalContacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CeaselessLocalContacts.h; sourceTree = "<group>"; };
 		425271AF1AB37F29005098F6 /* CeaselessLocalContacts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CeaselessLocalContacts.m; sourceTree = "<group>"; };
-		42869B071AC9FC5100E612F7 /* AppConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstants.h; sourceTree = "<group>"; };
-		42869B081AC9FC5100E612F7 /* AppConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConstants.m; sourceTree = "<group>"; };
 		429094D81AF29F7A009ABC3E /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = ../Reachability.h; sourceTree = "<group>"; };
 		429094D91AF29F7A009ABC3E /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = ../Reachability.m; sourceTree = "<group>"; };
 		429E60871AAA5FD7003F37BF /* ScriptureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptureViewController.h; sourceTree = "<group>"; };
@@ -189,8 +213,6 @@
 		704D5CF01AAFA96200BD48B3 /* ScriptureQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptureQueue.m; sourceTree = "<group>"; };
 		704D5CF21AAFA96200BD48B3 /* PrayerRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrayerRecord.h; sourceTree = "<group>"; };
 		704D5CF31AAFA96200BD48B3 /* PrayerRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrayerRecord.m; sourceTree = "<group>"; };
-		7075100D1ACB2B13006500A9 /* AppConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstants.h; sourceTree = "<group>"; };
-		7075100E1ACB2B13006500A9 /* AppConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConstants.m; sourceTree = "<group>"; };
 		7083F7111AD4C474002D93AD /* at_the_beach.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = at_the_beach.jpg; sourceTree = "<group>"; };
 		7083F7161AD5EEC6002D93AD /* NSString+FetchedGroupByString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FetchedGroupByString.h"; sourceTree = "<group>"; };
 		7083F7171AD5EEC6002D93AD /* NSString+FetchedGroupByString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FetchedGroupByString.m"; sourceTree = "<group>"; };
@@ -227,8 +249,18 @@
 		70F6640B1AA83CC60073801E /* ScriptureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptureView.m; sourceTree = "<group>"; };
 		70F664161AA8B9260073801E /* ScripturePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScripturePicker.h; sourceTree = "<group>"; };
 		70F664171AA8B9260073801E /* ScripturePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScripturePicker.m; sourceTree = "<group>"; };
+		8A6AA22E1DBD9EE500DB0346 /* CeaselessPack.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CeaselessPack.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A6AA2301DBD9EE500DB0346 /* Stickers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Stickers.xcassets; sourceTree = "<group>"; };
+		8A6AA2321DBD9EE500DB0346 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8A9D9DCE1DBC29A90056CB8C /* CelebrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CelebrationViewController.h; sourceTree = "<group>"; };
 		8A9D9DCF1DBC29A90056CB8C /* CelebrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CelebrationViewController.m; sourceTree = "<group>"; };
+		8A9D9DD11DBC31000056CB8C /* UIView+Glow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Glow.h"; sourceTree = "<group>"; };
+		8A9D9DD21DBC31000056CB8C /* UIView+Glow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Glow.m"; sourceTree = "<group>"; };
+		8A9D9DD41DBC5F3F0056CB8C /* CelebrationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CelebrationView.h; sourceTree = "<group>"; };
+		8A9D9DD51DBC5F3F0056CB8C /* CelebrationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CelebrationView.m; sourceTree = "<group>"; };
+		8A9D9DD71DBC5FA40056CB8C /* CelebrationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CelebrationView.xib; sourceTree = "<group>"; };
+		8AA6D2461DC56DAA0068AAD6 /* AppConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstants.h; sourceTree = "<group>"; };
+		8AA6D2471DC56DAA0068AAD6 /* AppConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConstants.m; sourceTree = "<group>"; };
 		CF4F6D081C96AB57002EA9C5 /* Ceaseless-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ceaseless-Bridging-Header.h"; sourceTree = "<group>"; };
 		CF4F6D091C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BWWalkthroughPageViewController.swift; sourceTree = "<group>"; };
 		CF4F6D0A1C96AB57002EA9C5 /* BWWalkthroughViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BWWalkthroughViewController.swift; sourceTree = "<group>"; };
@@ -273,6 +305,7 @@
 				4227F7881DBCBB3B00015654 /* Localizable.strings */,
 				42F3AE1A1AA4DD7F003A88F5 /* Ceaseless */,
 				42F3AE3A1AA4DD80003A88F5 /* CeaselessTests */,
+				8A6AA22F1DBD9EE500DB0346 /* CeaselessPack */,
 				42F3AE191AA4DD7F003A88F5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -282,6 +315,7 @@
 			children = (
 				42F3AE181AA4DD7F003A88F5 /* Ceaseless.app */,
 				42F3AE371AA4DD80003A88F5 /* CeaselessTests.xctest */,
+				8A6AA22E1DBD9EE500DB0346 /* CeaselessPack.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -321,8 +355,6 @@
 				42F3AE1B1AA4DD7F003A88F5 /* Supporting Files */,
 				425271AE1AB37F29005098F6 /* CeaselessLocalContacts.h */,
 				425271AF1AB37F29005098F6 /* CeaselessLocalContacts.m */,
-				42869B071AC9FC5100E612F7 /* AppConstants.h */,
-				42869B081AC9FC5100E612F7 /* AppConstants.m */,
 			);
 			path = Ceaseless;
 			sourceTree = "<group>";
@@ -330,10 +362,12 @@
 		42F3AE1B1AA4DD7F003A88F5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8A9D9DD11DBC31000056CB8C /* UIView+Glow.h */,
+				8A9D9DD21DBC31000056CB8C /* UIView+Glow.m */,
 				424C5B311AE07B76005C4CFC /* FontAwesome.ttf */,
 				7083F7111AD4C474002D93AD /* at_the_beach.jpg */,
-				7075100D1ACB2B13006500A9 /* AppConstants.h */,
-				7075100E1ACB2B13006500A9 /* AppConstants.m */,
+				8AA6D2461DC56DAA0068AAD6 /* AppConstants.h */,
+				8AA6D2471DC56DAA0068AAD6 /* AppConstants.m */,
 				42F3AE1C1AA4DD7F003A88F5 /* Info.plist */,
 				42F3AE1D1AA4DD7F003A88F5 /* main.m */,
 			);
@@ -398,6 +432,9 @@
 				42E0F4A31AD6093D00CE64E3 /* ProgressView.xib */,
 				42E0F4A51AD60C6200CE64E3 /* ProgressView.h */,
 				42E0F4A61AD60C6200CE64E3 /* ProgressView.m */,
+				8A9D9DD41DBC5F3F0056CB8C /* CelebrationView.h */,
+				8A9D9DD51DBC5F3F0056CB8C /* CelebrationView.m */,
+				8A9D9DD71DBC5FA40056CB8C /* CelebrationView.xib */,
 				70D51C141AA6800D00FA7CDC /* PersonView.h */,
 				70D51C151AA6800D00FA7CDC /* PersonView.m */,
 				70D51C121AA66F5100FA7CDC /* PersonView.xib */,
@@ -493,6 +530,15 @@
 			name = Controllers;
 			sourceTree = "<group>";
 		};
+		8A6AA22F1DBD9EE500DB0346 /* CeaselessPack */ = {
+			isa = PBXGroup;
+			children = (
+				8A6AA2301DBD9EE500DB0346 /* Stickers.xcassets */,
+				8A6AA2321DBD9EE500DB0346 /* Info.plist */,
+			);
+			path = CeaselessPack;
+			sourceTree = "<group>";
+		};
 		CF4F6D071C96AB26002EA9C5 /* BWWalkthrough */ = {
 			isa = PBXGroup;
 			children = (
@@ -513,10 +559,12 @@
 				42F3AE151AA4DD7F003A88F5 /* Frameworks */,
 				42F3AE161AA4DD7F003A88F5 /* Resources */,
 				42199AB11AAE61D500797224 /* ShellScript */,
+				8A6AA2391DBD9EE500DB0346 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				8A6AA2341DBD9EE500DB0346 /* PBXTargetDependency */,
 			);
 			name = Ceaseless;
 			productName = Ceaseless;
@@ -540,6 +588,21 @@
 			productName = CeaselessTests;
 			productReference = 42F3AE371AA4DD80003A88F5 /* CeaselessTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		8A6AA22D1DBD9EE500DB0346 /* CeaselessPack */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8A6AA2381DBD9EE500DB0346 /* Build configuration list for PBXNativeTarget "CeaselessPack" */;
+			buildPhases = (
+				8A6AA22C1DBD9EE500DB0346 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CeaselessPack;
+			productName = CeaselessPack;
+			productReference = 8A6AA22E1DBD9EE500DB0346 /* CeaselessPack.appex */;
+			productType = "com.apple.product-type.app-extension.messages-sticker-pack";
 		};
 /* End PBXNativeTarget section */
 
@@ -566,6 +629,11 @@
 						DevelopmentTeam = 28DYBASY7W;
 						TestTargetID = 42F3AE171AA4DD7F003A88F5;
 					};
+					8A6AA22D1DBD9EE500DB0346 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = 98FUBN4YVB;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 42F3AE131AA4DD7F003A88F5 /* Build configuration list for PBXProject "Ceaseless" */;
@@ -584,6 +652,7 @@
 			targets = (
 				42F3AE171AA4DD7F003A88F5 /* Ceaseless */,
 				42F3AE361AA4DD80003A88F5 /* CeaselessTests */,
+				8A6AA22D1DBD9EE500DB0346 /* CeaselessPack */,
 			);
 		};
 /* End PBXProject section */
@@ -600,6 +669,7 @@
 				42F3AE2D1AA4DD7F003A88F5 /* Main.storyboard in Resources */,
 				42E0F4A41AD6093D00CE64E3 /* ProgressView.xib in Resources */,
 				42F3AE321AA4DD80003A88F5 /* LaunchScreen.xib in Resources */,
+				8A9D9DD81DBC5FA40056CB8C /* CelebrationView.xib in Resources */,
 				42CBFBAE1ABBC9BA00F9FB1D /* WebCardView.xib in Resources */,
 				42F3AE2F1AA4DD7F003A88F5 /* Images.xcassets in Resources */,
 				424C5B321AE08433005C4CFC /* FontAwesome.ttf in Resources */,
@@ -611,6 +681,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8A6AA22C1DBD9EE500DB0346 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A6AA2311DBD9EE500DB0346 /* Stickers.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -674,15 +752,17 @@
 				CF4F6D111C97C55B002EA9C5 /* OnboardingContactViewController.m in Sources */,
 				42458BF01ACF1FEC00C48830 /* PhoneNumber.m in Sources */,
 				70F12B901AB396590090F47A /* PrayerJournalTableViewCell.m in Sources */,
+				8A9D9DD31DBC31000056CB8C /* UIView+Glow.m in Sources */,
 				70D51C0B1AA6222700FA7CDC /* PersonPicker.m in Sources */,
 				70F12B871AB2082B0090F47A /* NoteViewController.m in Sources */,
+				8A9D9DD61DBC5F3F0056CB8C /* CelebrationView.m in Sources */,
 				424C5B231ADF1137005C4CFC /* CeaselessService.m in Sources */,
 				70BCCC211ABB768F00386D51 /* PersonNotesTableViewCell.m in Sources */,
 				7083F7181AD5EEC6002D93AD /* NSString+FetchedGroupByString.m in Sources */,
 				70BFCB021AC070C50014C4BC /* ContactsListsViewController.m in Sources */,
 				CFD132631C97FAC2004CAA79 /* OnboardingNotificationViewController.m in Sources */,
-				42869B091AC9FC5100E612F7 /* AppConstants.m in Sources */,
 				42F3AE1E1AA4DD7F003A88F5 /* main.m in Sources */,
+				8AA6D2481DC56DAA0068AAD6 /* AppConstants.m in Sources */,
 				42458BF61ACF1FEC00C48830 /* AddressBookId.m in Sources */,
 				42F3AE241AA4DD7F003A88F5 /* RootViewController.m in Sources */,
 				70F12B841AB208000090F47A /* PrayerJournalViewController.m in Sources */,
@@ -708,6 +788,11 @@
 			isa = PBXTargetDependency;
 			target = 42F3AE171AA4DD7F003A88F5 /* Ceaseless */;
 			targetProxy = 42F3AE381AA4DD80003A88F5 /* PBXContainerItemProxy */;
+		};
+		8A6AA2341DBD9EE500DB0346 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8A6AA22D1DBD9EE500DB0346 /* CeaselessPack */;
+			targetProxy = 8A6AA2331DBD9EE500DB0346 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -906,6 +991,49 @@
 			};
 			name = Release;
 		};
+		8A6AA2361DBD9EE500DB0346 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 98FUBN4YVB;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = CeaselessPack/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ceaselessprayer.CeaselessPack;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		8A6AA2371DBD9EE500DB0346 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 98FUBN4YVB;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = CeaselessPack/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ceaselessprayer.CeaselessPack;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -932,6 +1060,15 @@
 			buildConfigurations = (
 				42F3AE451AA4DD80003A88F5 /* Debug */,
 				42F3AE461AA4DD80003A88F5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8A6AA2381DBD9EE500DB0346 /* Build configuration list for PBXNativeTarget "CeaselessPack" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A6AA2361DBD9EE500DB0346 /* Debug */,
+				8A6AA2371DBD9EE500DB0346 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

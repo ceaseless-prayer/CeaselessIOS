@@ -15,6 +15,7 @@
 #import "MenuViewController.h"
 #import "OnboardingNotificationViewController.h"
 #import "Ceaseless-Swift.h"
+#import "CeaselessLocalContacts.h"
 
 @interface RootViewController () <OnboardingDelegate>
 
@@ -68,7 +69,7 @@
     // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
     self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
 
-#ifndef DEBUG
+//#ifndef DEBUG
     NSDictionary *infoPlist = [[NSBundle mainBundle] infoDictionary];
 
     NSInteger onboardingQuietTimeInSeconds = [infoPlist[@"Onboarding Quiet Time"] integerValue];
@@ -88,7 +89,7 @@
     if (!self.needToShowOnboarding) {
         [self doAdditionalViewSetup];
     }
-#endif
+//#endif
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -111,12 +112,12 @@
     [onboardingContainer addViewController:contactController];
     [onboardingContainer addViewController:notificationController];
 
-#ifdef DEBUG
-    if (!self.hasOnboardingShown) {
-        self.hasOnboardingShown = YES;
-        [self presentViewController:onboardingContainer animated:YES completion:nil];
-    }
-#else
+//#ifdef DEBUG
+//    if (!self.hasOnboardingShown) {
+//        self.hasOnboardingShown = YES;
+//        [self presentViewController:onboardingContainer animated:YES completion:nil];
+//    }
+//#else
     if (self.needToShowOnboarding && !self.hasOnboardingShown) {
         [self presentViewController:onboardingContainer animated:YES completion:nil];
 
@@ -130,7 +131,16 @@
 
         self.hasOnboardingShown = YES;
     }
-#endif
+//#endif
+}
+
+// TODO  find a callback after return from Settings that can call this method
+- (void) ensureContacts
+{
+    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
+        CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
+        [ceaselessContacts ensureCeaselessContactsSynced];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
