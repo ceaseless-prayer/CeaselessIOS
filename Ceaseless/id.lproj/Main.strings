@@ -1,21 +1,21 @@
 
 /* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "0Wl-wY-iqb"; */
-"0Wl-wY-iqb.title" = "Cancel";
+"0Wl-wY-iqb.title" = "Batal";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "21g-XQ-nPL"; */
 "21g-XQ-nPL.text" = "Label";
 
 /* Class = "UILabel"; text = "text"; ObjectID = "2AE-KC-PdA"; */
-"2AE-KC-PdA.text" = "text";
+"2AE-KC-PdA.text" = "teks";
 
 /* Class = "UIViewController"; title = "Tagged Person Picker"; ObjectID = "2Ov-uL-ZtG"; */
-"2Ov-uL-ZtG.title" = "Tagged Person Picker";
+"2Ov-uL-ZtG.title" = "Pilih Orang Tagged";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "Ap3-56-gqg"; */
-"Ap3-56-gqg.text" = "Name";
+"Ap3-56-gqg.text" = "Nama";
 
 /* Class = "UINavigationItem"; title = "People"; ObjectID = "CCK-KN-64g"; */
-"CCK-KN-64g.title" = "People";
+"CCK-KN-64g.title" = "Orang";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "D86-2K-Klh"; */
 "D86-2K-Klh.text" = "Label";
@@ -24,7 +24,7 @@
 "Doy-Xf-IRt.title" = " ";
 
 /* Class = "UIViewController"; title = "Prayer Journal"; ObjectID = "Eu1-lG-zhA"; */
-"Eu1-lG-zhA.title" = "Prayer Journal";
+"Eu1-lG-zhA.title" = "Jurnal Doa";
 
 /* Class = "UIBarButtonItem"; title = "Menu"; ObjectID = "Guc-Qf-Mt0"; */
 "Guc-Qf-Mt0.title" = "Menu";
@@ -36,40 +36,40 @@
 "JcK-uc-3mv.title" = "Menu";
 
 /* Class = "UIBarButtonItem"; title = "Done"; ObjectID = "K2I-Qv-Zz7"; */
-"K2I-Qv-Zz7.title" = "Done";
+"K2I-Qv-Zz7.title" = "Sudah";
 
 /* Class = "UIBarButtonItem"; title = "Journal"; ObjectID = "KcV-zW-dSC"; */
-"KcV-zW-dSC.title" = "Journal";
+"KcV-zW-dSC.title" = "Jurnal";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "LY4-xh-BrB"; */
-"LY4-xh-BrB.text" = "Name";
+"LY4-xh-BrB.text" = "Nama";
 
 /* Class = "UILabel"; text = "Tag friends"; ObjectID = "Ltb-c7-ldM"; */
-"Ltb-c7-ldM.text" = "Tag friends";
+"Ltb-c7-ldM.text" = "Tag teman";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "MJp-9E-fuh"; */
-"MJp-9E-fuh.text" = "Title";
+"MJp-9E-fuh.text" = "Judul";
 
 /* Class = "UILabel"; text = "Remind me to pray at:"; ObjectID = "OMp-Bh-HQ6"; */
-"OMp-Bh-HQ6.text" = "Remind me to pray at:";
+"OMp-Bh-HQ6.text" = "Ingatkan doa waktu:";
 
 /* Class = "UIViewController"; title = "People"; ObjectID = "Trs-Fq-LiS"; */
-"Trs-Fq-LiS.title" = "People";
+"Trs-Fq-LiS.title" = "Orang";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "UtU-Y1-H5l"; */
-"UtU-Y1-H5l.text" = "Name";
+"UtU-Y1-H5l.text" = "Nama";
 
 /* Class = "UILabel"; text = "Loading..."; ObjectID = "VDk-V7-qRO"; */
-"VDk-V7-qRO.text" = "Loading...";
+"VDk-V7-qRO.text" = "Sedang memuat...";
 
 /* Class = "UITableViewController"; title = "NotesTableViewController"; ObjectID = "XQe-6l-Oah"; */
 "XQe-6l-Oah.title" = "NotesTableViewController";
 
 /* Class = "UILabel"; text = "people each day"; ObjectID = "YFL-4Q-zeM"; */
-"YFL-4Q-zeM.text" = "people each day";
+"YFL-4Q-zeM.text" = "orang setiap hari";
 
 /* Class = "UIButton"; normalTitle = "Select Yourself in Contacts"; ObjectID = "YvC-sY-Zh1"; */
-"YvC-sY-Zh1.normalTitle" = "Select Yourself in Contacts";
+"YvC-sY-Zh1.normalTitle" = "Pilih sendiri di kontak";
 
 /* Class = "UILabel"; text = "Syncing..."; ObjectID = "bg0-Qa-79x"; */
 "bg0-Qa-79x.text" = "Syncing...";
@@ -78,10 +78,10 @@
 "gvb-YA-f3g.normalTitle" = "Fav";
 
 /* Class = "UILabel"; text = "Tap to add a person. ^ "; ObjectID = "iLd-nE-21F"; */
-"iLd-nE-21F.text" = "Tap to add a person. ^ ";
+"iLd-nE-21F.text" = "Ketuk untuk menambahkan orang ^ ";
 
 /* Class = "UINavigationItem"; title = "Prayer Journal"; ObjectID = "kDo-wz-fet"; */
-"kDo-wz-fet.title" = "Prayer Journal";
+"kDo-wz-fet.title" = "Jurnal Doa";
 
 /* Class = "UILabel"; text = "date"; ObjectID = "lT7-VO-9HM"; */
 "lT7-VO-9HM.text" = "date";
@@ -90,31 +90,31 @@
 "mXJ-JJ-gyu.title" = "Ceaseless";
 
 /* Class = "UITextField"; text = "ME"; ObjectID = "oqk-y9-t0v"; */
-"oqk-y9-t0v.text" = "ME";
+"oqk-y9-t0v.text" = "Saya";
 
 /* Class = "UINavigationItem"; title = "Tag People"; ObjectID = "qna-R8-JJN"; */
-"qna-R8-JJN.title" = "Tag People";
+"qna-R8-JJN.title" = "Tag Orang";
 
 /* Class = "UIViewController"; title = "Settings"; ObjectID = "r5P-yf-vRE"; */
-"r5P-yf-vRE.title" = "Settings";
+"r5P-yf-vRE.title" = "Pengaturan";
 
 /* Class = "UINavigationItem"; title = "Add Notes"; ObjectID = "svM-zj-Uqx"; */
-"svM-zj-Uqx.title" = "Add Notes";
+"svM-zj-Uqx.title" = "Menambahkan catatan";
 
 /* Class = "UILabel"; text = "  Pray for "; ObjectID = "uJa-Kc-NzC"; */
-"uJa-Kc-NzC.text" = "  Pray for ";
+"uJa-Kc-NzC.text" = "  Doa untuk ";
 
 /* Class = "UISegmentedControl"; ubS-U9-lnF.segmentTitles[0] = "Active"; ObjectID = "ubS-U9-lnF"; */
-"ubS-U9-lnF.segmentTitles[0]" = "Active";
+"ubS-U9-lnF.segmentTitles[0]" = "Aktif";
 
 /* Class = "UISegmentedControl"; ubS-U9-lnF.segmentTitles[1] = "Removed"; ObjectID = "ubS-U9-lnF"; */
-"ubS-U9-lnF.segmentTitles[1]" = "Removed";
+"ubS-U9-lnF.segmentTitles[1]" = "Dihapus";
 
 /* Class = "UILabel"; text = "Tap to create a note. ^ "; ObjectID = "vaC-PW-6Xb"; */
-"vaC-PW-6Xb.text" = "Tap to create a note. ^ ";
+"vaC-PW-6Xb.text" = "Ketuk untuk menambahkan orang ^ ";
 
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "vb3-cf-jfP"; */
-"vb3-cf-jfP.title" = "Settings";
+"vb3-cf-jfP.title" = "Pengaturan";
 
 /* Class = "UINavigationItem"; title = "Menu"; ObjectID = "wnR-wZ-T2Y"; */
 "wnR-wZ-T2Y.title" = "Menu";
