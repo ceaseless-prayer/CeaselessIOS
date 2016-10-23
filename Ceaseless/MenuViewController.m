@@ -29,7 +29,14 @@
 
 	self.tableView.delegate = self;
 	self.tableView.dataSource = self;
-	self.menuInfoArray = [[NSMutableArray alloc] initWithObjects: @"People", @"Settings", @"Help", @"Contact Us", @"About", @"Review Ceaseless", @"Subscribe to Newsletter", nil];
+	self.menuInfoArray = [[NSMutableArray alloc] initWithObjects:
+                          NSLocalizedString(@"People", nil),
+                          NSLocalizedString(@"Settings", nil),
+                          NSLocalizedString(@"Help", nil),
+                          NSLocalizedString(@"Contact Us", nil),
+                          NSLocalizedString(@"About", nil),
+                          NSLocalizedString(@"Review Ceaseless", nil),
+                          NSLocalizedString(@"Subscribe to Newsletter", nil), nil];
     [self.menuInfoArray addObject: @""]; // for the developer mode row
     UIImage *background = [AppUtils getDynamicBackgroundImage];
     if(background != nil) {
@@ -169,7 +176,7 @@
 #pragma mark - Give Feedback
 - (void)showFeedbackForm {
     NSArray *recipents = [NSArray arrayWithObjects:@"ceaseless@theotech.org", nil];
-    NSString *subject = @"Ceaseless for iOS Feedback";
+    NSString *subject = NSLocalizedString(@"Ceaseless for iOS Feedback", nil);
     
     MFMailComposeViewController *mailController = [[MFMailComposeViewController alloc] init];
     mailController.mailComposeDelegate = self;
@@ -185,10 +192,10 @@
 - (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult) result error: (NSError*) error
 {
     UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Did not send feedback.", nil) delegate:nil
-                                                 cancelButtonTitle:@"OK"
+                                                 cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                                  otherButtonTitles:nil];
     UIAlertView *thanksAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Thank you!", nil) message:NSLocalizedString(@"Thanks for your feedback.", nil) delegate:nil
-                                                cancelButtonTitle:@"OK"
+                                                cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                                 otherButtonTitles:nil];
     
     if(error) {

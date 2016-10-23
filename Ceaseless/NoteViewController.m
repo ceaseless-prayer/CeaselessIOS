@@ -36,11 +36,12 @@
 
 static CGFloat const kPadding = 5.0;
 
-NSString *const kPlaceHolderText = @"Enter note";
+NSString *kPlaceHolderText;
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
     self.screenName = @"NoteViewScreen";
+    kPlaceHolderText = NSLocalizedString(@"Enter note", nil);
 	UIImage *backgroundImage = [AppUtils getDynamicBackgroundImage];
 	if(backgroundImage != nil) {
 		self.backgroundImageView.image = backgroundImage;
@@ -544,7 +545,7 @@ NSString *const kPlaceHolderText = @"Enter note";
 
 		// If this is the last row in filteredPeople, take special action
 	if (self.filteredPeople.count == indexPath.row) {
-		cell.textLabel.text	= @"Add new contact";
+		cell.textLabel.text	= NSLocalizedString(@"Add new contact", nil);
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     } else {
 		PersonIdentifier *person = [self.filteredPeople objectAtIndex:indexPath.row];

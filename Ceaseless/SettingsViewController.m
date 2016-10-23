@@ -135,7 +135,7 @@
 		// Check the segue identifier
 	if ([[segue identifier] isEqualToString:@"ShowSelectContact"]) {
 		UserIdentityPicker *picker = segue.destinationViewController;
-		picker.title = @"Select yourself";
+		picker.title = NSLocalizedString(@"Select yourself", nil);
 		picker.delegate = self;
 	}
 }

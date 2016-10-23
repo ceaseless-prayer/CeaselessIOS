@@ -38,12 +38,10 @@ static NSString *kInvitationError;
 
 +(void)initialize
 {
-    kInviteMessage =  NSLocalizedString(@"I prayed for you using the Ceaseless app today. You would like it. \n\nhttps://appsto.re/us/m8bc6.i", nil);
-    kSMSMessage = NSLocalizedString(@"I prayed for you today when you came up in my Ceaseless app. How are you doing?  \n\nhttps://appsto.re/us/m8bc6.i", nil);
+    kInviteMessage =  NSLocalizedString(@"I prayed for you using the Ceaseless app today.", nil);
+    kSMSMessage = NSLocalizedString(@"I prayed for you today when you came up in my Ceaseless app. How are you doing?", nil);
 	kMessageError = NSLocalizedString(@"Could not send a message because this person is missing contact information.", nil);
 	kInvitationError = NSLocalizedString(@"Could not send an invitation because this person is missing contact information.", nil);
-
-
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -235,19 +233,19 @@ static NSString *kInvitationError;
                                           message:nil
                                           preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *cancelAction = [UIAlertAction
-                                   actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
+                                   actionWithTitle: NSLocalizedString(@"Cancel action", nil)
                                    style:UIAlertActionStyleCancel
                                    handler:^(UIAlertAction *action)
                                    {
                                        NSLog(@"Cancel action");
                                    }];
 
-    NSString *invitationActionTitle = @"Invite to Ceaseless";
+    NSString *invitationActionTitle = NSLocalizedString(@"Invite to Ceaseless", nil);
     if(self.person.lastInvitedDate != nil) {
         NSString *formattedDate = [NSDateFormatter localizedStringFromDate:self.person.lastInvitedDate
                                                                  dateStyle:NSDateFormatterShortStyle
                                                                  timeStyle:NSDateFormatterNoStyle];
-        invitationActionTitle = [NSString stringWithFormat: @"Invited %@", formattedDate];
+        invitationActionTitle = [NSString stringWithFormat: NSLocalizedString(@"Invited %@", nil), formattedDate];
     }
     
     UIAlertAction *inviteAction = [UIAlertAction
@@ -263,7 +261,7 @@ static NSString *kInvitationError;
                                    }];
     
     UIAlertAction *removeFromCeaselessAction = [UIAlertAction
-                                        actionWithTitle:NSLocalizedString(@"Remove from Ceaseless", @"Remove from Ceaseless")
+                                        actionWithTitle:NSLocalizedString(@"Remove from Ceaseless", nil)
                                         style:UIAlertActionStyleDestructive
                                         handler:^(UIAlertAction *action)
                                         {
@@ -272,7 +270,7 @@ static NSString *kInvitationError;
                                         }];
     
     UIAlertAction *addToCeaselessAction = [UIAlertAction
-                                                actionWithTitle:NSLocalizedString(@"Add to Ceaseless", @"Add to Ceaseless")
+                                                actionWithTitle:NSLocalizedString(@"Add to Ceaseless", nil)
                                                 style:UIAlertActionStyleDefault
                                                 handler:^(UIAlertAction *action)
                                                 {
@@ -281,7 +279,7 @@ static NSString *kInvitationError;
                                                 }];
     
     UIAlertAction *viewContact = [UIAlertAction
-                              actionWithTitle:NSLocalizedString(@"View in Contacts", @"View in Contacts")
+                              actionWithTitle:NSLocalizedString(@"View in Contacts", nil)
                               style:UIAlertActionStyleDefault
                               handler:^(UIAlertAction *action)
                               {
@@ -292,9 +290,9 @@ static NSString *kInvitationError;
 
 	NSString *favoriteTitleString;
 	if (self.person.favoritedDate) {
-		favoriteTitleString = @"Unfavorite Contact";
+		favoriteTitleString = NSLocalizedString(@"Unfavorite Contact", nil);
 	} else {
-		favoriteTitleString = @"Favorite Contact";
+		favoriteTitleString = NSLocalizedString(@"Favorite Contact", nil);
 
 	}
 	UIAlertAction *favoriteContact = [UIAlertAction
@@ -308,7 +306,7 @@ static NSString *kInvitationError;
 								  }];
 
 	UIAlertAction *sendMessage = [UIAlertAction
-									  actionWithTitle:NSLocalizedString(@"Send Message", @"Send Message")
+									  actionWithTitle:NSLocalizedString(@"Send Message", nil)
 									  style:UIAlertActionStyleDefault
 									  handler:^(UIAlertAction *action)
 									  {
@@ -318,7 +316,7 @@ static NSString *kInvitationError;
 									  }];
 
 	UIAlertAction *addNote = [UIAlertAction
-								  actionWithTitle:NSLocalizedString(@"Add a New Note", @"Add a New Note")
+								  actionWithTitle:NSLocalizedString(@"Add a New Note", nil)
 								  style:UIAlertActionStyleDefault
 								  handler:^(UIAlertAction *action)
 								  {
@@ -424,9 +422,9 @@ static NSString *kInvitationError;
 
 	NSString *messageTitle;
 	if (message == kInviteMessage) {
-		messageTitle = @"Send Invite";
+		messageTitle = NSLocalizedString(@"Send Invite", nil);
 	} else {
-		messageTitle = @"Send Message";
+		messageTitle = NSLocalizedString(@"Send Message", nil);
 	}
 
 	UIAlertController *alertController = [UIAlertController
@@ -434,7 +432,7 @@ static NSString *kInvitationError;
 											  message:nil
 											  preferredStyle:UIAlertControllerStyleActionSheet];
 	UIAlertAction *cancelAction = [UIAlertAction
-									   actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
+									   actionWithTitle:NSLocalizedString(@"Cancel action", nil)
 									   style:UIAlertActionStyleCancel
 									   handler:^(UIAlertAction *action)
 									   {
@@ -496,7 +494,7 @@ static NSString *kInvitationError;
 		UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
 															   message: errorMessage
 															  delegate:nil
-													 cancelButtonTitle:@"OK"
+													 cancelButtonTitle:NSLocalizedString(@"OK", nil)
 													 otherButtonTitles:nil];
 
 		[warningAlert show];
@@ -537,9 +535,9 @@ static NSString *kInvitationError;
     
     if(![MFMessageComposeViewController canSendText]) {
         UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Error", nil)
-                                                               message:NSLocalizedString(@"Your device doesn't support SMS!", nil)
+                                                               message: NSLocalizedString(@"Your device doesn't support SMS!", nil)
                                                               delegate:nil
-                                                     cancelButtonTitle:@"OK"
+                                                     cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                                      otherButtonTitles:nil];
         
         [warningAlert show];
@@ -567,7 +565,7 @@ static NSString *kInvitationError;
     MFMailComposeViewController *mailController = [[MFMailComposeViewController alloc] init];
     mailController.mailComposeDelegate = self;
     [mailController setToRecipients: recipents];
-	[mailController setSubject: @"Ceaseless Prayer"];
+	[mailController setSubject: NSLocalizedString(@"Ceaseless Prayer", nil)];
 	NSString *emailBody = [NSString stringWithFormat: @"%@,\n\n%@",self.person.representativeInfo.primaryFirstName.name, message];
 	[mailController setMessageBody: emailBody  isHTML: NO];
 
@@ -593,7 +591,7 @@ static NSString *kInvitationError;
         {
             UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Failed to send SMS!", nil)
                                                                   delegate:nil
-                                                         cancelButtonTitle:@"OK"
+                                                         cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                                          otherButtonTitles:nil];
             
             [warningAlert show];
@@ -615,7 +613,7 @@ static NSString *kInvitationError;
 - (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult) result error: (NSError*) error
 {
     UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Did not send message.", nil) delegate:nil
-                                                 cancelButtonTitle:@"OK"
+                                                 cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                                  otherButtonTitles:nil];
     
     if(error) {
