@@ -715,7 +715,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
             personViewController.dataObject = ceaselessPerson;
             [self.navigationController pushViewController:personViewController animated:YES];
         } else {
-            [[[UIAlertView alloc] initWithTitle:nil message:@"Ceaseless only syncs contacts that have at least a first name." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Ceaseless only syncs contacts that have at least a first name.", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
         }
     } else {
         ceaselessContacts.internalAddressBookChange = NO;

@@ -37,7 +37,7 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
     float progressPercentage = 0;
     if([totalPeople intValue] > 0) {
         progressPercentage = [[NSNumber numberWithDouble:[totalPeoplePrayedForThisCycle doubleValue] / [totalPeople doubleValue]]floatValue];
-        self.progressView.progressLabel.text = [NSString stringWithFormat: @"%@ / %@ people", totalPeoplePrayedForThisCycle, totalPeople];
+        self.progressView.progressLabel.text = [NSString stringWithFormat: NSLocalizedString(@"%@ / %@ people", nil), totalPeoplePrayedForThisCycle, totalPeople];
         NSString *localInstallationId = [AppUtils localInstallationId];
         [AppUtils postAnalyticsEventWithCategory:@"progress_view" andAction:@"post_people_prayed_for_this_cycle" andLabel:localInstallationId andValue: totalPeoplePrayedForThisCycle];
         [AppUtils postAnalyticsEventWithCategory:@"progress_view" andAction:@"post_total_active_ceaseless_contacts" andLabel:localInstallationId andValue: totalPeople];

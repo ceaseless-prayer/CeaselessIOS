@@ -128,7 +128,7 @@
 	if (self.searchController.active) {
 		if (self.filteredList.count == indexPath.row)
 		{
-			cell.textLabel.text	= @"Add new contact";
+			cell.textLabel.text	= NSLocalizedString(@"Add new contact", nil);
 			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		} else {
 			PersonIdentifier *person = [self.filteredList objectAtIndex:indexPath.row];

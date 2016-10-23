@@ -93,7 +93,7 @@
             // however, if they didn't give you permission, handle it gracefully, for example...
             dispatch_async(dispatch_get_main_queue(), ^{
                 // BTW, this is not on the main thread, so dispatch UI updates back to the main queue
-                [[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit the \"Privacy\" section in the Settings app. Go to Contacts and enable Ceaseless." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"contactsPermissionRequired", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             });
         }
     } else if (status == kABAuthorizationStatusAuthorized) {

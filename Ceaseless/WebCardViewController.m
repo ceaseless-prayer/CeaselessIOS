@@ -18,7 +18,7 @@
     [super viewDidLoad];
     Reachability *reach = [Reachability reachabilityForInternetConnection];
     if([reach currentReachabilityStatus] == NotReachable) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Internet Connection" message:@"Please connect to the internet to see this." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Internet Connection", nil) message:NSLocalizedString(@"Please connect to the internet to see this.", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
         [alert show];
     }
     

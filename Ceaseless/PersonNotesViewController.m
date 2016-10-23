@@ -76,7 +76,7 @@
 		cell.text.text = note.text;
 	} else {
 		cell.date.text = @"";
-		cell.text.text = @"Add new note";
+		cell.text.text = NSLocalizedString(@"Add new note", nil);
 	}
 	NSLog (@"detail cell text %@", cell.text.text);
 	
