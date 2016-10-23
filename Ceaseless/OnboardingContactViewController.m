@@ -25,6 +25,8 @@
 
     self.allowContactsAccessButton.layer.cornerRadius = 5;
     self.allowContactsAccessButton.layer.masksToBounds = YES;
+    self.allowContactsAccessButton.layer.borderWidth = 1;
+    self.allowContactsAccessButton.layer.borderColor = UIColor.whiteColor.CGColor;
 }
 
 - (void)didReceiveMemoryWarning {
