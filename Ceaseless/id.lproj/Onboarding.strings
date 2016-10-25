@@ -1,0 +1,27 @@
+
+/* Class = "UILabel"; text = "Swipe to start"; ObjectID = "6LQ-it-R8r"; */
+"6LQ-it-R8r.text" = "Gesek untuk memulai";
+
+/* Class = "UILabel"; text = "Turn on notifications so you remember to pray for others"; ObjectID = "Hd1-Jz-EBT"; */
+"Hd1-Jz-EBT.text" = "Aktifkan notifikasi sehingga Anda ingat untuk berdoa bagi orang lain";
+
+/* Class = "UILabel"; text = "Pray for three contacts each day and together we can pray for everyone on earth."; ObjectID = "Qlw-yn-zGs"; */
+"Qlw-yn-zGs.text" = "Berdoa untuk tiga kontak setiap hari dan bersama-sama kita bisa berdoa untuk semua orang di bumi.";
+
+/* Class = "UILabel"; text = "Allow access to contacts so you know who to pray for each day. Ceaseless does not share your contacts with anyone."; ObjectID = "dlF-q2-6zg"; */
+"dlF-q2-6zg.text" = "Mohon akses ke kontak sehingga Anda tahu siapan yang di doakan. Ceaseless tidak berbagi kontak dengan siapa pun.";
+
+/* Class = "UIButton"; normalTitle = "Allow Contacts Access"; ObjectID = "ij8-an-A3o"; */
+"ij8-an-A3o.normalTitle" = "Izinkan Kontak Access";
+
+/* Class = "UIButton"; normalTitle = "Turn On Notifications"; ObjectID = "mGP-IK-v4v"; */
+"mGP-IK-v4v.normalTitle" = "Izinkan pemberitahuan";
+
+/* Class = "UILabel"; text = "Welcome to"; ObjectID = "pkH-0y-hPL"; */
+"pkH-0y-hPL.text" = "Selamat";
+
+/* Class = "UILabel"; text = "Pray for Contacts"; ObjectID = "ptw-Xe-efg"; */
+"ptw-Xe-efg.text" = "Doa untuk kontak";
+
+/* Class = "UILabel"; text = "Remember to Pray"; ObjectID = "q5m-Oa-Taf"; */
+"q5m-Oa-Taf.text" = "Ingat untuk berdoa";
