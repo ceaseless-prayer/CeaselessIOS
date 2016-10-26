@@ -94,3 +94,7 @@
 "Add Note" = "Menambahkan catatan";
 
 "scriptureLanguageCode" = "in_ID";
+
+"Tap to pray for %@ and %@ others." = "Tekan untuk mendoakan %@ dan %@ lagi.";
+"Tap to pray for %@ and others." = "Tekan untuk mendoakan %@ dain lain.";
+"Remember to pray for others today." = "Ingat untuk berdoa bagi orang lain hari ini.";
