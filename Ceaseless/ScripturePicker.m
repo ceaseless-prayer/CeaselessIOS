@@ -141,7 +141,9 @@ int const kDefaultQueueMinSize = 1;
 						  @"22", @"verse_end",
 						  nil];
     }
-	NSDictionary *jsonData = dailyVerseData;
+    NSMutableDictionary *withLanguage = [dailyVerseData mutableCopy];
+    [withLanguage setObject: NSLocalizedString(@"scriptureLanguageCode", nil) forKey: @"language"];
+    NSDictionary *jsonData = [NSDictionary dictionaryWithDictionary:withLanguage];
 	NSError *error;
 	NSData *postData = [NSJSONSerialization dataWithJSONObject:jsonData options:0 error:&error];
 
@@ -158,9 +160,8 @@ int const kDefaultQueueMinSize = 1;
                     NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"ScriptureQueue" inManagedObjectContext:self.managedObjectContext];
                     [newManagedObject setValue: [verseDictionary objectForKey:@"text"]forKey: @"verse"];
                     [newManagedObject setValue: [verseDictionary objectForKey:@"citation"] forKey: @"citation"];
-                    
-                    // TODO configure the right bible for the local language
-                    NSString *shareLink = [NSString stringWithFormat:@"%@/%@/%@#%@", @"http://www.bible.is/ENGESV", jsonData[@"book"], jsonData[@"chapter"], jsonData[@"verse_start"]];
+
+                    NSString *shareLink = [NSString stringWithFormat:@"%@/%@/%@/%@#%@", @"http://www.bible.is", [verseDictionary objectForKey:@"bible"], jsonData[@"book"], jsonData[@"chapter"], jsonData[@"verse_start"]];
                     
                     [newManagedObject setValue: shareLink forKey: @"shareLink"];
                     if (![self.managedObjectContext save: &error]) {

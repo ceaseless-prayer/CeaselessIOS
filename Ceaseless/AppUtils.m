@@ -52,7 +52,7 @@
         // to contacts
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            [[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit the \"Privacy\" section in the Settings app. Go to Contacts and enable Ceaseless." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            [[[UIAlertView alloc] initWithTitle:nil message: NSLocalizedString(@"contactsPermissionRequired", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         });
         return addressBook;
     }
@@ -185,12 +185,12 @@
         NSString *personName = [defaults objectForKey:kPersonNameForNextDay];
         NSInteger othersCount = [defaults integerForKey:kDailyPersonCount] - 1;
         if (othersCount > 1) {
-            return [NSString stringWithFormat:@"Pray for %@ and %@ others today.", personName, [NSNumber numberWithInteger:othersCount]];
+            return [NSString stringWithFormat:NSLocalizedString(@"Tap to pray for %@ and %@ others.", @"notification message"), personName, [NSNumber numberWithInteger:othersCount]];
         } else {
-            return [NSString stringWithFormat:@"Pray for %@ and others today.", personName];
+            return [NSString stringWithFormat:NSLocalizedString(@"Tap to pray for %@ and others.", @"notification message"), personName];
         }
     } else {
-        return @"Remember to pray for others today.";
+        return NSLocalizedString(@"Remember to pray for others today.", @"notification message");
     }
 }
 

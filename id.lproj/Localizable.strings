@@ -16,6 +16,7 @@
 "Could not send an invitation because this person is missing contact information." = "Tidak bisa mengirim undangan karena orang ini tidak ada informasi kontak.";
 
 "Cancel action" = "Batal";
+"Cancel" = "Batal";
 
 "Invite to Ceaseless" = "Undang ke Ceaseless";
 
@@ -82,3 +83,18 @@
 "Ceaseless only syncs contacts that have at least a first name." = "Ceaseless hanya menggunakan kontak yang memiliki nama pertama.";
 
 "Select yourself" = "Pilih sendiri";
+
+"Sync with Contacts" = "Sync dengan kontak";
+"Add a person" = "Tamba orang";
+"Remove" = "Hapus";
+"Add" = "Tamba";
+"Edit" = "Mengedit";
+
+"Save" = "Simpan";
+"Add Note" = "Menambahkan catatan";
+
+"scriptureLanguageCode" = "in_ID";
+
+"Tap to pray for %@ and %@ others." = "Tekan untuk mendoakan %@ dan %@ lagi.";
+"Tap to pray for %@ and others." = "Tekan untuk mendoakan %@ dain lain.";
+"Remember to pray for others today." = "Ingat untuk berdoa bagi orang lain hari ini.";

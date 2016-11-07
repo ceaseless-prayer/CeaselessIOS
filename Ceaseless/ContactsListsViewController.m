@@ -53,6 +53,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	self.tableView.delegate = self;
 
 	self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"Edit", nil);
 
 	UIImage *backgroundImage = [AppUtils getDynamicBackgroundImage];
 	if(backgroundImage != nil) {
@@ -183,12 +184,12 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 		[self.tableView setEditing:editing animated:YES];
 		switch (self.segment.selectedSegmentIndex){
 			case 0: { //can't just set the rightBarButtonItem title because it doesn't pick up font
-				UIBarButtonItem *removeButton = [[UIBarButtonItem alloc] initWithTitle: @"Remove" style: UIBarButtonItemStylePlain target:self action: @selector(editingDoneButtonPressed)];
+				UIBarButtonItem *removeButton = [[UIBarButtonItem alloc] initWithTitle: NSLocalizedString(@"Remove", nil) style: UIBarButtonItemStylePlain target:self action: @selector(editingDoneButtonPressed)];
 				self.navigationItem.rightBarButtonItem = removeButton;
 				break;
 			}
 			case 1:{ //can't just set the rightBarButtonItem title because it doesn't pick up font
-				UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithTitle: @"Add" style: UIBarButtonItemStylePlain target:self action: @selector(editingDoneButtonPressed)];
+				UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithTitle: NSLocalizedString(@"Add", nil) style: UIBarButtonItemStylePlain target:self action: @selector(editingDoneButtonPressed)];
 				self.navigationItem.rightBarButtonItem = addButton;
 				break;
 			}
@@ -595,7 +596,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 - (IBAction)contactsListSelector:(id)sender {
 	[self selectContactsPredicate];
 	self.tableView.editing = NO;
-	self.navigationItem.rightBarButtonItem.title = @"Edit";
+	self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"Edit", nil);
 	[self.tableView reloadData];
 }
 
@@ -655,7 +656,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
                                                 handler:^(UIAlertAction *action)
                                                 {
                                                     if(ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusDenied){
-                                                        [[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit the \"Privacy\" section in the Settings app. Go to Contacts and enable Ceaseless." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                                                        [[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit the \"Privacy\" section in the Settings app. Go to Contacts and enable Ceaseless." delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
                                                     } else {
                                                         [self.ceaselessContacts ensureCeaselessContactsSynced];
                                                         [self handleSyncing];
