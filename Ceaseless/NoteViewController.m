@@ -87,11 +87,11 @@ NSString *kPlaceHolderText;
 	self.singleTapGestureRecognizer.delegate = self;
 	[self.personsTaggedView addGestureRecognizer:self.singleTapGestureRecognizer];
 		//does not have correct font when init with system save button
-	UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle: @"Save" style: UIBarButtonItemStylePlain target:self action:@selector(saveButtonPressed:)];
+	UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle: NSLocalizedString(@"Save", nil) style: UIBarButtonItemStylePlain target:self action:@selector(saveButtonPressed:)];
 	self.navigationItem.rightBarButtonItem = saveButton;
 
 		// change the back button to cancel and add an event handler
-	UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: @"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelClick:)];
+	UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle: NSLocalizedString(@"Cancel", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelClick:)];
 	self.navigationItem.leftBarButtonItem = backButton;
 
     //initialize
@@ -114,7 +114,7 @@ NSString *kPlaceHolderText;
 	} else {
         //no note passed in, so add a new note
         //screen title is Add Note
-		self.navigationItem.title = @"Add Note";
+		self.navigationItem.title = NSLocalizedString(@"Add Note", nil);
 
 		if (self.personForNewNote) {
 			peopleTagged = [[NSOrderedSet alloc] initWithObjects: self.personForNewNote, nil];

@@ -29,9 +29,7 @@
 		42AA9BF81ACCBF6300C4896B /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 42AA9BF71ACCBF6300C4896B /* Note.m */; };
 		42C13BB11ABCC074000D5C08 /* WebCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C13BB01ABCC074000D5C08 /* WebCardViewController.m */; };
 		42C13BB41ABCC285000D5C08 /* WebCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C13BB31ABCC285000D5C08 /* WebCardView.m */; };
-		42CBFBAE1ABBC9BA00F9FB1D /* WebCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42CBFBAD1ABBC9BA00F9FB1D /* WebCardView.xib */; };
 		42DFFCCB1AD8666B0053DAAD /* PersonIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 42DFFCCA1AD8666B0053DAAD /* PersonIdentifier.m */; };
-		42E0F4A41AD6093D00CE64E3 /* ProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42E0F4A31AD6093D00CE64E3 /* ProgressView.xib */; };
 		42E0F4A71AD60C6200CE64E3 /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 42E0F4A61AD60C6200CE64E3 /* ProgressView.m */; };
 		42E0F4AA1AD60D1000CE64E3 /* ProgressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42E0F4A91AD60D1000CE64E3 /* ProgressViewController.m */; };
 		42F3AE1E1AA4DD7F003A88F5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F3AE1D1AA4DD7F003A88F5 /* main.m */; };
@@ -61,8 +59,6 @@
 		70BFCB021AC070C50014C4BC /* ContactsListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70BFCB011AC070C50014C4BC /* ContactsListsViewController.m */; };
 		70D155D61AC1BC1700FB9486 /* ContactsListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D155D51AC1BC1700FB9486 /* ContactsListTableViewCell.m */; };
 		70D51C0B1AA6222700FA7CDC /* PersonPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D51C0A1AA6222700FA7CDC /* PersonPicker.m */; };
-		70D51C111AA6694400FA7CDC /* ScriptureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70D51C101AA6694400FA7CDC /* ScriptureView.xib */; };
-		70D51C131AA66F5100FA7CDC /* PersonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70D51C121AA66F5100FA7CDC /* PersonView.xib */; };
 		70D51C161AA6800D00FA7CDC /* PersonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D51C151AA6800D00FA7CDC /* PersonView.m */; };
 		70F12B841AB208000090F47A /* PrayerJournalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F12B831AB208000090F47A /* PrayerJournalViewController.m */; };
 		70F12B871AB2082B0090F47A /* NoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F12B861AB2082B0090F47A /* NoteViewController.m */; };
@@ -84,7 +80,6 @@
 		8AA6D2481DC56DAA0068AAD6 /* AppConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA6D2471DC56DAA0068AAD6 /* AppConstants.m */; };
 		CF4F6D0B1C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4F6D091C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift */; };
 		CF4F6D0C1C96AB57002EA9C5 /* BWWalkthroughViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4F6D0A1C96AB57002EA9C5 /* BWWalkthroughViewController.swift */; };
-		CF4F6D0E1C96AFE8002EA9C5 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF4F6D0D1C96AFE8002EA9C5 /* Onboarding.storyboard */; };
 		CF4F6D111C97C55B002EA9C5 /* OnboardingContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4F6D101C97C55B002EA9C5 /* OnboardingContactViewController.m */; };
 		CFD132631C97FAC2004CAA79 /* OnboardingNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFD132621C97FAC2004CAA79 /* OnboardingNotificationViewController.m */; };
 /* End PBXBuildFile section */
@@ -123,7 +118,6 @@
 /* Begin PBXFileReference section */
 		4227F7841DBCBAB300015654 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Main.strings; sourceTree = "<group>"; };
 		4227F7851DBCBAB300015654 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		4227F7871DBCBB3B00015654 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4227F7891DBCBB5300015654 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
 		422DDD371ACBBD3400409001 /* AppUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppUtils.h; sourceTree = "<group>"; };
 		422DDD381ACBBD3400409001 /* AppUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppUtils.m; sourceTree = "<group>"; };
@@ -164,10 +158,8 @@
 		42C13BB01ABCC074000D5C08 /* WebCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebCardViewController.m; sourceTree = "<group>"; };
 		42C13BB21ABCC285000D5C08 /* WebCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebCardView.h; sourceTree = "<group>"; };
 		42C13BB31ABCC285000D5C08 /* WebCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebCardView.m; sourceTree = "<group>"; };
-		42CBFBAD1ABBC9BA00F9FB1D /* WebCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebCardView.xib; sourceTree = "<group>"; };
 		42DFFCC91AD8666B0053DAAD /* PersonIdentifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonIdentifier.h; sourceTree = "<group>"; };
 		42DFFCCA1AD8666B0053DAAD /* PersonIdentifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonIdentifier.m; sourceTree = "<group>"; };
-		42E0F4A31AD6093D00CE64E3 /* ProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProgressView.xib; sourceTree = "<group>"; };
 		42E0F4A51AD60C6200CE64E3 /* ProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressView.h; sourceTree = "<group>"; };
 		42E0F4A61AD60C6200CE64E3 /* ProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressView.m; sourceTree = "<group>"; };
 		42E0F4A81AD60D1000CE64E3 /* ProgressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressViewController.h; sourceTree = "<group>"; };
@@ -228,8 +220,6 @@
 		70D155D51AC1BC1700FB9486 /* ContactsListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsListTableViewCell.m; sourceTree = "<group>"; };
 		70D51C091AA6222700FA7CDC /* PersonPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonPicker.h; sourceTree = "<group>"; };
 		70D51C0A1AA6222700FA7CDC /* PersonPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonPicker.m; sourceTree = "<group>"; };
-		70D51C101AA6694400FA7CDC /* ScriptureView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScriptureView.xib; sourceTree = "<group>"; };
-		70D51C121AA66F5100FA7CDC /* PersonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonView.xib; sourceTree = "<group>"; };
 		70D51C141AA6800D00FA7CDC /* PersonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonView.h; sourceTree = "<group>"; };
 		70D51C151AA6800D00FA7CDC /* PersonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonView.m; sourceTree = "<group>"; };
 		70F12B821AB208000090F47A /* PrayerJournalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrayerJournalViewController.h; sourceTree = "<group>"; };
@@ -264,7 +254,6 @@
 		CF4F6D081C96AB57002EA9C5 /* Ceaseless-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ceaseless-Bridging-Header.h"; sourceTree = "<group>"; };
 		CF4F6D091C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BWWalkthroughPageViewController.swift; sourceTree = "<group>"; };
 		CF4F6D0A1C96AB57002EA9C5 /* BWWalkthroughViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BWWalkthroughViewController.swift; sourceTree = "<group>"; };
-		CF4F6D0D1C96AFE8002EA9C5 /* Onboarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 		CF4F6D0F1C97C55B002EA9C5 /* OnboardingContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnboardingContactViewController.h; sourceTree = "<group>"; };
 		CF4F6D101C97C55B002EA9C5 /* OnboardingContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnboardingContactViewController.m; sourceTree = "<group>"; };
 		CFD132611C97FAC2004CAA79 /* OnboardingNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnboardingNotificationViewController.h; sourceTree = "<group>"; };
@@ -416,7 +405,7 @@
 			isa = PBXGroup;
 			children = (
 				42F3AE2B1AA4DD7F003A88F5 /* Main.storyboard */,
-				CF4F6D0D1C96AFE8002EA9C5 /* Onboarding.storyboard */,
+				425BB2B71DC00F0000D07A1D /* Onboarding.storyboard */,
 				70F12B8E1AB396590090F47A /* PrayerJournalTableViewCell.h */,
 				70F12B8F1AB396590090F47A /* PrayerJournalTableViewCell.m */,
 				70BCCC1F1ABB768F00386D51 /* PersonNotesTableViewCell.h */,
@@ -425,11 +414,11 @@
 				70D155D51AC1BC1700FB9486 /* ContactsListTableViewCell.m */,
 				70F6640A1AA83CC60073801E /* ScriptureView.h */,
 				70F6640B1AA83CC60073801E /* ScriptureView.m */,
-				70D51C101AA6694400FA7CDC /* ScriptureView.xib */,
+				425BB2BC1DC00FE500D07A1D /* ScriptureView.xib */,
 				42C13BB21ABCC285000D5C08 /* WebCardView.h */,
 				42C13BB31ABCC285000D5C08 /* WebCardView.m */,
-				42CBFBAD1ABBC9BA00F9FB1D /* WebCardView.xib */,
-				42E0F4A31AD6093D00CE64E3 /* ProgressView.xib */,
+				425BB2C11DC0100400D07A1D /* WebCardView.xib */,
+				425BB2C61DC0101D00D07A1D /* ProgressView.xib */,
 				42E0F4A51AD60C6200CE64E3 /* ProgressView.h */,
 				42E0F4A61AD60C6200CE64E3 /* ProgressView.m */,
 				8A9D9DD41DBC5F3F0056CB8C /* CelebrationView.h */,
@@ -437,7 +426,7 @@
 				8A9D9DD71DBC5FA40056CB8C /* CelebrationView.xib */,
 				70D51C141AA6800D00FA7CDC /* PersonView.h */,
 				70D51C151AA6800D00FA7CDC /* PersonView.m */,
-				70D51C121AA66F5100FA7CDC /* PersonView.xib */,
+				425BB2CC1DC0114300D07A1D /* PersonView.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -662,18 +651,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70D51C111AA6694400FA7CDC /* ScriptureView.xib in Resources */,
-				CF4F6D0E1C96AFE8002EA9C5 /* Onboarding.storyboard in Resources */,
+				425BB2BA1DC00FE500D07A1D /* ScriptureView.xib in Resources */,
+				425BB2B51DC00F0000D07A1D /* Onboarding.storyboard in Resources */,
 				4227F7861DBCBB3B00015654 /* Localizable.strings in Resources */,
 				7083F7121AD4C474002D93AD /* at_the_beach.jpg in Resources */,
 				42F3AE2D1AA4DD7F003A88F5 /* Main.storyboard in Resources */,
-				42E0F4A41AD6093D00CE64E3 /* ProgressView.xib in Resources */,
+				425BB2C41DC0101D00D07A1D /* ProgressView.xib in Resources */,
 				42F3AE321AA4DD80003A88F5 /* LaunchScreen.xib in Resources */,
 				8A9D9DD81DBC5FA40056CB8C /* CelebrationView.xib in Resources */,
 				42CBFBAE1ABBC9BA00F9FB1D /* WebCardView.xib in Resources */,
 				42F3AE2F1AA4DD7F003A88F5 /* Images.xcassets in Resources */,
 				424C5B321AE08433005C4CFC /* FontAwesome.ttf in Resources */,
-				70D51C131AA66F5100FA7CDC /* PersonView.xib in Resources */,
+				425BB2CA1DC0114300D07A1D /* PersonView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -800,10 +789,55 @@
 		4227F7881DBCBB3B00015654 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4227F7871DBCBB3B00015654 /* en */,
 				4227F7891DBCBB5300015654 /* id */,
+				425BB2C91DC0103100D07A1D /* Base */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		425BB2B71DC00F0000D07A1D /* Onboarding.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				425BB2B61DC00F0000D07A1D /* Base */,
+				425BB2B91DC00F1000D07A1D /* id */,
+			);
+			name = Onboarding.storyboard;
+			sourceTree = "<group>";
+		};
+		425BB2BC1DC00FE500D07A1D /* ScriptureView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				425BB2BB1DC00FE500D07A1D /* Base */,
+				425BB2BE1DC00FE700D07A1D /* id */,
+			);
+			name = ScriptureView.xib;
+			sourceTree = "<group>";
+		};
+		425BB2C11DC0100400D07A1D /* WebCardView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				425BB2C01DC0100400D07A1D /* Base */,
+				425BB2C31DC0100B00D07A1D /* id */,
+			);
+			name = WebCardView.xib;
+			sourceTree = "<group>";
+		};
+		425BB2C61DC0101D00D07A1D /* ProgressView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				425BB2C51DC0101D00D07A1D /* Base */,
+				425BB2C81DC0102100D07A1D /* id */,
+			);
+			name = ProgressView.xib;
+			sourceTree = "<group>";
+		};
+		425BB2CC1DC0114300D07A1D /* PersonView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				425BB2CB1DC0114300D07A1D /* Base */,
+				425BB2CE1DC0114500D07A1D /* id */,
+			);
+			name = PersonView.xib;
 			sourceTree = "<group>";
 		};
 		42F3AE2B1AA4DD7F003A88F5 /* Main.storyboard */ = {
