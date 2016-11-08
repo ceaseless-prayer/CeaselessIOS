@@ -22,6 +22,12 @@
 		425271A81AB1FA9A005098F6 /* ScripturePickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271A71AB1FA9A005098F6 /* ScripturePickerTests.m */; };
 		425271AA1AB1FF1C005098F6 /* PersonPickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271A91AB1FF1C005098F6 /* PersonPickerTests.m */; };
 		425271B01AB37F29005098F6 /* CeaselessLocalContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = 425271AF1AB37F29005098F6 /* CeaselessLocalContacts.m */; };
+		425BB2B51DC00F0000D07A1D /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425BB2B71DC00F0000D07A1D /* Onboarding.storyboard */; };
+		425BB2BA1DC00FE500D07A1D /* ScriptureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 425BB2BC1DC00FE500D07A1D /* ScriptureView.xib */; };
+		425BB2BF1DC0100400D07A1D /* WebCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 425BB2C11DC0100400D07A1D /* WebCardView.xib */; };
+		425BB2C41DC0101D00D07A1D /* ProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 425BB2C61DC0101D00D07A1D /* ProgressView.xib */; };
+		425BB2CA1DC0114300D07A1D /* PersonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 425BB2CC1DC0114300D07A1D /* PersonView.xib */; };
+		42869B091AC9FC5100E612F7 /* AppConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 42869B081AC9FC5100E612F7 /* AppConstants.m */; };
 		429094DA1AF29F7A009ABC3E /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 429094D91AF29F7A009ABC3E /* Reachability.m */; };
 		429E60891AAA5FD8003F37BF /* ScriptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E60881AAA5FD7003F37BF /* ScriptureViewController.m */; };
 		429E608C1AAA61B1003F37BF /* PersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E608B1AAA61B1003F37BF /* PersonViewController.m */; };
@@ -144,6 +150,19 @@
 		425271A91AB1FF1C005098F6 /* PersonPickerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonPickerTests.m; sourceTree = "<group>"; };
 		425271AE1AB37F29005098F6 /* CeaselessLocalContacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CeaselessLocalContacts.h; sourceTree = "<group>"; };
 		425271AF1AB37F29005098F6 /* CeaselessLocalContacts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CeaselessLocalContacts.m; sourceTree = "<group>"; };
+		425BB2B61DC00F0000D07A1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Onboarding.storyboard; sourceTree = "<group>"; };
+		425BB2B91DC00F1000D07A1D /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Onboarding.strings; sourceTree = "<group>"; };
+		425BB2BB1DC00FE500D07A1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ScriptureView.xib; sourceTree = "<group>"; };
+		425BB2BE1DC00FE700D07A1D /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/ScriptureView.strings; sourceTree = "<group>"; };
+		425BB2C01DC0100400D07A1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/WebCardView.xib; sourceTree = "<group>"; };
+		425BB2C31DC0100B00D07A1D /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/WebCardView.strings; sourceTree = "<group>"; };
+		425BB2C51DC0101D00D07A1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ProgressView.xib; sourceTree = "<group>"; };
+		425BB2C81DC0102100D07A1D /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/ProgressView.strings; sourceTree = "<group>"; };
+		425BB2C91DC0103100D07A1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		425BB2CB1DC0114300D07A1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PersonView.xib; sourceTree = "<group>"; };
+		425BB2CE1DC0114500D07A1D /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/PersonView.strings; sourceTree = "<group>"; };
+		42869B071AC9FC5100E612F7 /* AppConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstants.h; sourceTree = "<group>"; };
+		42869B081AC9FC5100E612F7 /* AppConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConstants.m; sourceTree = "<group>"; };
 		429094D81AF29F7A009ABC3E /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = ../Reachability.h; sourceTree = "<group>"; };
 		429094D91AF29F7A009ABC3E /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = ../Reachability.m; sourceTree = "<group>"; };
 		429E60871AAA5FD7003F37BF /* ScriptureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptureViewController.h; sourceTree = "<group>"; };
@@ -605,7 +624,7 @@
 				TargetAttributes = {
 					42F3AE171AA4DD7F003A88F5 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 98FUBN4YVB;
+						DevelopmentTeam = 28DYBASY7W;
 						LastSwiftMigration = 0810;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -620,7 +639,7 @@
 					};
 					8A6AA22D1DBD9EE500DB0346 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = 98FUBN4YVB;
+						DevelopmentTeam = 28DYBASY7W;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -951,7 +970,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 98FUBN4YVB;
+				DEVELOPMENT_TEAM = 28DYBASY7W;
 				INFOPLIST_FILE = Ceaseless/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -975,7 +994,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 98FUBN4YVB;
+				DEVELOPMENT_TEAM = 28DYBASY7W;
 				INFOPLIST_FILE = Ceaseless/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -1036,7 +1055,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 98FUBN4YVB;
+				DEVELOPMENT_TEAM = 28DYBASY7W;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = CeaselessPack/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
@@ -1058,7 +1077,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 98FUBN4YVB;
+				DEVELOPMENT_TEAM = 28DYBASY7W;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = CeaselessPack/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
