@@ -3,52 +3,52 @@
     {
       "size" : "60x45",
       "idiom" : "iphone",
-      "filename" : "stickerpack_logo_60x45-1.png",
+      "filename" : "stickerpack_logo_120x90.png",
       "scale" : "2x"
     },
     {
       "size" : "60x45",
       "idiom" : "iphone",
-      "filename" : "stickerpack_logo_60x45.png",
+      "filename" : "stickerpack_logo_180x135.png",
       "scale" : "3x"
     },
     {
       "size" : "67x50",
       "idiom" : "ipad",
-      "filename" : "stickerpack_logo_1025x768-5.png",
+      "filename" : "stickerpack_logo_134x100.png",
       "scale" : "2x"
     },
     {
       "size" : "74x55",
       "idiom" : "ipad",
-      "filename" : "stickerpack_logo_148x111.png",
+      "filename" : "stickerpack_logo_148x110.png",
       "scale" : "2x"
     },
     {
       "size" : "27x20",
       "idiom" : "universal",
-      "filename" : "stickerpack_logo_1025x768-4.png",
+      "filename" : "stickerpack_logo_54x40.png",
       "scale" : "2x",
       "platform" : "ios"
     },
     {
       "size" : "27x20",
       "idiom" : "universal",
-      "filename" : "stickerpack_logo_1025x768-3.png",
+      "filename" : "stickerpack_logo_81x60.png",
       "scale" : "3x",
       "platform" : "ios"
     },
     {
       "size" : "32x24",
       "idiom" : "universal",
-      "filename" : "stickerpack_logo_1025x768-2.png",
+      "filename" : "stickerpack_logo_64x48.png",
       "scale" : "2x",
       "platform" : "ios"
     },
     {
       "size" : "32x24",
       "idiom" : "universal",
-      "filename" : "stickerpack_logo_1025x768-1.png",
+      "filename" : "stickerpack_logo_96x72.png",
       "scale" : "3x",
       "platform" : "ios"
     },
