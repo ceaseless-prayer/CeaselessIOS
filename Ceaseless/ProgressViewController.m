@@ -34,6 +34,9 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
     self.progressView.showMoreButton.layer.borderColor = [UIColor whiteColor].CGColor;
     [self.progressView.showMoreButton setTitleEdgeInsets:UIEdgeInsetsMake(0.0, 5.0, 0.0, 5.0)];
     
+    NSLog(@"Days opened: %@", [NSString stringWithFormat: NSLocalizedString(@"Day %@", nil), [[AppUtils getNumberOfDaysAppOpened] stringValue]]);
+    self.progressView.dayCounterLabel.text = [NSString stringWithFormat: NSLocalizedString(@"Day %@", nil), [[AppUtils getNumberOfDaysAppOpened] stringValue]];
+    
     [self showAnnouncementButtonIfNeeded];
     NSArray *progress = (NSArray *) self.dataObject;
     NSNumber *totalPeoplePrayedForThisCycle = progress[0];

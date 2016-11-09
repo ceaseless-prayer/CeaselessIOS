@@ -202,7 +202,9 @@
     if (![defaults objectForKey:kLocalInstallationId]) {
         NSUUID  *UUID = [NSUUID UUID];
         NSString *localInstallationId = [UUID UUIDString];
+        NSDate *localInstallationDate = [NSDate date];
         [defaults setObject:localInstallationId forKey:kLocalInstallationId];
+        [defaults setObject:localInstallationDate forKey: kLocalInstallationDate];
         [defaults synchronize];
         return localInstallationId;
     } else {
@@ -229,6 +231,30 @@
         notificationDate = [defaults objectForKey:kNotificationDate];
     }
     return notificationDate;
+}
+
++ (NSNumber *) getNumberOfDaysAppOpened {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDate *now = [NSDate date];
+    NSDate *installationDate = [defaults objectForKey:kLocalInstallationDate];
+    
+    // if we have no installation date, the default number of days is 1
+    if (!installationDate) {
+        [defaults setObject:now forKey: kLocalInstallationDate];
+        [defaults synchronize];
+        return [NSNumber numberWithLongLong:1];
+    }
+    
+    // otherwise return the number of days between
+    // when this app was installed and today.
+    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *components = [gregorianCalendar components:NSCalendarUnitDay
+                                                        fromDate:installationDate
+                                                          toDate:now
+                                                         options:0];
+
+    // note: we add 1 because we start with day 1, not day 0.
+    return [NSNumber numberWithLongLong:[components day] + 1];
 }
 
 + (NSString*) getDailyNotificationMessage {
