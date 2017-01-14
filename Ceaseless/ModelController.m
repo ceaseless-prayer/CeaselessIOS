@@ -117,6 +117,7 @@ NSString *const kLocalLastRefreshDate = @"localLastRefreshDate";
             NSLog(@"Debug Mode enabled: refreshing application every time it is newly opened.");
         }
         NSLog(@"It's a new day!");
+        [AppUtils incrementNumberOfDaysAppOpened];
         [self showNewContent];
         [ceaselessContacts ensureCeaselessContactsSynced];
         NSLog(@"Ceaseless has been refreshed");

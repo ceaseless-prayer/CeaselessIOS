@@ -11,6 +11,7 @@
 @interface AppConstants : NSObject
     FOUNDATION_EXPORT NSString *const kLocalInstallationId;
     FOUNDATION_EXPORT NSString *const kLocalInstallationDate;
+    FOUNDATION_EXPORT NSString *const kDaysAppOpened;
     FOUNDATION_EXPORT NSString *const kCeaselessAppstoreAppId;
     FOUNDATION_EXPORT NSString *const kDeveloperMode;
     FOUNDATION_EXPORT NSString *const kDailyPersonCount;

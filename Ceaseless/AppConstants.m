@@ -17,10 +17,12 @@
     NSString *const kLocalInstallationId = @"localInstallationId";
 
     // this is the date the app was installed.
-    // it is used to count the number of days the app has been opened
+    NSString *const kLocalInstallationDate = @"localInstallationDate";
+
+    // This is used to count the number of days the app has been opened
     // for display in the progress card
     // it is a different take on the "streak" gamification idea
-    NSString *const kLocalInstallationDate = @"localInstallationDate";
+    NSString *const kDaysAppOpened = @"daysAppOpened";
 
     // this is the user default key for whether or not
     // the app is in developer mode
