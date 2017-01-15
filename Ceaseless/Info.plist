@@ -43,8 +43,8 @@
 	</dict>
 	<key>NSContactsUsageDescription</key>
 	<string>Ceaseless shows you three contacts to pray for each day.</string>
-	<key>Onboarding Quiet Time</key>
-	<integer>86400</integer>
+	<key>Onboarding Version Date</key>
+	<date>2017-01-15T02:38:01Z</date>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

@@ -126,23 +126,22 @@
 #pragma mark - Show onboarding or not
 + (BOOL) needsOnboarding {
     NSDictionary *infoPlist = [[NSBundle mainBundle] infoDictionary];
-    NSInteger onboardingQuietTimeInSeconds = [infoPlist[@"Onboarding Quiet Time"] integerValue];
+    NSDate *onboardingVersionDate = infoPlist[@"Onboarding Version Date"];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSDate *lastRefreshDate = [defaults objectForKey:kLocalLastRefreshDate];
     NSDate *onboardingLastOpenedDate = [defaults objectForKey:kOnboardingLastOpenedDate];
     
-    
-    // if the app has already been refreshed, we don't need to show onboarding
-    // since the user has already used the app.
-    if (lastRefreshDate) {
-        return NO;
-    }
-    
     if (!onboardingLastOpenedDate) {
+        // if the app has already been refreshed, we don't need to show onboarding
+        // since the user has already used the app.
+        if (lastRefreshDate) {
+            return NO;
+        }
+        
         return YES;
     } else {
-        NSDate *onboardingQuietTimeLimit = [onboardingLastOpenedDate dateByAddingTimeInterval:onboardingQuietTimeInSeconds];
-        return [[NSDate date] compare:onboardingQuietTimeLimit] == NSOrderedDescending;
+        // if the last onboarding date is less than the new onboarding version date we need to show it.
+        return [onboardingLastOpenedDate compare: onboardingVersionDate] == NSOrderedAscending;
     }
 }
 

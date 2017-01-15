@@ -732,6 +732,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
         [AppUtils showAlert];
     } else {
         if (peopleCount == 0) {
+            [self.instructionBubble addTarget:self action:@selector(presentActionSheet:)forControlEvents:UIControlEventTouchUpInside];
             self.instructionBubble.layer.cornerRadius = 6.0f;
             [AppUtils bounceView:self.instructionBubble distance: -6.0 duration: 0.4];
             self.instructionBubble.hidden = NO;
