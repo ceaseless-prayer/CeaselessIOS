@@ -26,6 +26,7 @@
 		425BB2BA1DC00FE500D07A1D /* ScriptureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 425BB2BC1DC00FE500D07A1D /* ScriptureView.xib */; };
 		425BB2C41DC0101D00D07A1D /* ProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 425BB2C61DC0101D00D07A1D /* ProgressView.xib */; };
 		425BB2CA1DC0114300D07A1D /* PersonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 425BB2CC1DC0114300D07A1D /* PersonView.xib */; };
+		427097811E2B58040024EEE7 /* WebCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 425BB2C11DC0100400D07A1D /* WebCardView.xib */; };
 		429094DA1AF29F7A009ABC3E /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 429094D91AF29F7A009ABC3E /* Reachability.m */; };
 		429E60891AAA5FD8003F37BF /* ScriptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E60881AAA5FD7003F37BF /* ScriptureViewController.m */; };
 		429E608C1AAA61B1003F37BF /* PersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E608B1AAA61B1003F37BF /* PersonViewController.m */; };
@@ -666,6 +667,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				427097811E2B58040024EEE7 /* WebCardView.xib in Resources */,
 				425BB2BA1DC00FE500D07A1D /* ScriptureView.xib in Resources */,
 				425BB2B51DC00F0000D07A1D /* Onboarding.storyboard in Resources */,
 				4227F7861DBCBB3B00015654 /* Localizable.strings in Resources */,
