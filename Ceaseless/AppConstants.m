@@ -24,6 +24,10 @@
     // it is a different take on the "streak" gamification idea
     NSString *const kDaysAppOpened = @"daysAppOpened";
 
+    // when the app was last refreshed, used by modelController and rootViewController
+    // primarily to determine if it is a new day.
+    NSString *const kLocalLastRefreshDate = @"localLastRefreshDate";
+
     // this is the user default key for whether or not
     // the app is in developer mode
     NSString *const kDeveloperMode = @"developerMode";

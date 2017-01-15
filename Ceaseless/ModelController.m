@@ -44,7 +44,6 @@
 
 @implementation ModelController
 NSString *const kModelRefreshNotification = @"ceaselessModelRefreshed";
-NSString *const kLocalLastRefreshDate = @"localLastRefreshDate";
 
 // this method sets up the card array for display
 // everything here should be read only

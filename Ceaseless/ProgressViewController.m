@@ -78,6 +78,10 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
 }
 
 - (IBAction)showMorePeople:(id)sender {
+    if (![AppUtils addressBookAuthorized]) {
+        [AppUtils showAlert];
+    }
+    
     self.progressView.showMoreButton.hidden = YES;
     [self.progressView.loadingMore startAnimating];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
