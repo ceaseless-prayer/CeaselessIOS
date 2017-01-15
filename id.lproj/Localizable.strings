@@ -5,7 +5,7 @@
   Created by Christopher Lim on 10/22/16.
   Copyright © 2016 Christopher Lim. All rights reserved.
 */
-"contactsPermissionRequired" = "Aplikasi ini membutuhkan akses ke kontak Anda untuk berfungsi dengan baik. ****Needs translation******";
+"contactsPermissionRequired" = "Aplikasi ini membutuhkan akses ke kontak Anda untuk berfungsi dengan baik. Tolong memberikan izin.";
 
 "I prayed for you using the Ceaseless app today." = "Saya berdoa untuk Anda menggunakan aplikasi Ceaseless hari ini. Anda akan menyukainya. \n\nhttp://ceaselessprayer.com";
 
@@ -18,7 +18,7 @@
 "Cancel action" = "Batal";
 "Cancel" = "Batal";
 
-"Allow access action" = "** needs translation **";
+"Allow access action" = "Izinkan akses";
 
 "Invite to Ceaseless" = "Undang ke Ceaseless";
 
