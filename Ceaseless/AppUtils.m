@@ -9,6 +9,8 @@
 #import "AppUtils.h"
 #import "GAI.h"
 #import "GAIDictionaryBuilder.h"
+#import "CeaselessLocalContacts.h"
+#import "RootViewController.h"
 
 @implementation AppUtils
 
@@ -52,7 +54,7 @@
         // to contacts
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            [[[UIAlertView alloc] initWithTitle:nil message: NSLocalizedString(@"contactsPermissionRequired", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            [self.class showAlert];
         });
         return addressBook;
     }
@@ -66,35 +68,28 @@
     }
     
     if (status == kABAuthorizationStatusNotDetermined) {
-        __block BOOL accessGranted = NO;
-        dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-        // present the user the UI that requests permission to contacts ...
-        ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
-            if (error) {
-                NSLog(@"ABAddressBookRequestAccessWithCompletion error: %@", CFBridgingRelease(error));
-                
+        if (![AppUtils onboardingShownToday]) { // we only request access automatically if onboarding isn't needed.
+            
+            BOOL accessGranted = [AppUtils requestAddressBookAccess];
+            if (accessGranted) {
+                // TODO this should probably be a notification
+                // which then kicks off the initalization process.
+                // show a housekeeping loading view and hide it when the process is done.
+                // if they gave you permission, then just carry on
+                // send out notification that permission is granted.
+                // we can detect the notification, kick off ensureContactsAreInitializedAndRefreshed
+                // and show the UI.
+                addressBook = ABAddressBookCreateWithOptions(NULL, &error);
+                return addressBook;
+            } else {
+                // however, if they didn't give you permission, handle it gracefully, for example...
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    // BTW, this is not on the main thread, so dispatch UI updates back to the main queue
+                    [self.class showAlert];
+                });
             }
-            accessGranted = granted;
-            dispatch_semaphore_signal(sema);
-        });
-        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
-        
-        if (accessGranted) {
-            // TODO this should probably be a notification
-            // which then kicks off the initalization process.
-            // show a housekeeping loading view and hide it when the process is done.
-            // if they gave you permission, then just carry on
-            // send out notification that permission is granted.
-            // we can detect the notification, kick off ensureContactsAreInitializedAndRefreshed
-            // and show the UI.
-            addressBook = ABAddressBookCreateWithOptions(NULL, &error);
-            return addressBook;
         } else {
-            // however, if they didn't give you permission, handle it gracefully, for example...
-            dispatch_async(dispatch_get_main_queue(), ^{
-                // BTW, this is not on the main thread, so dispatch UI updates back to the main queue
-                [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"contactsPermissionRequired", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-            });
+            return addressBook;
         }
     } else if (status == kABAuthorizationStatusAuthorized) {
         NSLog(@"Address Book initialized");
@@ -103,6 +98,120 @@
     }
     
     return addressBook;
+}
+
++ (BOOL) addressBookAuthorized {
+    // get address book authorization
+    ABAuthorizationStatus status = ABAddressBookGetAuthorizationStatus();
+    return status == kABAuthorizationStatusAuthorized;
+}
+
++ (BOOL) requestAddressBookAccess {
+    ABAddressBookRef addressBook = NULL;
+    __block BOOL accessGranted = NO;
+    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+    // present the user the UI that requests permission to contacts ...
+    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+        if (error) {
+            NSLog(@"ABAddressBookRequestAccessWithCompletion error: %@", CFBridgingRelease(error));
+            
+        }
+        accessGranted = granted;
+        dispatch_semaphore_signal(sema);
+    });
+    dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+    return accessGranted;
+}
+
+#pragma mark - Show onboarding or not
++ (BOOL) needsOnboarding {
+    NSDictionary *infoPlist = [[NSBundle mainBundle] infoDictionary];
+    NSDate *onboardingVersionDate = infoPlist[@"Onboarding Version Date"];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDate *lastRefreshDate = [defaults objectForKey:kLocalLastRefreshDate];
+    NSDate *onboardingLastOpenedDate = [defaults objectForKey:kOnboardingLastOpenedDate];
+    
+    if (!onboardingLastOpenedDate) {
+        // if the app has already been refreshed, we don't need to show onboarding
+        // since the user has already used the app.
+        if (lastRefreshDate) {
+            return NO;
+        }
+        
+        return YES;
+    } else {
+        // if the last onboarding date is less than the new onboarding version date we need to show it.
+        return [onboardingLastOpenedDate compare: onboardingVersionDate] == NSOrderedAscending;
+    }
+}
+
++ (BOOL) onboardingShownToday {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDate *onboardingLastOpenedDate = [defaults objectForKey:kOnboardingLastOpenedDate];
+    NSDate *now = [NSDate date];
+    return [[AppUtils daysWithinEraFromDate: onboardingLastOpenedDate toDate: now]intValue] <= 0;
+}
+
+#pragma mark - Alert View Controller
+
++ (void) showAlert {
+    UIViewController *presentingViewController = [self.class topMostController];
+    UIAlertController *alertController = [UIAlertController
+                                          alertControllerWithTitle:nil
+                                          message:NSLocalizedString(@"contactsPermissionRequired", nil)
+                                          preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       NSLog(@"Cancel action");
+                                   }];
+    
+    
+    UIAlertAction *enableContacts = [UIAlertAction
+                                     actionWithTitle:NSLocalizedString(@"OK", @"OK")
+                                     style:UIAlertActionStyleDefault
+                                     handler:^(UIAlertAction *action)
+                                     {
+                                         ABAuthorizationStatus status = ABAddressBookGetAuthorizationStatus();
+                                         if (status == kABAuthorizationStatusNotDetermined) {
+                                             BOOL accessGranted = [AppUtils requestAddressBookAccess];
+                                             if (accessGranted) {
+                                                 CeaselessLocalContacts *clc = [CeaselessLocalContacts sharedCeaselessLocalContacts];
+                                                 [clc ensureCeaselessContactsSynced];
+                                             }
+                                         } else {
+                                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                                             
+                                         }
+                                         NSLog(@"Allow action");
+                                     }];
+    
+    [alertController addAction:enableContacts];
+    [alertController addAction:cancelAction];
+    
+    // this prevents crash on iPad in iOS 8 - known Apple bug
+    UIPopoverPresentationController *popover = alertController.popoverPresentationController;
+    if (popover)
+    {
+        popover.sourceRect = presentingViewController.view.bounds;
+        popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    }
+    
+    [presentingViewController presentViewController:alertController animated:YES completion:nil];
+}
+
++ (UIViewController*) topMostController
+{
+    UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    
+    while (topController.presentedViewController) {
+        topController = topController.presentedViewController;
+    }
+    
+    return topController;
 }
 
 #pragma mark - Animation
@@ -150,7 +259,9 @@
     if (![defaults objectForKey:kLocalInstallationId]) {
         NSUUID  *UUID = [NSUUID UUID];
         NSString *localInstallationId = [UUID UUIDString];
+        NSDate *localInstallationDate = [NSDate date];
         [defaults setObject:localInstallationId forKey:kLocalInstallationId];
+        [defaults setObject:localInstallationDate forKey: kLocalInstallationDate];
         [defaults synchronize];
         return localInstallationId;
     } else {
@@ -177,6 +288,30 @@
         notificationDate = [defaults objectForKey:kNotificationDate];
     }
     return notificationDate;
+}
+
++ (NSNumber *) getNumberOfDaysAppOpened {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *daysAppOpened = [defaults objectForKey: kDaysAppOpened];
+    if (!daysAppOpened) {
+        return [NSNumber numberWithLongLong: 1];
+    } else {
+        return daysAppOpened;
+    }
+}
+
++ (void) incrementNumberOfDaysAppOpened {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *daysAppOpened = [defaults objectForKey: kDaysAppOpened];
+    if (!daysAppOpened) {
+        // default number of days is 1
+        daysAppOpened = [NSNumber numberWithLongLong: 1];
+    } else {
+        daysAppOpened =  @([daysAppOpened longLongValue] + 1);
+    }
+    
+    [defaults setObject: daysAppOpened forKey: kDaysAppOpened];
+    [defaults synchronize];
 }
 
 + (NSString*) getDailyNotificationMessage {

@@ -58,7 +58,7 @@
 #pragma mark - Actions
 
 - (IBAction)allowContactsAccessTouched:(id)sender {
-    [AppUtils getAddressBookRef];
+    [AppUtils requestAddressBookAccess];
 
     self.allowContactsAccessButton.enabled = NO;
     self.notNowButton.enabled = NO;

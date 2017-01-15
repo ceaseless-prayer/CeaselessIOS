@@ -29,6 +29,14 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
 
     [self formatCardView: self.progressView.cardView withShadowView:self.progressView.shadowView];
     
+    self.progressView.showMoreButton.layer.cornerRadius = 2.0f;
+    self.progressView.showMoreButton.layer.borderWidth = 1.0f;
+    self.progressView.showMoreButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    [self.progressView.showMoreButton setTitleEdgeInsets:UIEdgeInsetsMake(0.0, 5.0, 0.0, 5.0)];
+    
+    NSLog(@"Days opened: %@", [NSString stringWithFormat: NSLocalizedString(@"Day %@", nil), [[AppUtils getNumberOfDaysAppOpened] stringValue]]);
+    self.progressView.dayCounterLabel.text = [NSString stringWithFormat: NSLocalizedString(@"Day %@", nil), [[AppUtils getNumberOfDaysAppOpened] stringValue]];
+    
     [self showAnnouncementButtonIfNeeded];
     NSArray *progress = (NSArray *) self.dataObject;
     NSNumber *totalPeoplePrayedForThisCycle = progress[0];
@@ -70,6 +78,10 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
 }
 
 - (IBAction)showMorePeople:(id)sender {
+    if (![AppUtils addressBookAuthorized]) {
+        [AppUtils showAlert];
+    }
+    
     self.progressView.showMoreButton.hidden = YES;
     [self.progressView.loadingMore startAnimating];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -108,11 +120,14 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
                 NSDate *latestAnnouncementDate = [NSDate dateWithTimeIntervalSince1970:
                                                   [[_announcements[0] objectForKey:@"date"] doubleValue]];
                 
-                BOOL developerMode = [defaults boolForKey:kDeveloperMode];
+//                BOOL developerMode = [defaults boolForKey:kDeveloperMode];
+                BOOL developerMode = NO;
                 if(developerMode || lastAnnouncementDate.timeIntervalSinceReferenceDate < latestAnnouncementDate.timeIntervalSinceReferenceDate) {
                     NSLog(@"Latest %@ Last %@", latestAnnouncementDate, lastAnnouncementDate);
                     NSString *headline = [NSString stringWithFormat: @"Announcement: %@", _announcements[0][@"headline"]];
                     [self.progressView.announcementButton setTitle: headline forState: UIControlStateNormal];
+                    [self.progressView.announcementButton.titleLabel setTextAlignment: NSTextAlignmentCenter];
+
                     self.progressView.announcementButton.hidden = NO;
                 }
             }

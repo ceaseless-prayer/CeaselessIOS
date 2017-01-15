@@ -29,7 +29,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topToVisualEffectsViewConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
-@property (strong, nonatomic) IBOutlet UIView *instructionBubble;
+@property (strong, nonatomic) IBOutlet UIButton *instructionBubble;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) CeaselessLocalContacts *ceaselessContacts;

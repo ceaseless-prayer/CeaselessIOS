@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Onboarding Quiet Time</key>
-	<integer>86400</integer>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -44,9 +42,9 @@
 		</dict>
 	</dict>
 	<key>NSContactsUsageDescription</key>
-	<string>Would you like to grant 'Ceaseless' access to your address book?</string>
-	<key>Onboarding Quiet Time</key>
-	<integer>86400</integer>
+	<string>Ceaseless shows you three contacts to pray for each day.</string>
+	<key>Onboarding Version Date</key>
+	<date>2017-01-15T02:38:01Z</date>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
@@ -75,7 +73,5 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSContactsUsageDescription</key>
-	<string>Would you like to grant &apos;Ceaseless&apos; access to your address book?</string>
 </dict>
 </plist>

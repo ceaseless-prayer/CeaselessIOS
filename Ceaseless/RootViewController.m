@@ -15,6 +15,7 @@
 #import "MenuViewController.h"
 #import "OnboardingNotificationViewController.h"
 #import "Ceaseless-Swift.h"
+#import "CeaselessLocalContacts.h"
 
 @interface RootViewController () <OnboardingDelegate>
 
@@ -68,69 +69,48 @@
     // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
     self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
 
-#ifndef DEBUG
-    NSDictionary *infoPlist = [[NSBundle mainBundle] infoDictionary];
-
-    NSInteger onboardingQuietTimeInSeconds = [infoPlist[@"Onboarding Quiet Time"] integerValue];
-
-    NSString *onboardingLastOpenedDateInString = [[NSUserDefaults standardUserDefaults] stringForKey:kOnboardingLastOpenedDate];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"dd-MM-yyyy HH:mm:ss ZZZ";
-    NSDate *onboardingLastOpenedDate = [formatter dateFromString:onboardingLastOpenedDateInString];
-
-    if (!onboardingLastOpenedDate) {
-        self.needToShowOnboarding = YES;
-    } else {
-        NSDate *onboardingQuiteTimeLimit = [onboardingLastOpenedDate dateByAddingTimeInterval:onboardingQuietTimeInSeconds];
-        self.needToShowOnboarding = [[NSDate date] compare:onboardingQuiteTimeLimit] == NSOrderedDescending;
-    }
+//#ifndef DEBUG
+    self.needToShowOnboarding = [AppUtils needsOnboarding];
 
     if (!self.needToShowOnboarding) {
         [self doAdditionalViewSetup];
     }
-#endif
+//#endif
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-
-    // Setup onboarding
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Onboarding"
-                                                         bundle:[NSBundle mainBundle]];
-
-    BWWalkthroughViewController *onboardingContainer = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingContainer"];
-    onboardingContainer.scrollview.bounces = NO;
-
-    UIViewController *welcomeController = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingWelcome"];
-    UIViewController *contactController = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingContact"];
-    OnboardingNotificationViewController *notificationController = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingNotification"];
-
-    notificationController.delegate = self;
-
-    [onboardingContainer addViewController:welcomeController];
-    [onboardingContainer addViewController:contactController];
-    [onboardingContainer addViewController:notificationController];
-
-#ifdef DEBUG
-    if (!self.hasOnboardingShown) {
-        self.hasOnboardingShown = YES;
-        [self presentViewController:onboardingContainer animated:YES completion:nil];
-    }
-#else
     if (self.needToShowOnboarding && !self.hasOnboardingShown) {
+        // Setup onboarding
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Onboarding"
+                                                             bundle:[NSBundle mainBundle]];
+        
+        BWWalkthroughViewController *onboardingContainer = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingContainer"];
+        onboardingContainer.scrollview.bounces = NO;
+        
+        UIViewController *welcomeController = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingWelcome"];
+        UIViewController *contactController = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingContact"];
+        OnboardingNotificationViewController *notificationController = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingNotification"];
+        
+        notificationController.delegate = self;
+        
+        [onboardingContainer addViewController:welcomeController];
+        [onboardingContainer addViewController:contactController];
+        [onboardingContainer addViewController:notificationController];
+        
+        // present onboarding
         [self presentViewController:onboardingContainer animated:YES completion:nil];
-
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"dd-MM-yyyy HH:mm:ss ZZZ";
-        NSString *onboardingLastOpenedDateInString = [formatter stringFromDate:[NSDate date]];
-
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:onboardingLastOpenedDateInString forKey:kOnboardingLastOpenedDate];
-        [defaults synchronize];
-
         self.hasOnboardingShown = YES;
     }
-#endif
+}
+
+// TODO  find a callback after return from Settings that can call this method
+- (void) ensureContacts
+{
+    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
+        CeaselessLocalContacts *ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
+        [ceaselessContacts ensureCeaselessContactsSynced];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -296,6 +276,12 @@
 #pragma mark - Onboarding Delegate
 
 - (void)onboardingHasFinished {
+    // denote that onboarding has been opened.
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[NSDate date] forKey:kOnboardingLastOpenedDate];
+    [defaults synchronize];
+
+    // display the rest of the app.
     [self doAdditionalViewSetup];
 
     // Need to give timeout to let additional view setup finished first

@@ -30,13 +30,15 @@
 	self.tableView.delegate = self;
 	self.tableView.dataSource = self;
 	self.menuInfoArray = [[NSMutableArray alloc] initWithObjects:
+                          NSLocalizedString(@"Home", nil),
                           NSLocalizedString(@"People", nil),
                           NSLocalizedString(@"Settings", nil),
                           NSLocalizedString(@"Help", nil),
                           NSLocalizedString(@"Contact Us", nil),
                           NSLocalizedString(@"About", nil),
                           NSLocalizedString(@"Review Ceaseless", nil),
-                          NSLocalizedString(@"Subscribe to Newsletter", nil), nil];
+                          NSLocalizedString(@"Subscribe to Newsletter", nil),
+                        nil];
     [self.menuInfoArray addObject: @""]; // for the developer mode row
     UIImage *background = [AppUtils getDynamicBackgroundImage];
     if(background != nil) {
@@ -75,7 +77,7 @@
 	cell.textLabel.text = [self.menuInfoArray objectAtIndex: indexPath.row];
 	cell.backgroundColor = [UIColor clearColor];
 
-	if (indexPath.row == 7) {
+	if (indexPath.row == 8) {
         [cell setAccessoryType: UITableViewCellAccessoryNone];
         UITapGestureRecognizer *tripleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTripleTap:)];
         tripleTap.numberOfTapsRequired = 3;
@@ -102,33 +104,38 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	if (indexPath.row == 0) {
+    if (indexPath.row == 0) {
+        // return home.
+        [self.delegate menuViewControllerDidFinish: self];
+    }
+    
+	if (indexPath.row == 1) {
 		[self performSegueWithIdentifier:@"ShowContactsLists" sender: self];
 	}
     
-	if (indexPath.row == 1) {
+	if (indexPath.row == 2) {
 		[self performSegueWithIdentifier:@"ShowSettings" sender: self];
 	}
     
-    if (indexPath.row == 2) {
+    if (indexPath.row == 3) {
         WebCardViewController *webView = [[WebCardViewController alloc]init];
 		webView.title = [self.menuInfoArray objectAtIndex: indexPath.row];
         webView.dataObject = [[CeaselessService sharedCeaselessService]getUrlForKey:kHelpURL];
         [self.navigationController pushViewController:webView animated:YES];
     }
     
-    if (indexPath.row == 3) {
+    if (indexPath.row == 4) {
         [self showFeedbackForm];
     }
     
-    if (indexPath.row == 4) {
+    if (indexPath.row == 5) {
         WebCardViewController *webView = [[WebCardViewController alloc]init];
 		webView.title = [self.menuInfoArray objectAtIndex: indexPath.row];
         webView.dataObject = [[CeaselessService sharedCeaselessService]getUrlForKey:kCeaselessAboutURL];
         [self.navigationController pushViewController:webView animated:YES];
     }
 
-    if (indexPath.row == 5) {
+    if (indexPath.row == 6) {
         SKStoreProductViewController *productViewController = [[SKStoreProductViewController alloc]init];
         productViewController.delegate = self;
         // TODO why is the completionBlock not being called? Because the ID doesn't work yet.
@@ -145,10 +152,11 @@
         }];
     }
 
-    if (indexPath.row == 6) {
+    if (indexPath.row == 7) {
         WebCardViewController *webView = [[WebCardViewController alloc]init];
 		webView.title = [self.menuInfoArray objectAtIndex: indexPath.row];
         webView.dataObject = [[CeaselessService sharedCeaselessService]getUrlForKey:kSubscribeToMailingListURL];
+        
         [self.navigationController pushViewController:webView animated:YES];
     }
 
@@ -167,7 +175,7 @@
 	NSLog( @"The switch is %@", switchControl.on ? @"YES" : @"NO" );
 }
 
-	// Action receiver for the clicking of Cancel button
+// Action receiver for the clicking of Cancel button
 - (IBAction)menuDoneClicked:(id)sender
 {
 	[self.delegate menuViewControllerDidFinish: self];

@@ -67,7 +67,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 - (void) searchControllerSetup {
 
-		//searchController cannot be set up in IB, so set it up here
+    //searchController cannot be set up in IB, so set it up here
 	self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
 	self.searchController.searchResultsUpdater = self;
 	self.searchController.dimsBackgroundDuringPresentation = NO;
@@ -76,7 +76,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"",@"")];
 	self.searchController.searchBar.delegate = self;
 	self.searchController.delegate = self;
-		//		// Hide the search bar until user scrolls up
+    // Hide the search bar until user scrolls up
 	CGRect newBounds = self.tableView.bounds;
 	newBounds.origin.y = newBounds.origin.y + self.searchController.searchBar.bounds.size.height;
 	self.tableView.bounds = newBounds;
@@ -87,15 +87,15 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 - (void) viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-		// make the model try to refresh whenever the app becomes active
+    // make the model try to refresh whenever the app becomes active
 	[[NSNotificationCenter defaultCenter] addObserver: self selector:@selector(handleSyncing) name:UIApplicationDidBecomeActiveNotification object:nil];
 	[self handleSyncing];
     [self showInstructionsIfNeeded];
 }
 
 - (void)adjustSearchBar{
-		//if this isn't done, the textfield gets positioned too far left some of the time :(  Apple Bug
-//	[self.searchController.searchBar setPositionAdjustment: UIOffsetMake (0.0, 0.0) forSearchBarIcon: UISearchBarIconSearch];
+    // if this isn't done, the textfield gets positioned too far left some of the time :(  Apple Bug
+    //	[self.searchController.searchBar setPositionAdjustment: UIOffsetMake (0.0, 0.0) forSearchBarIcon: UISearchBarIconSearch];
 	self.tableView.tableHeaderView = self.searchController.searchBar;
 }
 
@@ -112,7 +112,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 		NSLog (@"syncing");
 		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 
-			//listen for contacts to finish syncing
+        //listen for contacts to finish syncing
 		[notificationCenter addObserver: self
 							   selector: @selector (enableTable)
 								   name: kContactsSyncedNotification
@@ -138,7 +138,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 }
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];
-		// Dispose of any resources that can be recreated.
+    // Dispose of any resources that can be recreated.
 	self.searchFetchRequest = nil;
 
 }
@@ -656,7 +656,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
                                                 handler:^(UIAlertAction *action)
                                                 {
                                                     if(ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusDenied){
-                                                        [[[UIAlertView alloc] initWithTitle:nil message:@"This app requires access to your contacts to function properly. Please visit the \"Privacy\" section in the Settings app. Go to Contacts and enable Ceaseless." delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+                                                        [AppUtils showAlert];
                                                     } else {
                                                         [self.ceaselessContacts ensureCeaselessContactsSynced];
                                                         [self handleSyncing];
@@ -728,10 +728,15 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 #pragma mark - Instructions
 - (void) showInstructionsIfNeeded {
     NSInteger peopleCount = [[CeaselessLocalContacts sharedCeaselessLocalContacts] numberOfActiveCeaselessContacts];
-    if (peopleCount == 0) {
-        self.instructionBubble.layer.cornerRadius = 6.0f;
-        [AppUtils bounceView:self.instructionBubble distance: -6.0 duration: 0.4];
-        self.instructionBubble.hidden = NO;
+    if (![AppUtils addressBookAuthorized]) {
+        [AppUtils showAlert];
+    } else {
+        if (peopleCount == 0) {
+            [self.instructionBubble addTarget:self action:@selector(presentActionSheet:)forControlEvents:UIControlEventTouchUpInside];
+            self.instructionBubble.layer.cornerRadius = 6.0f;
+            [AppUtils bounceView:self.instructionBubble distance: -6.0 duration: 0.4];
+            self.instructionBubble.hidden = NO;
+        }
     }
 }
 
