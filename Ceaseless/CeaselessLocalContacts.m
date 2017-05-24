@@ -481,7 +481,9 @@ void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictiona
                 phoneNumberObject.number = phoneNumber;
                 newCeaselessPersonInfo.primaryPhoneNumber = phoneNumberObject;
             }
-            CFRelease(phoneNumbers);
+            if (phoneNumbers) {
+                CFRelease(phoneNumbers);
+            }
         }
         
         if(newCeaselessPersonInfo.primaryEmail == nil) {
@@ -495,7 +497,9 @@ void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictiona
                 emailObject.address = email;
                 newCeaselessPersonInfo.primaryEmail = emailObject;
             }
-            CFRelease(emails);
+            if (emails) {
+                CFRelease(emails);
+            }
         }
     }
     
