@@ -320,12 +320,12 @@
         NSString *personName = [defaults objectForKey:kPersonNameForNextDay];
         NSInteger othersCount = [defaults integerForKey:kDailyPersonCount] - 1;
         if (othersCount > 1) {
-            return [NSString stringWithFormat:NSLocalizedString(@"Tap to pray for %@ and %@ others.", @"notification message"), personName, [NSNumber numberWithInteger:othersCount]];
+            return [NSString stringWithFormat:NSLocalizedString(@"Ready to pray for %@ and %@ others today? Open the app to start.", @"notification message"), personName, [NSNumber numberWithInteger:othersCount]];
         } else {
-            return [NSString stringWithFormat:NSLocalizedString(@"Tap to pray for %@ and others.", @"notification message"), personName];
+            return [NSString stringWithFormat:NSLocalizedString(@"Ready to pray for %@ and others today? Open the app to start.", @"notification message"), personName];
         }
     } else {
-        return NSLocalizedString(@"Remember to pray for others today.", @"notification message");
+        return NSLocalizedString(@"Ready to pray for others today? Open the app to start.", @"notification message");
     }
 }
 

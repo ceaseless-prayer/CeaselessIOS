@@ -18,8 +18,6 @@
 "Cancel action" = "Batal";
 "Cancel" = "Batal";
 
-"Allow access action" = "Izinkan akses";
-
 "Invite to Ceaseless" = "Undang ke Ceaseless";
 
 "Invited %@" = "Diundang %@";
@@ -86,3 +84,19 @@
 
 "Select yourself" = "Pilih sendiri";
 
+"Sync with Contacts" = "Sync dengan kontak";
+"Add a person" = "Tambah teman";
+"Remove" = "Menghapus";
+"Add" = "Tambah";
+"Edit" = "Mengedit";
+
+"Save" = "Menyimpan";
+"Add Note" = "Menambahkan Catatan";
+
+"scriptureLanguageCode" = "in_ID";
+
+"Ready to pray for %@ and %@ others today? Open the app to start." = "Siap berdoa untuk %@ dan %@ orang lain hari ini? Buka aplikasi untuk memulai.";
+"Ready to pray for %@ and others today? Open the app to start." = "Siap berdoa untuk %@ dan orang lain hari ini? Buka aplikasi untuk memulai.";
+"Ready to pray for others today? Open the app to start." = "Siap berdoa untuk sahabatmu hari ini? Buka aplikasi untuk memulai.";
+
+"Day %@" = "Hari %@";

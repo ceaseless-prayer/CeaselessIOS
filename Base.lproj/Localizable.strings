@@ -95,8 +95,8 @@
 
 "scriptureLanguageCode" = "en";
 
-"Tap to pray for %@ and %@ others." = "Tap to pray for %@ and %@ others.";
-"Tap to pray for %@ and others." = "Tap to pray for %@ and others.";
-"Remember to pray for others today." = "Remember to pray for others today.";
+"Ready to pray for %@ and %@ others today? Open the app to start." = "Ready to pray for %@ and %@ others today? Open the app to start.";
+"Ready to pray for %@ and others today? Open the app to start." = "Ready to pray for %@ and others today? Open the app to start.";
+"Ready to pray for others today? Open the app to start." = "Ready to pray for others today? Open the app to start.";
 
 "Day %@" = "Day %@";
