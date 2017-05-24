@@ -1,0 +1,21 @@
+
+/* Class = "UIButton"; normalTitle = "Share"; ObjectID = "3Ot-ds-S6v"; */
+"3Ot-ds-S6v.normalTitle" = "Bagikan";
+
+/* Class = "UILabel"; text = "60"; ObjectID = "BX0-9b-ZLL"; */
+"BX0-9b-ZLL.text" = "60";
+
+/* Class = "UILabel"; text = "You have prayed for all of your contacts."; ObjectID = "P9y-cz-V4B"; */
+"P9y-cz-V4B.text" = "Anda telah berdoa untuk semua kontak Anda.";
+
+/* Class = "UILabel"; text = "people"; ObjectID = "XG5-wv-O8p"; */
+"XG5-wv-O8p.text" = "orang";
+
+/* Class = "UILabel"; text = "Congratulations!"; ObjectID = "eSr-aM-9dB"; */
+"eSr-aM-9dB.text" = "Selamat!";
+
+/* Class = "UIButton"; accessibilityLabel = "Keep praying"; ObjectID = "mW6-VP-IRg"; */
+"mW6-VP-IRg.accessibilityLabel" = "Terus berdoa";
+
+/* Class = "UIButton"; normalTitle = "Keep Praying"; ObjectID = "mW6-VP-IRg"; */
+"mW6-VP-IRg.normalTitle" = "Terus berdoa";

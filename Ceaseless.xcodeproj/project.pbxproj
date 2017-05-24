@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4205802E1ED55813000AAAE0 /* CelebrationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 420580301ED55813000AAAE0 /* CelebrationView.xib */; };
 		4227F7861DBCBB3B00015654 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4227F7881DBCBB3B00015654 /* Localizable.strings */; };
 		422DDD391ACBBD3400409001 /* AppUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 422DDD381ACBBD3400409001 /* AppUtils.m */; };
 		42458BEA1ACF1FEB00C48830 /* Email.m in Sources */ = {isa = PBXBuildFile; fileRef = 42458BE91ACF1FEB00C48830 /* Email.m */; };
@@ -81,7 +82,6 @@
 		8A9D9DD01DBC29A90056CB8C /* CelebrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A9D9DCF1DBC29A90056CB8C /* CelebrationViewController.m */; };
 		8A9D9DD31DBC31000056CB8C /* UIView+Glow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A9D9DD21DBC31000056CB8C /* UIView+Glow.m */; };
 		8A9D9DD61DBC5F3F0056CB8C /* CelebrationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A9D9DD51DBC5F3F0056CB8C /* CelebrationView.m */; };
-		8A9D9DD81DBC5FA40056CB8C /* CelebrationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A9D9DD71DBC5FA40056CB8C /* CelebrationView.xib */; };
 		8AA6D2481DC56DAA0068AAD6 /* AppConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA6D2471DC56DAA0068AAD6 /* AppConstants.m */; };
 		CF4F6D0B1C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4F6D091C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift */; };
 		CF4F6D0C1C96AB57002EA9C5 /* BWWalkthroughViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4F6D0A1C96AB57002EA9C5 /* BWWalkthroughViewController.swift */; };
@@ -121,6 +121,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4205802F1ED55813000AAAE0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CelebrationView.xib; sourceTree = "<group>"; };
+		420580321ED5581E000AAAE0 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/CelebrationView.strings; sourceTree = "<group>"; };
 		4227F7841DBCBAB300015654 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Main.strings; sourceTree = "<group>"; };
 		4227F7851DBCBAB300015654 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		4227F7891DBCBB5300015654 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -264,7 +266,6 @@
 		8A9D9DD21DBC31000056CB8C /* UIView+Glow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Glow.m"; sourceTree = "<group>"; };
 		8A9D9DD41DBC5F3F0056CB8C /* CelebrationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CelebrationView.h; sourceTree = "<group>"; };
 		8A9D9DD51DBC5F3F0056CB8C /* CelebrationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CelebrationView.m; sourceTree = "<group>"; };
-		8A9D9DD71DBC5FA40056CB8C /* CelebrationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CelebrationView.xib; sourceTree = "<group>"; };
 		8AA6D2461DC56DAA0068AAD6 /* AppConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstants.h; sourceTree = "<group>"; };
 		8AA6D2471DC56DAA0068AAD6 /* AppConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConstants.m; sourceTree = "<group>"; };
 		CF4F6D081C96AB57002EA9C5 /* Ceaseless-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ceaseless-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -439,7 +440,7 @@
 				42E0F4A61AD60C6200CE64E3 /* ProgressView.m */,
 				8A9D9DD41DBC5F3F0056CB8C /* CelebrationView.h */,
 				8A9D9DD51DBC5F3F0056CB8C /* CelebrationView.m */,
-				8A9D9DD71DBC5FA40056CB8C /* CelebrationView.xib */,
+				420580301ED55813000AAAE0 /* CelebrationView.xib */,
 				70D51C141AA6800D00FA7CDC /* PersonView.h */,
 				70D51C151AA6800D00FA7CDC /* PersonView.m */,
 				425BB2CC1DC0114300D07A1D /* PersonView.xib */,
@@ -675,7 +676,7 @@
 				42F3AE2D1AA4DD7F003A88F5 /* Main.storyboard in Resources */,
 				425BB2C41DC0101D00D07A1D /* ProgressView.xib in Resources */,
 				42F3AE321AA4DD80003A88F5 /* LaunchScreen.xib in Resources */,
-				8A9D9DD81DBC5FA40056CB8C /* CelebrationView.xib in Resources */,
+				4205802E1ED55813000AAAE0 /* CelebrationView.xib in Resources */,
 				42F3AE2F1AA4DD7F003A88F5 /* Images.xcassets in Resources */,
 				424C5B321AE08433005C4CFC /* FontAwesome.ttf in Resources */,
 				425BB2CA1DC0114300D07A1D /* PersonView.xib in Resources */,
@@ -802,6 +803,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		420580301ED55813000AAAE0 /* CelebrationView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4205802F1ED55813000AAAE0 /* Base */,
+				420580321ED5581E000AAAE0 /* id */,
+			);
+			name = CelebrationView.xib;
+			sourceTree = "<group>";
+		};
 		4227F7881DBCBB3B00015654 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
