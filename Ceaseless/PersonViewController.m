@@ -562,20 +562,28 @@ static NSString *kInvitationError;
 
 - (void) showFormForEmail: (Email*) email withMessage: (NSString *) message {
     NSArray *recipents = [NSArray arrayWithObjects:email.address, nil];
-    MFMailComposeViewController *mailController = [[MFMailComposeViewController alloc] init];
-    mailController.mailComposeDelegate = self;
-    [mailController setToRecipients: recipents];
-	[mailController setSubject: NSLocalizedString(@"Ceaseless Prayer", nil)];
-	NSString *emailBody = [NSString stringWithFormat: @"%@,\n\n%@",self.person.representativeInfo.primaryFirstName.name, message];
-	[mailController setMessageBody: emailBody  isHTML: NO];
-
-		//if this is an invitation, save the invite date
-	if (message == kInviteMessage) {
-		self.person.lastInvitedDate = [NSDate date];
-		[self save];
-	}
-    // Present mail view controller on screen
-    [self presentViewController:mailController animated:YES completion:nil];
+    if ([MFMailComposeViewController canSendMail]) {
+        MFMailComposeViewController *mailController = [[MFMailComposeViewController alloc] init];
+        
+        mailController.mailComposeDelegate = self;
+        [mailController setToRecipients: recipents];
+        [mailController setSubject: NSLocalizedString(@"Ceaseless Prayer", nil)];
+        NSString *emailBody = [NSString stringWithFormat: @"%@,\n\n%@",self.person.representativeInfo.primaryFirstName.name, message];
+        [mailController setMessageBody: emailBody  isHTML: NO];
+        
+        //if this is an invitation, save the invite date
+        if (message == kInviteMessage) {
+            self.person.lastInvitedDate = [NSDate date];
+            [self save];
+        }
+        // Present mail view controller on screen
+        [self presentViewController:mailController animated:YES completion:nil];
+    } else {
+        UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Set up an e-mail account in order to send mail.", nil) delegate:nil
+                                                     cancelButtonTitle:@"OK"
+                                                     otherButtonTitles:nil];
+        [warningAlert show];
+    }
 }
 
 
