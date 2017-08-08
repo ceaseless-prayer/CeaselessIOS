@@ -122,7 +122,16 @@
     // get the first person for the following day to show in the notification
     self.pickForNotification = YES;
 	numberOfPeople = 1;
-    [self pickPeople: (int) numberOfPeople fromArray: ceaselessPeople];
+    NSInteger result = [self pickPeople: (int) numberOfPeople fromArray: ceaselessPeople];
+    if (result == 0) {
+        // HACK pickPeople sets numberOfPeople to -1 if it fails to fill the entire requested amount.
+        // We detect and handle that here since if we aren't able to pick someone for the notification
+        // We need to clear the person's name and id so they don't surface the next day.
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults removeObjectForKey:kPersonForNextDay];
+        [defaults removeObjectForKey:kPersonNameForNextDay];
+        [defaults synchronize];
+    }
 }
 
 - (PersonIdentifier *) personFromNotification {
@@ -132,10 +141,13 @@
     return [_ceaselessContacts getCeaselessContactFromCeaselessId:ceaselessId];
 }
 
-- (void) pickPeople: (int) numberOfPeople fromArray: (NSArray *) ceaselessPeople {
+- (NSInteger) pickPeople: (int) numberOfPeople fromArray: (NSArray *) ceaselessPeople {
+    NSInteger peoplePicked = 0;
+    
 	BOOL pickedFavorite = [self pickFavoriteFromArray: ceaselessPeople];
 	if (pickedFavorite) {
 		--numberOfPeople;
+        peoplePicked++;
 	}
 
     // if there is room for another person to pray for
@@ -144,6 +156,7 @@
 		BOOL pickedPersonWithNotes = [self pickPersonWithNotesFromArray: ceaselessPeople];
 		if(pickedPersonWithNotes) {
 			--numberOfPeople;
+            peoplePicked++;
 		}
 	}
 
@@ -154,7 +167,8 @@
 		numberOfPeople = (int) [ceaselessPeople count];
 	}
 
-	[self pickMorePeopleForCount: numberOfPeople inArray: ceaselessPeople];
+	peoplePicked += [self pickMorePeopleForCount: numberOfPeople inArray: ceaselessPeople];
+    return peoplePicked;
 }
 
 - (BOOL) pickFavoriteFromArray: (NSArray *) ceaselessPeople {
@@ -218,19 +232,23 @@
 	}
 }
 
-- (void) pickMorePeopleForCount: (int) numberOfPeople inArray: (NSArray *) ceaselessPeople {
+- (NSInteger) pickMorePeopleForCount: (int) numberOfPeople inArray: (NSArray *) ceaselessPeople {
+    NSInteger peoplePicked = 0;
 	for (NSInteger i = 0; i< numberOfPeople; i++) {
 		PersonIdentifier *personToShow = ceaselessPeople[i];
 		BOOL personPicked = [self pickPersonIfPossible:personToShow];
 
-		if(!personPicked) {
+		if (!personPicked) {
 			NSLog(@"Could not pick %@", personToShow);
             // we gotta loop through again if we haven't picked someone yet.
 			if (numberOfPeople < [ceaselessPeople count]) {
 				++numberOfPeople;
-			}
-		}
+            }
+        } else {
+            peoplePicked++;
+        }
 	}
+    return peoplePicked;
 }
 
 - (BOOL) pickPersonIfPossible: (PersonIdentifier *) personToPick {
