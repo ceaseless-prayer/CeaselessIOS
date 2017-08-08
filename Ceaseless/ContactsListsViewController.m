@@ -205,29 +205,30 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 		NSLog(@"editMode on");
 	} else {
 		if (!self.searchController.active) {
-
 			NSArray *selectedCells = [self.tableView indexPathsForSelectedRows];
-				//enumerate backwards so that the index does not get updated by previous removals
+            // enumerate backwards so that the index does not get updated by previous removals
 			for (NSIndexPath *indexPath in [selectedCells reverseObjectEnumerator]) {
 				PersonIdentifier *person = [self personAtIndexPath:indexPath];
-				switch (self.segment.selectedSegmentIndex) {
-                    // case 0 - for recent contacts there is no action to be taken.
-					case 1:
-						person.removedDate = [NSDate date];
-						break;
-					case 2:
-						person.removedDate = nil;
-						break;
-					default:
-						break;
-				}
-				[self save];
-			}
+                if (person) {
+                    switch (self.segment.selectedSegmentIndex) {
+                            // case 0 - for recent contacts there is no action to be taken.
+                        case 1:
+                            person.removedDate = [NSDate date];
+                            break;
+                        case 2:
+                            person.removedDate = nil;
+                            break;
+                        default:
+                            break;
+                    }
+                    [self save];
+                }
+            }
 		}
 
 		[self.tableView setEditing:editing animated:NO];
 		[self.tableView reloadData];
-			//can't just set the title because it won't be an editing button 
+        // can't just set the title because it won't be an editing button
 		self.navigationItem.rightBarButtonItem = self.editButtonItem;
 		NSLog(@"editmode off");
 	}
@@ -616,7 +617,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 - (IBAction) contactsListSelector: (id) sender {
 	[self selectContactsPredicateAndSortDescriptors];
-	self.tableView.editing = NO;
+	[self.tableView setEditing:NO animated:NO];
     self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"Edit", nil);
 	[self.tableView reloadData];
 }
