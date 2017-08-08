@@ -19,8 +19,9 @@
 
 typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 {
-	predicateScopeActive = 0,
-	predicateScopeRemoved = 1
+    predicateScopeRecent = 0,
+	predicateScopeActive = 1,
+	predicateScopeRemoved = 2
 };
 
 @interface ContactsListsViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UISearchControllerDelegate>
@@ -28,7 +29,10 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 @property (strong, nonatomic) NSArray *filteredList;
 @property (strong, nonatomic) NSFetchRequest *searchFetchRequest;
 @property (nonatomic, strong) UISearchController *searchController;
-@property (nonatomic, strong) NSString *selectedListPredicate;
+@property (nonatomic, strong) NSPredicate *selectedListPredicate;
+@property (nonatomic, strong) NSArray *selectedListSortDescriptors;
+@property (nonatomic, strong) NSString *selectedListEntity;
+@property (nonatomic, strong) NSString *selectedListSectionNameKeyPath;
 @property (nonatomic, strong) PersonPicker *personPicker;
 @property ContactsListsPredicateScope selectedList;
 
@@ -41,7 +45,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	AppDelegate *appDelegate = (id) [[UIApplication sharedApplication] delegate];
 	self.managedObjectContext = appDelegate.managedObjectContext;
 	self.ceaselessContacts = [CeaselessLocalContacts sharedCeaselessLocalContacts];
-	[self selectContactsPredicate];
+	[self selectContactsPredicateAndSortDescriptors];
 
 }
 
@@ -163,7 +167,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 		if (self.searchController.isActive) {
 			person = [self.filteredList objectAtIndex:indexPath.row];
 		} else {
-			person = [self.fetchedResultsController objectAtIndexPath:indexPath];
+			person = [self personAtIndexPath:indexPath];
 		}
 
 		PersonViewController *personViewController = segue.destinationViewController;
@@ -182,13 +186,14 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	if (editing) {
 		self.tableView.allowsMultipleSelectionDuringEditing = YES;
 		[self.tableView setEditing:editing animated:YES];
-		switch (self.segment.selectedSegmentIndex){
-			case 0: { //can't just set the rightBarButtonItem title because it doesn't pick up font
+		switch (self.segment.selectedSegmentIndex) {
+            // case 0 - for recent contacts there is no action to be taken.
+			case 1: { //can't just set the rightBarButtonItem title because it doesn't pick up font
 				UIBarButtonItem *removeButton = [[UIBarButtonItem alloc] initWithTitle: NSLocalizedString(@"Remove", nil) style: UIBarButtonItemStylePlain target:self action: @selector(editingDoneButtonPressed)];
 				self.navigationItem.rightBarButtonItem = removeButton;
 				break;
 			}
-			case 1:{ //can't just set the rightBarButtonItem title because it doesn't pick up font
+			case 2:{ //can't just set the rightBarButtonItem title because it doesn't pick up font
 				UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithTitle: NSLocalizedString(@"Add", nil) style: UIBarButtonItemStylePlain target:self action: @selector(editingDoneButtonPressed)];
 				self.navigationItem.rightBarButtonItem = addButton;
 				break;
@@ -204,12 +209,13 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 			NSArray *selectedCells = [self.tableView indexPathsForSelectedRows];
 				//enumerate backwards so that the index does not get updated by previous removals
 			for (NSIndexPath *indexPath in [selectedCells reverseObjectEnumerator]) {
-				PersonIdentifier *person = [self.fetchedResultsController objectAtIndexPath:indexPath];
-				switch (self.segment.selectedSegmentIndex){
-					case 0:
+				PersonIdentifier *person = [self personAtIndexPath:indexPath];
+				switch (self.segment.selectedSegmentIndex) {
+                    // case 0 - for recent contacts there is no action to be taken.
+					case 1:
 						person.removedDate = [NSDate date];
 						break;
-					case 1:
+					case 2:
 						person.removedDate = nil;
 						break;
 					default:
@@ -233,14 +239,14 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 }
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
 	switch (self.segment.selectedSegmentIndex){
-		case 0:
-			return @"Remove";
-			break;
 		case 1:
-			return @"Add to Ceaseless";
+			return NSLocalizedString(@"Remove", nil);
+			break;
+		case 2:
+			return NSLocalizedString(@"Add", nil);
 			break;
 		default:
-			return @"Remove";
+			return @"Other";
 			break;
 	}
 }
@@ -297,9 +303,9 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 		if (self.searchController.active) {
 			person = [self.filteredList objectAtIndex:indexPath.row];
 		} else {
-			person = [self.fetchedResultsController objectAtIndexPath:indexPath];
+			person = [self personAtIndexPath:indexPath];
 		}
-		if (self.selectedList == predicateScopeActive) {
+		if (self.selectedList == predicateScopeActive || self.selectedList == predicateScopeRecent) {
 			if (person.favoritedDate == nil) {
 				person.favoritedDate = [NSDate date];
 				[self save];
@@ -319,10 +325,11 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	if (self.searchController.active) {
 		person = [self.filteredList objectAtIndex:indexPath.row];
 	} else {
-		person = [self.fetchedResultsController objectAtIndexPath:indexPath];
+		person = [self personAtIndexPath:indexPath];
 	}
 	switch (self.segment.selectedSegmentIndex){
-		case 0:
+        case 0: // favoriting is possible for both recent and active contacts
+		case 1:
 			cell.favButton.hidden = NO;
 			cell.viewToImageViewConstraint.constant = 38;
 			if (person.favoritedDate) {
@@ -331,7 +338,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 				[cell.favButton setTitle: [NSString fontAwesomeIconStringForEnum:FAHeartO] forState:UIControlStateNormal];
 			}
 			break;
-		case 1:
+		case 2:
 			cell.favButton.hidden = YES;
 			cell.viewToImageViewConstraint.constant = 0;
 			break;
@@ -359,20 +366,32 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
 		// Return NO if you do not want the specified item to be editable.
-	return YES;
+    return [self validPersonAtIndex:indexPath];
 }
+
+- (BOOL) validPersonAtIndex: (NSIndexPath *)indexPath {
+    // After adding prayer records and history, we are concerned that a record may
+    // for some reason point to a nil person. This checks for that
+    // so that our users won't crash the app by tapping on a row with invalid data.
+    PersonIdentifier *p = [self personAtIndexPath: indexPath];
+    if (!p) {
+        return NO;
+    }
+    return YES;
+}
+
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
 		return UITableViewCellEditingStyleDelete;
 }
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (editingStyle == UITableViewCellEditingStyleDelete) {
-		PersonIdentifier *person = [self.fetchedResultsController objectAtIndexPath:indexPath];
-		switch (self.segment.selectedSegmentIndex){
-			case 0:
+		PersonIdentifier *person = [self personAtIndexPath:indexPath];
+		switch (self.segment.selectedSegmentIndex) {
+			case 1:
 				person.removedDate = [NSDate date];
 				break;
-			case 1:
+			case 2:
 				person.removedDate = nil;
 				break;
 			default:
@@ -383,7 +402,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 }
 
 - (void)tableView: (UITableView *)tableView didSelectRowAtIndexPath: (NSIndexPath *)indexPath {
-	if (!tableView.isEditing) {
+	if (!tableView.isEditing && [self validPersonAtIndex:indexPath]) {
 		[self performSegueWithIdentifier: @"ShowPerson" sender: self];
 	}
 }
@@ -402,7 +421,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 - (void)searchForText:(NSString *)searchText
 {
-	NSString *buildPredicateFormat = [NSString stringWithString: self.selectedListPredicate];
+	NSString *buildPredicateFormat = @"removedDate == nil"; // only allow searching for active contacts for now.
 	NSString *predicateFormat = [buildPredicateFormat stringByAppendingString: @" AND (representativeInfo.primaryFirstName.name BEGINSWITH[cd] %@ OR representativeInfo.primaryLastName.name BEGINSWITH[cd] %@ OR  (representativeInfo.primaryFirstName.name BEGINSWITH[cd] %@ AND representativeInfo.primaryLastName.name BEGINSWITH[cd] %@))"];
 
 	NSString *searchFirst = searchText;
@@ -520,28 +539,26 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
 		// Edit the entity name as appropriate.
-	NSEntityDescription *entity = [NSEntityDescription entityForName:@"PersonIdentifier" inManagedObjectContext:self.managedObjectContext];
+	NSEntityDescription *entity = [NSEntityDescription entityForName:self.selectedListEntity inManagedObjectContext:self.managedObjectContext];
 	[fetchRequest setEntity:entity];
+    
+    if ([self.selectedListEntity isEqual: @"PrayerRecord"]) {
+        fetchRequest.relationshipKeyPathsForPrefetching = @[@"person"];
+    }
 
 		// Set the batch size to a suitable number.
 	[fetchRequest setFetchBatchSize:20];
 
-		// Edit the sort key as appropriate.
+	[fetchRequest setSortDescriptors:self.selectedListSortDescriptors];
 
-	NSSortDescriptor *sortDescriptor1 = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryLastName.name" ascending:YES selector: @selector(caseInsensitiveCompare:)];
-	NSSortDescriptor *sortDescriptor2 = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryFirstName.name" ascending:YES selector: @selector(caseInsensitiveCompare:)];
-
-	NSArray *sortDescriptors = @[sortDescriptor1, sortDescriptor2];
-
-	[fetchRequest setSortDescriptors:sortDescriptors];
-
-	NSPredicate *selectedContacts = [NSPredicate predicateWithFormat: self.selectedListPredicate];
+	NSPredicate *selectedContacts = self.selectedListPredicate;
 
 	[fetchRequest setPredicate: selectedContacts];
 
+
 		// Edit the section name key path and cache name if appropriate.
 		// nil for section name key path means "no sections".
-	NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath: @"representativeInfo.sectionLastName" cacheName:nil];
+	NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath: self.selectedListSectionNameKeyPath cacheName:nil];
 	aFetchedResultsController.delegate = self;
 	self.fetchedResultsController = aFetchedResultsController;
 
@@ -565,12 +582,7 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	_searchFetchRequest = [[NSFetchRequest alloc] init];
 	NSEntityDescription *entity = [NSEntityDescription entityForName:@"PersonIdentifier" inManagedObjectContext:self.managedObjectContext];
 	[_searchFetchRequest setEntity:entity];
-
-		// Edit the sort key as appropriate.
-	NSSortDescriptor *sortDescriptor1 = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryLastName.name" ascending:YES selector: @selector(caseInsensitiveCompare:)];
-	NSSortDescriptor *sortDescriptor2 = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryFirstName.name" ascending:YES selector: @selector(caseInsensitiveCompare:)];
-	NSArray *sortDescriptors = @[sortDescriptor1, sortDescriptor2];
-	[_searchFetchRequest setSortDescriptors:sortDescriptors];
+	[_searchFetchRequest setSortDescriptors:[self defaultSortDescriptors]];
 
 	return _searchFetchRequest;
 }
@@ -593,30 +605,71 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	}
 }
 
-- (IBAction)contactsListSelector:(id)sender {
-	[self selectContactsPredicate];
+- (PersonIdentifier *) personAtIndexPath: (NSIndexPath *) indexPath {
+    if ([self.selectedListEntity isEqual: @"PersonIdentifier"]) {
+        return [self.fetchedResultsController objectAtIndexPath:indexPath];
+    } else {
+        PrayerRecord *pr = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        return pr.person;
+    }
+}
+
+- (IBAction) contactsListSelector: (id) sender {
+	[self selectContactsPredicateAndSortDescriptors];
 	self.tableView.editing = NO;
-	self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"Edit", nil);
+    self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"Edit", nil);
 	[self.tableView reloadData];
 }
 
-- (void) selectContactsPredicate {
-	{
-	switch (self.segment.selectedSegmentIndex){
-		case 0:
-			self.selectedListPredicate = @"removedDate == nil";
+- (NSArray *) defaultSortDescriptors {
+    NSSortDescriptor *sortDescriptor1 = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryLastName.name" ascending:YES selector: @selector(caseInsensitiveCompare:)];
+    NSSortDescriptor *sortDescriptor2 = [NSSortDescriptor sortDescriptorWithKey:@"representativeInfo.primaryFirstName.name" ascending:YES selector: @selector(caseInsensitiveCompare:)];
+    
+    return @[sortDescriptor1, sortDescriptor2];
+}
+
+- (NSDate *) historyLimitDate {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDate *limitDate = [defaults objectForKey:kPrayerCycleStartDate];
+    NSDate *oneMonthAgo = [[NSDate date] dateByAddingTimeInterval:-60*60*24*30];
+    if(!limitDate || [oneMonthAgo earlierDate:limitDate]) {
+        limitDate = oneMonthAgo;
+    }
+    NSLog(@"Cycle start %@", limitDate);
+    return limitDate;
+}
+
+- (void) selectContactsPredicateAndSortDescriptors {
+	switch (self.segment.selectedSegmentIndex) {
+        case 0:
+            self.selectedListEntity = @"PrayerRecord";
+            self.selectedListSortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"createDate" ascending:NO]];
+            // if you want to limit the history a user can access, uncomment the following, otherwise set the predicate to nil.
+            // self.selectedListPredicate = [NSPredicate predicateWithFormat: @"createDate >= %@", [self historyLimitDate]];
+            self.selectedListPredicate = nil;
+            self.selectedListSectionNameKeyPath = nil;
+            _fetchedResultsController = nil;
+            self.selectedList = self.segment.selectedSegmentIndex;
+            break;
+		case 1:
+            self.selectedListEntity = @"PersonIdentifier";
+            self.selectedListSortDescriptors = [self defaultSortDescriptors];
+            self.selectedListPredicate = [NSPredicate predicateWithFormat: @"removedDate == nil" ];
+            self.selectedListSectionNameKeyPath = @"representativeInfo.sectionLastName";
 			_fetchedResultsController = nil;
 			self.selectedList = self.segment.selectedSegmentIndex;
 			break;
 
-		case 1:
-			self.selectedListPredicate = @"removedDate != nil";
+		case 2:
+            self.selectedListEntity = @"PersonIdentifier";
+            self.selectedListSortDescriptors = [self defaultSortDescriptors];
+			self.selectedListPredicate = [NSPredicate predicateWithFormat: @"removedDate != nil"];
+            self.selectedListSectionNameKeyPath = @"representativeInfo.sectionLastName";
 			_fetchedResultsController = nil;
 			self.selectedList = self.segment.selectedSegmentIndex;
 			break;
 		default:
 			break;
-	}
 	}
 }
 
