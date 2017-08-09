@@ -228,14 +228,18 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 		[self.tableView setEditing:editing animated:NO];
 		[self.tableView reloadData];
-        // can't just set the title because it won't be an editing button
-		self.navigationItem.rightBarButtonItem = self.editButtonItem;
+        [self resetEditButton];
 		NSLog(@"editmode off");
 	}
 }
 
+- (void) resetEditButton {
+    // can't just set the title because it won't be an editing button
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
 - (void) editingDoneButtonPressed {
-		//Remove or Add button pressed
+    //Remove or Add button pressed
 	[self setEditing:NO animated:NO];
 }
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -617,9 +621,17 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 
 - (IBAction) contactsListSelector: (id) sender {
 	[self selectContactsPredicateAndSortDescriptors];
-	[self.tableView setEditing:NO animated:NO];
     self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"Edit", nil);
-	[self.tableView reloadData];
+    // we reload data before enforcing edit mode off because that way proper data is loaded
+    // and so we switch edit mode off after the right data is loaded.
+    // You might think we could detect when the user pressed the action (i.e. 'remove')
+    // and edit mode was turned off, but in this case, we want to turn off edit mode when
+    // switching between tabs (there is no action to take like removal) and so this is the right
+    // place to do this so that we prevent a crash.
+    [self.tableView reloadData];
+    [self resetEditButton];
+    [super setEditing:NO animated:NO];
+    [self.tableView setEditing:NO animated:NO];
 }
 
 - (NSArray *) defaultSortDescriptors {
