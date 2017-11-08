@@ -234,14 +234,22 @@
 
 - (NSInteger) pickMorePeopleForCount: (int) numberOfPeople inArray: (NSArray *) ceaselessPeople {
     NSInteger peoplePicked = 0;
+    NSUInteger totalPeopleAvailable = [ceaselessPeople count];
+    
+    if (totalPeopleAvailable == 0) {
+        return peoplePicked;
+    }
+    
 	for (NSInteger i = 0; i< numberOfPeople; i++) {
-		PersonIdentifier *personToShow = ceaselessPeople[i];
+        // Casting isn't the best, but ok here since the array of people shouldn't be greater than 2^31-1
+        NSUInteger rnd = arc4random_uniform((uint32_t) totalPeopleAvailable);
+		PersonIdentifier *personToShow = ceaselessPeople[rnd];
 		BOOL personPicked = [self pickPersonIfPossible:personToShow];
 
 		if (!personPicked) {
 			NSLog(@"Could not pick %@", personToShow);
             // we gotta loop through again if we haven't picked someone yet.
-			if (numberOfPeople < [ceaselessPeople count]) {
+			if (numberOfPeople < totalPeopleAvailable) {
 				++numberOfPeople;
             }
         } else {
