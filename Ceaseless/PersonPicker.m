@@ -104,9 +104,11 @@
 
     // in case you didn't notice, the following line is beautiful.
     NSSortDescriptor *prayerRecordCountDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"prayerRecords.@max.createDate" ascending:YES];
-
+    
+    NSSortDescriptor *randomizerDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"ceaselessId" ascending:YES];
+    
     // filter out removed contacts
-    NSArray *ceaselessPeople = [[_ceaselessContacts getAllActiveCeaselessContacts] sortedArrayUsingDescriptors:[NSArray arrayWithObject:prayerRecordCountDescriptor]];
+    NSArray *ceaselessPeople = [[_ceaselessContacts getAllActiveCeaselessContacts] sortedArrayUsingDescriptors:@[prayerRecordCountDescriptor, randomizerDescriptor]];
     NSLog(@"Total filtered Ceaseless contacts: %lu", (unsigned long)[ceaselessPeople count]);
 
     self.pickForNotification = NO;
@@ -241,9 +243,7 @@
     }
     
 	for (NSInteger i = 0; i< numberOfPeople; i++) {
-        // Casting isn't the best, but ok here since the array of people shouldn't be greater than 2^31-1
-        NSUInteger rnd = arc4random_uniform((uint32_t) totalPeopleAvailable);
-		PersonIdentifier *personToShow = ceaselessPeople[rnd];
+		PersonIdentifier *personToShow = ceaselessPeople[i];
 		BOOL personPicked = [self pickPersonIfPossible:personToShow];
 
 		if (!personPicked) {
