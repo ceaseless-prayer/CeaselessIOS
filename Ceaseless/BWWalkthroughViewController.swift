@@ -91,7 +91,7 @@ At the moment it's only used to perform custom animations on didScroll.
     
     // MARK: - Private properties -
     
-    open let scrollview:UIScrollView!
+    @objc open let scrollview:UIScrollView!
     fileprivate var controllers:[UIViewController]!
     fileprivate var lastViewConstraint:NSArray?
     
@@ -174,7 +174,7 @@ At the moment it's only used to perform custom animations on didScroll.
         delegate?.walkthroughCloseButtonPressed?()
     }
     
-    func pageControlDidTouch(){
+    @objc func pageControlDidTouch(){
 
         if let pc = pageControl{
             gotoPage(pc.currentPage)
@@ -195,7 +195,7 @@ At the moment it's only used to perform custom animations on didScroll.
     Add a new page to the walkthrough. 
     To have information about the current position of the page in the walkthrough add a UIVIewController which implements BWWalkthroughPage    
     */
-    open func addViewController(_ vc:UIViewController)->Void{
+    @objc open func addViewController(_ vc:UIViewController)->Void{
         
         controllers.append(vc)
         
