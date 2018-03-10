@@ -9,6 +9,7 @@ target 'Ceaseless' do
 
   # Pods for Ceaseless
   pod 'GoogleAnalytics'
+  pod 'OneSignal', '>= 2.6.2', '< 3.0'
 
   target 'CeaselessTests' do
     inherit! :search_paths

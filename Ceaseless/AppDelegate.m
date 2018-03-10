@@ -10,6 +10,7 @@
 #import "AppConstants.h"
 #import "GAI.h"
 #import "AppUtils.h"
+#import <OneSignal/OneSignal.h>
 
 static NSString *const kTrackingId = @"UA-44378341-2";
 static NSString *const kAllowTracking = @"allowTracking";
@@ -31,6 +32,13 @@ static NSString *const kAllowTracking = @"allowTracking";
     // doing this to make status bar text white according to trick here:
     // http://stackoverflow.com/questions/19108513/uistatusbarstyle-preferredstatusbarstyle-does-not-work-on-ios-7
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackTranslucent];
+    
+    // Initialize OneSignal for Push Notifications
+    [OneSignal initWithLaunchOptions:launchOptions
+                               appId:@"3d054882-fde3-4bee-bf8e-723087fc3536"
+            handleNotificationAction:nil
+                            settings:@{kOSSettingsKeyAutoPrompt: @false}];
+    OneSignal.inFocusDisplayType = OSNotificationDisplayTypeNotification;
     
     // this is deprecated in iOS9 and eventually this in conjunction with the not setting style from view controller was
     // causing error messages according to
