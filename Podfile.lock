@@ -71,10 +71,12 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.1.3)
     - GoogleToolboxForMac/NSDictionary+URLArguments (= 2.1.3)
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.3)
+  - OneSignal (2.7.2)
 
 DEPENDENCIES:
   - Google/Analytics
   - GoogleToolboxForMac
+  - OneSignal (< 3.0, >= 2.6.2)
 
 SPEC CHECKSUMS:
   FirebaseAnalytics: e5fe8486efc01bec33f6bf82e2fa9fce4b124052
@@ -83,7 +85,8 @@ SPEC CHECKSUMS:
   Google: 98da4b1a60ed0beb80a290387a28333406a1eb90
   GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
+  OneSignal: 02166aa47052b5c339a4231d6ee0bb8cbaf4f9be
 
-PODFILE CHECKSUM: 5c80fe594097a3cb43e70959efa4b7cf3cc72e34
+PODFILE CHECKSUM: 4361117ed74ebcd366ab4bd8aa14a3c28332d1b6
 
 COCOAPODS: 1.4.0
