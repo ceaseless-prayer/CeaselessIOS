@@ -756,10 +756,12 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Ceaseless/Pods-Ceaseless-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1149,16 +1151,15 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 28DYBASY7W;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Ceaseless/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/kirisu/Downloads/GoogleAnalyticsServicesiOS_3.10,
 					"$(PROJECT_DIR)/Ceaseless/Library",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-l\"GoogleAnalytics\"",
 					"-l\"c++\"",
 					"-l\"sqlite3\"",
 					"-l\"stdc++\"",
@@ -1175,18 +1176,6 @@
 					"\"CoreLocation\"",
 					"-framework",
 					"\"CoreMotion\"",
-					"-framework",
-					"\"FirebaseAnalytics\"",
-					"-framework",
-					"\"FirebaseCore\"",
-					"-framework",
-					"\"FirebaseInstanceID\"",
-					"-framework",
-					"\"GGLAnalytics\"",
-					"-framework",
-					"\"GGLCore\"",
-					"-framework",
-					"\"GoogleToolboxForMac\"",
 					"-framework",
 					"\"MessageUI\"",
 					"-framework",
@@ -1213,16 +1202,15 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 28DYBASY7W;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Ceaseless/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/kirisu/Downloads/GoogleAnalyticsServicesiOS_3.10,
 					"$(PROJECT_DIR)/Ceaseless/Library",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-l\"GoogleAnalytics\"",
 					"-l\"c++\"",
 					"-l\"sqlite3\"",
 					"-l\"stdc++\"",
@@ -1239,18 +1227,6 @@
 					"\"CoreLocation\"",
 					"-framework",
 					"\"CoreMotion\"",
-					"-framework",
-					"\"FirebaseAnalytics\"",
-					"-framework",
-					"\"FirebaseCore\"",
-					"-framework",
-					"\"FirebaseInstanceID\"",
-					"-framework",
-					"\"GGLAnalytics\"",
-					"-framework",
-					"\"GGLCore\"",
-					"-framework",
-					"\"GoogleToolboxForMac\"",
 					"-framework",
 					"\"MessageUI\"",
 					"-framework",

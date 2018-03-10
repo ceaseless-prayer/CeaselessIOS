@@ -8,8 +8,7 @@ target 'Ceaseless' do
   use_frameworks!
 
   # Pods for Ceaseless
-  pod 'Google/Analytics'
-  pod 'GoogleToolboxForMac'
+  pod 'GoogleAnalytics'
 
   target 'CeaselessTests' do
     inherit! :search_paths

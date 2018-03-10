@@ -24,6 +24,7 @@ static NSString *const kAllowTracking = @"allowTracking";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     GAI *gai = [GAI sharedInstance];
+
     
     // Override point for customization after application launch.
 	[[UINavigationBar appearance] setBackgroundColor: UIColorFromRGBWithAlpha(0x00012f, 0.6)];
