@@ -23,6 +23,8 @@ static NSString *const kAllowTracking = @"allowTracking";
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    GAI *gai = [GAI sharedInstance];
+    
     // Override point for customization after application launch.
 	[[UINavigationBar appearance] setBackgroundColor: UIColorFromRGBWithAlpha(0x00012f, 0.6)];
     // doing this to make status bar text white according to trick here:
@@ -43,16 +45,16 @@ static NSString *const kAllowTracking = @"allowTracking";
 	[[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
 
     // Optional: automatically send uncaught exceptions to Google Analytics.
-    [GAI sharedInstance].trackUncaughtExceptions = YES;
+    gai.trackUncaughtExceptions = YES;
     
     // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
-    [GAI sharedInstance].dispatchInterval = 20;
+    gai.dispatchInterval = 20;
     
     // Optional: set Logger to VERBOSE for debug information.
-    [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelInfo];
+    gai.logger.logLevel = kGAILogLevelVerbose;
     
     // Initialize tracker. Replace with your tracking ID.
-    [[GAI sharedInstance] trackerWithTrackingId:kTrackingId];
+    [gai trackerWithTrackingId:kTrackingId];
     
     NSDictionary *appDefaults = @{kAllowTracking: @(YES)};
     [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];

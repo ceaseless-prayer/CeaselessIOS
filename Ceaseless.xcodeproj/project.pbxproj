@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4130416B5ED576F3F0CE153A /* Pods_CeaselessPack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E88D65D121E87CE8898EB48 /* Pods_CeaselessPack.framework */; };
 		4205802E1ED55813000AAAE0 /* CelebrationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 420580301ED55813000AAAE0 /* CelebrationView.xib */; };
 		4227F7861DBCBB3B00015654 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4227F7881DBCBB3B00015654 /* Localizable.strings */; };
 		422DDD391ACBBD3400409001 /* AppUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 422DDD381ACBBD3400409001 /* AppUtils.m */; };
@@ -49,9 +50,7 @@
 		42F3AE3E1AA4DD80003A88F5 /* CeaselessTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F3AE3D1AA4DD80003A88F5 /* CeaselessTests.m */; };
 		42F505661AE42FC300337A21 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F505651AE42FC300337A21 /* CoreData.framework */; };
 		42F505681AE42FCC00337A21 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F505671AE42FCC00337A21 /* SystemConfiguration.framework */; };
-		42F5056A1AE42FD600337A21 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F505691AE42FD600337A21 /* libz.dylib */; };
-		42F5056C1AE42FDF00337A21 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F5056B1AE42FDF00337A21 /* libsqlite3.dylib */; };
-		42F5B8F51AE6112D00FA62B7 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F5B8F41AE6112D00FA62B7 /* libGoogleAnalyticsServices.a */; };
+		6AAE133331D8A7A6D740B650 /* Pods_CeaselessTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B69160D2625E11B8FC8243 /* Pods_CeaselessTests.framework */; };
 		704D5CA11AAF6D5200BD48B3 /* PersonNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5C9F1AAF6D5200BD48B3 /* PersonNotesViewController.m */; };
 		704D5CA71AAF90A200BD48B3 /* Ceaseless.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CA51AAF90A200BD48B3 /* Ceaseless.xcdatamodeld */; };
 		704D5CE51AAFA96200BD48B3 /* PeopleQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 704D5CE41AAFA96200BD48B3 /* PeopleQueue.m */; };
@@ -83,6 +82,7 @@
 		8A9D9DD31DBC31000056CB8C /* UIView+Glow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A9D9DD21DBC31000056CB8C /* UIView+Glow.m */; };
 		8A9D9DD61DBC5F3F0056CB8C /* CelebrationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A9D9DD51DBC5F3F0056CB8C /* CelebrationView.m */; };
 		8AA6D2481DC56DAA0068AAD6 /* AppConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA6D2471DC56DAA0068AAD6 /* AppConstants.m */; };
+		9772DEA53D313B6241877979 /* Pods_Ceaseless.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C75D601C9E93FFD0BC878 /* Pods_Ceaseless.framework */; };
 		CF4F6D0B1C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4F6D091C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift */; };
 		CF4F6D0C1C96AB57002EA9C5 /* BWWalkthroughViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4F6D0A1C96AB57002EA9C5 /* BWWalkthroughViewController.swift */; };
 		CF4F6D111C97C55B002EA9C5 /* OnboardingContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4F6D101C97C55B002EA9C5 /* OnboardingContactViewController.m */; };
@@ -121,11 +121,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		19330E7E82000F89441D0E46 /* Pods-CeaselessPack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CeaselessPack.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CeaselessPack/Pods-CeaselessPack.debug.xcconfig"; sourceTree = "<group>"; };
 		4205802F1ED55813000AAAE0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CelebrationView.xib; sourceTree = "<group>"; };
 		420580321ED5581E000AAAE0 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/CelebrationView.strings; sourceTree = "<group>"; };
 		4227F7841DBCBAB300015654 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Main.strings; sourceTree = "<group>"; };
 		4227F7851DBCBAB300015654 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		4227F7891DBCBB5300015654 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
+		422B388C9AD02FE29D654992 /* Pods-CeaselessTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CeaselessTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CeaselessTests/Pods-CeaselessTests.release.xcconfig"; sourceTree = "<group>"; };
 		422DDD371ACBBD3400409001 /* AppUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppUtils.h; sourceTree = "<group>"; };
 		422DDD381ACBBD3400409001 /* AppUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppUtils.m; sourceTree = "<group>"; };
 		42458BE81ACF1FEB00C48830 /* Email.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Email.h; sourceTree = "<group>"; };
@@ -199,21 +201,14 @@
 		42F3AE371AA4DD80003A88F5 /* CeaselessTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CeaselessTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		42F3AE3C1AA4DD80003A88F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		42F3AE3D1AA4DD80003A88F5 /* CeaselessTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CeaselessTests.m; sourceTree = "<group>"; };
-		42F5055B1AE42F9F00337A21 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
-		42F5055C1AE42F9F00337A21 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
-		42F5055D1AE42F9F00337A21 /* GAIEcommerceFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceFields.h; sourceTree = "<group>"; };
-		42F5055E1AE42F9F00337A21 /* GAIEcommerceProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceProduct.h; sourceTree = "<group>"; };
-		42F5055F1AE42F9F00337A21 /* GAIEcommerceProductAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceProductAction.h; sourceTree = "<group>"; };
-		42F505601AE42F9F00337A21 /* GAIEcommercePromotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommercePromotion.h; sourceTree = "<group>"; };
-		42F505611AE42F9F00337A21 /* GAIFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIFields.h; sourceTree = "<group>"; };
-		42F505621AE42F9F00337A21 /* GAILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAILogger.h; sourceTree = "<group>"; };
-		42F505631AE42F9F00337A21 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
-		42F505641AE42F9F00337A21 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
 		42F505651AE42FC300337A21 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		42F505671AE42FCC00337A21 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		42F505691AE42FD600337A21 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		42F5056B1AE42FDF00337A21 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		42F5B8F41AE6112D00FA62B7 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
+		49E196878487596BCA321AB0 /* Pods-Ceaseless.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ceaseless.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ceaseless/Pods-Ceaseless.release.xcconfig"; sourceTree = "<group>"; };
+		4E88D65D121E87CE8898EB48 /* Pods_CeaselessPack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CeaselessPack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		543DD1C64C789374091DD44B /* Pods-CeaselessTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CeaselessTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CeaselessTests/Pods-CeaselessTests.debug.xcconfig"; sourceTree = "<group>"; };
+		555C75D601C9E93FFD0BC878 /* Pods_Ceaseless.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ceaseless.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		704D5C9E1AAF6D5200BD48B3 /* PersonNotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonNotesViewController.h; sourceTree = "<group>"; };
 		704D5C9F1AAF6D5200BD48B3 /* PersonNotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonNotesViewController.m; sourceTree = "<group>"; };
 		704D5CA61AAF90A200BD48B3 /* Ceaseless.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Ceaseless.xcdatamodel; sourceTree = "<group>"; };
@@ -268,6 +263,9 @@
 		8A9D9DD51DBC5F3F0056CB8C /* CelebrationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CelebrationView.m; sourceTree = "<group>"; };
 		8AA6D2461DC56DAA0068AAD6 /* AppConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstants.h; sourceTree = "<group>"; };
 		8AA6D2471DC56DAA0068AAD6 /* AppConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConstants.m; sourceTree = "<group>"; };
+		94B69160D2625E11B8FC8243 /* Pods_CeaselessTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CeaselessTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		96FFE36D75FA9736898164F3 /* Pods-CeaselessPack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CeaselessPack.release.xcconfig"; path = "Pods/Target Support Files/Pods-CeaselessPack/Pods-CeaselessPack.release.xcconfig"; sourceTree = "<group>"; };
+		C9B9A8D37FD94F90E8DA32E9 /* Pods-Ceaseless.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ceaseless.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ceaseless/Pods-Ceaseless.debug.xcconfig"; sourceTree = "<group>"; };
 		CF4F6D081C96AB57002EA9C5 /* Ceaseless-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ceaseless-Bridging-Header.h"; sourceTree = "<group>"; };
 		CF4F6D091C96AB57002EA9C5 /* BWWalkthroughPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BWWalkthroughPageViewController.swift; sourceTree = "<group>"; };
 		CF4F6D0A1C96AB57002EA9C5 /* BWWalkthroughViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BWWalkthroughViewController.swift; sourceTree = "<group>"; };
@@ -282,9 +280,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42F5056C1AE42FDF00337A21 /* libsqlite3.dylib in Frameworks */,
-				42F5056A1AE42FD600337A21 /* libz.dylib in Frameworks */,
-				42F5B8F51AE6112D00FA62B7 /* libGoogleAnalyticsServices.a in Frameworks */,
 				42F505681AE42FCC00337A21 /* SystemConfiguration.framework in Frameworks */,
 				42F505661AE42FC300337A21 /* CoreData.framework in Frameworks */,
 				70F664091AA82B360073801E /* QuartzCore.framework in Frameworks */,
@@ -292,6 +287,7 @@
 				70F664021AA7E46C0073801E /* UIKit.framework in Frameworks */,
 				70F664001AA7E4470073801E /* Accelerate.framework in Frameworks */,
 				70F663FB1AA7E14F0073801E /* CoreGraphics.framework in Frameworks */,
+				9772DEA53D313B6241877979 /* Pods_Ceaseless.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,12 +295,34 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AAE133331D8A7A6D740B650 /* Pods_CeaselessTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47FA707A107AA9269F7D80EE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4130416B5ED576F3F0CE153A /* Pods_CeaselessPack.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		09F386B1E487159A89C8378C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C9B9A8D37FD94F90E8DA32E9 /* Pods-Ceaseless.debug.xcconfig */,
+				49E196878487596BCA321AB0 /* Pods-Ceaseless.release.xcconfig */,
+				19330E7E82000F89441D0E46 /* Pods-CeaselessPack.debug.xcconfig */,
+				96FFE36D75FA9736898164F3 /* Pods-CeaselessPack.release.xcconfig */,
+				543DD1C64C789374091DD44B /* Pods-CeaselessTests.debug.xcconfig */,
+				422B388C9AD02FE29D654992 /* Pods-CeaselessTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		42F3AE0F1AA4DD7F003A88F5 = {
 			isa = PBXGroup;
 			children = (
@@ -313,6 +331,8 @@
 				42F3AE3A1AA4DD80003A88F5 /* CeaselessTests */,
 				8A6AA22F1DBD9EE500DB0346 /* CeaselessPack */,
 				42F3AE191AA4DD7F003A88F5 /* Products */,
+				09F386B1E487159A89C8378C /* Pods */,
+				C5EE5CBA7BA9BD85AEE9CC7D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -330,7 +350,6 @@
 			isa = PBXGroup;
 			children = (
 				CF4F6D071C96AB26002EA9C5 /* BWWalkthrough */,
-				42F5055A1AE42F9F00337A21 /* GA Headers */,
 				42F3AE1F1AA4DD7F003A88F5 /* AppDelegate.h */,
 				42F3AE201AA4DD7F003A88F5 /* AppDelegate.m */,
 				70F664161AA8B9260073801E /* ScripturePicker.h */,
@@ -397,25 +416,6 @@
 				42F3AE3C1AA4DD80003A88F5 /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		42F5055A1AE42F9F00337A21 /* GA Headers */ = {
-			isa = PBXGroup;
-			children = (
-				42F5055B1AE42F9F00337A21 /* GAI.h */,
-				42F5055C1AE42F9F00337A21 /* GAIDictionaryBuilder.h */,
-				42F5055D1AE42F9F00337A21 /* GAIEcommerceFields.h */,
-				42F5055E1AE42F9F00337A21 /* GAIEcommerceProduct.h */,
-				42F5055F1AE42F9F00337A21 /* GAIEcommerceProductAction.h */,
-				42F505601AE42F9F00337A21 /* GAIEcommercePromotion.h */,
-				42F505611AE42F9F00337A21 /* GAIFields.h */,
-				42F505621AE42F9F00337A21 /* GAILogger.h */,
-				42F505631AE42F9F00337A21 /* GAITrackedViewController.h */,
-				42F5B8F41AE6112D00FA62B7 /* libGoogleAnalyticsServices.a */,
-				42F505641AE42F9F00337A21 /* GAITracker.h */,
-			);
-			name = "GA Headers";
-			path = Library;
 			sourceTree = "<group>";
 		};
 		70D51C0F1AA668AA00FA7CDC /* View */ = {
@@ -545,6 +545,16 @@
 			path = CeaselessPack;
 			sourceTree = "<group>";
 		};
+		C5EE5CBA7BA9BD85AEE9CC7D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				555C75D601C9E93FFD0BC878 /* Pods_Ceaseless.framework */,
+				4E88D65D121E87CE8898EB48 /* Pods_CeaselessPack.framework */,
+				94B69160D2625E11B8FC8243 /* Pods_CeaselessTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CF4F6D071C96AB26002EA9C5 /* BWWalkthrough */ = {
 			isa = PBXGroup;
 			children = (
@@ -561,11 +571,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 42F3AE411AA4DD80003A88F5 /* Build configuration list for PBXNativeTarget "Ceaseless" */;
 			buildPhases = (
+				8C4F30C4F7C584C3049AB87B /* [CP] Check Pods Manifest.lock */,
 				42F3AE141AA4DD7F003A88F5 /* Sources */,
 				42F3AE151AA4DD7F003A88F5 /* Frameworks */,
 				42F3AE161AA4DD7F003A88F5 /* Resources */,
 				42199AB11AAE61D500797224 /* ShellScript */,
 				8A6AA2391DBD9EE500DB0346 /* Embed App Extensions */,
+				4DEA9C94848A1BB9F2BCB6F4 /* [CP] Embed Pods Frameworks */,
+				CF82C765D27A6630BDBB7E56 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -581,9 +594,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 42F3AE441AA4DD80003A88F5 /* Build configuration list for PBXNativeTarget "CeaselessTests" */;
 			buildPhases = (
+				D804653B2B7CA7F1AC89B36B /* [CP] Check Pods Manifest.lock */,
 				42F3AE331AA4DD80003A88F5 /* Sources */,
 				42F3AE341AA4DD80003A88F5 /* Frameworks */,
 				42F3AE351AA4DD80003A88F5 /* Resources */,
+				4B64E6BD85036B459E64DDC1 /* [CP] Embed Pods Frameworks */,
+				D987303876404341B7BEEB64 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -599,7 +615,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8A6AA2381DBD9EE500DB0346 /* Build configuration list for PBXNativeTarget "CeaselessPack" */;
 			buildPhases = (
+				CA651C46C3A9D86924472776 /* [CP] Check Pods Manifest.lock */,
 				8A6AA22C1DBD9EE500DB0346 /* Resources */,
+				47FA707A107AA9269F7D80EE /* Frameworks */,
+				5A52557EEB2C886F156598E4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -713,6 +732,138 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#\n# Set the build number to the current git commit count.\n# If we're using the Dev scheme, then we'll suffix the build\n# number with the current branch name, to make collisions\n# far less likely across feature branches.\n# Based on: http://w3facility.info/question/how-do-i-force-xcode-to-rebuild-the-info-plist-file-in-my-project-every-time-i-build-the-project/\n#\ngit=`sh /etc/profile; which git`\nappBuild=`\"$git\" rev-list --all |wc -l`\nif [ $CONFIGURATION = \"Debug\" ]; then\nbranchName=`\"$git\" rev-parse --abbrev-ref HEAD`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $appBuild-$branchName\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\nelse\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $appBuild\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\nfi\necho \"Updated ${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"";
+		};
+		4B64E6BD85036B459E64DDC1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CeaselessTests/Pods-CeaselessTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4DEA9C94848A1BB9F2BCB6F4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Ceaseless/Pods-Ceaseless-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Ceaseless/Pods-Ceaseless-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5A52557EEB2C886F156598E4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CeaselessPack/Pods-CeaselessPack-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8C4F30C4F7C584C3049AB87B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Ceaseless-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CA651C46C3A9D86924472776 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CeaselessPack-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CF82C765D27A6630BDBB7E56 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Ceaseless/Pods-Ceaseless-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D804653B2B7CA7F1AC89B36B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CeaselessTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D987303876404341B7BEEB64 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CeaselessTests/Pods-CeaselessTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -991,6 +1142,7 @@
 		};
 		42F3AE421AA4DD80003A88F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C9B9A8D37FD94F90E8DA32E9 /* Pods-Ceaseless.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1003,6 +1155,44 @@
 					"$(inherited)",
 					/Users/kirisu/Downloads/GoogleAnalyticsServicesiOS_3.10,
 					"$(PROJECT_DIR)/Ceaseless/Library",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-l\"GoogleAnalytics\"",
+					"-l\"c++\"",
+					"-l\"sqlite3\"",
+					"-l\"stdc++\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AddressBook\"",
+					"-framework",
+					"\"AssetsLibrary\"",
+					"-framework",
+					"\"CoreData\"",
+					"-framework",
+					"\"CoreFoundation\"",
+					"-framework",
+					"\"CoreLocation\"",
+					"-framework",
+					"\"CoreMotion\"",
+					"-framework",
+					"\"FirebaseAnalytics\"",
+					"-framework",
+					"\"FirebaseCore\"",
+					"-framework",
+					"\"FirebaseInstanceID\"",
+					"-framework",
+					"\"GGLAnalytics\"",
+					"-framework",
+					"\"GGLCore\"",
+					"-framework",
+					"\"GoogleToolboxForMac\"",
+					"-framework",
+					"\"MessageUI\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SystemConfiguration\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ceaselessprayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1016,6 +1206,7 @@
 		};
 		42F3AE431AA4DD80003A88F5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 49E196878487596BCA321AB0 /* Pods-Ceaseless.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1029,6 +1220,44 @@
 					/Users/kirisu/Downloads/GoogleAnalyticsServicesiOS_3.10,
 					"$(PROJECT_DIR)/Ceaseless/Library",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-l\"GoogleAnalytics\"",
+					"-l\"c++\"",
+					"-l\"sqlite3\"",
+					"-l\"stdc++\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AddressBook\"",
+					"-framework",
+					"\"AssetsLibrary\"",
+					"-framework",
+					"\"CoreData\"",
+					"-framework",
+					"\"CoreFoundation\"",
+					"-framework",
+					"\"CoreLocation\"",
+					"-framework",
+					"\"CoreMotion\"",
+					"-framework",
+					"\"FirebaseAnalytics\"",
+					"-framework",
+					"\"FirebaseCore\"",
+					"-framework",
+					"\"FirebaseInstanceID\"",
+					"-framework",
+					"\"GGLAnalytics\"",
+					"-framework",
+					"\"GGLCore\"",
+					"-framework",
+					"\"GoogleToolboxForMac\"",
+					"-framework",
+					"\"MessageUI\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ceaselessprayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1040,6 +1269,7 @@
 		};
 		42F3AE451AA4DD80003A88F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 543DD1C64C789374091DD44B /* Pods-CeaselessTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1059,6 +1289,7 @@
 		};
 		42F3AE461AA4DD80003A88F5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 422B388C9AD02FE29D654992 /* Pods-CeaselessTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1074,6 +1305,7 @@
 		};
 		8A6AA2361DBD9EE500DB0346 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 19330E7E82000F89441D0E46 /* Pods-CeaselessPack.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1095,6 +1327,7 @@
 		};
 		8A6AA2371DBD9EE500DB0346 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 96FFE36D75FA9736898164F3 /* Pods-CeaselessPack.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CLANG_ANALYZER_NONNULL = YES;
