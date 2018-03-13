@@ -34,13 +34,13 @@ NSString *const kCeaselessAboutURL = @"aboutCeaselessAppURL";
         _defaultUrls = [[NSMutableDictionary alloc] init];
         // TODO move DBP related methods into their own service class.
         [_defaultUrls setValue:@"http://www.bible.is/ENGESV/Matt/21#22" forKey:kDefaultScriptureShareURL];
-        [_defaultUrls setValue:@"http://api.ceaselessprayer.com/v1/votd" forKey:kFetchVerseOfTheDayURL];
-        [_defaultUrls setValue:@"http://api.ceaselessprayer.com/v1/getScripture" forKey:kFetchScriptureURL];
-        [_defaultUrls setValue:@"http://www.ceaselessprayer.com/announcements/feed" forKey:kFetchAnnouncementsURL];
-        [_defaultUrls setValue:@"http://api.ceaselessprayer.com/v1/getAScriptureImage" forKey:kFetchNewScriptureImageURL];
-        [_defaultUrls setValue:@"http://www.ceaselessprayer.com/ios_help.html" forKey:kHelpURL];
-        [_defaultUrls setValue:@"http://www.ceaselessprayer.com/ios_mailing_list.html" forKey:kSubscribeToMailingListURL];
-        [_defaultUrls setValue:@"http://www.ceaselessprayer.com/ios_about.html" forKey:kCeaselessAboutURL];
+        [_defaultUrls setValue:@"https://api.ceaselessprayer.com/v1/votd" forKey:kFetchVerseOfTheDayURL];
+        [_defaultUrls setValue:@"https://api.ceaselessprayer.com/v1/getScripture" forKey:kFetchScriptureURL];
+        [_defaultUrls setValue:@"https://www.ceaselessprayer.com/announcements/feed" forKey:kFetchAnnouncementsURL];
+        [_defaultUrls setValue:@"https://api.ceaselessprayer.com/v1/getAScriptureImage" forKey:kFetchNewScriptureImageURL];
+        [_defaultUrls setValue:@"https://www.ceaselessprayer.com/ios_help.html" forKey:kHelpURL];
+        [_defaultUrls setValue:@"https://www.ceaselessprayer.com/ios_mailing_list.html" forKey:kSubscribeToMailingListURL];
+        [_defaultUrls setValue:@"https://www.ceaselessprayer.com/ios_about.html" forKey:kCeaselessAboutURL];
     }
     return self;
 }
