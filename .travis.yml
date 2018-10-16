@@ -1,4 +1,4 @@
 language: objective-c
 xcode_workspace: Ceaseless.xcworkspace
-xcode_scheme: CeaselessTest.xcscheme
+xcode_scheme: CeaselessTests.xcscheme
 xcode_destination: platform=iOS Simulator,OS=11.3,name=iPhone X
