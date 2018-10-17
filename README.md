@@ -1,4 +1,3 @@
-# CeaselessIOS
 # Ceaseless for iOS
 The Ceaseless Prayer app for iOS will be built natively
 
