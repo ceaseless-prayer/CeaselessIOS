@@ -19,6 +19,6 @@ Coming soon.
 
 # Testing
 
-For testing we use browserstack
-![https://browserstack.com][Browserstack-logo@2x.png]
+For testing we use [browserstack](https://browserstack.com)
+![https://browserstack.com](Browserstack-logo@2x.png?raw=true "Browserstack logo")
 
