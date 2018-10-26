@@ -19,7 +19,7 @@ Coming soon.
 
 # Testing
 
-For testing we use [browserstack](https://browserstack.com)
+For testing we use [BrowserStack](https://browserstack.com)
 
 ![https://browserstack.com](Browserstack-logo@2x.png?raw=true "Browserstack logo")
 
