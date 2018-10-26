@@ -20,5 +20,5 @@ Coming soon.
 # Testing
 
 For testing we use browserstack
-![https://browserstack.com][Browserstack-logo@2x.png
+![https://browserstack.com][Browserstack-logo@2x.png]
 
