@@ -1,5 +1,5 @@
 # Ceaseless for iOS [![Build Status](https://travis-ci.com/ceaseless-prayer/CeaselessIOS.svg?branch=master)](https://travis-ci.com/ceaseless-prayer/CeaselessIOS)
-The Ceaseless Prayer app for iOS will be built natively
+The Ceaseless Prayer app for iOS is built natively
 
 # Download on the App Store
 
