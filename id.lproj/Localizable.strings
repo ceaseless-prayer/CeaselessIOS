@@ -1,67 +1,41 @@
-/* 
-  Localizable.strings
+/* Localizable.strings
   Ceaseless
 
   Created by Christopher Lim on 10/22/16.
-  Copyright © 2016 Christopher Lim. All rights reserved.
-*/
+  Copyright © 2016 Christopher Lim. All rights reserved. */
 "contactsPermissionRequired" = "Aplikasi ini membutuhkan akses ke kontak Anda untuk berfungsi dengan baik. Tolong memberikan izin.";
-
-"I prayed for you using the Ceaseless app today." = "Saya berdoa untuk Anda menggunakan aplikasi Ceaseless hari ini. Anda akan menyukainya. \n\nhttp://ceaselessprayer.com";
-
-"I prayed for you today when you came up in my Ceaseless app. How are you doing?" = "Saya berdoa untuk Anda hari ini. Apa kabar?  \n\nhttp://ceaselessprayer.com";
-
+"I prayed for you using the Ceaseless app today." = "Saya berdoa untuk Anda menggunakan aplikasi Ceaseless hari ini. Anda akan menyukainya. \
+\
+http://ceaselessprayer.com";
+"I prayed for you today when you came up in my Ceaseless app. How are you doing?" = "Saya berdoa untuk Anda hari ini. Apa kabar?  \
+\
+http://ceaselessprayer.com";
 "Could not send a message because this person is missing contact information." = "Tidak bisa mengirim pesan karena orang ini tidak ada informasi kontak.";
-
 "Could not send an invitation because this person is missing contact information." = "Tidak bisa mengirim undangan karena orang ini tidak ada informasi kontak.";
-
 "Cancel action" = "Batal";
-"Cancel" = "Batal";
-
+"Allow access action" = "Allow access";
 "Invite to Ceaseless" = "Undang ke Ceaseless";
-
 "Invited %@" = "Diundang %@";
-
 "Remove from Ceaseless" = "Hapus dari Ceaseless";
-
 "Add to Ceaseless" = "Tambahkan ke Ceaseless";
-
 "View in Contacts" = "Lihat di Kontak";
-
 "Unfavorite Contact" = "Tidak Favorit Kontak";
-
 "Favorite Contact" = "Favorit Kontak";
-
 "Send Message" = "Mengirim Pesan";
-
 "Add a New Note" = "Menambahkan Catatan Baru";
-
 "Send Invite" = "Kirim Undangan";
-
 "Error" = "Error";
-
 "OK" = "OK";
-
 "Your device doesn't support SMS!" = "Perangkat Anda tidak mendukung SMS!";
-
 "Failed to send SMS!" = "Gagal mengirim SMS!";
-
 "Did not send message." = "Tidak mengirim pesan.";
-
 "Ceaseless Prayer" = "Ceaseless Prayer";
-
 "%@ / %@ people" = "%@ / %@ kontak";
-
 "No Internet Connection" = "Tidak ada koneksi internet";
-
 "Please connect to the internet to see this." = "Silakan terhubung ke internet untuk melihat ini.";
-
 "Add new note" = "Menambahkan catatan baru";
-
 "Enter note" = "Masukkan catatan";
-
 "Add new contact" = "Tambah kontak baru";
-
 "People" = "Kontak";
 "Settings" = "Pengaturan";
 "Help" = "Bantuan";
@@ -69,34 +43,23 @@
 "About" = "Tentang";
 "Review Ceaseless" = "Meninjau Ceaseless";
 "Subscribe to Newsletter" = "Mendaftar untuk Newsletter kami";
-
 "Could not show Ceaseless in App Store." = "Tidak bisa menunjukkan Ceaseless di App Store.";
-
 "Ceaseless for iOS Feedback" = "Ceaseless untuk iOS Umpan Balik";
-
 "Did not send feedback." = "Tidak mengirim umpan balik.";
-
 "Thank you!" = "Terima kasih!";
-
 "Thanks for your feedback." = "Terima kasih atas tanggapan Anda.";
-
 "Ceaseless only syncs contacts that have at least a first name." = "Ceaseless hanya menggunakan kontak yang memiliki nama pertama.";
-
 "Select yourself" = "Pilih sendiri";
-
+"Cancel" = "Batal";
 "Sync with Contacts" = "Sync dengan kontak";
 "Add a person" = "Tambah teman";
 "Remove" = "Menghapus";
 "Add" = "Tambah";
 "Edit" = "Mengedit";
-
 "Save" = "Menyimpan";
 "Add Note" = "Menambahkan Catatan";
-
 "scriptureLanguageCode" = "in_ID";
-
 "Ready to pray for %@ and %@ others today? Open the app to start." = "Siap berdoa untuk %@ dan %@ orang lain hari ini? Buka aplikasi untuk memulai.";
 "Ready to pray for %@ and others today? Open the app to start." = "Siap berdoa untuk %@ dan orang lain hari ini? Buka aplikasi untuk memulai.";
 "Ready to pray for others today? Open the app to start." = "Siap berdoa untuk sahabatmu hari ini? Buka aplikasi untuk memulai.";
-
 "Day %@" = "Hari %@";
