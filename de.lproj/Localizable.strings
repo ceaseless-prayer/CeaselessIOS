@@ -1,102 +1,65 @@
-/* 
-  Localizable.strings
+/* Localizable.strings
   Ceaseless
 
   Created by Christopher Lim on 10/22/16.
-  Copyright © 2016 Christopher Lim. All rights reserved.
-*/
-"contactsPermissionRequired" = "This app requires access to your contacts to function properly. Please visit the \"Privacy\" section in the Settings app. Go to Contacts and enable Ceaseless.";
-
-"I prayed for you using the Ceaseless app today." = "I prayed for you using the Ceaseless app today. You would like it. \n\nhttp://ceaselessprayer.com";
-
-"I prayed for you today when you came up in my Ceaseless app. How are you doing?" = "I prayed for you today when you came up in my Ceaseless app. How are you doing?  \n\nhttp://ceaselessprayer.com";
-
-"Could not send a message because this person is missing contact information." = "Could not send a message because this person is missing contact information.";
-
-"Could not send an invitation because this person is missing contact information." = "Could not send an invitation because this person is missing contact information.";
-
-"Cancel action" = "Cancel";
-"Cancel" = "Cancel";
-
-"Invite to Ceaseless" = "Invite to Ceaseless";
-
-"Invited %@" = "Invited %@";
-
-"Remove from Ceaseless" = "Remove from Ceaseless";
-
-"Add to Ceaseless" = "Add to Ceaseless";
-
-"View in Contacts" = "View in Contacts";
-
-"Unfavorite Contact" = "Unfavorite Contact";
-
-"Favorite Contact" = "Favorite Contact";
-
-"Send Message" = "Send Message";
-
-"Add a New Note" = "Add a New Note";
-
-"Send Invite" = "Send Invite";
-
-"Error" = "Error";
-
+  Copyright © 2016 Christopher Lim. All rights reserved. */
+"contactsPermissionRequired" = "Diese App benötigt Zugriff auf deine Kontakte, um richtig zu funktionieren. Möchtest du den Zugriff erlauben?";
+"I prayed for you using the Ceaseless app today." = "Ich habe für dich mit der Ceaseless app gebetet.\
+\
+http://ceaselessprayer.com";
+"I prayed for you today when you came up in my Ceaseless app. How are you doing?" = "Ich habe heute für Dich gebetet da du in meiner Ceaseless app dran warst. Wie geht's Dir?\
+\
+http://ceaselessprayer.com";
+"Could not send a message because this person is missing contact information." = "Nachricht konnte nicht verschickt werden da bei dieser Person Kontaktinformationen fehlen.";
+"Could not send an invitation because this person is missing contact information." = "Einladung konnte nicht verschickt werden da bei dieser Person Kontaktinformationen fehlen.";
+"Cancel action" = "Abbrechen";
+"Allow access action" = "Zugriff erlauben";
+"Invite to Ceaseless" = "Zu Ceaseless einladen";
+"Invited %@" = "Eingeladen %@";
+"Remove from Ceaseless" = "Von Ceaseless entfernen";
+"Add to Ceaseless" = "Zu Ceaseless hinzufügen";
+"View in Contacts" = "In Kontakten anzeigen";
+"Unfavorite Contact" = "Kontakt von Favoriten entfernen";
+"Favorite Contact" = "Kontakt zu Favoriten hinzufügen";
+"Send Message" = "Nachricht verschicken";
+"Add a New Note" = "Notiz hinzufügen";
+"Send Invite" = "Einladung verschicken";
+"Error" = "Fehler";
 "OK" = "OK";
-
-"Your device doesn't support SMS!" = "Your device doesn't support SMS!";
-
-"Failed to send SMS!" = "Failed to send SMS!";
-
-"Did not send message." = "Did not send message.";
-
+"Your device doesn't support SMS!" = "Dein Gerät unterstützt keine SMS!";
+"Failed to send SMS!" = "SMS konnte nicht gesendet werden!";
+"Did not send message." = "Nachricht konnte nicht verschickt werden.";
 "Ceaseless Prayer" = "Ceaseless Prayer";
-
-"%@ / %@ people" = "%@ / %@ people";
-
-"No Internet Connection" = "No Internet Connection";
-
-"Please connect to the internet to see this." = "Please connect to the internet to see this.";
-
-"Add new note" = "Add new note";
-
-"Enter note" = "Enter note";
-
-"Add new contact" = "Add new contact";
-
-"People" = "People";
-"Settings" = "Settings";
-"Help" = "Help";
-"Contact Us" = "Contact Us";
-"About" = "About";
-"Review Ceaseless" = "Review Ceaseless";
-"Subscribe to Newsletter" = "Subscribe to Newsletter";
-
-"Could not show Ceaseless in App Store." = "Could not show Ceaseless in App Store.";
-
-"Ceaseless for iOS Feedback" = "Ceaseless for iOS Feedback";
-
-"Did not send feedback." = "Did not send feedback.";
-
-"Thank you!" = "Thank you!";
-
-"Thanks for your feedback." = "Thanks for your feedback.";
-
-"Ceaseless only syncs contacts that have at least a first name." = "Ceaseless only syncs contacts that have at least a first name.";
-
-"Select yourself" = "Select yourself";
-
-"Sync with Contacts" = "Sync with contacts";
-"Add a person" = "Add a person";
-"Remove" = "Remove";
-"Add" = "Add";
-"Edit" = "Edit";
-
-"Save" = "Save";
-"Add Note" = "Add note";
-
-"scriptureLanguageCode" = "en";
-
-"Ready to pray for %@ and %@ others today? Open the app to start." = "Ready to pray for %@ and %@ others today? Open the app to start.";
-"Ready to pray for %@ and others today? Open the app to start." = "Ready to pray for %@ and others today? Open the app to start.";
-"Ready to pray for others today? Open the app to start." = "Ready to pray for others today? Open the app to start.";
-
-"Day %@" = "Day %@";
+"%@ / %@ people" = "%@/%@Personen";
+"No Internet Connection" = "Keine Internetverbindung";
+"Please connect to the internet to see this." = "Bitte mit dem Internet verbinden, um dies zu sehen.";
+"Add new note" = "Notiz hinzufügen";
+"Enter note" = "Notiz hinzufügen";
+"Add new contact" = "Kontakt hinzufügen";
+"People" = "Personen";
+"Settings" = "Einstellungen";
+"Help" = "Hilfe";
+"Contact Us" = "Kontakt";
+"About" = "Über die App";
+"Review Ceaseless" = "Ceaseless bewerten";
+"Subscribe to Newsletter" = "Newsletter abonnieren";
+"Could not show Ceaseless in App Store." = "Konnte Ceaseless nicht im App Store anzeigen.";
+"Ceaseless for iOS Feedback" = "Ceaseless für iOS Feedback";
+"Did not send feedback." = "Feedback konnte nicht verschickt werden.";
+"Thank you!" = "Danke!";
+"Thanks for your feedback." = "Vielen Dank für dein Feedback.";
+"Ceaseless only syncs contacts that have at least a first name." = "Ceaseless synchronisiert nur Kontakte die mindestens einen Vornamen haben.";
+"Select yourself" = "Wähle Dich selbst aus";
+"Cancel" = "Abbrechen";
+"Sync with Contacts" = "Mit Kontakten synchronisieren";
+"Add a person" = "Eine Person hinzufügen";
+"Remove" = "Entfernen";
+"Add" = "Hinzufügen";
+"Edit" = "Bearbeiten";
+"Save" = "Speichern";
+"Add Note" = "Notiz hinzufügen";
+"scriptureLanguageCode" = "de_DE";
+"Ready to pray for %@ and %@ others today? Open the app to start." = "Bereit, heute für %@ und %@ andere zu beten? Öffne die App um damit zu beginnen.";
+"Ready to pray for %@ and others today? Open the app to start." = "Bereit, heute für %@ und andere zu beten? Öffne die App um damit zu beginnen.";
+"Ready to pray for others today? Open the app to start." = "Bereit, heute für andere zu beten? Öffne die App um damit zu beginnen.";
+"Day %@" = "Tag %@";
