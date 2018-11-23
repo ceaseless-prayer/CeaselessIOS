@@ -1,87 +1,165 @@
-/* 
-  Localizable.strings
+"app_name" = "Ceaseless";
+"search_hint" = "Search contacts and notes";
+"contacts_access_required" = "Ceaseless requires access to contacts in order to show who to pray for.";
+"nav_home" = "Home";
+"People" = "People";
+"nav_journal" = "Journal";
+"nav_home_tutorial" = "Learn Ceaseless";
+"Settings" = "Settings";
+"Help" = "Help";
+"help_url" = "http://www.ceaselessprayer.com/android_help.html";
+"about_url" = "http://www.ceaselessprayer.com/android_about.html";
+"Contact Us" = "Contact Us";
+"About" = "About";
+"nav_subscribe_to_newsletter" = "Subscribe To Newsletter";
+"mailing_list_url" = "http://www.ceaselessprayer.com/ios_mailing_list.html";
+"nav_rate_this_app" = "Rate This App";
+"search_title" = "Search";
+"person_view" = "Person";
+"navigation_drawer_open" = "Open navigation drawer";
+"navigation_drawer_close" = "Close navigation drawer";
+"reminder_notification_title" = "Prayer reminder";
+"reminder_notification_message" = "Pray for %1$s and %2$s today.";
+"reminder_notification_message_default" = "Remember to pray for others today.";
+"verse_share" = "Share";
+"progress" = "Progress";
+"day" = "Day";
+"prayed_for" = "You have prayed for %1$d of %2$d people";
+"prayed_for_text" = "You have prayed for";
+"prayer_reminders" = "Reminder:";
+"number_of_people_each_day" = "Number of people to pray for daily:";
+"reminder_time_picker_title" = "Prayer reminder time:";
+"reminder_time_picker_dialog_title" = "Edit reminder time:";
+"reminders_on_text" = "Reminders are on";
+"reminders_off_text" = "Reminders are off";
+"default_notification_time" = "08:30";
+"people_active" = "Active";
+"people_favorite" = "Favorite";
+"people_removed" = "Removed";
+"person_remove" = "Remove";
+"person_reactivate" = "Re-activate";
+"Remove from Ceaseless" = "Remove from Ceaseless";
+"Add to Ceaseless" = "Add to Ceaseless";
+"person_send_message" = "Send message";
+"Invite to Ceaseless" = "Invite to Ceaseless";
+"Favorite Contact" = "Favorite Contact";
+"Unfavorite Contact" = "Unfavorite Contact";
+"bulk_selected" = "%d Selected";
+"favorite_on" = "{fa-heart}";
+/* do not localize */
+"favorite_off" = "{fa-heart-o}";
+/* do not localize */
+"person_add_note" = "Add Note";
+"empty_notes" = "There are no notes";
+"note_tag_hint" = "Tap to tag people";
+"Enter note" = "Enter note";
+"save" = "Save";
+"Cancel action" = "Cancel";
+"add_contact" = "Add Contact";
+"sync_contacts" = "Sync Contacts";
+"syncing_contacts" = "Syncing Contacts...";
+"contact_us_message" = "If you have any questions or feedback about Ceaseless, we'd love to hear from you.";
+"contact_us_social" = "You can also connect with us on social media.";
+"contact_us_web" = "Visit us on the web: <a href=\"http://www.ceaselessprayer.com/\">ceaselessprayer.com</a>";
+"contact_us_button" = "Email Ceaseless";
+/* TODO: Remove or change this placeholder text */
+"hello_blank_fragment" = "Sorry, something went wrong...";
+"show_more_people" = "Show more people";
+/* Image descriptions */
+"fb" = "Facebook logo";
+/* Image descriptions */
+"twitter" = "Twitter logo";
+"scenic_photo" = "Scenic photo";
+"person_image" = "Contact photo";
+"person_thumbnail" = "Contact photo thumbnail";
+"ceaseless_logo" = "Ceaseless dove logo";
+/* Analytics strings */
+"ga_post_total_active_contacts" = "post_total_active_ceaseless_contacts";
+"ga_post_total_removed_contacts" = "post_total_removed_ceaseless_contacts";
+"ga_post_total_favorited" = "post_total_favorited_ceaseless_contacts";
+"ga_post_total_prayed_for" = "post_people_prayed_for_this_cycle";
+"ga_tapped_send_message" = "tapped_send_message";
+"ga_tapped_add_note" = "tapped_add_note";
+"ga_tapped_share_scripture" = "share_scripture";
+"ga_tapped_invite" = "tapped_invite";
+"ga_tapped_show_more_people" = "tapped_show_more_people";
+"ga_address_book_sync" = "address_book_sync";
+"ga_prayer_progress" = "prayer_progress";
+"ga_person_card_actions" = "person_card_actions";
+"ga_scripture_card_actions" = "scripture_card_actions";
+"ga_progress_card_actions" = "progress_card_actions";
+/* Analytics strings */
+"default_verse_text" = "And whatever you ask in prayer, you will receive, if you have faith.";
+"default_verse_citation" = "Matthew 21:22, ESV";
+"default_verse_link" = "http://www.bible.is/ENGESV/Matt/21/22";
+/* search */
+"no_results_msg" = "No results";
+/* tutorial */
+"tutorial_person_name" = "Your Best Friend";
+"start_tutorial_text" = "Start Tutorial";
+"skip_tutorial_text" = "Skip Tutorial";
+"home_tutorial_intro" = "Start Praying For Others";
+"scripture_tutorial_explanation" = "Learn to pray from scripture";
+"tutorial_swipe_to_see_person" = "Swipe to see who to pray for";
+"tutorial_tap_anywhere_to_hide_menu" = "Tap anywhere to continue";
+"tutorial_favorite_person" = "Favorite this person if they are important";
+"tutorial_send_message" = "Send a message to encourage this person";
+"tutorial_add_note" = "Write a private note so you remember how to pray for this person";
+"tutorial_tap_picture_for_actions" = "Tap the picture to see actions you can take after praying";
+"tutorial_swipe_to_view_progress" = "Swipe to view progress";
+"tutorial_watch_progress" = "Watch your progress praying for others";
+"bible_version" = "Bible Version";
+"bible_version_will_change" = "Your next Bible verse will use the version you chose.";
+/* Localizable.strings
   Ceaseless
 
   Created by Christopher Lim on 10/22/16.
-  Copyright © 2016 Christopher Lim. All rights reserved.
-*/
+  Copyright © 2016 Christopher Lim. All rights reserved. */
 "contactsPermissionRequired" = "This app requires access to your contacts to function properly. Would you like to enable access?";
-
-"I prayed for you using the Ceaseless app today." = "I prayed for you using the Ceaseless app today. You would like it. \n\nhttp://ceaselessprayer.com";
-
-"I prayed for you today when you came up in my Ceaseless app. How are you doing?" = "I prayed for you today when you came up in my Ceaseless app. How are you doing?  \n\nhttp://ceaselessprayer.com";
-
+"I prayed for you using the Ceaseless app today." = "I prayed for you using the Ceaseless app today. You would like it. \
+\
+http://ceaselessprayer.com";
+"I prayed for you today when you came up in my Ceaseless app. How are you doing?" = "I prayed for you today when you came up in my Ceaseless app. How are you doing?  \
+\
+http://ceaselessprayer.com";
 "Could not send a message because this person is missing contact information." = "Could not send a message because this person is missing contact information.";
-
 "Could not send an invitation because this person is missing contact information." = "Could not send an invitation because this person is missing contact information.";
-
-"Cancel action" = "Cancel";
-
 "Allow access action" = "Allow access";
-
-"Invite to Ceaseless" = "Invite to Ceaseless";
-
 "Invited %@" = "Invited %@";
-
-"Remove from Ceaseless" = "Remove from Ceaseless";
-
-"Add to Ceaseless" = "Add to Ceaseless";
-
 "View in Contacts" = "View in Contacts";
-
-"Unfavorite Contact" = "Unfavorite Contact";
-
-"Favorite Contact" = "Favorite Contact";
-
 "Send Message" = "Send Message";
-
 "Add a New Note" = "Add a New Note";
-
 "Send Invite" = "Send Invite";
-
 "Error" = "Error";
-
 "OK" = "OK";
-
 "Your device doesn't support SMS!" = "Your device doesn't support SMS!";
-
 "Failed to send SMS!" = "Failed to send SMS!";
-
 "Did not send message." = "Did not send message.";
-
 "Ceaseless Prayer" = "Ceaseless Prayer";
-
 "%@ / %@ people" = "%@ / %@ people";
-
 "No Internet Connection" = "No Internet Connection";
-
 "Please connect to the internet to see this." = "Please connect to the internet to see this.";
-
 "Add new note" = "Add new note";
-
-"Enter note" = "Enter note";
-
 "Add new contact" = "Add new contact";
-
-"People" = "People";
-"Settings" = "Settings";
-"Help" = "Help";
-"Contact Us" = "Contact Us";
-"About" = "About";
 "Review Ceaseless" = "Review Ceaseless";
 "Subscribe to Newsletter" = "Subscribe to Newsletter";
-
 "Could not show Ceaseless in App Store." = "Could not show Ceaseless in App Store.";
-
 "Ceaseless for iOS Feedback" = "Ceaseless for iOS Feedback";
-
 "Did not send feedback." = "Did not send feedback.";
-
 "Thank you!" = "Thank you!";
-
 "Thanks for your feedback." = "Thanks for your feedback.";
-
 "Ceaseless only syncs contacts that have at least a first name." = "Ceaseless only syncs contacts that have at least a first name.";
-
 "Select yourself" = "Select yourself";
-
+"Cancel" = "";
+"Sync with Contacts" = "";
+"Add a person" = "";
+"Remove" = "";
+"Add" = "";
+"Edit" = "";
+"Save" = "";
+"Add Note" = "";
+"scriptureLanguageCode" = "";
+"Ready to pray for %@ and %@ others today? Open the app to start." = "";
+"Ready to pray for %@ and others today? Open the app to start." = "";
+"Ready to pray for others today? Open the app to start." = "";
+"Day %@" = "";
