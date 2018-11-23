@@ -1,26 +1,109 @@
+"app_name" = "Ceaseless";
+"search_hint" = "Suche Kontakte und Notizen";
+"contacts_access_required" = "Ceaseless benötigt Zugriff auf Kontakte, um anzuzeigen für wen man beten kann.";
+"nav_home" = "Home";
+"People" = "Personen";
+"nav_journal" = "Notizbuch";
+"nav_home_tutorial" = "Lerne Ceaseless kennen";
+"Settings" = "Einstellungen";
+"Help" = "Hilfe";
+"Contact Us" = "Kontakt";
+"About" = "Über uns";
+"nav_subscribe_to_newsletter" = "Abonniere den Newsletter";
+"nav_rate_this_app" = "Bewerte diese App";
+"search_title" = "Suche";
+"person_view" = "Person";
+"navigation_drawer_open" = "Navigation öffnen";
+"navigation_drawer_close" = "Navigation schließen";
+"reminder_notification_title" = "Gebets-Erinnerung";
+"reminder_notification_message" = "Bete heute für %1$s und %2$s.";
+"reminder_notification_message_default" = "Denk' daran, heute für andere zu beten.";
+"verse_share" = "Teilen";
+"progress" = "Fortschritt";
+"day" = "Tag";
+"prayed_for" = "Du hast bereits für %1$d von %2$d Personen gebetet";
+"prayed_for_text" = "Du hast gebetet für";
+"prayer_reminders" = "Erinnerung:";
+"number_of_people_each_day" = "Anzahl der Personen die täglich erscheinen:";
+"reminder_time_picker_title" = "Zeitpunkt der Gebetserinnerung:";
+"reminder_time_picker_dialog_title" = "Zeitpunkt der Gebetserinnerung bearbeiten:";
+"reminders_on_text" = "Erinnerungen sind inaktiv";
+"reminders_off_text" = "Erinnerungen sind aktiv";
+"default_notification_time" = "08:30";
+"people_active" = "Aktiv";
+"people_favorite" = "Favorit";
+"people_removed" = "Gelöscht";
+"person_remove" = "Löschen";
+"person_reactivate" = "Reaktivieren";
+"Remove from Ceaseless" = "Von Ceaseless entfernen";
+"Add to Ceaseless" = "Zu Ceaseless hinzufügen";
+"person_send_message" = "Nachricht senden";
+"Invite to Ceaseless" = "Zu Ceaseless einladen";
+"Favorite Contact" = "Kontakt zu Favoriten hinzufügen";
+"Unfavorite Contact" = "Kontakt von Favoriten entfernen";
+"bulk_selected" = "%d ausgewählt";
+/* do not localize */
+"person_add_note" = "Notiz hinzufügen";
+"empty_notes" = "Für diesen Kontakt gibt es noch keine Notizen";
+"note_tag_hint" = "Zum Markieren von Personen hier tippen";
+"Enter note" = "Notiz eingeben";
+"save" = "Speichern";
+"Cancel action" = "Abbrechen";
+"add_contact" = "Kontakt hinzufügen";
+"sync_contacts" = "Kontakte synchronisieren";
+"syncing_contacts" = "Kontakte werden synchronisiert...";
+"contact_us_message" = "Du hast Fragen oder Feedback zu Ceaseless? Wir freuen uns, von dir zu hören.";
+"contact_us_social" = "Du kannst Dich auch mit uns über Social Media verbinden.";
+"contact_us_web" = "Besuche uns im Internet: <a href=\"http://www.ceaselessprayer.com/\">ceaselessprayer.com</a>";
+"contact_us_button" = "Ceaseless eine E-Mail schicken";
+/* TODO: Remove or change this placeholder text */
+"hello_blank_fragment" = "Leider ist ein Fehler aufgetreten...";
+"show_more_people" = "Mehr Personen anzeigen";
+/* Image descriptions */
+"twitter" = "Twitter logo";
+"scenic_photo" = "Szenisches Foto";
+"person_image" = "Foto des Kontakts";
+"person_thumbnail" = "Vorschaubild des Kontakts";
+"ceaseless_logo" = "Ceaseless Logo";
+/* Analytics strings */
+"default_verse_text" = "Und alles, was ihr bittet im Gebet, so ihr glaubet, werdet ihr's empfangen.";
+"default_verse_citation" = "Matthäus 21,22 - LUT";
+"default_verse_link" = "http://listen.bible.is/GERL12/Matt/21/22";
+/* search */
+"no_results_msg" = "Keine Ergebnisse";
+/* tutorial */
+"tutorial_person_name" = "Dein bester Freund";
+"start_tutorial_text" = "Einführung starten";
+"skip_tutorial_text" = "Einführung überspringen";
+"home_tutorial_intro" = "Beginne, für andere zu beten";
+"scripture_tutorial_explanation" = "Bete mit Versen aus der Bibel";
+"tutorial_swipe_to_see_person" = "Wische um zu sehen für wen Du heute beten kannst";
+"tutorial_tap_anywhere_to_hide_menu" = "Tippe irgendwo um fortzufahren";
+"tutorial_favorite_person" = "Markiere die Person als Favorit wenn sie dir wichtig ist";
+"tutorial_send_message" = "Sende dieser Person eine Nachricht um sie zu ermutigen";
+"tutorial_add_note" = "Schreibe eine private Notiz, damit du später weißt wie du für diese Person beten kannst.";
+"tutorial_tap_picture_for_actions" = "Tippe auf das Bild, um zu sehen welche Aktionen du nach dem Beten ausführen kannst";
+"tutorial_swipe_to_view_progress" = "Wische um zu sehen für wen du bereits gebetet hast";
+"tutorial_watch_progress" = "Hier siehst Du für wie viele Personen du bereits gebetet hast";
+"bible_version" = "Bibelversion";
+"bible_version_will_change" = "Dein nächster Bibelvers wird die von dir gewählte Version verwenden.";
 /* Localizable.strings
   Ceaseless
 
   Created by Christopher Lim on 10/22/16.
   Copyright © 2016 Christopher Lim. All rights reserved. */
 "contactsPermissionRequired" = "Diese App benötigt Zugriff auf deine Kontakte, um richtig zu funktionieren. Möchtest du den Zugriff erlauben?";
-"I prayed for you using the Ceaseless app today." = "Ich habe für dich mit der Ceaseless app gebetet.\
+"I prayed for you using the Ceaseless app today." = "Ich habe für dich mit der Ceaseless App gebetet.\
 \
 http://ceaselessprayer.com";
-"I prayed for you today when you came up in my Ceaseless app. How are you doing?" = "Ich habe heute für Dich gebetet da du in meiner Ceaseless app dran warst. Wie geht's Dir?\
+"I prayed for you today when you came up in my Ceaseless app. How are you doing?" = "Ich habe heute für Dich gebetet da du in meiner Ceaseless App dran warst. Wie geht's Dir?\
 \
 http://ceaselessprayer.com";
 "Could not send a message because this person is missing contact information." = "Nachricht konnte nicht verschickt werden da bei dieser Person Kontaktinformationen fehlen.";
 "Could not send an invitation because this person is missing contact information." = "Einladung konnte nicht verschickt werden da bei dieser Person Kontaktinformationen fehlen.";
-"Cancel action" = "Abbrechen";
 "Allow access action" = "Zugriff erlauben";
-"Invite to Ceaseless" = "Zu Ceaseless einladen";
-"Invited %@" = "Eingeladen %@";
-"Remove from Ceaseless" = "Von Ceaseless entfernen";
-"Add to Ceaseless" = "Zu Ceaseless hinzufügen";
+"Invited %@" = "%@ eingeladen";
 "View in Contacts" = "In Kontakten anzeigen";
-"Unfavorite Contact" = "Kontakt von Favoriten entfernen";
-"Favorite Contact" = "Kontakt zu Favoriten hinzufügen";
 "Send Message" = "Nachricht verschicken";
 "Add a New Note" = "Notiz hinzufügen";
 "Send Invite" = "Einladung verschicken";
@@ -28,19 +111,13 @@ http://ceaselessprayer.com";
 "OK" = "OK";
 "Your device doesn't support SMS!" = "Dein Gerät unterstützt keine SMS!";
 "Failed to send SMS!" = "SMS konnte nicht gesendet werden!";
-"Did not send message." = "Nachricht konnte nicht verschickt werden.";
+"Did not send message." = "Nachricht nicht versendet.";
 "Ceaseless Prayer" = "Ceaseless Prayer";
 "%@ / %@ people" = "%@/%@Personen";
 "No Internet Connection" = "Keine Internetverbindung";
-"Please connect to the internet to see this." = "Bitte mit dem Internet verbinden, um dies zu sehen.";
+"Please connect to the internet to see this." = "Bitte mit dem Internet verbinden um dies zu sehen.";
 "Add new note" = "Notiz hinzufügen";
-"Enter note" = "Notiz hinzufügen";
 "Add new contact" = "Kontakt hinzufügen";
-"People" = "Personen";
-"Settings" = "Einstellungen";
-"Help" = "Hilfe";
-"Contact Us" = "Kontakt";
-"About" = "Über die App";
 "Review Ceaseless" = "Ceaseless bewerten";
 "Subscribe to Newsletter" = "Newsletter abonnieren";
 "Could not show Ceaseless in App Store." = "Konnte Ceaseless nicht im App Store anzeigen.";
