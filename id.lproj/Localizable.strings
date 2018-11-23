@@ -1,3 +1,15 @@
+"People" = "Orang-Orang";
+"Settings" = "Konfigurasi";
+"Help" = "Bantuan";
+"Contact Us" = "Hubungi kami";
+"About" = "Tentang";
+"Remove from Ceaseless" = "Menghapus dari Ceaseless";
+"Add to Ceaseless" = "Tambahkan ke Ceaseless";
+"Invite to Ceaseless" = "Mengundang ke Ceaseless";
+"Favorite Contact" = "Favorit Kontak";
+"Unfavorite Contact" = "Tidak Favorit Kontak";
+"Enter note" = "Masukkan catatan";
+"Cancel action" = "Batal";
 /* Localizable.strings
   Ceaseless
 
@@ -12,15 +24,9 @@ http://ceaselessprayer.com";
 http://ceaselessprayer.com";
 "Could not send a message because this person is missing contact information." = "Tidak bisa mengirim pesan karena orang ini tidak ada informasi kontak.";
 "Could not send an invitation because this person is missing contact information." = "Tidak bisa mengirim undangan karena orang ini tidak ada informasi kontak.";
-"Cancel action" = "Batal";
 "Allow access action" = "Allow access";
-"Invite to Ceaseless" = "Undang ke Ceaseless";
 "Invited %@" = "Diundang %@";
-"Remove from Ceaseless" = "Hapus dari Ceaseless";
-"Add to Ceaseless" = "Tambahkan ke Ceaseless";
 "View in Contacts" = "Lihat di Kontak";
-"Unfavorite Contact" = "Tidak Favorit Kontak";
-"Favorite Contact" = "Favorit Kontak";
 "Send Message" = "Mengirim Pesan";
 "Add a New Note" = "Menambahkan Catatan Baru";
 "Send Invite" = "Kirim Undangan";
@@ -34,13 +40,7 @@ http://ceaselessprayer.com";
 "No Internet Connection" = "Tidak ada koneksi internet";
 "Please connect to the internet to see this." = "Silakan terhubung ke internet untuk melihat ini.";
 "Add new note" = "Menambahkan catatan baru";
-"Enter note" = "Masukkan catatan";
 "Add new contact" = "Tambah kontak baru";
-"People" = "Kontak";
-"Settings" = "Pengaturan";
-"Help" = "Bantuan";
-"Contact Us" = "Hubungi Kami";
-"About" = "Tentang";
 "Review Ceaseless" = "Meninjau Ceaseless";
 "Subscribe to Newsletter" = "Mendaftar untuk Newsletter kami";
 "Could not show Ceaseless in App Store." = "Tidak bisa menunjukkan Ceaseless di App Store.";
