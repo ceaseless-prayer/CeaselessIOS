@@ -1,51 +1,51 @@
+"People" = "Personen";
+"Settings" = "Einstellungen";
+"Help" = "Hilfe";
+"Contact Us" = "Kontakt";
+"About" = "Über uns";
+"Remove from Ceaseless" = "Von Ceaseless entfernen";
+"Add to Ceaseless" = "Zu Ceaseless hinzufügen";
+"Invite to Ceaseless" = "Zu Ceaseless einladen";
+"Favorite Contact" = "Kontakt zu Favoriten hinzufügen";
+"Unfavorite Contact" = "Kontakt von Favoriten entfernen";
+"Enter note" = "Notiz eingeben";
+"Cancel action" = "Abbrechen";
 /* Localizable.strings
   Ceaseless
 
   Created by Christopher Lim on 10/22/16.
   Copyright © 2016 Christopher Lim. All rights reserved. */
 "contactsPermissionRequired" = "Diese App benötigt Zugriff auf deine Kontakte, um richtig zu funktionieren. Möchtest du den Zugriff erlauben?";
-"I prayed for you using the Ceaseless app today." = "Ich habe für dich mit der Ceaseless app gebetet.\
+"I prayed for you using the Ceaseless app today." = "Ich habe für dich mit der Ceaseless App gebetet.\
 \
 http://ceaselessprayer.com";
-"I prayed for you today when you came up in my Ceaseless app. How are you doing?" = "Ich habe heute für Dich gebetet da du in meiner Ceaseless app dran warst. Wie geht's Dir?\
+"I prayed for you today when you came up in my Ceaseless app. How are you doing?" = "Ich habe heute für Dich gebetet da du in meiner Ceaseless App dran warst. Wie geht's Dir?\
 \
 http://ceaselessprayer.com";
-"Could not send a message because this person is missing contact information." = "Nachricht konnte nicht verschickt werden da bei dieser Person Kontaktinformationen fehlen.";
-"Could not send an invitation because this person is missing contact information." = "Einladung konnte nicht verschickt werden da bei dieser Person Kontaktinformationen fehlen.";
-"Cancel action" = "Abbrechen";
+"Could not send a message because this person is missing contact information." = "Nachricht konnte nicht versendet werden da bei dieser Person Kontaktinformationen fehlen.";
+"Could not send an invitation because this person is missing contact information." = "Einladung konnte nicht versendet werden da bei dieser Person Kontaktinformationen fehlen.";
 "Allow access action" = "Zugriff erlauben";
-"Invite to Ceaseless" = "Zu Ceaseless einladen";
-"Invited %@" = "Eingeladen %@";
-"Remove from Ceaseless" = "Von Ceaseless entfernen";
-"Add to Ceaseless" = "Zu Ceaseless hinzufügen";
+"Invited %@" = "%@ eingeladen";
 "View in Contacts" = "In Kontakten anzeigen";
-"Unfavorite Contact" = "Kontakt von Favoriten entfernen";
-"Favorite Contact" = "Kontakt zu Favoriten hinzufügen";
-"Send Message" = "Nachricht verschicken";
+"Send Message" = "Nachricht versenden";
 "Add a New Note" = "Notiz hinzufügen";
-"Send Invite" = "Einladung verschicken";
+"Send Invite" = "Einladung versenden";
 "Error" = "Fehler";
 "OK" = "OK";
 "Your device doesn't support SMS!" = "Dein Gerät unterstützt keine SMS!";
 "Failed to send SMS!" = "SMS konnte nicht gesendet werden!";
-"Did not send message." = "Nachricht konnte nicht verschickt werden.";
+"Did not send message." = "Nachricht konnte nicht gesendet werden.";
 "Ceaseless Prayer" = "Ceaseless Prayer";
 "%@ / %@ people" = "%@/%@Personen";
 "No Internet Connection" = "Keine Internetverbindung";
-"Please connect to the internet to see this." = "Bitte mit dem Internet verbinden, um dies zu sehen.";
+"Please connect to the internet to see this." = "Bitte mit dem Internet verbinden um dies zu sehen.";
 "Add new note" = "Notiz hinzufügen";
-"Enter note" = "Notiz hinzufügen";
 "Add new contact" = "Kontakt hinzufügen";
-"People" = "Personen";
-"Settings" = "Einstellungen";
-"Help" = "Hilfe";
-"Contact Us" = "Kontakt";
-"About" = "Über die App";
 "Review Ceaseless" = "Ceaseless bewerten";
 "Subscribe to Newsletter" = "Newsletter abonnieren";
 "Could not show Ceaseless in App Store." = "Konnte Ceaseless nicht im App Store anzeigen.";
 "Ceaseless for iOS Feedback" = "Ceaseless für iOS Feedback";
-"Did not send feedback." = "Feedback konnte nicht verschickt werden.";
+"Did not send feedback." = "Feedback konnte nicht versendet werden.";
 "Thank you!" = "Danke!";
 "Thanks for your feedback." = "Vielen Dank für dein Feedback.";
 "Ceaseless only syncs contacts that have at least a first name." = "Ceaseless synchronisiert nur Kontakte die mindestens einen Vornamen haben.";
