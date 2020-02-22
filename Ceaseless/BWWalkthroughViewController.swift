@@ -91,7 +91,7 @@ At the moment it's only used to perform custom animations on didScroll.
     
     // MARK: - Private properties -
     
-    @objc open let scrollview:UIScrollView!
+    @objc public let scrollview:UIScrollView!
     fileprivate var controllers:[UIViewController]!
     fileprivate var lastViewConstraint:NSArray?
     
@@ -122,7 +122,7 @@ At the moment it's only used to perform custom animations on didScroll.
         
         // Initialize UI Elements
         
-        pageControl?.addTarget(self, action: #selector(BWWalkthroughViewController.pageControlDidTouch), for: UIControlEvents.touchUpInside)
+        pageControl?.addTarget(self, action: #selector(BWWalkthroughViewController.pageControlDidTouch), for: UIControl.Event.touchUpInside)
         
         // Scrollview
         
