@@ -91,7 +91,7 @@ At the moment it's only used to perform custom animations on didScroll.
     
     // MARK: - Private properties -
     
-    @objc public let scrollview:UIScrollView!
+    @objc public let scrollview:UIScrollView
     fileprivate var controllers:[UIViewController]!
     fileprivate var lastViewConstraint:NSArray?
     
@@ -199,39 +199,42 @@ At the moment it's only used to perform custom animations on didScroll.
         
         controllers.append(vc)
         
+        guard let view = vc.view else { return }
+        
         // Setup the viewController view
         
-        vc.view.translatesAutoresizingMaskIntoConstraints = false
-        scrollview.addSubview(vc.view)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        scrollview.addSubview(view)
         
         // Constraints
         
-        let metricDict = ["w":vc.view.bounds.size.width,"h":vc.view.bounds.size.height]
+        let metricDict = ["w":view.bounds.size.width,"h":view.bounds.size.height]
         
         // - Generic cnst
         
-        vc.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[view(h)]", options:[], metrics: metricDict, views: ["view":vc.view]))
-        vc.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[view(w)]", options:[], metrics: metricDict, views: ["view":vc.view]))
-        scrollview.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[view]|", options:[], metrics: nil, views: ["view":vc.view,]))
+        
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[view(h)]", options:[], metrics: metricDict, views: ["view":view]))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[view(w)]", options:[], metrics: metricDict, views: ["view":view]))
+        scrollview.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[view]|", options:[], metrics: nil, views: ["view":view,]))
         
         // cnst for position: 1st element
         
-        if controllers.count == 1{
-            scrollview.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[view]", options:[], metrics: nil, views: ["view":vc.view,]))
+        if controllers.count == 1 {
+            scrollview.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[view]", options:[], metrics: nil, views: ["view":view,]))
             
             // cnst for position: other elements
             
-        }else{
+        } else {
             
             let previousVC = controllers[controllers.count-2]
             let previousView = previousVC.view;
             
-            scrollview.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[previousView]-0-[view]", options:[], metrics: nil, views: ["previousView":previousView!,"view":vc.view]))
+            scrollview.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[previousView]-0-[view]", options:[], metrics: nil, views: ["previousView":previousView!,"view":view]))
             
             if let cst = lastViewConstraint{
                 scrollview.removeConstraints(cst as! [NSLayoutConstraint])
             }
-            lastViewConstraint = NSLayoutConstraint.constraints(withVisualFormat: "H:[view]-0-|", options:[], metrics: nil, views: ["view":vc.view]) as NSArray?
+            lastViewConstraint = NSLayoutConstraint.constraints(withVisualFormat: "H:[view]-0-|", options:[], metrics: nil, views: ["view":view]) as NSArray?
             scrollview.addConstraints(lastViewConstraint! as! [NSLayoutConstraint])
         }
     }
