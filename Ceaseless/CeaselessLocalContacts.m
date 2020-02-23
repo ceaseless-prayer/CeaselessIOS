@@ -177,7 +177,7 @@ void externalAddressBookChangeCallback (ABAddressBookRef addressBook, CFDictiona
             [AppUtils postAnalyticsEventWithCategory:@"address_book_sync" andAction:@"post_total_active_ceaseless_contacts" andLabel:localInstallationId andValue: [NSNumber numberWithInteger:clc.numberOfActiveCeaselessContacts]];
             [AppUtils postAnalyticsEventWithCategory:@"address_book_sync" andAction:@"post_total_removed_ceaseless_contacts" andLabel:localInstallationId andValue: [NSNumber numberWithInteger:clc.numberOfRemovedCeaselessContacts]];
             
-            _syncing = NO;
+            self->_syncing = NO;
 			[[UIApplication sharedApplication] endBackgroundTask:self.backgroundTask];
 			self.backgroundTask = UIBackgroundTaskInvalid;
         });

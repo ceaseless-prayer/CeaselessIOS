@@ -80,10 +80,6 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 	self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"",@"")];
 	self.searchController.searchBar.delegate = self;
 	self.searchController.delegate = self;
-    // Hide the search bar until user scrolls up
-	CGRect newBounds = self.tableView.bounds;
-	newBounds.origin.y = newBounds.origin.y + self.searchController.searchBar.bounds.size.height;
-	self.tableView.bounds = newBounds;
 
 	[self adjustSearchBar];
 	self.definesPresentationContext = YES;
@@ -371,6 +367,10 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
 		// Return NO if you do not want the specified item to be editable.
+    if (self.searchController.active || self.segment.selectedSegmentIndex == 0) {
+        return NO;
+    }
+    
     return [self validPersonAtIndex:indexPath];
 }
 
@@ -454,7 +454,10 @@ typedef NS_ENUM(NSInteger, ContactsListsPredicateScope)
 }
 
 - (void)willPresentSearchController:(UISearchController *)searchController {
-		//push the view up under status bar
+    self.segment.selectedSegmentIndex = 1;
+    [self selectContactsPredicateAndSortDescriptors];
+    
+    //push the view up under status bar
 	self.segment.hidden = YES;
 	self.moreButton.hidden = YES;
 	self.topToVisualEffectsViewConstraint.constant = -20;

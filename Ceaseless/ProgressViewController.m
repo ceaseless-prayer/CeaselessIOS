@@ -103,7 +103,7 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
         if (connectionError == nil && data != nil) {
             NSSortDescriptor *sortByDate = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO];
             NSError *error;
-            _announcements = [[NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error] sortedArrayUsingDescriptors:@[sortByDate]];
+            self->_announcements = [[NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error] sortedArrayUsingDescriptors:@[sortByDate]];
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             NSDate *lastAnnouncementDate = [defaults objectForKey:kLastAnnouncementDate];
             
@@ -113,18 +113,18 @@ NSString *const kLastAnnouncementDate = @"localLastAnnouncementDate";
                 lastAnnouncementDate = [NSDate dateWithTimeIntervalSince1970: 1427432895];
             }
             
-            if([_announcements count] > 0) {
+            if([self->_announcements count] > 0) {
                 // get last announcement refresh date
                 // compare to the date of the announcement in the array
                 // TODO define the announcement format more strictly.
                 NSDate *latestAnnouncementDate = [NSDate dateWithTimeIntervalSince1970:
-                                                  [[_announcements[0] objectForKey:@"date"] doubleValue]];
+                                                  [[self->_announcements[0] objectForKey:@"date"] doubleValue]];
                 
 //                BOOL developerMode = [defaults boolForKey:kDeveloperMode];
                 BOOL developerMode = NO;
                 if(developerMode || lastAnnouncementDate.timeIntervalSinceReferenceDate < latestAnnouncementDate.timeIntervalSinceReferenceDate) {
                     NSLog(@"Latest %@ Last %@", latestAnnouncementDate, lastAnnouncementDate);
-                    NSString *headline = [NSString stringWithFormat: @"Announcement: %@", _announcements[0][@"headline"]];
+                    NSString *headline = [NSString stringWithFormat: @"Announcement: %@", self->_announcements[0][@"headline"]];
                     [self.progressView.announcementButton setTitle: headline forState: UIControlStateNormal];
                     [self.progressView.announcementButton.titleLabel setTextAlignment: NSTextAlignmentCenter];
 
