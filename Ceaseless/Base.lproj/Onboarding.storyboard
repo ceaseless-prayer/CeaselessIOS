@@ -1,11 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11535.1" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -39,13 +37,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="at_the_beach.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Fdl-57-btj"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="at_the_beach.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Fdl-57-btj">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7b3-wX-85i">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="CYc-uE-1nU">
-                                    <frame key="frameInset"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pkH-0y-hPL">
+                                            <rect key="frame" x="58" y="160" width="259" height="33"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="259" id="KBX-XN-MiL"/>
                                             </constraints>
@@ -54,16 +56,19 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_big" translatesAutoresizingMaskIntoConstraints="NO" id="oic-ir-HXY">
+                                            <rect key="frame" x="45" y="207" width="285" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="nJA-lr-Q6b"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pray for three contacts each day and together we can pray for everyone on earth." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qlw-yn-zGs">
+                                            <rect key="frame" x="58" y="273" width="259" height="70"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swipe to start" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6LQ-it-R8r">
+                                            <rect key="frame" x="212" y="551.5" width="105" height="23.5"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -106,7 +111,7 @@
                             <constraint firstItem="7b3-wX-85i" firstAttribute="trailing" secondItem="Fdl-57-btj" secondAttribute="trailing" id="AwB-Hy-XXH"/>
                             <constraint firstItem="Fdl-57-btj" firstAttribute="leading" secondItem="pMv-va-oHo" secondAttribute="leading" id="K1V-RJ-bQ3"/>
                             <constraint firstItem="7b3-wX-85i" firstAttribute="bottom" secondItem="Fdl-57-btj" secondAttribute="bottom" id="OJq-od-JwJ"/>
-                            <constraint firstItem="pCc-Vc-fyG" firstAttribute="top" secondItem="Fdl-57-btj" secondAttribute="bottom" id="OYw-As-yYh"/>
+                            <constraint firstAttribute="bottom" secondItem="Fdl-57-btj" secondAttribute="bottom" id="OYw-As-yYh"/>
                             <constraint firstAttribute="trailing" secondItem="Fdl-57-btj" secondAttribute="trailing" id="Tma-uR-kzz"/>
                             <constraint firstItem="7b3-wX-85i" firstAttribute="top" secondItem="686-aC-wyn" secondAttribute="bottom" id="ZN4-xE-Gwo"/>
                             <constraint firstItem="Fdl-57-btj" firstAttribute="top" secondItem="pMv-va-oHo" secondAttribute="top" id="b43-7n-Hix"/>
@@ -137,14 +142,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="at_the_beach.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="V69-uZ-A41">
-                                <frame key="frameInset" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oj3-qF-1jR">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="tIj-rj-00h">
-                                    <frame key="frameInset"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pray for Contacts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ptw-Xe-efg">
+                                            <rect key="frame" x="58" y="160" width="259" height="33"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="259" id="RdO-yt-KCi"/>
                                                 <constraint firstAttribute="width" constant="259" id="fJq-h7-zTa"/>
@@ -159,6 +166,7 @@
                                             </variation>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ij8-an-A3o">
+                                            <rect key="frame" x="84.5" y="320" width="206" height="40"/>
                                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.13809257745742798" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                             <inset key="contentEdgeInsets" minX="16" minY="8" maxX="16" maxY="8"/>
@@ -168,6 +176,7 @@
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow access to contacts so you know who to pray for each day. Ceaseless does not share your contacts with anyone." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dlF-q2-6zg">
+                                            <rect key="frame" x="58" y="203" width="259" height="93"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -223,7 +232,7 @@
                             <constraint firstItem="Oj3-qF-1jR" firstAttribute="bottom" secondItem="V69-uZ-A41" secondAttribute="bottom" id="Ctc-og-hrs"/>
                             <constraint firstItem="Oj3-qF-1jR" firstAttribute="top" secondItem="V69-uZ-A41" secondAttribute="top" id="DXG-sl-A8r"/>
                             <constraint firstAttribute="trailing" secondItem="V69-uZ-A41" secondAttribute="trailing" id="Eeo-D2-7sy"/>
-                            <constraint firstItem="j0Z-aV-dxs" firstAttribute="top" secondItem="V69-uZ-A41" secondAttribute="bottom" id="Ewb-8D-NVX"/>
+                            <constraint firstAttribute="bottom" secondItem="V69-uZ-A41" secondAttribute="bottom" id="Ewb-8D-NVX"/>
                             <constraint firstItem="Oj3-qF-1jR" firstAttribute="leading" secondItem="V69-uZ-A41" secondAttribute="leading" id="Tju-3X-TOw"/>
                             <constraint firstItem="Oj3-qF-1jR" firstAttribute="trailing" secondItem="V69-uZ-A41" secondAttribute="trailing" id="Uag-QK-DTg"/>
                             <constraint firstItem="V69-uZ-A41" firstAttribute="top" secondItem="uRo-oK-KjY" secondAttribute="top" id="ZBQ-kH-rsR"/>
@@ -257,14 +266,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="at_the_beach.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="crO-xC-TIz">
-                                <frame key="frameInset" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zIH-ED-wKW">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="xXA-5G-dLa">
-                                    <frame key="frameInset"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remember to Pray" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5m-Oa-Taf">
+                                            <rect key="frame" x="58" y="160" width="259" height="33"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="259" id="Tkp-5q-fZf"/>
                                                 <constraint firstAttribute="width" constant="259" id="VIx-it-Pr5"/>
@@ -279,12 +290,13 @@
                                             </variation>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Turn on notifications so you remember to pray for others" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hd1-Jz-EBT">
+                                            <rect key="frame" x="58" y="203" width="259" height="46.5"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mGP-IK-v4v">
-                                            <rect key="frame" x="90" y="320" width="196" height="40"/>
+                                            <rect key="frame" x="89.5" y="320" width="196" height="40"/>
                                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.13809257745742798" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                             <inset key="contentEdgeInsets" minX="16" minY="8" maxX="16" maxY="8"/>
@@ -342,7 +354,7 @@
                         <constraints>
                             <constraint firstItem="zIH-ED-wKW" firstAttribute="trailing" secondItem="crO-xC-TIz" secondAttribute="trailing" id="CDc-9w-EeC"/>
                             <constraint firstItem="zIH-ED-wKW" firstAttribute="top" secondItem="9st-IG-Muh" secondAttribute="bottom" id="DDG-9R-wiR"/>
-                            <constraint firstItem="v5e-Fy-MKe" firstAttribute="top" secondItem="crO-xC-TIz" secondAttribute="bottom" id="Jat-bO-Y2j"/>
+                            <constraint firstAttribute="bottom" secondItem="crO-xC-TIz" secondAttribute="bottom" id="Jat-bO-Y2j"/>
                             <constraint firstItem="crO-xC-TIz" firstAttribute="leading" secondItem="zZK-Jm-upW" secondAttribute="leading" id="KSn-dC-rC5"/>
                             <constraint firstItem="zIH-ED-wKW" firstAttribute="leading" secondItem="crO-xC-TIz" secondAttribute="leading" id="Mbk-z5-w8d"/>
                             <constraint firstItem="zIH-ED-wKW" firstAttribute="top" secondItem="crO-xC-TIz" secondAttribute="top" id="RdB-ht-RZ0"/>
