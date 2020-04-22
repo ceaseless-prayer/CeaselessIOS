@@ -97,6 +97,7 @@
         
         BWWalkthroughViewController *onboardingContainer = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingContainer"];
         onboardingContainer.scrollview.bounces = NO;
+        onboardingContainer.modalPresentationStyle = UIModalPresentationFullScreen;
         
         UIViewController *welcomeController = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingWelcome"];
         UIViewController *contactController = [storyboard instantiateViewControllerWithIdentifier:@"OnboardingContact"];

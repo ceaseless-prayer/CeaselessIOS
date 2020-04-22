@@ -6,10 +6,15 @@ DEPENDENCIES:
   - GoogleAnalytics
   - OneSignal (< 3.0, >= 2.6.2)
 
+SPEC REPOS:
+  trunk:
+    - GoogleAnalytics
+    - OneSignal
+
 SPEC CHECKSUMS:
   GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
   OneSignal: 02166aa47052b5c339a4231d6ee0bb8cbaf4f9be
 
 PODFILE CHECKSUM: 91513188f3f7abb30000947977429a1852c6f79c
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.8.4
