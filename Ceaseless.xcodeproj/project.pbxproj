@@ -178,6 +178,8 @@
 		42C13BB01ABCC074000D5C08 /* WebCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebCardViewController.m; sourceTree = "<group>"; };
 		42C13BB21ABCC285000D5C08 /* WebCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebCardView.h; sourceTree = "<group>"; };
 		42C13BB31ABCC285000D5C08 /* WebCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebCardView.m; sourceTree = "<group>"; };
+		42CA398B24574838006C57F4 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		42CA398C2457491B006C57F4 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		42DFFCC91AD8666B0053DAAD /* PersonIdentifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonIdentifier.h; sourceTree = "<group>"; };
 		42DFFCCA1AD8666B0053DAAD /* PersonIdentifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonIdentifier.m; sourceTree = "<group>"; };
 		42E0F4A51AD60C6200CE64E3 /* ProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressView.h; sourceTree = "<group>"; };
@@ -669,6 +671,8 @@
 				en,
 				Base,
 				id,
+				de,
+				es,
 			);
 			mainGroup = 42F3AE0F1AA4DD7F003A88F5;
 			productRefGroup = 42F3AE191AA4DD7F003A88F5 /* Products */;
@@ -890,6 +894,8 @@
 			children = (
 				4227F7891DBCBB5300015654 /* id */,
 				425BB2C91DC0103100D07A1D /* Base */,
+				42CA398B24574838006C57F4 /* de */,
+				42CA398C2457491B006C57F4 /* es */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
