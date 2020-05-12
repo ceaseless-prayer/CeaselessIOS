@@ -1,0 +1,24 @@
+
+/* Class = "UILabel"; text = "\"Rejoice always, 
+pray without ceasing,
+give thanks in all circumstances;
+for this is the will of God in Christ Jesus for you.\"
+(1 Thessalonians 5:16-18, ESV)"; ObjectID = "6Rj-CP-8zw"; */
+"6Rj-CP-8zw.text" = "Seid allezeit fröhlich,\
+betet ohne Unterlaß,\
+seid dankbar in allen Dingen; denn das ist der Wille Gottes in Christo Jesu an euch. (1 Thessalonicher 5:16-18 Luther 1545)";
+
+/* Class = "UIButton"; normalTitle = "Subscribe to the Ceaseless newsletter"; ObjectID = "UxO-qy-ABq"; */
+"UxO-qy-ABq.normalTitle" = "Abonniere den Ceaseless Newsletter";
+
+/* Class = "UILabel"; text = "Thanks for Praying!"; ObjectID = "ecU-u3-d6X"; */
+"ecU-u3-d6X.text" = "Danke für Deine Gebete!";
+
+/* Class = "UILabel"; text = "You have prayed for:"; ObjectID = "fi9-Vk-ecV"; */
+"fi9-Vk-ecV.text" = "Duhast gebetet für:";
+
+/* Class = "UIButton"; normalTitle = "Announcement:"; ObjectID = "xiT-Sk-r1h"; */
+"xiT-Sk-r1h.normalTitle" = "Ankündigung:";
+
+/* Class = "UIButton"; normalTitle = "Show more people"; ObjectID = "xyC-Sa-Zer"; */
+"xyC-Sa-Zer.normalTitle" = "Zeige mehr Personen";

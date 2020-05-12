@@ -1,0 +1,123 @@
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "0Wl-wY-iqb"; */
+"0Wl-wY-iqb.title" = "Abbrechen";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "21g-XQ-nPL"; */
+"21g-XQ-nPL.text" = "Label";
+
+/* Class = "UILabel"; text = "text"; ObjectID = "2AE-KC-PdA"; */
+"2AE-KC-PdA.text" = "Text";
+
+/* Class = "UIViewController"; title = "Tagged Person Picker"; ObjectID = "2Ov-uL-ZtG"; */
+"2Ov-uL-ZtG.title" = "Ausgewählte Person";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "Ap3-56-gqg"; */
+"Ap3-56-gqg.text" = "Name";
+
+/* Class = "UINavigationItem"; title = "People"; ObjectID = "CCK-KN-64g"; */
+"CCK-KN-64g.title" = "Personen";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "D86-2K-Klh"; */
+"D86-2K-Klh.text" = "Label";
+
+/* Class = "UIBarButtonItem"; title = " "; ObjectID = "Doy-Xf-IRt"; */
+"Doy-Xf-IRt.title" = "\" \"";
+
+/* Class = "UIViewController"; title = "Prayer Journal"; ObjectID = "Eu1-lG-zhA"; */
+"Eu1-lG-zhA.title" = "Gebetstagebuch";
+
+/* Class = "UIBarButtonItem"; title = "Menu"; ObjectID = "Guc-Qf-Mt0"; */
+"Guc-Qf-Mt0.title" = "Menü";
+
+/* Class = "UILabel"; text = "date"; ObjectID = "Gxh-3w-1xW"; */
+"Gxh-3w-1xW.text" = "Datum";
+
+/* Class = "UIViewController"; title = "Menu"; ObjectID = "JcK-uc-3mv"; */
+"JcK-uc-3mv.title" = "Menü";
+
+/* Class = "UIBarButtonItem"; title = "Done"; ObjectID = "K2I-Qv-Zz7"; */
+"K2I-Qv-Zz7.title" = "Fertig";
+
+/* Class = "UIBarButtonItem"; title = "Journal"; ObjectID = "KcV-zW-dSC"; */
+"KcV-zW-dSC.title" = "Notizbuch";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "LY4-xh-BrB"; */
+"LY4-xh-BrB.text" = "Name";
+
+/* Class = "UILabel"; text = "Tag friends"; ObjectID = "Ltb-c7-ldM"; */
+"Ltb-c7-ldM.text" = "Markiere Freunde";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "MJp-9E-fuh"; */
+"MJp-9E-fuh.text" = "Titel";
+
+/* Class = "UILabel"; text = "Remind me to pray at:"; ObjectID = "OMp-Bh-HQ6"; */
+"OMp-Bh-HQ6.text" = "Erinnere mich zu beten um:";
+
+/* Class = "UIViewController"; title = "People"; ObjectID = "Trs-Fq-LiS"; */
+"Trs-Fq-LiS.title" = "Personen";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "UtU-Y1-H5l"; */
+"UtU-Y1-H5l.text" = "Name";
+
+/* Class = "UILabel"; text = "Loading..."; ObjectID = "VDk-V7-qRO"; */
+"VDk-V7-qRO.text" = "Laden...";
+
+/* Class = "UITableViewController"; title = "NotesTableViewController"; ObjectID = "XQe-6l-Oah"; */
+"XQe-6l-Oah.title" = "";
+
+/* Class = "UILabel"; text = "people each day"; ObjectID = "YFL-4Q-zeM"; */
+"YFL-4Q-zeM.text" = "Personen pro Tag";
+
+/* Class = "UIButton"; normalTitle = "Select Yourself in Contacts"; ObjectID = "YvC-sY-Zh1"; */
+"YvC-sY-Zh1.normalTitle" = "Wähle Dich selbst in den Kontakten aus";
+
+/* Class = "UILabel"; text = "Syncing..."; ObjectID = "bg0-Qa-79x"; */
+"bg0-Qa-79x.text" = "Synchronisierung läuft...";
+
+/* Class = "UIButton"; normalTitle = "Fav"; ObjectID = "gvb-YA-f3g"; */
+"gvb-YA-f3g.normalTitle" = "Favorit";
+
+/* Class = "UILabel"; text = "Tap to add a person. ^ "; ObjectID = "iLd-nE-21F"; */
+"iLd-nE-21F.text" = "Tippe um eine Person hinzuzufügen";
+
+/* Class = "UINavigationItem"; title = "Prayer Journal"; ObjectID = "kDo-wz-fet"; */
+"kDo-wz-fet.title" = "Notizbuch";
+
+/* Class = "UILabel"; text = "date"; ObjectID = "lT7-VO-9HM"; */
+"lT7-VO-9HM.text" = "Datum";
+
+/* Class = "UINavigationController"; title = "Ceaseless"; ObjectID = "mXJ-JJ-gyu"; */
+"mXJ-JJ-gyu.title" = "Ceaseless";
+
+/* Class = "UITextField"; text = "ME"; ObjectID = "oqk-y9-t0v"; */
+"oqk-y9-t0v.text" = "Ich";
+
+/* Class = "UINavigationItem"; title = "Tag People"; ObjectID = "qna-R8-JJN"; */
+"qna-R8-JJN.title" = "Markiere Personen";
+
+/* Class = "UIViewController"; title = "Settings"; ObjectID = "r5P-yf-vRE"; */
+"r5P-yf-vRE.title" = "Einstellungen";
+
+/* Class = "UINavigationItem"; title = "Add Notes"; ObjectID = "svM-zj-Uqx"; */
+"svM-zj-Uqx.title" = "Füge neue Notizen hinzu";
+
+/* Class = "UILabel"; text = "  Pray for "; ObjectID = "uJa-Kc-NzC"; */
+"uJa-Kc-NzC.text" = "Bete für";
+
+/* Class = "UISegmentedControl"; ubS-U9-lnF.segmentTitles[0] = "Active"; ObjectID = "ubS-U9-lnF"; */
+"ubS-U9-lnF.segmentTitles[0]" = "Aktiv";
+
+/* Class = "UISegmentedControl"; ubS-U9-lnF.segmentTitles[1] = "Removed"; ObjectID = "ubS-U9-lnF"; */
+"ubS-U9-lnF.segmentTitles[1]" = "Entfernt";
+
+/* Class = "UILabel"; text = "Tap to create a note. ^ "; ObjectID = "vaC-PW-6Xb"; */
+"vaC-PW-6Xb.text" = "Tippe um eine Notiz anzulegen";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "vb3-cf-jfP"; */
+"vb3-cf-jfP.title" = "Einstellungen";
+
+/* Class = "UINavigationItem"; title = "Menu"; ObjectID = "wnR-wZ-T2Y"; */
+"wnR-wZ-T2Y.title" = "Menü";
+
+/* Class = "UILabel"; text = "text"; ObjectID = "ydH-A8-QfC"; */
+"ydH-A8-QfC.text" = "Text";
